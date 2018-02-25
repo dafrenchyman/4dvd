@@ -1,0 +1,13 @@
+
+<div id="DatasetMenu">
+<h2 md-dialog-title>Datasets</h2>
+<md-dialog-content>
+
+  <div id="datasetList"></div>
+  <li *ngFor="let dataset of _MenuDataFull">
+    <button md-button [md-dialog-close]="dataset">{{ dataset.FullName }}</button>
+  </li>
+
+
+</md-dialog-content>
+</div>

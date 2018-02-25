@@ -1,0 +1,107 @@
+
+<?php
+
+	header("Access-Control-Allow-Origin: *");
+
+	error_reporting(0);
+	@ini_set('display_errors', 0);
+	/**
+	 * Calls a Stored Procedure and returns the results as an array of rows.
+	 * @param mysqli $dbLink An open mysqli object.
+	 * @param string $procName The name of the procedure to call.
+	 * @param string $params The parameter string to be used
+	 * @return array An array of rows returned by the call.
+	 */
+	function c_mysqli_call(mysqli $dbLink, $procName, $params="")
+	{
+	    if(!$dbLink) 
+		{
+			throw new Exception("The MySQLi connection is invalid.");
+		}
+		else
+		{
+			// Execute the SQL command.
+			// The multy_query method is used here to get the buffered results,
+			// so they can be freeded later to avoid the out of sync error.
+			$sql = "CALL {$procName}({$params});";
+			$sqlSuccess = $dbLink->multi_query($sql);
+
+			if($sqlSuccess)
+			{
+				if($dbLink->more_results())
+				{
+					// Get the first buffered result set, the one with our data.
+					$result = $dbLink->use_result();
+					$output = array();
+					// Put the rows into the outpu array
+					while($row = $result->fetch_assoc())
+					{
+					    $output[] = $row;
+					}
+					// Free the first result set.
+					// If you forget this one, you will get the "out of sync" error.
+					$result->free();
+					// Go through each remaining buffered result and free them as well.
+					// This removes all extra result sets returned, clearing the way
+					// for the next SQL command.
+					while($dbLink->more_results() && $dbLink->next_result())
+					{
+					    $extraResult = $dbLink->use_result();
+					    if($extraResult instanceof mysqli_result)
+						{
+					        $extraResult->free();
+					    }
+					}
+					return $output;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				throw new Exception("The call failed: " . $dbLink->error);
+			}
+		}
+	}
+
+	$servername = "localhost";
+	$username = "mrsharky_climate";
+	$password = "";
+	$dbname = $_GET['dbname'];
+
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) 
+	{
+		 die("Connection failed: " . $conn->connect_error);
+	} 
+	//$predictor_variable1_id = $_GET['predictor_variable1_id'];
+	//$predictor_variable2_id = $_GET['predictor_variable2_id'];
+	//$response_valiable_id = $_GET['response_variable_id'];
+
+	// Response Variable data
+
+	// Bi-variate Histogram Data
+	$Level_ID = array();
+	$Name = array();	
+	$result = c_mysqli_call($conn, 'p_GetLevel', '');
+	if($result) 
+	{
+		foreach($result as $_row)
+		{
+			$Level_ID[] = $_row['Level_ID'];
+			$Name[] = $_row['Name'];	
+		}
+	}
+
+	$conn->close();
+?>
+
+{
+	"Level_ID": <?php echo json_encode($Level_ID); ?>,
+	"Name": <?php echo json_encode($Name); ?>
+}
+
+

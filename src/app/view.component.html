@@ -1,0 +1,270 @@
+
+
+<div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
+  <md-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden" id="WebglCanvas">
+    <md-sidenav id="Menu" #sidenav mode="push" opened="false" style="background-color: white; overflow:auto;" (onmouseover)="inMenu = true;">
+      <md-tab-group>
+        <md-tab>
+          <ng-template md-tab-label>
+            <md-icon>list</md-icon>
+          </ng-template>
+          <div class="TabHeading">
+            <h5>Dataset Settings</h5>
+          </div>
+          <md-list>
+            <md-list-item>
+              <button md-raised-button (click)="OpenDatasetDialog()">Datasets</button>
+            </md-list-item>
+          </md-list>
+          <md-list>
+            <md-divider></md-divider>
+          </md-list>
+
+          <div class="section" style="margin-left: 20px;">
+            <h6>Layers</h6>
+            <md-radio-group class="radio-group">
+              <md-radio-button class="radio-button" *ngFor="let level of GetLevels()" [checked]="level.Selected" [value]="level.Name" (change)="ChangeLevel(level.Level_ID)">
+                {{ level.Name }}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+
+        </md-tab>
+
+        <md-tab>
+          <ng-template md-tab-label>
+            <md-icon>event</md-icon>
+          </ng-template>
+          <div class="TabHeading">
+            <h5>Date</h5>
+          </div>
+
+          <div class="section" style="margin-left: 20px;">
+            <h6>Year</h6>
+            <md-slider
+              [(ngModel)]="yearSlider"
+              [max]="GetMaxYear()"
+              [min]="GetMinYear()"
+              step="1"
+              thumb-label="true"
+              tick-interval="auto"
+              (change)="ChangeYear()">
+            </md-slider>
+            <md-input-container>
+              <input mdInput [(ngModel)]="yearSlider" (change)="ChangeYear()" type="number">
+            </md-input-container>
+          </div>
+
+          <md-divider></md-divider>
+
+          <div class="section" style="margin-left: 20px; margin-top: 20px;">
+            <md-select placeholder="Month" [(ngModel)]="currMonth" (change)="ChangeMonth()">
+              <md-option *ngFor="let month of months" [value]="month.value">
+                {{ month.viewValue }}
+              </md-option>
+            </md-select>
+          </div>
+
+
+        </md-tab>
+
+        <md-tab>
+          <ng-template md-tab-label>
+            <md-icon>brush</md-icon>
+          </ng-template>
+
+            <div class="TabHeading">
+              <h5>Graphical Settings</h5>
+            </div>
+
+          <md-list>
+            <md-list-item>
+              <button md-raised-button (click)="OpenColorMapDialog()"><md-icon>palette</md-icon> ColorMaps</button>
+            </md-list-item>
+          </md-list>
+          <md-list>
+            <md-divider></md-divider>
+
+            <!-- Smoothed Gridboxes -->
+            <md-list-item>
+              <md-slide-toggle
+                class="example-margin"
+                [color]="'primary'"
+                [checked]="viewSettingsSelected.smoothGrid"
+                (change)="changeSmoothGrid()">
+                Smoothed Gridboxes
+              </md-slide-toggle>
+            </md-list-item>
+
+            <!-- Pacific Centered -->
+            <md-list-item>
+              <md-slide-toggle
+                class="example-margin"
+                [color]="'primary'"
+                [checked]="viewSettingsSelected.pacificCentered"
+                (change)="changePacificCentered()">
+                Pacific Centered
+              </md-slide-toggle>
+            </md-list-item>
+
+            <!-- Minor Islands -->
+            <md-list-item>
+              <md-slide-toggle
+                class="example-margin"
+                [color]="'primary'"
+                [checked]="viewSettingsSelected.minorIslands"
+                (change)="changeMinorIslandsLines()">
+                Minor Islands
+              </md-slide-toggle>
+            </md-list-item>
+
+            <!-- Lat/Lon Lines -->
+            <md-list-item>
+              <md-slide-toggle
+                class="example-margin"
+                [color]="'primary'"
+                [checked]="viewSettingsSelected.latlonlines"
+                (change)="changeLatlonlines()">
+                Lat/Lon Lines
+              </md-slide-toggle>
+            </md-list-item>
+
+            <!-- Geographical Lines -->
+            <md-list-item>
+              <md-slide-toggle
+                class="example-margin"
+                [color]="'primary'"
+                [checked]="viewSettingsSelected.geolines"
+                (change)="changeGeolines()">
+                Geographical Lines
+              </md-slide-toggle>
+            </md-list-item>
+
+            <!-- Time Zones -->
+            <md-list-item>
+              <md-slide-toggle
+                class="example-margin"
+                [color]="'primary'"
+                [checked]="viewSettingsSelected.timezones"
+                (change)="changeTimezones()">
+                Time Zones
+              </md-slide-toggle>
+            </md-list-item>
+          </md-list>
+
+          <md-divider></md-divider>
+
+          <!-- Bump Mapping -->
+          <div class="section" style="margin-left: 20px;">
+            <h6>Bump Mapping</h6>
+            <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.bumpMapping">
+              <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.bumpMapping" [value]="curr" (change)="changeBumpMapping(curr)">
+                {{curr}}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <md-divider></md-divider>
+
+          <!-- Globe View -->
+          <div class="section" style="margin-left: 20px;">
+            <h6>Globe View</h6>
+            <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.view">
+              <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.view" [value]="curr" (change)="selectView(curr)">
+                {{curr}}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <md-divider></md-divider>
+
+          <!-- Coasts -->
+          <div class="section" style="margin-left: 20px;">
+            <h6>Coasts</h6>
+            <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.coasts">
+              <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.coasts" [value]="curr" (change)="selectCoasts(curr)">
+                {{curr}}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <md-divider></md-divider>
+
+          <!-- Rivers -->
+          <div class="section" style="margin-left: 20px;">
+            <h6>Rivers</h6>
+            <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.rivers">
+              <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.rivers" [value]="curr" (change)="selectRiver(curr)">
+                {{curr}}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <md-divider></md-divider>
+
+          <!-- Lakes -->
+          <div class="section" style="margin-left: 20px;">
+            <h6>Lakes</h6>
+            <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.lakes">
+              <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.lakes" [value]="curr" (change)="selectLakes(curr)">
+                {{curr}}
+              </md-radio-button>
+            </md-radio-group>
+          </div>
+          <br>
+
+
+
+        </md-tab>
+        <md-tab>
+          <ng-template md-tab-label>
+            <md-icon>info</md-icon>
+          </ng-template>
+          <div class="TabHeading">
+            <h5>Information</h5>
+          </div>
+
+          <md-list>
+            <md-list-item>
+              <button md-raised-button (click)="createCsvFromGriddedData()">Download Data</button>
+            </md-list-item>
+          </md-list>
+
+        </md-tab>
+      </md-tab-group>
+    </md-sidenav>
+
+    <button md-mini-fab id="sideNavButton" class="example-fab" (click)="sidenav.toggle()">
+      <md-icon>add</md-icon>
+    </button>
+
+
+    <div id="Legend"></div>
+
+    <div id="ClimateTitle"> {{ GetTitle() }} </div>
+
+    <div id="ClimateDate"> {{ GetLayerDateLabel() }} </div>
+
+    <div id="TimeseriesBox">
+      <md-card *ngIf="GridboxSelected()" >
+        <md-list>
+          <md-list-item>
+            Value: {{ this.GridBoxData[0] }}
+          </md-list-item>
+          <md-list-item>
+            Lat: {{ this.GridBoxData[1] }}
+          </md-list-item>
+          <md-list-item>
+            Lon: {{ this.GridBoxData[2] }}
+          </md-list-item>
+          <md-list-item>
+            <button md-raised-button (click)="OpenTimeseriesDialog()">Timeseries</button>
+          </md-list-item>
+        </md-list>
+      </md-card>
+    </div>
+
+    <canvas #ClimateGl id="ClimateGl" (mouseleave)="inCanvas = false;" (mouseenter)='inCanvas = true;' style="position: absolute; z-index: 5; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;"><!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
+
+    </canvas>
+
+
+  </md-sidenav-container>
+</div>
+

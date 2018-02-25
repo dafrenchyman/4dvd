@@ -1,0 +1,32 @@
+<div id="TimeseriesPlot">
+  <h2 md-dialog-title>Timeseries</h2>
+  <md-dialog-content>
+
+      <ngx-charts-line-chart *ngIf="DataAvailable()"
+        [view]="view"
+        [scheme]="colorScheme"
+        [timeline]="timeline"
+        [results]="multi"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [autoScale]="autoScale">
+      </ngx-charts-line-chart>
+      <br>
+      <button md-raised-button (click)="createCsvFromTimeseriesData()">Download Data</button>
+
+  </md-dialog-content>
+  <md-dialog-actions>
+
+    <md-checkbox *ngFor="let level of GetLevels()"
+                 [checked]="IsSelected(level)"
+                 (click)="ToggleTimeseries(level)"> {{ level.Name }}
+    </md-checkbox>
+
+  </md-dialog-actions>
+</div>

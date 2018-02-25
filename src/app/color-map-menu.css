@@ -1,0 +1,6 @@
+#ColorMapMenu {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  z-index: 10;
+}

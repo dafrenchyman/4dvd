@@ -1,0 +1,25 @@
+
+<div id="ColorMapMenu">
+<h2 md-dialog-title>Color Maps Available</h2>
+<md-dialog-content>
+
+  <md-list *ngFor="let color of _colorMapGradient.ColorMaps">
+
+    <md-list-item>
+    <svg width="55" height="55">
+      <defs>
+        <linearGradient id="{{ color.IdName }}" x1="0" y1="0" x2="0" y2="1">
+          <stop *ngFor="let gradient of color.Gradient" attr.offset="{{ gradient.Offset }}" attr.stop-color="{{ gradient.StopColor }}" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+      <circle attr.fill="url(#{{ color.IdName }})" cx="27" cy="27" r="27" width="55" height="55"/>
+    </svg>
+
+    <button md-button [md-dialog-close]="color">{{ color.FullName }}</button>
+    </md-list-item>
+  </md-list>
+
+
+</md-dialog-content>
+
+</div>

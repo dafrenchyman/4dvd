@@ -1,0 +1,271 @@
+{
+  "GeoLines": {
+    "label": "Geographical Lines",
+    "inputName": "geoLines",
+    "function": "ChangeGeoLinesMenu",
+    "default": false,
+    "id": "geoLinesToggle",
+    "values": [
+      {
+        "option": true,
+        "file": "Coastlines/ne_10m_geographic_lines.js"
+      },
+      {
+        "option": false,
+        "file": ""
+      }
+    ]
+  },
+  "LatLon": {
+    "label": "Lat/Lon Lines",
+    "inputName": "latLonLines",
+    "function": "ChangeLatLonMenu",
+    "default": true,
+    "id": "latLonToggle",
+    "values": [
+      {
+        "option": true,
+        "file": ""
+      },
+      {
+        "option": false,
+        "file": ""
+      }
+    ]
+  },
+  "MinorIslands": {
+    "label": "Minor Islands",
+    "inputName": "minorIslands",
+    "buttonType": "toggle",
+    "function": "ChangeMinorIslandsMenu",
+    "default": false,
+    "id": "minorIslandsToggle",
+    "values": [
+      {
+        "option": true,
+        "file": "Coastlines/ne_10m_minor_islands_coastline.js"
+      },
+      {
+        "option": false,
+        "file": ""
+      }
+    ]
+  },
+  "PacificCentered": {
+    "label": "Pacific Centered",
+    "inputName": "pacificCentered",
+    "buttonType": "toggle",
+    "function": "ChangeCenterMenu",
+    "default": false,
+    "id": "pacificCenteredToggle",
+    "values": [
+      {
+        "option": true,
+        "file": ""
+      },
+      {
+        "option": false,
+        "file": ""
+      }
+    ]
+  },
+  "SmoothGrid": {
+    "label": "Smooth Grid",
+    "inputName": "SmoothGrid",
+    "buttonType": "toggle",
+    "function": "ChangeSmoothGridMenu",
+    "default": true,
+    "id": "smoothGridToggle",
+    "values": [
+      {
+        "option": true,
+        "file": ""
+      },
+      {
+        "option": false,
+        "file": ""
+      }
+    ]
+  },
+  "TimeZone": {
+    "label": "Time Zones",
+    "inputName": "timeZones",
+    "buttonType": "toggle",
+    "function": "ChangeTimeZonesMenu",
+    "default": false,
+    "id": "TimezonesToggle",
+    "values": [
+      {
+        "option": true,
+        "file": "Coastlines/ne_10m_time_zones.js"
+      },
+      {
+        "option": false,
+        "file": ""
+      }
+    ]
+  },
+  "BumpMapping": {
+    "label": "Bump Mapping",
+    "inputName": "BumpMapping",
+    "buttonType": "radio",
+    "function": "ChangeBumpMapping",
+    "values": [
+      {
+        "label": "Land",
+        "option": "land",
+        "file": "images/earth_normalmap_flat_8192x4096.jpg",
+        "id": "bumpMapGridRadio1",
+        "checked": true
+      },
+      {
+        "label": "Land & Bathymetry",
+        "option": "landOcean",
+        "file": "images/earth_normalmap_8192x4096.jpg",
+        "id": "bumpMapGridRadio2",
+        "checked": false
+      },
+      {
+        "label": "None",
+        "option": "",
+        "file": "",
+        "id": "bumpMapGridRadio3",
+        "checked": false
+      }
+    ]
+  },
+  "Coasts": {
+    "label": "Coasts",
+    "inputName": "coasts",
+    "function": "ChangeCoastsMenu",
+    "values": [
+      {
+        "label": "Low",
+        "option": "110m",
+        "file": "Coastlines/ne_110m_coastline.js",
+        "id": "coastsRadio1",
+        "checked": true
+      },
+      {
+        "label": "Medium",
+        "option": "50m",
+        "file": "Coastlines/ne_50m_coastline.js",
+        "id": "coastsRadio2",
+        "checked": false
+      },
+      {
+        "label": "High",
+        "option": "10m",
+        "file": "Coastlines/ne_10m_coastline.js",
+        "id": "coastsRadio3",
+        "checked": false
+      },
+      {
+        "label": "None",
+        "option": "",
+        "file": "",
+        "id": "coastsRadio4",
+        "checked": false
+      }
+    ]
+  },
+  "Globe": {
+    "label": "Globe",
+    "inputName": "globe",
+    "buttonType": "radio",
+    "function": "ChangeGlobeViewMenu",
+    "values": [
+      {
+        "label": "3D",
+        "option": "3d",
+        "file": "",
+        "id": "3dGlobeRadio1",
+        "checked": false
+      },
+      {
+        "label": "3D - Ortho",
+        "option": "ortho",
+        "file": "",
+        "id": "3dGlobeRadio2",
+        "checked": true
+      },
+      {
+        "label": "2D - Mercator",
+        "option": "2d",
+        "file": "",
+        "id": "3dGlobeRadio3",
+        "checked": false
+      }
+    ]
+  },
+  "Lakes": {
+    "label": "Lakes",
+    "inputName": "lakes",
+    "function": "ChangeLakesMenu",
+    "values": [
+      {
+        "label": "Low",
+        "option": "110m",
+        "file": "Coastlines/ne_110m_lakes.js",
+        "id": "lakesRadio1",
+        "checked": true
+      },
+      {
+        "label": "Medium",
+        "option": "50m",
+        "file": "Coastlines/ne_50m_lakes.js",
+        "id": "lakesRadio2",
+        "checked": false
+      },
+      {
+        "label": "High",
+        "option": "10m",
+        "file": "Coastlines/ne_10m_lakes.js",
+        "id": "lakesRadio3",
+        "checked": false
+      },
+      {
+        "label": "None",
+        "option": "",
+        "file": "",
+        "id": "lakesRadio4",
+        "checked": false
+      }
+    ]
+  },
+  "Rivers": {
+    "label": "Rivers",
+    "inputName": "rivers",
+    "function": "ChangeRiversMenu",
+    "values": [
+      {
+        "label": "Low",
+        "option": "110m",
+        "file": "Coastlines/ne_110m_rivers_lake_centerlines.js",
+        "id": "riversRadio1",
+        "checked": true
+      },
+      {
+        "label": "Medium",
+        "option": "50m",
+        "file": "Coastlines/ne_50m_rivers_lake_centerlines.js",
+        "id": "riversRadio2",
+        "checked": false
+      },
+      {
+        "label": "High",
+        "option": "10m",
+        "file": "Coastlines/ne_10m_rivers_lake_centerlines.js",
+        "id": "riversRadio3",
+        "checked": false
+      },
+      {
+        "label": "None",
+        "option": "",
+        "file": "",
+        "id": "riversRadio4",
+        "checked": false
+      }
+    ]
+  }
+}

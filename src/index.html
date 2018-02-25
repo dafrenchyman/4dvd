@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Climate</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--link href="~@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet"-->
+
+  <!--script src="../node_modules/gl-matrix/dist/gl-matrix-min.js"></script-->
+</head>
+
+
+
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    uniform bool uUseLighting;
+    uniform sampler2D uSampler;
+
+    varying vec3 vAmbientColor;
+    varying vec3 vDirectionalColor;
+    varying vec3 vLightingDirection;
+
+    varying mat3 vNMatrix;
+    varying vec3 vLightWeighting;
+    varying vec4 vColor;
+    varying vec2 vTextureCoord;
+    varying vec3 vTransformedNormal;
+
+    varying vec3 vLightVector;
+    varying mat3 vTbn;
+    varying vec4 vPosition;
+
+    void main(void) {
+
+    	//gl_FragColor = vColor;
+		//gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+
+    	if (!uUseLighting)
+    	{
+    		gl_FragColor = vColor;
+    	} else {
+    		vec3 lightDirection = vLightVector; //normalize(uPointLightingLocation - vPosition.xyz);
+    		vec3 lightDirection_tangentSpace = vTbn * lightDirection;
+
+    		vec3 normalCoordinate = normalize(texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)).rgb *2.0 - 1.0);
+
+    		vec3 normal = normalize(vTbn * normalCoordinate);
+
+    		float intensity = max(0.0, dot(normal, lightDirection));
+
+    		vec3 lighting = vAmbientColor + vDirectionalColor * intensity;
+
+    		gl_FragColor = vec4(vColor.rgb * lighting, vColor.a);
+
+
+			//vec3 i = vTbn[0];
+
+    		//gl_FragColor = vec4(lightDirection_tangentSpace.xyz, vColor.a);
+
+			//float directionalLightWeighting = max(dot(normalize(vTransformedNormal), lightDirection), 0.0);
+			//vec3 lightWeighting = vAmbientColor + vDirectionalColor * directionalLightWeighting;
+			//gl_FragColor = vec4(vColor.rgb * lightWeighting, vColor.a);
+
+        }
+    }
+
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+
+	attribute vec3 aVertexPosition;
+	attribute vec3 aVertexNormal;
+    attribute vec3 aVertexTangent;
+    attribute vec3 aVertexBiTangent;
+
+    attribute vec4 aVertexColor;
+    attribute vec2 aTextureCoord;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+    uniform mat3 uNMatrix;
+    uniform mat4 uVMatrix;
+
+    uniform bool uUseLighting;
+    uniform vec3 uAmbientColor;
+    uniform vec3 uLightingDirection;
+    uniform vec3 uDirectionalColor;
+
+    varying vec4 vColor;
+    varying vec2 vTextureCoord;
+    varying vec3 vLightWeighting;
+    varying vec3 vLightingDirection;
+    varying mat3 vNMatrix;
+    varying vec3 vAmbientColor;
+    varying vec3 vDirectionalColor;
+    varying vec3 vTransformedNormal;
+    varying vec3 vLightVector;
+    varying mat3 vTbn;
+    varying vec4 vPosition;
+
+    highp mat4 transpose(in highp mat4 inMatrix) {
+		highp vec4 i0 = inMatrix[0];
+		highp vec4 i1 = inMatrix[1];
+		highp vec4 i2 = inMatrix[2];
+		highp vec4 i3 = inMatrix[3];
+
+		highp mat4 outMatrix = mat4(
+					 vec4(i0.x, i1.x, i2.x, i3.x),
+					 vec4(i0.y, i1.y, i2.y, i3.y),
+					 vec4(i0.z, i1.z, i2.z, i3.z),
+					 vec4(i0.w, i1.w, i2.w, i3.w)
+					 );
+
+		return outMatrix;
+	}
+
+	highp mat3 transpose(in highp mat3 inMatrix) {
+		highp vec3 i0 = inMatrix[0];
+		highp vec3 i1 = inMatrix[1];
+		highp vec3 i2 = inMatrix[2];
+
+		highp mat3 outMatrix = mat3(
+					 vec3(i0.x, i1.x, i2.x),
+					 vec3(i0.y, i1.y, i2.y),
+					 vec3(i0.z, i1.z, i2.z)
+					 );
+		return outMatrix;
+	}
+
+    void main(void) {
+    	vec4 vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);
+        gl_Position = uPMatrix * vPosition;
+        vTextureCoord = aTextureCoord;
+        vTransformedNormal = uNMatrix * aVertexNormal;
+
+        vec3 normal_cameraSpace = normalize(mat3(uMVMatrix) * aVertexNormal);
+        vec3 tangent_cameraSpace = normalize(mat3(uMVMatrix) * aVertexTangent);
+        vec3 biTangent_cameraSpace = normalize(mat3(uMVMatrix) * aVertexBiTangent);
+
+        vec3 lightVector = mat3(uMVMatrix) * uLightingDirection; // uVMatrix *
+        vLightVector = normalize(lightVector.xyz - vPosition.xyz);
+
+		vTbn = mat3(tangent_cameraSpace, biTangent_cameraSpace, normal_cameraSpace);
+
+		vLightingDirection = mat3(uMVMatrix) * uLightingDirection;
+        vAmbientColor = uAmbientColor;
+        vDirectionalColor = uDirectionalColor;
+
+		vColor = aVertexColor;
+        if (!uUseLighting)
+        {
+        	vLightWeighting = vec3(1.0, 1.0, 1.0);
+        } else {
+
+
+			vec3 transformedNormal = uNMatrix * aVertexNormal;
+			float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
+			vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
+			vNMatrix = uNMatrix;
+			//vec3 vTransformedNormal = transformedNormal;
+
+			vec3 vNormal = (normalize(uNMatrix * aVertexNormal));
+			vec3 vTangent = normalize(uNMatrix * aVertexTangent);
+			vec3 vBinormal = normalize(cross(vNormal, vTangent));
+			//vTbn = mat3(vTangent, vBinormal, vNormal);
+
+			//vLightVector = normalize(vLightingDirection, uMVMatrix.xyz);
+			//vLightVector = vLightingDirection;
+
+        }
+
+		vec3 test0 = aVertexNormal * aVertexPosition;
+		vec3 test1 = uAmbientColor;
+		vec3 test2 = uLightingDirection;
+		vec3 test3 = uDirectionalColor;
+		mat3 test4 = uNMatrix;
+
+    }
+
+</script>
+
+
+<body>
+  <app-root>Loading 1</app-root>
+</body>
+</html>
