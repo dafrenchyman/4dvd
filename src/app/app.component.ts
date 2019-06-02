@@ -15,7 +15,7 @@ import {Controller} from "./controller";
 export class AppComponent{
 
   private _getJson : GetJson;
-  title = 'Mr. Sharky Climate Visualizer';
+  title = '4DVD (4-Dimensional Visual Delivery of Big Climate Data)';
 
   constructor(getJson : GetJson) {
     this._getJson = getJson;
