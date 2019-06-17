@@ -1,4 +1,4 @@
-import {Helpers} from "./helpers";
+import {Helpers} from './helpers';
 /**
  * Created by dafre on 7/16/2017.
  */
@@ -14,13 +14,13 @@ export class  TimeseriesData {
   }[];
 
   constructor(name: string, level_ID: number, rawTimeseriesData: any) {
-    var series = new Array<{
+    const series = new Array<{
       value: number,
       name: string
     }>();
-    for (var counter = 0; counter < rawTimeseriesData.ValueFinal.length; counter++) {
-      var currDate = rawTimeseriesData.Date[counter];
-      var currValue = rawTimeseriesData.ValueFinal[counter];
+    for (let counter = 0; counter < rawTimeseriesData.ValueFinal.length; counter++) {
+      const currDate = rawTimeseriesData.Date[counter];
+      const currValue = rawTimeseriesData.ValueFinal[counter];
       series.push({
         value : currValue,
         name: currDate

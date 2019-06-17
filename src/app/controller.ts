@@ -1,37 +1,37 @@
-import {Model} from "./model";
-import {ViewComponent} from "./view.component";
-import {ElementRef} from "@angular/core";
-import {GetJson} from "./getJson";
+import {Model} from './model';
+import {ViewComponent} from './view.component';
+import {ElementRef} from '@angular/core';
+import {GetJson} from './getJson';
 /**
  * Created by dafre on 5/16/2017.
  */
 
 export class Controller {
 
-  private _model : Model;
-  private _view : ViewComponent;
+  private _model: Model;
+  private _view: ViewComponent;
 
-  public constructor(model : Model, view : ViewComponent) {
+  public constructor(model: Model, view: ViewComponent) {
     this._model = model;
     this._view = view;
   }
 
-  public changeLatLon(enabled : boolean) {
+  public changeLatLon(enabled: boolean) {
     this._model.settings.latLons = enabled;
     this._model.loadLatLonLines(enabled);
   }
 
-  public changeGeoLines(enabled : boolean) {
+  public changeGeoLines(enabled: boolean) {
     this._model.settings.geoLines = enabled;
     this._model.loadGeoLines(enabled);
   }
 
-  public changeTimezoneLines(enabled : boolean) {
+  public changeTimezoneLines(enabled: boolean) {
     this._model.settings.timeZones = enabled;
     this._model.loadTimeZoneLines(enabled);
   }
 
-  public changeMinorIslandsLines(enabled : boolean) {
+  public changeMinorIslandsLines(enabled: boolean) {
     this._model.settings.minorIslands = enabled;
     this._model.loadMinorIslandsLines(enabled);
   }
@@ -63,32 +63,32 @@ export class Controller {
   }
 
   public changeRivers(rivers) {
-    var riversFile = this._model.settings.GetRiversFile(rivers);
+    const riversFile = this._model.settings.GetRiversFile(rivers);
     if (riversFile != null) {
       this._model.settings.RiversType = rivers;
       this._model.loadRivers(riversFile);
     } else {
-      alert("Invalid option: " + rivers);
+      alert('Invalid option: ' + rivers);
     }
   }
 
   public changeCoasts(coasts) {
-    var coastsFile = this._model.settings.GetCoastsFile(coasts);
+    const coastsFile = this._model.settings.GetCoastsFile(coasts);
     if (coastsFile != null) {
       this._model.settings.CoastsType = coasts;
       this._model.loadCoasts(coastsFile);
     } else {
-      alert("Invalid option: " + coasts);
+      alert('Invalid option: ' + coasts);
     }
   }
 
   public changeLakes(lakes) {
-    var lakesFile = this._model.settings.GetLakesFile(lakes);
+    const lakesFile = this._model.settings.GetLakesFile(lakes);
     if (lakesFile != null) {
       this._model.settings.LakesType = lakes;
       this._model.loadLakes(lakesFile);
     } else {
-      alert("Invalid option: " + lakes);
+      alert('Invalid option: ' + lakes);
     }
   }
 
@@ -101,9 +101,9 @@ export class Controller {
 
     /*var locationColorMap = GetLocationOfColorMap(currColorMap[0].FullName);
     var uri = new URI(window.location.href);
-    uri.removeSearch("colorMap");
-    uri.addSearch("colorMap", locationColorMap);
-    window.history.replaceState("", "", uri.search());*/
+    uri.removeSearch('colorMap');
+    uri.addSearch('colorMap', locationColorMap);
+    window.history.replaceState('', '', uri.search());*/
   }
 
 

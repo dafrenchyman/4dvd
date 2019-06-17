@@ -13,7 +13,7 @@ export class  Dataset {
   public Units: string;
   public DefaultLevel: string;
 
-  constructor(input : {
+  constructor(input: {
     Name: string,
     FullName: string,
     Dataset_ID: number,
@@ -23,8 +23,7 @@ export class  Dataset {
     EndDate: string,
     Units: string,
     DefaultLevel: string
-    })
-  {
+    }) {
     this.Name = input.Name;
     this.FullName = input.FullName;
     this.Dataset_ID = input.Dataset_ID;

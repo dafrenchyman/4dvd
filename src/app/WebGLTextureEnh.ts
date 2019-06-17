@@ -3,7 +3,7 @@
  */
 
 export class WebGLTextureEnh {
-  public texture : WebGLTexture;
-  public image : HTMLImageElement;
+  public texture: WebGLTexture;
+  public image: HTMLImageElement;
 
 }

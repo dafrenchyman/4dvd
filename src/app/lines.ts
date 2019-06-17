@@ -2,35 +2,35 @@
  * Created by dafre on 5/11/2017.
  */
 
-import {Helpers} from "./helpers";
-import {LineVertex} from "./lineVertex";
-import {GlobeViewType, Settings} from "./settings";
-import {GlBuffer} from "./gl";
-import {ColorMap} from "./ColorMap";
+import {Helpers} from './helpers';
+import {LineVertex} from './lineVertex';
+import {GlobeViewType, Settings} from './settings';
+import {GlBuffer} from './gl';
+import {ColorMap} from './ColorMap';
 
 export class Lines {
 
-  // Variables
-  latLinesVertexPositionBuffer : any[];
-  latLinesVertexColorBuffer : any[];
-  lonLinesVertexPositionBuffer : any[];
-  lonLinesVertexColorBuffer : any[];
-  currDegreeStep : number;
-  LineVertex : LineVertex;
+  // letiables
+  latLinesVertexPositionBuffer: any[];
+  latLinesVertexColorBuffer: any[];
+  lonLinesVertexPositionBuffer: any[];
+  lonLinesVertexColorBuffer: any[];
+  currDegreeStep: number;
+  LineVertex: LineVertex;
 
-  CoastsVertex : LineVertex;
-  LatLonVertex : LineVertex;
-  MinorIslandsVertex : LineVertex;
-  LakesVertex : LineVertex;
-  RiversVertex : LineVertex;
-  GeoLinesVertex : LineVertex;
-  TimeZonesVertex : LineVertex;
+  CoastsVertex: LineVertex;
+  LatLonVertex: LineVertex;
+  MinorIslandsVertex: LineVertex;
+  LakesVertex: LineVertex;
+  RiversVertex: LineVertex;
+  GeoLinesVertex: LineVertex;
+  TimeZonesVertex: LineVertex;
 
-  private _settings : Settings;
-  private _gl : WebGLRenderingContext;
-  private _colorMap : ColorMap;
+  private _settings: Settings;
+  private _gl: WebGLRenderingContext;
+  private _colorMap: ColorMap;
 
-  public constructor(gl : WebGLRenderingContext, settings: Settings, colorMap : ColorMap) {
+  public constructor(gl: WebGLRenderingContext, settings: Settings, colorMap: ColorMap) {
     this._settings = settings;
     this._gl = gl;
     this._colorMap = colorMap;
@@ -48,24 +48,23 @@ export class Lines {
 
   // Methods
 
-  CreateLatLonGridLines (lonDegreeStep, latDegreeStep) {
-    var latLinesData = {Lat: [], Lon: []};
-    var visualStep = 1.0;
+  // tslint:disable-next-line:member-ordering
+  static CreateLatLonGridLines (lonDegreeStep, latDegreeStep) {
+    const latLinesData = {Lat: [], Lon: []};
+    const visualStep = 1.0;
 
     // Vertical Lines
-    var latStart = -90;
-    var latEnd = 90;
-    var lonStart = -180;
-    var lonEnd = 180;
+    const latStart = -90;
+    const latEnd = 90;
+    const lonStart = -180;
+    const lonEnd = 180;
     latLinesData.Lat.push(null);
     latLinesData.Lon.push(null);
     // Vertical Lines
-    for (var lonCounter = 0; lonCounter <= (lonEnd-lonStart)/lonDegreeStep; lonCounter++)
-    {
-      var curLon = lonStart + lonCounter * lonDegreeStep;
-      for (var latCounter = 0; latCounter <= (latEnd-latStart)/visualStep; latCounter++)
-      {
-        var curLat = latStart + latCounter * visualStep;
+    for (let lonCounter = 0; lonCounter <= (lonEnd - lonStart) / lonDegreeStep; lonCounter++) {
+      const curLon = lonStart + lonCounter * lonDegreeStep;
+      for (let latCounter = 0; latCounter <= (latEnd - latStart) / visualStep; latCounter++) {
+        const curLat = latStart + latCounter * visualStep;
 
         latLinesData.Lat.push(curLat);
         latLinesData.Lon.push(curLon);
@@ -74,12 +73,10 @@ export class Lines {
       latLinesData.Lon.push(null);
     }
     // Horizontal Lines
-    for (var latCounter = 0; latCounter <= (latEnd-latStart)/latDegreeStep; latCounter++)
-    {
-      var curLat = latStart + latCounter * latDegreeStep;
-      for (var lonCounter = 0; lonCounter <= (lonEnd-lonStart)/visualStep; lonCounter++)
-      {
-        var curLon = lonStart + lonCounter * visualStep;
+    for (let latCounter = 0; latCounter <= (latEnd - latStart) / latDegreeStep; latCounter++) {
+      const curLat = latStart + latCounter * latDegreeStep;
+      for (let lonCounter = 0; lonCounter <= (lonEnd - lonStart) / visualStep; lonCounter++) {
+        const curLon = lonStart + lonCounter * visualStep;
 
         latLinesData.Lat.push(curLat);
         latLinesData.Lon.push(curLon);
@@ -91,37 +88,36 @@ export class Lines {
   }
 
   submitDataForLines (SubData, color) {
-    var dataLon = SubData.Lon;
-    var dataLat = SubData.Lat;
+    const dataLon = SubData.Lon;
+    const dataLat = SubData.Lat;
     // Zero out final buffers
-    var PositionBuffer = [];
-    var ColorBuffer = [];
-    var NormalBuffer = [];
-    var TangentBuffer = [];
-    var BiTangentBuffer = [];
-    var TextureBuffer = [];
-    var IndexBuffer = [];
+    const PositionBuffer = [];
+    const ColorBuffer = [];
+    const NormalBuffer = [];
+    const TangentBuffer = [];
+    const BiTangentBuffer = [];
+    const TextureBuffer = [];
+    const IndexBuffer = [];
 
-    var linePositionData = [];
-    var lineColorData = [];
-    var lineNormalData = [];
-    var lineTangentData = [];
-    var lineBiTangentData = [];
-    var lineTextureData = [];
-    var lineIndexData = [];
+    let linePositionData = [];
+    let lineColorData = [];
+    let lineNormalData = [];
+    let lineTangentData = [];
+    let lineBiTangentData = [];
+    let lineTextureData = [];
+    let lineIndexData = [];
 
-    var prevLon;
+    let prevLon;
 
-    var currLineIndexData = [];
-    var counter = 0;
-    for (var i = 0; i < dataLat.length; i++) {
+    let currLineIndexData = [];
+    let counter = 0;
+    for (let i = 0; i < dataLat.length; i++) {
       // if our current entry is null, it means it's the start of a new array
       if (dataLat[i] == null ) {
-        // if we're not on the first entry, and we've hit a null, then we need the put the last "coast" into buffer
-        if (i != 0) {
-          for (var j = 1; j < currLineIndexData.length; j++)
-          {
-            lineIndexData.push(currLineIndexData[j-1]);
+        // if we're not on the first entry, and we've hit a null, then we need the put the last 'coast' into buffer
+        if (i !== 0) {
+          for (let j = 1; j < currLineIndexData.length; j++) {
+            lineIndexData.push(currLineIndexData[j - 1]);
             lineIndexData.push(currLineIndexData[j]);
           }
         }
@@ -132,17 +128,15 @@ export class Lines {
       }
 
       // if we hit the 16 bit ceiling for indexes (or the last element
-      if ( (i != 0 && counter / (Math.pow(2,16)-2000) > 1.0) || i == dataLat.length -2 )
-      {
+      if ( (i !== 0 && counter / (Math.pow(2, 16) - 2000) > 1.0) || i === dataLat.length - 2 ) {
         counter = 0;
-        for (var j = 1; j < currLineIndexData.length; j++)
-        {
-          lineIndexData.push(currLineIndexData[j-1]);
+        for (let j = 1; j < currLineIndexData.length; j++) {
+          lineIndexData.push(currLineIndexData[j - 1]);
           lineIndexData.push(currLineIndexData[j]);
         }
 
         // Position
-        var currLineVertexPositionBuffer = new GlBuffer(this._gl);
+        const currLineVertexPositionBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLineVertexPositionBuffer.buffer);
         this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(linePositionData), this._gl.STATIC_DRAW);
         currLineVertexPositionBuffer.itemSize = 3;
@@ -150,7 +144,7 @@ export class Lines {
         PositionBuffer.push(currLineVertexPositionBuffer);
 
         // Color
-        var currLineVertexColorBuffer = new GlBuffer(this._gl);
+        const currLineVertexColorBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLineVertexColorBuffer.buffer);
         this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(lineColorData), this._gl.STATIC_DRAW);
         currLineVertexColorBuffer.itemSize = 4;
@@ -158,7 +152,7 @@ export class Lines {
         ColorBuffer.push(currLineVertexColorBuffer);
 
         // Normal
-        var currLineVertexNormalBuffer = new GlBuffer(this._gl);
+        const currLineVertexNormalBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLineVertexNormalBuffer.buffer);
         this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(lineNormalData), this._gl.STATIC_DRAW);
         currLineVertexNormalBuffer.itemSize = 3;
@@ -166,7 +160,7 @@ export class Lines {
         NormalBuffer.push(currLineVertexNormalBuffer);
 
         // Tangent
-        var currLineVertexTangentBuffer = new GlBuffer(this._gl);
+        const currLineVertexTangentBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLineVertexTangentBuffer.buffer);
         this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(lineTangentData), this._gl.STATIC_DRAW);
         currLineVertexTangentBuffer.itemSize = 3;
@@ -174,7 +168,7 @@ export class Lines {
         TangentBuffer.push(currLineVertexTangentBuffer);
 
         // BiTangent
-        var currLineVertexBiTangentBuffer = new GlBuffer(this._gl);
+        const currLineVertexBiTangentBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLineVertexBiTangentBuffer.buffer);
         this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(lineBiTangentData), this._gl.STATIC_DRAW);
         currLineVertexBiTangentBuffer.itemSize = 3;
@@ -182,7 +176,7 @@ export class Lines {
         BiTangentBuffer.push(currLineVertexBiTangentBuffer);
 
         // Texture
-        var currLineVertexTextureBuffer = new GlBuffer(this._gl);
+        const currLineVertexTextureBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLineVertexTextureBuffer.buffer);
         this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(lineTextureData), this._gl.STATIC_DRAW);
         currLineVertexTextureBuffer.itemSize = 2;
@@ -190,7 +184,7 @@ export class Lines {
         TextureBuffer.push(currLineVertexTextureBuffer);
 
         // Index
-        var currLineVertexIndexBuffer = new GlBuffer(this._gl);
+        const currLineVertexIndexBuffer = new GlBuffer(this._gl);
         this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, currLineVertexIndexBuffer.buffer);
         this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(lineIndexData), this._gl.STATIC_DRAW);
         currLineVertexIndexBuffer.itemSize = 1;
@@ -206,17 +200,16 @@ export class Lines {
         lineBiTangentData = [];
         lineTextureData = [];
         lineIndexData = [];
-        //i++;
+        // i++;
       }
 
-      var curLon = dataLon[i];
-      var curLat = dataLat[i];
+      let curLon = dataLon[i];
+      const curLat = dataLat[i];
 
       // if we've gone over the bounds of the map (2D) we need to add new end pieces and indexes
-      if (this._settings.globeView == GlobeViewType.TwoDim)
-      {
-        var lonMax = this._settings.pacificCenter ? 360.0 : 180;
-        var lonMin = this._settings.pacificCenter ? 0.0 : -180;
+      if (this._settings.globeView === GlobeViewType.TwoDim) {
+        const lonMax = this._settings.pacificCenter ? 360.0 : 180;
+        const lonMin = this._settings.pacificCenter ? 0.0 : -180;
 
         if (this._settings.pacificCenter) {
           if (curLon < 0) {
@@ -224,16 +217,16 @@ export class Lines {
           }
         }
 
-        var currCoordinates = {
+        const currCoordinates = {
           coordinates: {x: curLon, y: curLat, z: 0.25},
           normals: {x: 0, y: 0, z: 1},
-          u: (curLon + 180.0)/360,
-          v: (curLat + 90.0)/180,
+          u: (curLon + 180.0) / 360,
+          v: (curLat + 90.0) / 180,
           tangents: {x: 1, y: 0, z: 0},
           biTangents: {x: 0, y: 1, z: 0}};
 
-        var passBounds = false;
-        if (i == 0) {
+        let passBounds = false;
+        if (i === 0) {
           prevLon = curLon;
         }
 
@@ -279,8 +272,8 @@ export class Lines {
 
           currLineIndexData.push(counter);
 
-          for (var j = 1; j < currLineIndexData.length; j++) {
-            lineIndexData.push(currLineIndexData[j-1]);
+          for (let j = 1; j < currLineIndexData.length; j++) {
+            lineIndexData.push(currLineIndexData[j - 1]);
             lineIndexData.push(currLineIndexData[j]);
           }
 
@@ -291,15 +284,15 @@ export class Lines {
         }
       }
 
-      var currCoordinates = {
+      const currCoordinates = {
         coordinates: {x: curLon, y: curLat, z: 0.25},
         normals: {x: 0, y: 0, z: 1},
-        u: (curLon + 180.0)/360,
-        v: (curLat + 90.0)/180,
+        u: (curLon + 180.0) / 360,
+        v: (curLat + 90.0) / 180,
         tangents: {x: 1, y: 0, z: 0},
         biTangents: {x: 0, y: 1, z: 0}};
-      if (this._settings.globeView == GlobeViewType.ThreeDim || this._settings.globeView == GlobeViewType.Ortho) {
-        var newCurrCoordinates = Helpers.cartesianToSphere(curLon * (Math.PI / 180.0),
+      if (this._settings.globeView === GlobeViewType.ThreeDim || this._settings.globeView === GlobeViewType.Ortho) {
+        const newCurrCoordinates = Helpers.cartesianToSphere(curLon * (Math.PI / 180.0),
           curLat * (Math.PI / 180.0),
           this._settings.EarthRadius + 0.01);
         currCoordinates.biTangents = newCurrCoordinates.biTangents;
@@ -360,19 +353,17 @@ export class Lines {
     this.lonLinesVertexPositionBuffer = [];
     this.lonLinesVertexColorBuffer = [];
 
-    var degreeStep = this.currDegreeStep;
-    var visualStep = 2.5;
+    const degreeStep = this.currDegreeStep;
+    const visualStep = 2.5;
     // Lat lines
-    for (var latCounter = 0; latCounter < 180/degreeStep; latCounter++)
-    {
-      var curLat = latCounter * degreeStep - 90.0;
-      var currLatLinesVertexPositionData = [];
-      var currLatLinesVertexColorData = [];
-      for (lonCounter = 0; lonCounter <= 360/visualStep; lonCounter++)
-      {
-        var curLon = (lonCounter * visualStep) - (this._settings.pacificCenter == true ? 0: 180);
-        var currCoordinates = {x: curLon, y: curLat, z: 2.0};
-        if (this._settings.globeView == GlobeViewType.ThreeDim || this._settings.globeView == GlobeViewType.Ortho) {
+    for (let latCounter = 0; latCounter < 180 / degreeStep; latCounter++) {
+      const curLat = latCounter * degreeStep - 90.0;
+      const currLatLinesVertexPositionData = [];
+      const currLatLinesVertexColorData = [];
+      for (let lonCounter = 0; lonCounter <= 360 / visualStep; lonCounter++) {
+        const curLon = (lonCounter * visualStep) - (this._settings.pacificCenter === true ? 0 : 180);
+        let currCoordinates = {x: curLon, y: curLat, z: 2.0};
+        if (this._settings.globeView === GlobeViewType.ThreeDim || this._settings.globeView === GlobeViewType.Ortho) {
           currCoordinates = Helpers.cartesianToSphere(curLon * (Math.PI / 180.0),
             curLat * (Math.PI / 180.0),
             this._settings.EarthRadius + 0.05).coordinates;
@@ -391,33 +382,32 @@ export class Lines {
       }
 
       // Position
-      var currLatLinesVertexPositionBuffer = new GlBuffer(this._gl);
+      const currLatLinesVertexPositionBuffer = new GlBuffer(this._gl);
       this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLatLinesVertexPositionBuffer.buffer);
       this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(currLatLinesVertexPositionData), this._gl.STATIC_DRAW);
       currLatLinesVertexPositionBuffer.itemSize = 3;
-      currLatLinesVertexPositionBuffer.numItems = currLatLinesVertexPositionData.length/3;
+      currLatLinesVertexPositionBuffer.numItems = currLatLinesVertexPositionData.length / 3;
       this.latLinesVertexPositionBuffer.push(currLatLinesVertexPositionBuffer);
 
       // Color
-      var currLatLinesVertexColorBuffer = new GlBuffer(this._gl);
+      const currLatLinesVertexColorBuffer = new GlBuffer(this._gl);
       this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLatLinesVertexColorBuffer.buffer);
       this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(currLatLinesVertexColorData), this._gl.STATIC_DRAW);
       currLatLinesVertexColorBuffer.itemSize = 4;
-      currLatLinesVertexColorBuffer.numItems = currLatLinesVertexColorData.length/4;
+      currLatLinesVertexColorBuffer.numItems = currLatLinesVertexColorData.length / 4;
       this.latLinesVertexColorBuffer.push(currLatLinesVertexColorBuffer);
     }
 
-    for (var lonCounter = 0; lonCounter < 360/degreeStep; lonCounter++)
-    {
-      curLon = lonCounter * degreeStep;
-      var currLonLinesVertexPositionData = [];
-      var currLonLinesVertexColorData = [];
-      for (latCounter = 0; latCounter <= 360/visualStep; latCounter++)
-      {
+    for (let lonCounter = 0; lonCounter < 360 / degreeStep; lonCounter++) {
+      const curLon = lonCounter * degreeStep;
+      const currLonLinesVertexPositionData = [];
+      const currLonLinesVertexColorData = [];
+      let curLat;
+      for (let latCounter = 0; latCounter <= 360 / visualStep; latCounter++) {
         curLat = latCounter * visualStep;
 
-        var currCoordinates = {x: curLon-180, y: curLat-90, z: 2.0};
-        if (this._settings.globeView == GlobeViewType.ThreeDim || this._settings.globeView == GlobeViewType.Ortho) {
+        let currCoordinates = {x: curLon - 180, y: curLat - 90, z: 2.0};
+        if (this._settings.globeView === GlobeViewType.ThreeDim || this._settings.globeView === GlobeViewType.Ortho) {
           currCoordinates = Helpers.cartesianToSphere(curLon * (Math.PI / 180.0),
             curLat * (Math.PI / 180.0),
             this._settings.EarthRadius + 0.05).coordinates;
@@ -436,25 +426,25 @@ export class Lines {
       }
 
       // Position
-      var currLonLinesVertexPositionBuffer = new GlBuffer(this._gl);
+      const currLonLinesVertexPositionBuffer = new GlBuffer(this._gl);
       this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLonLinesVertexPositionBuffer.buffer);
       this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(currLonLinesVertexPositionData), this._gl.STATIC_DRAW);
       currLonLinesVertexPositionBuffer.itemSize = 3;
-      currLonLinesVertexPositionBuffer.numItems = currLonLinesVertexPositionData.length/3;
+      currLonLinesVertexPositionBuffer.numItems = currLonLinesVertexPositionData.length / 3;
       this.lonLinesVertexPositionBuffer.push(currLonLinesVertexPositionBuffer);
 
       // Color
-      var currLonLinesVertexColorBuffer = new GlBuffer(this._gl);
+      const currLonLinesVertexColorBuffer = new GlBuffer(this._gl);
       this._gl.bindBuffer(this._gl.ARRAY_BUFFER, currLonLinesVertexColorBuffer.buffer);
       this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array(currLonLinesVertexColorData), this._gl.STATIC_DRAW);
       currLonLinesVertexColorBuffer.itemSize = 4;
-      currLonLinesVertexColorBuffer.numItems = currLonLinesVertexColorData.length/4;
+      currLonLinesVertexColorBuffer.numItems = currLonLinesVertexColorData.length / 4;
       this.lonLinesVertexColorBuffer.push(currLonLinesVertexColorBuffer);
     }
   }
 
   generateLineVertex (rawData, color) {
-    var proccessedData = this.submitDataForLines(rawData, color);
+    const proccessedData = this.submitDataForLines(rawData, color);
     this.LineVertex.PositionBuffer     = this.LineVertex.PositionBuffer.concat(proccessedData.position);
     this.LineVertex.ColorBuffer        = this.LineVertex.ColorBuffer.concat(proccessedData.color);
     this.LineVertex.IndexBuffer        = this.LineVertex.IndexBuffer.concat(proccessedData.index);
@@ -464,9 +454,9 @@ export class Lines {
     this.LineVertex.TextureCoordBuffer = this.LineVertex.TextureCoordBuffer.concat(proccessedData.texture);
   }
 
-  generateLineVertexSpecific (rawData, color) : LineVertex {
-    var proccessedData = this.submitDataForLines(rawData, color);
-    var currVertex = new LineVertex();
+  generateLineVertexSpecific (rawData, color): LineVertex {
+    const proccessedData = this.submitDataForLines(rawData, color);
+    const currVertex = new LineVertex();
     currVertex.PositionBuffer     = proccessedData.position;
     currVertex.ColorBuffer        = proccessedData.color;
     currVertex.IndexBuffer        = proccessedData.index;
@@ -490,7 +480,8 @@ export class Lines {
   // ***********************************************************
   // Rivers
   // ***********************************************************
-  private riversData : any;
+  // tslint:disable-next-line:member-ordering
+  private riversData: any;
 
   riversBuffers(rivers) {
     if (this._settings.rivers && rivers.Lat.length > 0) {
@@ -500,7 +491,7 @@ export class Lines {
   }
 
   processRivers() {
-    if (this._settings.rivers && this.riversData.hasOwnProperty("Lat")) {
+    if (this._settings.rivers && this.riversData.hasOwnProperty('Lat')) {
       this.RiversVertex = this.generateLineVertexSpecific(this.riversData, [0.45, 0.45, 0.45, 1.0]);
     }
   }
@@ -512,7 +503,8 @@ export class Lines {
   // ***********************************************************
   // Lakes
   // ***********************************************************
-  private lakesData : any;
+  // tslint:disable-next-line:member-ordering
+  private lakesData: any;
   lakesBuffers(lakes) {
     if (this._settings.lakes && lakes.Lat.length > 0) {
       this.lakesData = lakes;
@@ -521,7 +513,7 @@ export class Lines {
   }
 
   processLakes() {
-    if (this._settings.lakes && this.lakesData.hasOwnProperty("Lat")) {
+    if (this._settings.lakes && this.lakesData.hasOwnProperty('Lat')) {
       this.LakesVertex = this.generateLineVertexSpecific(this.lakesData, [0.45, 0.45, 0.45, 1.0]);
     }
   }
@@ -533,7 +525,8 @@ export class Lines {
   // ***********************************************************
   // Coasts
   // ***********************************************************
-  private coastsData : any;
+  // tslint:disable-next-line:member-ordering
+  private coastsData: any;
 
   coastsBuffers(coasts) {
     if (this._settings.coasts && coasts.Lat.length > 0) {
@@ -543,7 +536,7 @@ export class Lines {
   }
 
   processCoasts() {
-    if (this._settings.coasts && this.coastsData.hasOwnProperty("Lat")) {
+    if (this._settings.coasts && this.coastsData.hasOwnProperty('Lat')) {
       this.CoastsVertex = this.generateLineVertexSpecific(this.coastsData, [0.35, 0.35, 0.35, 1.0]);
     }
   }
@@ -555,7 +548,8 @@ export class Lines {
   // ***********************************************************
   // Minor Islands
   // ***********************************************************
-  private minorIslandsData : any;
+  // tslint:disable-next-line:member-ordering
+  private minorIslandsData: any;
 
   minorIslandsBuffers(minorIslands) {
     if (this._settings.minorIslands && minorIslands.Lat.length > 0) {
@@ -565,7 +559,7 @@ export class Lines {
   }
 
   public processMinorIslands() {
-    if (this._settings.minorIslands && this.minorIslandsData.hasOwnProperty("Lat")) {
+    if (this._settings.minorIslands && this.minorIslandsData.hasOwnProperty('Lat')) {
       this.MinorIslandsVertex = this.generateLineVertexSpecific(this.minorIslandsData, [0.35, 0.35, 0.35, 1.0]);
     }
   }
@@ -577,15 +571,16 @@ export class Lines {
   // ***********************************************************
   // Lat Lon Lines related
   // ***********************************************************
-  private latLonLinesData : any;
+  // tslint:disable-next-line:member-ordering
+  private latLonLinesData: any;
 
   public latLonLinesBuffers() {
-    this.latLonLinesData = this.CreateLatLonGridLines(10, 10);
+    this.latLonLinesData = Lines.CreateLatLonGridLines(10, 10);
     this.processLatLon();
   }
 
   public processLatLon() {
-    if (this.latLonLinesData.hasOwnProperty("Lat")) {
+    if (this.latLonLinesData.hasOwnProperty('Lat')) {
       this.LatLonVertex = this.generateLineVertexSpecific(this.latLonLinesData, [0.4, 0.4, 0.4, 1.0]);
     }
   }
@@ -597,7 +592,8 @@ export class Lines {
   // ***********************************************************
   // Timezone related
   // ***********************************************************
-  private timezoneData : any;
+  // tslint:disable-next-line:member-ordering
+  private timezoneData: any;
 
   public geoTimezoneBuffers(timezones) {
     this.timezoneData = timezones;
@@ -605,7 +601,7 @@ export class Lines {
   }
 
   public processTimezone() {
-    if (this._settings.timeZones && this.timezoneData.hasOwnProperty("Lat")) {
+    if (this._settings.timeZones && this.timezoneData.hasOwnProperty('Lat')) {
       this.TimeZonesVertex = this.generateLineVertexSpecific(this.timezoneData, [0.45, 0.45, 0.45, 1.0]);
     }
   }
@@ -617,15 +613,16 @@ export class Lines {
   // ***********************************************************
   // Geographical lines related
   // ***********************************************************
-  private geoLinesData : any;
+  // tslint:disable-next-line:member-ordering
+  private geoLinesData: any;
 
   public geoLinesBuffers(geoLines) {
     this.geoLinesData = geoLines;
-    this.processGeolines()
+    this.processGeolines();
   }
 
   public processGeolines() {
-    if (this._settings.geoLines && this.geoLinesData.hasOwnProperty("Lat")) {
+    if (this._settings.geoLines && this.geoLinesData.hasOwnProperty('Lat')) {
       this.GeoLinesVertex = this.generateLineVertexSpecific(this.geoLinesData, [0.45, 0.45, 0.45, 1.0]);
     }
   }
