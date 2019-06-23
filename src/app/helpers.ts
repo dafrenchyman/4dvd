@@ -1,7 +1,7 @@
 /**
  * Created by dafre on 5/11/2017.
  */
-
+// tslint:disable:member-ordering
 // import * as glMatrix from 'gl-matrix';
 import {GlMatrix} from './GlMatrix';
 import {Settings} from './settings';
@@ -10,7 +10,7 @@ export class Helpers {
 
   public static LeftPad(num: number, size: number): string {
     let s = num + '';
-    while (s.length < size) { s = '0' + s; }
+    while (s.length < size) {s = '0' + s; }
     return s;
   }
 
@@ -145,9 +145,8 @@ export class Helpers {
     return values;
   }
 
-  // Unproject the canvas (x,y) to coordinates in the 'world.' Z values is the depth into the world. You'll need to call this
-  // function twice to get a 'ray' in the world that is then usable.
-  // tslint:disable-next-line:member-ordering
+  // Unproject the canvas (x,y) to coordinates in the "world." Z values is the depth into the world. You'll need to call this
+  // function twice to get a "ray" in the world that is then usable.
   public static Unproject(winx, winy, winz, viewportWidth, viewPortHeight, pMatrix, vMatrix) {
 
     // This was a pain. Eventually found this site: http://trac.bookofhook.com/bookofhook/trac.cgi/wiki/MousePicking
@@ -186,17 +185,16 @@ export class Helpers {
 
   //
   // From http://geomalgorithms.com/a06-_intersect-2.html
-  // tslint:disable-next-line:member-ordering
   public static TriangleIntersection(V0, V1, V2, P0, P1) {
-    const  SMALL_NUM = 0.00000001;
+    const SMALL_NUM = 0.00000001;
     const returnValue = {
       intersects: false,
       point: null
     };
 
     const u = GlMatrix.vec3.create(), v = GlMatrix.vec3.create(), n = GlMatrix.vec3.create();              // triangle vectors
-    const dir = GlMatrix.vec3.create(), w0 = GlMatrix.vec3.create();                                       // ray vectors
-    let w = GlMatrix.vec3.create();                                                                        // ray vectors
+    const dir = GlMatrix.vec3.create(), w0 = GlMatrix.vec3.create(); // ray vectors
+    let w = GlMatrix.vec3.create();           // ray vectors
     let r, a, b;              // params to calc ray-plane intersect
     const I = GlMatrix.vec3.create();
 
@@ -204,7 +202,7 @@ export class Helpers {
     GlMatrix.vec3.sub(u, V1, V0);
     GlMatrix.vec3.sub(v, V2, V0);
     GlMatrix.vec3.cross(n, u, v);              			// cross product
-    if (n[0] === 0 && n[1] === 0 && n[2] === 0) {   // triangle is degenerate
+    if (n[0] === 0 && n[1] === 0 && n[2] === 0) {    // triangle is degenerate
       // return -1;							// do not deal with this case
       return returnValue;
     }
@@ -214,7 +212,7 @@ export class Helpers {
     a = -1.0 * GlMatrix.vec3.dot(n, w0);
     b = GlMatrix.vec3.dot(n, dir);
     if (Math.abs(b) < SMALL_NUM) {     			// ray is  parallel to triangle plane
-      if (a === 0) {                			// ray lies in triangle plane
+      if (a === 0) {            			// ray lies in triangle plane
         // return 2;
         return returnValue;
       } else {
@@ -262,20 +260,17 @@ export class Helpers {
       return returnValue;
     }
     returnValue.intersects = true;
-    let out = GlMatrix.vec3.create();
+    let out: number[];
     out = I;
     returnValue.point = out;
 
     // return 1;                       // I is in T
     return returnValue;
   }
-
-  // tslint:disable-next-line:member-ordering
   public static ArrayMax(input: number[]) {
     return Math.max.apply(null, input);
   };
 
-  // tslint:disable-next-line:member-ordering
   public static ProcessRawDataValue (rawValues, settings: Settings) {
   let valueFinal = [];
   switch (settings.DataUnits) {
@@ -297,8 +292,6 @@ export class Helpers {
   return(valueFinal);
 }
 
-
-  // tslint:disable-next-line:member-ordering
   public static ArrayMin(input: number[]) {
     return Math.min.apply(null, input);
   };
@@ -310,8 +303,6 @@ export class Helpers {
     }
     return false;
   };
-
-  // tslint:disable-next-line:member-ordering
   public static ArrayUnique(input: any[]): any[] {
     const arr = [];
     for (let i = 0; i < input.length; i++) {
@@ -321,8 +312,6 @@ export class Helpers {
     }
     return arr;
   };
-
-  // tslint:disable-next-line:member-ordering
   public static StringReplaceAll = function(search, replacement, target) {
     return target.split(search).join(replacement);
   };
