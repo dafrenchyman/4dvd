@@ -101,9 +101,9 @@ export class Controller {
 
     /*var locationColorMap = GetLocationOfColorMap(currColorMap[0].FullName);
     var uri = new URI(window.location.href);
-    uri.removeSearch('colorMap');
-    uri.addSearch('colorMap', locationColorMap);
-    window.history.replaceState('', '', uri.search());*/
+    uri.removeSearch("colorMap");
+    uri.addSearch("colorMap", locationColorMap);
+    window.history.replaceState("", "", uri.search());*/
   }
 
 
