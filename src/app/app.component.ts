@@ -15,7 +15,7 @@ import {Controller} from "./controller";
 export class AppComponent{
 
   private _getJson : GetJson;
-  title = '4DVD (4-Dimensional Visual Delivery of Big Climate Data) Sam Test';
+  title = '4DVD (4-Dimensional Visual Delivery of Big Climate Data) Sam Test 2019-06-26';
 
   constructor(getJson : GetJson) {
     this._getJson = getJson;
