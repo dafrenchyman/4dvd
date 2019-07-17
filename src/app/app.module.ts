@@ -23,9 +23,9 @@ import {
   MdSliderModule} from '@angular/material';
 import {} from '@angular/material';
 import { GetJson } from './getJson';
-import {ViewComponent} from "./view.component";
-import {DatasetMenu} from "./dataset-menu";
-import {TimeseriesMenu} from "./timeseries-menu";
+import {ViewComponent} from './view.component';
+import {DatasetMenu} from './dataset-menu';
+import {TimeseriesMenu} from './timeseries-menu';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import {TimeseriesMenu} from "./timeseries-menu";
   ],
   providers: [
     GetJson,
-    {provide: APP_BASE_HREF, useValue: "/"},
+    {provide: APP_BASE_HREF, useValue: '/'},
   ],
   bootstrap: [AppComponent],
   entryComponents: [ColorMapMenu, DatasetMenu, TimeseriesMenu]
