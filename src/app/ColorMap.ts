@@ -19,37 +19,37 @@ export class ColorMap {
    * @param   Number  l       The lightness
    * @return  Array           The RGB representation
    */
-  hslToRgb (h : number, s : number, l : number){
+  hslToRgb (h: number, s: number, l: number) {
     var r, g, b;
 
-    if(s == 0){
+    if (s === 0) {
       r = g = b = l; // achromatic
     } else {
       var hue2rgb = function hue2rgb(p, q, t){
-        if(t < 0) t += 1;
-        if(t > 1) t -= 1;
-        if(t < 1/6) return p + (q - p) * 6 * t;
-        if(t < 1/2) return q;
-        if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        if (t < 0) { t += 1; }
+        if (t > 1) { t -= 1; }
+        if (t < 1 / 6) { return p + (q - p) * 6 * t; }
+        if (t < 1 / 2) { return q; }
+        if (t < 2 / 3) { return p + (q - p) * (2 / 3 - t) * 6; }
         return p;
       };
 
       var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       var p = 2 * l - q;
-      r = hue2rgb(p, q, h + 1/3);
+      r = hue2rgb(p, q, h + 1 / 3);
       g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
+      b = hue2rgb(p, q, h - 1 / 3);
     }
     return [r, g, b];
   }
 
   componentToHex(c) {
     var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+    return hex.length === 1 ? '0' + hex : hex;
   }
 
   rgbToHex (r, g, b) {
-    return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+    return '#' + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
   }
 
   hexToRgb (hex) {
@@ -61,25 +61,25 @@ export class ColorMap {
     } : null;
   }
 
-  rainbowColormapCreator (minValue : number, maxValue : number, currValue : number){
-      var hue = 240.0/360.0 - ((currValue - minValue)/(maxValue - minValue))* (240.0/360.0);
+  rainbowColormapCreator (minValue: number, maxValue: number, currValue: number) {
+      var hue = 240.0 / 360.0 - ((currValue - minValue) / (maxValue - minValue)) * (240.0 / 360.0);
       return this.hslToRgb(hue, 1.0, 0.5);
     }
 
-  coolWarmColormap (minValue : number, maxValue : number, currValue :number){
+  coolWarmColormap (minValue: number, maxValue: number, currValue: number) {
     var midpoint = [0.865, 0.865, 0.865];
-    var valueScaled = (currValue - minValue)/(maxValue - minValue);
+    var valueScaled = (currValue - minValue) / (maxValue - minValue);
     var lowerColor;
     var upperColor;
     var percentFade;
     if (valueScaled < 0.5) {
       lowerColor = [0.320, 0.299, 0.754];
       upperColor = midpoint;
-      percentFade = valueScaled/0.5;
+      percentFade = valueScaled / 0.5;
     } else {// value Scaled >= 0.5
       lowerColor = midpoint;
       upperColor = [0.706, 0.016, 0.150];
-      percentFade = (valueScaled-0.5)/(0.5);
+      percentFade = (valueScaled - 0.5) / (0.5);
     }
     var diffRed = upperColor[0] - lowerColor[0];
     var diffGreen = upperColor[1] - lowerColor[1];
@@ -92,12 +92,11 @@ export class ColorMap {
     return [diffRed, diffGreen, diffBlue];
   }
 
-  coolWarmColormapWithMidpoint (minValue : number, maxValue : number, currValue : number, midpointValue : number, colorScheme){
+  coolWarmColormapWithMidpoint (minValue: number, maxValue: number, currValue: number, midpointValue: number, colorScheme) {
     var midpoint = [0.865, 0.865, 0.865];
     var lowColor;
     var highColor;
-    switch(colorScheme)
-    {
+    switch (colorScheme) {
       case 1:
         lowColor = [0.320, 0.299, 0.754];
         highColor = [0.706, 0.016, 0.150];
@@ -124,23 +123,20 @@ export class ColorMap {
         break;
     }
 
-    var valueScaled = (currValue - minValue)/(maxValue - minValue);
-    var midpointValueScaled = (midpointValue - minValue)/(maxValue - minValue);
+    var valueScaled = (currValue - minValue) / (maxValue - minValue);
+    var midpointValueScaled = (midpointValue - minValue) / (maxValue - minValue);
 
     var lowerColor;
     var upperColor;
     var percentFade;
-    if (valueScaled < midpointValueScaled)
-    {
+    if (valueScaled < midpointValueScaled) {
       lowerColor = lowColor;
       upperColor = midpoint;
-      percentFade = valueScaled/midpointValueScaled;
-    }
-    else // value Scaled >= 0.5
-    {
+      percentFade = valueScaled / midpointValueScaled;
+    } else { // value Scaled >= 0.5
       lowerColor = midpoint;
       upperColor = highColor;
-      percentFade = (valueScaled-midpointValueScaled)/(midpointValueScaled);
+      percentFade = (valueScaled - midpointValueScaled) / (midpointValueScaled);
     }
     var diffRed = upperColor[0] - lowerColor[0];
     var diffGreen = upperColor[1] - lowerColor[1];
@@ -153,8 +149,8 @@ export class ColorMap {
     return [diffRed, diffGreen, diffBlue];
   }
 
-  grayscaleColormap (minValue : number, maxValue : number, currValue : number){
-    var valueScaled = (currValue - minValue)/(maxValue - minValue);
+  grayscaleColormap (minValue: number, maxValue: number, currValue: number) {
+    var valueScaled = (currValue - minValue) / (maxValue - minValue);
     var lowerColor = [1.0, 1.0, 1.0];
     var upperColor = [0.0, 0.0, 0.0];
     var percentFade = valueScaled;
@@ -173,10 +169,9 @@ export class ColorMap {
   createColorMapFromHexValues (hexValues) {
     var colorsMap = [];
     var currColor;
-    for (var counter = 0; counter < hexValues.length; counter++)
-    {
+    for (let counter = 0; counter < hexValues.length; counter++) {
       currColor = this.hexToRgb(hexValues[counter]);
-      colorsMap.push({x: (counter / (hexValues.length-1)), o: 1.0, r: currColor.r/255, g: currColor.g/255, b: currColor.b/255 });
+      colorsMap.push({x: (counter / (hexValues.length - 1)), o: 1.0, r: currColor.r / 255, g: currColor.g / 255, b: currColor.b / 255 });
     }
     return colorsMap;
   }
@@ -184,7 +179,7 @@ export class ColorMap {
   createColorMapFromXORGB(xorgb) {
     var colorsMap = [];
     var currColor;
-    for (var i = 0; i < xorgb.length; i++) {
+    for (let i = 0; i < xorgb.length; i++) {
       currColor = xorgb[i];
       colorsMap.push({x: currColor.x, o: currColor.o, r: currColor.r, g: currColor.g, b: currColor.b});
     }
@@ -194,34 +189,33 @@ export class ColorMap {
   reverseColorMap(colorMap) {
     var colorsMap = [];
     var currColor;
-    for (var counter = colorMap.length-1; counter >= 0; counter--)
-    {
+    for (let counter = colorMap.length - 1; counter >= 0; counter--) {
       currColor = colorMap[counter];
-      colorsMap.push({x: 1-currColor.x, o: currColor.o, r: currColor.r, g: currColor.g, b: currColor.b });
+      colorsMap.push({x: 1 - currColor.x, o: currColor.o, r: currColor.r, g: currColor.g, b: currColor.b });
     }
     return colorsMap;
   }
-  ColorMaps :{
+  ColorMaps: {
     FullName: string,
     IdName: string
-    ColorMap :any[],
+    ColorMap: any[],
     Function: string,
     Gradient: {
       Offset: string,
       StopColor: string
     }[]
   }[];
-  ColorMenuItems : {any};
-  ColorMenuData : any[];
+  ColorMenuItems: {any};
+  ColorMenuData: any[];
 
-  public GetColorMap (colorMapName : any) {
+  public GetColorMap (colorMapName: any) {
     return this.ColorMaps.filter(function (obj: any) {
-      return obj.FullName == colorMapName;
+      return obj.FullName === colorMapName;
     })[0].ColorMap;
   }
 
   GetLocationOfColorMap (fullName) {
-    return this.ColorMaps.map(function(e : any) { return e.FullName; }).indexOf(fullName);
+    return this.ColorMaps.map(function(e: any) { return e.FullName; }).indexOf(fullName);
   }
 
   // Function comes from slightly modifying:
@@ -294,13 +288,13 @@ export class ColorMap {
   }
 
   createGradient(colorMap) {
-    var gradient : {
+    var gradient: {
       Offset: string,
       StopColor: string
     }[] = [];
 
     for (var currPercentage = 0; currPercentage <= 1.0; currPercentage += 0.05) {
-      var offsetString = (currPercentage * 100).toString() + "%";
+      var offsetString = (currPercentage * 100).toString() + '%';
       var currColors;
       currColors = this.customColorMapByPercentage(colorMap, 0.0, 1.0, 1.0 - currPercentage);
       var colorsHex = this.rgbToHex(Math.round(currColors[0] * 255),
@@ -317,12 +311,12 @@ export class ColorMap {
 
   createColorMaps () {
     // Load Color Maps from json "RawColorMaps"
-    for (var i = 0; i < this.RawColorMaps.length; i++ ) {
+    for (let i = 0; i < this.RawColorMaps.length; i++ ) {
       var curr = this.RawColorMaps[i];
       var currColorMap;
-      if (curr.BuildFunction == "HEX") {
+      if (curr.BuildFunction === 'HEX') {
         currColorMap = this.createColorMapFromHexValues(curr.Values);
-      } else if (curr.BuildFunction == "xorgb"){
+      } else if (curr.BuildFunction === 'xorgb') {
         currColorMap = this.createColorMapFromXORGB(curr.Values);
       }
 
@@ -338,8 +332,8 @@ export class ColorMap {
       var reverseColorMap = this.reverseColorMap(currColorMap);
       var reverseGradient = this.createGradient(reverseColorMap);
       this.ColorMaps.push({
-        FullName: curr.FullName + " Inverse",
-        IdName : idName + "_Inverse",
+        FullName: curr.FullName + ' Inverse',
+        IdName : idName + '_Inverse',
         ColorMap: reverseColorMap,
         Function: curr.Function,
         Gradient: reverseGradient
@@ -349,8 +343,7 @@ export class ColorMap {
     // Rainbow Colormap
     {
       var rainbowColormap = [];
-      for (var currPercentage = 0.0; currPercentage < 1.01; currPercentage +=0.01)
-      {
+      for (var currPercentage = 0.0; currPercentage < 1.01; currPercentage += 0.01) {
         var currValue = this.rainbowColormapCreator(0.0, 1.0, currPercentage);
         var r = currValue[0];
         var g = currValue[1];
@@ -358,17 +351,17 @@ export class ColorMap {
         rainbowColormap.push({x: currPercentage, o: 1.0, r: r, g: g, b: b});
       }
       this.ColorMaps.push({
-        FullName: "Other|Rainbow",
-        IdName : "Other_Rainbow",
+        FullName: 'Other|Rainbow',
+        IdName : 'Other_Rainbow',
         ColorMap: rainbowColormap,
-        Function: "customColorMap",
+        Function: 'customColorMap',
         Gradient: this.createGradient(rainbowColormap)
       });
       this.ColorMaps.push({
-        FullName: "Other|Rainbow Inverse",
-        IdName : "Other_Rainbow_Inverse",
+        FullName: 'Other|Rainbow Inverse',
+        IdName : 'Other_Rainbow_Inverse',
         ColorMap: this.reverseColorMap(rainbowColormap),
-        Function: "customColorMap",
+        Function: 'customColorMap',
         Gradient: this.createGradient(rainbowColormap)
       });
     }
@@ -382,8 +375,8 @@ export class ColorMap {
     }
 
     // Resort the colormap alphabetically
-    this.ColorMaps.sort(function(a,b){
-      var x = a.FullName < b.FullName? -1:1;
+    this.ColorMaps.sort(function(a, b){
+      var x = a.FullName < b.FullName ? - 1 : 1;
       return x;
     });
 
@@ -427,31 +420,31 @@ export class ColorMap {
       */
     }
 
-    //return this.colorMaps;
+    // return this.colorMaps;
   }
 
-  colorMaps : {};
+  colorMaps: {};
 
   customColorMap (colormap, minValue, maxValue, currValue){
-    var valueScaled = (currValue - minValue)/(maxValue - minValue);
+    var valueScaled = (currValue - minValue) / (maxValue - minValue);
 
     if (currValue < minValue) {
       var lowerColor = [colormap[0].r, colormap[0].g, colormap[0].b];
       var upperColor = [colormap[0].r, colormap[0].g, colormap[0].b];
       var percentFade = 1.0;
     } else if (currValue > maxValue) {
-      var curLoc = colormap.length-1;
+      var curLoc = colormap.length - 1;
       var lowerColor = [colormap[curLoc].r, colormap[curLoc].g, colormap[curLoc].b];
       var upperColor = [colormap[curLoc].r, colormap[curLoc].g, colormap[curLoc].b];
       var percentFade = 1.0;
     } else {
-      for (var i = 1; i < colormap.length; i++) {
+      for (let i = 1; i < colormap.length; i++) {
         if (valueScaled >= colormap[i - 1].x && valueScaled <= colormap[i].x) {
           var lowerColor = [colormap[i - 1].r, colormap[i - 1].g, colormap[i - 1].b];
           var upperColor = [colormap[i].r, colormap[i].g, colormap[i].b];
           var percentFade = (valueScaled - colormap[i - 1].x) / (colormap[i].x - colormap[i - 1].x);
           break;
-        } else if (i == colormap.length - 1 && valueScaled > colormap[i].x) {
+        } else if (i === colormap.length - 1 && valueScaled > colormap[i].x) {
 
           break;
         }
@@ -472,9 +465,9 @@ export class ColorMap {
   customColorMapWithMidpoint(colormap, minValue, midpoint, maxValue, currValue){
     var valueScaled;
     if (currValue < midpoint) {
-      valueScaled = (currValue - minValue)/(midpoint - minValue)/2.0;
+      valueScaled = (currValue - minValue) / (midpoint - minValue) / 2.0;
     } else if (currValue > midpoint) {
-      valueScaled = (currValue - midpoint)/(maxValue - midpoint)/2.0 + 0.5;
+      valueScaled = (currValue - midpoint) / (maxValue - midpoint / 2.0 + 0.5);
     } else {
       valueScaled = 0.5;
     }
@@ -484,12 +477,12 @@ export class ColorMap {
       var upperColor = [colormap[0].r, colormap[0].g, colormap[0].b];
       var percentFade = 1.0;
     } else if (currValue > maxValue) {
-      var curLoc = colormap.length-1;
+      var curLoc = colormap.length - 1;
       var lowerColor = [colormap[curLoc].r, colormap[curLoc].g, colormap[curLoc].b];
       var upperColor = [colormap[curLoc].r, colormap[curLoc].g, colormap[curLoc].b];
       var percentFade = 1.0;
     } else {
-      for (var i = 1; i < colormap.length; i++) {
+      for (let i = 1; i < colormap.length; i++) {
         if (valueScaled >= colormap[i - 1].x && valueScaled <= colormap[i].x) {
           var lowerColor = [colormap[i - 1].r, colormap[i - 1].g, colormap[i - 1].b];
           var upperColor = [colormap[i].r, colormap[i].g, colormap[i].b];
@@ -509,20 +502,21 @@ export class ColorMap {
   }
 
   customColorMapWithMidpointByPercentage (colormap, minValue, midpoint, maxValue, percentage) {
-    var currValue = ((maxValue - minValue)*percentage ) + minValue;
+    var currValue = ((maxValue - minValue) * percentage ) + minValue;
     return this.customColorMapWithMidpoint(colormap, minValue, midpoint, maxValue, currValue);
   }
 
   customColorMapByPercentage (colormap, minValue, maxValue, percentage) {
-    var currValue = ((maxValue - minValue)*percentage ) + minValue;
+    var currValue = ((maxValue - minValue) * percentage ) + minValue;
     return this.customColorMap(colormap, minValue, maxValue, currValue);
   }
-
+ // tslint:disable:max-line-length
   /*drawLegend (Settings) {
     var w = 140, h = 400;
 
     d3.select("#legend").selectAll("svg").remove();
     var key = d3.select("#legend").append("svg").attr("width", w).attr("height", h);
+
     var legend = key.append("defs").append("svg:linearGradient").attr("id", "gradient").attr("x1", "100%").attr("y1", "0%").attr("x2", "100%").attr("y2", "100%").attr("spreadMethod", "pad");
 
     var colorMap = this.GetColorMap(Settings.displaySettings.currColormapName);
