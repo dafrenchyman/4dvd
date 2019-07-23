@@ -1,12 +1,12 @@
 
 
 <div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
-  <md-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden" id="WebglCanvas">
-    <md-sidenav id="Menu" #sidenav mode="push" opened="false" style="background-color: white; overflow:auto;" (onmouseover)="inMenu = true;">
+  <md-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden"  id="WebglCanvas">
+    <md-sidenav id="Menu" #sidenav mode="push"  opened="false" style="background-color: white; overflow:auto;" (onmouseover)="inMenu = true;">
       <md-tab-group>
         <md-tab>
           <ng-template md-tab-label>
-            <md-icon>list</md-icon>
+            <md-icon title='{{datasetTitle}}'>list</md-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Dataset Settings</h5>
@@ -33,7 +33,7 @@
 
         <md-tab>
           <ng-template md-tab-label>
-            <md-icon>event</md-icon>
+            <md-icon title="{{timeTitle}}">event</md-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Date</h5>
@@ -70,7 +70,7 @@
 
         <md-tab>
           <ng-template md-tab-label>
-            <md-icon>brush</md-icon>
+            <md-icon title="{{graphicTitle}}">brush</md-icon>
           </ng-template>
 
             <div class="TabHeading">
@@ -79,7 +79,7 @@
 
           <md-list>
             <md-list-item>
-              <button md-raised-button (click)="OpenColorMapDialog()"><md-icon>palette</md-icon> ColorMaps</button>
+              <button md-raised-button (click)="OpenColorMapDialog()" title="{{colorMapDesc}}"><md-icon>palette</md-icon> ColorMaps</button>
             </md-list-item>
           </md-list>
           <md-list>
@@ -89,6 +89,7 @@
             <md-list-item>
               <md-slide-toggle
                 class="example-margin"
+                title="{{gridboxDesc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.smoothGrid"
                 (change)="changeSmoothGrid()">
@@ -100,6 +101,7 @@
             <md-list-item>
               <md-slide-toggle
                 class="example-margin"
+                title="{{pacificDesc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.pacificCentered"
                 (change)="changePacificCentered()">
@@ -111,6 +113,7 @@
             <md-list-item>
               <md-slide-toggle
                 class="example-margin"
+                title="{{islandDesc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.minorIslands"
                 (change)="changeMinorIslandsLines()">
@@ -122,6 +125,7 @@
             <md-list-item>
               <md-slide-toggle
                 class="example-margin"
+                title="{{latLonDesc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.latlonlines"
                 (change)="changeLatlonlines()">
@@ -133,6 +137,7 @@
             <md-list-item>
               <md-slide-toggle
                 class="example-margin"
+                title="{{geoLineDes}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.geolines"
                 (change)="changeGeolines()">
@@ -144,6 +149,7 @@
             <md-list-item>
               <md-slide-toggle
                 class="example-margin"
+                title="{{timeZoneDesc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.timezones"
                 (change)="changeTimezones()">
@@ -155,7 +161,7 @@
           <md-divider></md-divider>
 
           <!-- Bump Mapping -->
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px;" title="{{bumpDesc}}">
             <h6>Bump Mapping</h6>
             <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.bumpMapping">
               <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.bumpMapping" [value]="curr" (change)="changeBumpMapping(curr)">
@@ -166,7 +172,7 @@
           <md-divider></md-divider>
 
           <!-- Globe View -->
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px;" title="{{viewDesc}}">
             <h6>Globe View</h6>
             <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.view">
               <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.view" [value]="curr" (change)="selectView(curr)">
@@ -177,7 +183,7 @@
           <md-divider></md-divider>
 
           <!-- Coasts -->
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px;" title="{{coastDesc}}">
             <h6>Coasts</h6>
             <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.coasts">
               <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.coasts" [value]="curr" (change)="selectCoasts(curr)">
@@ -188,7 +194,7 @@
           <md-divider></md-divider>
 
           <!-- Rivers -->
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px;" title="{{riverDesc}}">
             <h6>Rivers</h6>
             <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.rivers">
               <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.rivers" [value]="curr" (change)="selectRiver(curr)">
@@ -199,7 +205,7 @@
           <md-divider></md-divider>
 
           <!-- Lakes -->
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px;" title="{{lakeDesc}}">
             <h6>Lakes</h6>
             <md-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.lakes">
               <md-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.lakes" [value]="curr" (change)="selectLakes(curr)">
@@ -214,7 +220,7 @@
         </md-tab>
         <md-tab>
           <ng-template md-tab-label>
-            <md-icon>info</md-icon>
+            <md-icon title="{{infoTitle}}">info</md-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Information</h5>
