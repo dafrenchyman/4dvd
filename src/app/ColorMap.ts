@@ -1,4 +1,3 @@
-
 import {Http} from "@angular/http";
 import {Component} from "@angular/core";
 /**
@@ -62,9 +61,9 @@ export class ColorMap {
   }
 
   rainbowColormapCreator (minValue: number, maxValue: number, currValue: number) {
-      var hue = 240.0 / 360.0 - ((currValue - minValue) / (maxValue - minValue)) * (240.0 / 360.0);
-      return this.hslToRgb(hue, 1.0, 0.5);
-    }
+    var hue = 240.0 / 360.0 - ((currValue - minValue) / (maxValue - minValue)) * (240.0 / 360.0);
+    return this.hslToRgb(hue, 1.0, 0.5);
+  }
 
   coolWarmColormap (minValue: number, maxValue: number, currValue: number) {
     var midpoint = [0.865, 0.865, 0.865];
@@ -465,9 +464,9 @@ export class ColorMap {
   customColorMapWithMidpoint(colormap, minValue, midpoint, maxValue, currValue){
     var valueScaled;
     if (currValue < midpoint) {
-      valueScaled = (currValue - minValue) / (midpoint - minValue) / 2.0;
+      valueScaled = ((currValue - minValue) / (midpoint - minValue)) / 2.0;
     } else if (currValue > midpoint) {
-      valueScaled = (currValue - midpoint) / (maxValue - midpoint / 2.0 + 0.5);
+      valueScaled = ((currValue - midpoint) / (maxValue - midpoint)) / 2.0 + 0.5;
     } else {
       valueScaled = 0.5;
     }
@@ -510,7 +509,8 @@ export class ColorMap {
     var currValue = ((maxValue - minValue) * percentage ) + minValue;
     return this.customColorMap(colormap, minValue, maxValue, currValue);
   }
- // tslint:disable:max-line-length
+
+  // tslint:disable:max-line-length
   /*drawLegend (Settings) {
     var w = 140, h = 400;
 
