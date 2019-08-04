@@ -1,7 +1,7 @@
 import {Component, Inject, ViewChild} from '@angular/core';
 import {MD_DIALOG_DATA} from '@angular/material';
-import {ColorMap} from "./ColorMap";
-import {createElement} from "@angular/core/src/view/element";
+import {ColorMap} from './ColorMap';
+import {createElement} from '@angular/core/src/view/element';
 
 declare var d3: any;
 
@@ -20,7 +20,7 @@ export class ColorMapMenu {
   public
 
 
-  private _colorMapGradient : {
+  private _colorMapGradient: {
     Name: string,
     IdName: string,
     FullName: string,
