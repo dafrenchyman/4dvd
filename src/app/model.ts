@@ -160,10 +160,12 @@ export class Model {
         this.settings.minValue = Helpers.ArrayMin(this.rawGridData.ValueFinal);
 
         // Add the datasetID to the input options
-        var uri = new URI(window.location.href);
-        uri.removeSearch("database");
-        uri.addSearch("database", this.settings.Dataset_ID);
-        window.history.replaceState("", "", uri.search());
+        if (this.settings.EnableUri) {
+          var uri = new URI(window.location.href);
+          uri.removeSearch('database');
+          uri.addSearch('database', this.settings.Dataset_ID);
+          window.history.replaceState('', '', uri.search());
+        }
 
         // Draw the world
         this._world.worldBuffers(this.rawGridData);
