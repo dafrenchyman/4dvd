@@ -72,7 +72,7 @@ export class ViewComponent implements OnInit {
     rivers : "Low",
     lakes : "Low",
     coasts : "Low",
-    bumpMapping : "Land",
+    bumpMapping : "None",
     view: "3D Orthographic",
     timezones : false,
     geolines : false,

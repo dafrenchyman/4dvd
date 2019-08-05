@@ -116,7 +116,7 @@
         "option": "land",
         "file": "images/earth_normalmap_flat_8192x4096.jpg",
         "id": "bumpMapGridRadio1",
-        "checked": true
+        "checked": false
       },
       {
         "label": "Land & Bathymetry",
@@ -130,7 +130,7 @@
         "option": "",
         "file": "",
         "id": "bumpMapGridRadio3",
-        "checked": false
+        "checked": true
       }
     ]
   },

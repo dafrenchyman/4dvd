@@ -152,7 +152,7 @@ export class Settings {
   latLons: boolean = true;
   geoLines: boolean = false;
   timeZones: boolean = false;
-  lightingEnabled: boolean = true;
+  lightingEnabled: boolean = false;
   lightDirection: number[];
   lightDirectionColor: number[] = [1.0, 1.0, 1.0];
   lightAmbient: number[] = [0.2, 0.2, 0.2];

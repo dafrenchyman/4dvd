@@ -171,10 +171,12 @@ export class Loaders {
         }
 
         // Add the datasetID to the input options
-        var uri = new URI(window.location.href);
-        uri.removeSearch("database");
-        uri.addSearch("database", this._settings.Dataset_ID);
-        window.history.replaceState("", "", uri.search());
+        if (this._settings.EnableUri) {
+          const uri = new URI(window.location.href);
+          uri.removeSearch('database');
+          uri.addSearch('database', this._settings.Dataset_ID);
+          window.history.replaceState('', '', uri.search());
+        }
     });
   }
 
@@ -206,10 +208,12 @@ export class Loaders {
       }
 
       // Add the datasetID to the input options
-      var uri = new URI(window.location.href);
-      uri.removeSearch("database");
-      uri.addSearch("database", this._settings.Dataset_ID);
-      window.history.replaceState("", "", uri.search());
+      if (this._settings.EnableUri) {
+        const uri = new URI(window.location.href);
+        uri.removeSearch('database');
+        uri.addSearch('database', this._settings.Dataset_ID);
+        window.history.replaceState('', '', uri.search());
+      }
     });
   }
 
