@@ -301,13 +301,57 @@ export class ViewComponent implements OnInit {
     return [];
   }
 
+  /**
+   * Takes the '|' separated list of datasets and creates a nested json of datasets out of it
+   * Used the following as a starting port for this code:
+   * https://stackoverflow.com/questions/5484673/javascript-how-to-dynamically-create-nested-objects-using-object-names-given-by
+   * @param obj - The array we will be adding the keys to
+   * @param keyPath - The keypath (as an array) we will be adding @param obj
+   */
+  public generateDatesetMenuItems(obj, keyPath) {
+    const lastKeyIndex = keyPath.length;
+    for (let i = 0; i < lastKeyIndex; ++ i) {
+      const key = keyPath[i];
+      let found_key = false;
+      let key_location = -1;
+      for (let j = 0; j < obj.length; j++) {
+        if (obj[j].title === key) {
+          found_key = true;
+          key_location = j;
+          break;
+        }
+      }
+      if (!found_key) {
+        obj.push({
+          title: key,
+          FullName: keyPath.slice(0, i + 1).join('|'),
+          children: new Array<any>()
+        });
+        key_location = obj.length - 1;
+      }
+      obj = obj[key_location].children;
+    }
+  }
+
   OpenDatasetDialog() {
-    let dialogRef = this.dialog.open(DatasetMenu, {data: this._model.settings.Datasets});
+
+    let settings = new Array<any>();
+
+    // Generate key/value lookup //
+    for (let i = 0; i < this._model.settings.Datasets.length; i++) {
+      const currFullName = this._model.settings.Datasets[i].FullName;
+      const datasetPath = currFullName.split('|', -1);
+      this.generateDatesetMenuItems(settings, datasetPath);
+    }
+
+    const dialogRef = this.dialog.open(DatasetMenu, {data: settings});
     dialogRef.afterClosed().subscribe(dataset => {
-      if (dataset != null) {
-        this._controller.loadLevels(dataset);
-        this._controller.loadDataset(dataset, dataset.StartDate, 1);
-        this.yearSlider = Number(dataset.StartDate.substring(0, 4));
+
+      const selectedDataset = this._model.settings.Datasets.find(myObj => myObj.FullName === dataset.FullName);
+      if (selectedDataset != null) {
+        this._controller.loadLevels(selectedDataset);
+        this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+        this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
       }
     });
   }
@@ -532,7 +576,7 @@ export class ViewComponent implements OnInit {
     this.viewportHeight = this._canvas.nativeElement.height;
 
     this.initShaders();
-    this.initTextures('./assets/earth_normalmap_flat_8192x4096.jpg');
+    //this.initTextures('./assets/earth_normalmap_flat_8192x4096.jpg');
 
     this._model = new Model(this.GL, this._getJson);
     this._model.RegisterObserver(this);

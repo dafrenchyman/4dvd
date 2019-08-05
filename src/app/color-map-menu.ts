@@ -15,13 +15,9 @@ declare var d3: any;
 })
 export class ColorMapMenu {
 
-
-
-  public
-
-
   private _colorMapGradient: {
     Name: string,
+    ColorMaps: ColorMap,
     IdName: string,
     FullName: string,
     Gradient: {
