@@ -1,7 +1,6 @@
-import {Component, Inject, ViewChild} from '@angular/core';
+import {Component, Inject, Input, ViewChild} from '@angular/core';
 import {MD_DIALOG_DATA} from '@angular/material';
-import {ColorMap} from "./ColorMap";
-import {createElement} from "@angular/core/src/view/element";
+import { DatasetMenu } from 'dataset-menu.component.ts';
 
 declare var d3: any;
 
@@ -11,9 +10,10 @@ declare var d3: any;
 
 
 @Component({
-  templateUrl: './dataset-menu.html'
+  selector: 'nav-item',
+  templateUrl: './datasetMenu.component.html'
 })
-export class DatasetMenu {
+export class DatasetMenuComponents {
 
   private _MenuDataFull : {
     Name: string,
@@ -31,6 +31,8 @@ export class DatasetMenu {
   constructor(@Inject(MD_DIALOG_DATA) public data: any) {
     this._MenuDataFull = data;
   }
+
+  @Input() private navItems: NavItem[];
 
 
 }
