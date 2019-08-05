@@ -23,7 +23,9 @@ export class DatasetMenu {
     let selected_dataset: string;
     dialogRef.afterClosed().subscribe(result => {
       selected_dataset = result;
-      this.dialogRef.close(result);
+      if (result !== undefined) {
+        this.dialogRef.close(result);
+      }
       return result;
     });
     return selected_dataset;
