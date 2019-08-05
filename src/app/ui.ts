@@ -276,18 +276,20 @@ export class UI {
       }
     }
 
-    var uri = new URI(window.location.href);
-    uri.removeSearch("rMatrix");
-    uri.removeSearch("rMatrixX");
-    uri.removeSearch("rMatrixY");
-    uri.removeSearch("xMov");
-    uri.removeSearch("yMov");
-    uri.addSearch("rMatrix", earthRotationMatrix);
-    uri.addSearch("rMatrixX", earthRotationMatrix_x);
-    uri.addSearch("rMatrixY", earthRotationMatrix_y);
-    uri.addSearch("xMov", this.xMovement);
-    uri.addSearch("yMov", this.yMovement);
-    window.history.replaceState("", "", uri.search());
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('rMatrix');
+      uri.removeSearch('rMatrixX');
+      uri.removeSearch('rMatrixY');
+      uri.removeSearch('xMov');
+      uri.removeSearch('yMov');
+      uri.addSearch('rMatrix', earthRotationMatrix);
+      uri.addSearch('rMatrixX', earthRotationMatrix_x);
+      uri.addSearch('rMatrixY', earthRotationMatrix_y);
+      uri.addSearch('xMov', this.xMovement);
+      uri.addSearch('yMov', this.yMovement);
+      window.history.replaceState('', '', uri.search());
+    }
   }
 
   handleMouseWheel(globeView : GlobeViewType, event) {
@@ -317,10 +319,12 @@ export class UI {
       }
     }
 
-    var uri = new URI(window.location.href);
-    uri.removeSearch("zoom");
-    uri.addSearch("zoom", this.zoomLevel);
-    window.history.replaceState("", "", uri.search());
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('zoom');
+      uri.addSearch('zoom', this.zoomLevel);
+      window.history.replaceState('', '', uri.search());
+    }
   }
 
   GetMenuOption(menuOption, y) {
@@ -359,10 +363,12 @@ export class UI {
     } else {
       this._settings.lightingEnabled = false;
     }
-    var uri = new URI(window.location.href);
-    uri.removeSearch("bumpMapping");
-    uri.addSearch("bumpMapping", y);
-    window.history.replaceState("","",uri.search());
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('bumpMapping');
+      uri.addSearch('bumpMapping', y);
+      window.history.replaceState('', '', uri.search());
+    }
   }
 
   GlobeViewSettings(Gl, y, resetView) {
@@ -397,201 +403,308 @@ export class UI {
       default:
         break;
     }
-    var uri = new URI(window.location.href);
-    uri.removeSearch("zoom");
-    uri.removeSearch("rMatrix");
-    uri.removeSearch("rMatrixX");
-    uri.removeSearch("rMatrixY");
-    uri.removeSearch("xMov");
-    uri.removeSearch("yMov");
-    uri.addSearch("zoom", this.zoomLevel);
-    uri.addSearch("rMatrix", Gl.earthRotationMatrix);
-    uri.addSearch("rMatrixX", Gl.earthRotationMatrix_x);
-    uri.addSearch("rMatrixY", Gl.earthRotationMatrix_y);
-    uri.addSearch("xMov", this.xMovement);
-    uri.addSearch("yMov", this.yMovement);
-    window.history.replaceState("", "", uri.search());
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('zoom');
+      uri.removeSearch('rMatrix');
+      uri.removeSearch('rMatrixX');
+      uri.removeSearch('rMatrixY');
+      uri.removeSearch('xMov');
+      uri.removeSearch('yMov');
+      uri.addSearch('zoom', this.zoomLevel);
+      uri.addSearch('rMatrix', Gl.earthRotationMatrix);
+      uri.addSearch('rMatrixX', Gl.earthRotationMatrix_x);
+      uri.addSearch('rMatrixY', Gl.earthRotationMatrix_y);
+      uri.addSearch('xMov', this.xMovement);
+      uri.addSearch('yMov', this.yMovement);
+      window.history.replaceState('', '', uri.search());
+    }
   }
 
   ChangeGlobeViewMenu(Gl, y) {
+
+    // Change the setting
     this.GlobeViewSettings(Gl, y, true);
-    return this.ChangeMenuOption(y, this.MenuOptions.Globe, true, function(){
-      var uri = new URI(window.location.href);
-      this._settings.globeView = y;
-      uri.removeSearch("globe");
-      uri.addSearch("globe", y);
-      window.history.replaceState("","",uri.search());
+    this._settings.globeView = y;
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('globe');
+      uri.addSearch('globe', y);
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change the viewport
+    return this.ChangeMenuOption(y, this.MenuOptions.Globe, true, function() {
       Gl.initBuffers();
     });
   }
 
   ChangeRiversMenu(Lines, y) {
+
+    // Change the setting
+    this._settings.RiversType = y;
+    if (y === '') {
+      this._settings.rivers = false;
+    } else {
+      this._settings.rivers = true;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('rivers');
+      uri.addSearch('rivers', y);
+      window.history.replaceState('', '' , uri.search());
+    }
+
+    // Change the view
     this.ChangeMenuOption(y, this.MenuOptions.Rivers, true, function(){
-      var uri = new URI(window.location.href);
-      this._settings.RiversType = y;
-      uri.removeSearch("rivers");
-      uri.addSearch("rivers", y);
-      window.history.replaceState("","",uri.search());
-      if (y == "") {
-        this._settings.rivers = false;
-      } else {
-        this._settings.rivers = true;
-      }
       Lines.lineBuffers();
     });
   }
 
   ChangeCoastsMenu(Lines, y) {
+
+    // Change the setting
+    this._settings.CoastsType = y;
+    if (y === '') {
+      this._settings.coasts = false;
+    } else {
+      this._settings.coasts = true;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('coasts');
+      uri.addSearch('coasts', y);
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change the view
     this.ChangeMenuOption(y, this.MenuOptions.Coasts, true, function(){
-      var uri = new URI(window.location.href);
-      this._settings.CoastsType = y;
-      uri.removeSearch("coasts");
-      uri.addSearch("coasts", y);
-      window.history.replaceState("","",uri.search());
-      if (y == "") {
-        this._settings.coasts = false;
-      } else {
-        this._settings.coasts = true;
-      }
       Lines.lineBuffers();
     });
   }
 
   ChangeLakesMenu (Lines, y) {
+
+    // Change the setting
+    this._settings.LakesType = y;
+    if (y === '') {
+      this._settings.lakes = false;
+    } else {
+      this._settings.lakes = true;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('lakes');
+      uri.addSearch('lakes', y);
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change the view
     this.ChangeMenuOption(y, this.MenuOptions.Lakes, true, function(){
-      var uri = new URI(window.location.href);
-      this._settings.LakesType = y;
-      uri.removeSearch("lakes");
-      uri.addSearch("lakes", y);
-      window.history.replaceState("","",uri.search());
-      if (y == "") {
-        this._settings.lakes = false;
-      } else {
-        this._settings.lakes = true;
-      }
       Lines.lineBuffers();
     });
   }
 
   // Toggle button options
   ChangeMinorIslandsMenu (Lines, y) {
-    var y = jQuery('#'+ this.MenuOptions.MinorIslands.id)[0].checked;
-    this.ChangeMenuOption(y, this.MenuOptions.MinorIslands, true, function(){
-      var uri = new URI(window.location.href);
-      if (y == true) {
-        this._settings.minorIslands = true;
-        uri.removeSearch("minorIslands");
-        uri.addSearch("minorIslands", true);
-        window.history.replaceState("", "", uri.search());
+
+    // Change the settings
+    var y = jQuery('#' + this.MenuOptions.MinorIslands.id)[0].checked;
+    if (y === true) {
+      this._settings.minorIslands = true;
+    } else {
+      this._settings.minorIslands = false;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      if (y === true) {
+        uri.removeSearch('minorIslands');
+        uri.addSearch('minorIslands', true);
+        window.history.replaceState('', '', uri.search());
       } else {
-        this._settings.minorIslands = false;
-        uri.removeSearch("minorIslands");
-        uri.addSearch("minorIslands", false);
-        window.history.replaceState("","",uri.search());
+        uri.removeSearch('minorIslands');
+        uri.addSearch('minorIslands', false);
+        window.history.replaceState('','', uri.search());
       }
+    }
+
+    // Change the view
+    this.ChangeMenuOption(y, this.MenuOptions.MinorIslands, true, function(){
       Lines.lineBuffers();
     });
   }
 
   ChangeTimeZonesMenu(Lines, y) {
+
+    // Change the setting
     var y = jQuery('#'+ this.MenuOptions.TimeZone.id)[0].checked;
-    this.ChangeMenuOption(y, this.MenuOptions.TimeZone, true, function(){
+    if (y === true) {
+      this._settings.timeZones = true;
+    } else {
+      this._settings.timeZones = false;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
       var uri = new URI(window.location.href);
-      if (y == true) {
-        this._settings.timeZones = true;
-        uri.removeSearch("timeZones");
-        uri.addSearch("timeZones", true);
-        window.history.replaceState("", "", uri.search());
+      if (y === true) {
+        uri.removeSearch('timeZones');
+        uri.addSearch('timeZones', true);
+        window.history.replaceState('', '', uri.search());
       } else {
-        this._settings.timeZones = false;
-        uri.removeSearch("timeZones");
-        uri.addSearch("timeZones", false);
-        window.history.replaceState("","",uri.search());
+        uri.removeSearch('timeZones');
+        uri.addSearch('timeZones', false);
+        window.history.replaceState('', '', uri.search());
       }
+    }
+
+    // Change the view
+    this.ChangeMenuOption(y, this.MenuOptions.TimeZone, true, function(){
       Lines.lineBuffers();
     });
   }
 
   ChangeGeoLinesMenu(Lines, y) {
-    var y = jQuery('#'+ this.MenuOptions.GeoLines.id)[0].checked;
-    this.ChangeMenuOption(y, this.MenuOptions.GeoLines, true, function(){
-      var uri = new URI(window.location.href);
-      uri.removeSearch("geoLines");
-      if (y == true) {
-        this._settings.geoLines = true;
-        uri.addSearch("geoLines", true);
+
+    // Change the settings
+    var y = jQuery('#' + this.MenuOptions.GeoLines.id)[0].checked;
+    if (y === true) {
+      this._settings.geoLines = true;
+    } else {
+      this._settings.geoLines = false;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('geoLines');
+      if (y === true) {
+        uri.addSearch('geoLines', true);
       } else {
-        this._settings.geoLines = false;
-        uri.addSearch("geoLines", false);
+        uri.addSearch('geoLines', false);
       }
-      window.history.replaceState("", "", uri.search());
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change the view
+    this.ChangeMenuOption(y, this.MenuOptions.GeoLines, true, function(){
       Lines.lineBuffers();
     });
   }
 
   ChangeLatLonMenu(Lines, y) {
-    var y = jQuery('#'+ this.MenuOptions.LatLon.id)[0].checked;
-    this.ChangeMenuOption(y, this.MenuOptions.LatLon, true, function(){
-      var uri = new URI(window.location.href);
-      uri.removeSearch("latlon");
-      if (y == true) {
-        this._settings.latLons = true;
-        uri.addSearch("latlon", true);
+
+    // Change the settings
+    var y = jQuery('#' + this.MenuOptions.LatLon.id)[0].checked;
+    if (y === true) {
+      this._settings.latLons = true;
+    } else {
+      this._settings.latLons = false;
+    }
+
+    // Change the URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('latlon');
+      if (y === true) {
+        uri.addSearch('latlon', true);
       } else {
-        this._settings.latLons = false;
-        uri.addSearch("latlon", false);
+        uri.addSearch('latlon', false);
       }
-      window.history.replaceState("", "", uri.search());
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change the view
+    this.ChangeMenuOption(y, this.MenuOptions.LatLon, true, function() {
       Lines.lineBuffers();
     });
   }
 
   ChangeCenterMenu(methods, y) {
-    var y = jQuery('#'+ this.MenuOptions.PacificCentered.id)[0].checked;
-    this.ChangeMenuOption(y, this.MenuOptions.PacificCentered, true, function(){
-      var uri = new URI(window.location.href);
-      uri.removeSearch("center");
-      if (y == true) {
-        this._settings.pacificCenter = true;
-        uri.addSearch("center", true);
+
+    // Change settings
+    var y = jQuery('#' + this.MenuOptions.PacificCentered.id)[0].checked;
+    if (y === true) {
+      this._settings.pacificCenter = true;
+    } else {
+      this._settings.pacificCenter = false;
+    }
+
+    // Change URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('center');
+      if (y === true) {
+        uri.addSearch('center', true);
       } else {
-        this._settings.pacificCenter = false;
-        uri.addSearch("center", false);
+        uri.addSearch('center', false);
       }
-      window.history.replaceState("", "", uri.search());
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change view
+    this.ChangeMenuOption(y, this.MenuOptions.PacificCentered, true, function(){
       methods.initBuffers();
     });
   }
 
   ChangeSmoothGridMenu(World, y) {
-    var y = jQuery('#'+ this.MenuOptions.SmoothGrid.id)[0].checked;
-    this.ChangeMenuOption(y, this.MenuOptions.SmoothGrid, true, function(){
-      var uri = new URI(window.location.href);
-      uri.removeSearch("smoothGrid");
-      if (y == true) {
-        this._settings.smoothGridBoxValues = true;
-        uri.addSearch("smoothGrid", true);
+
+    // Change settings
+    var y = jQuery('#' + this.MenuOptions.SmoothGrid.id)[0].checked;
+    if (y === true) {
+      this._settings.smoothGridBoxValues = true;
+    } else {
+      this._settings.smoothGridBoxValues = false;
+    }
+
+    // Change URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('smoothGrid');
+      if (y === true) {
+        uri.addSearch('smoothGrid', true);
       } else {
-        this._settings.smoothGridBoxValues = false;
-        uri.addSearch("smoothGrid", false);
+        uri.addSearch('smoothGrid', false);
       }
-      window.history.replaceState("", "", uri.search());
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change view
+    this.ChangeMenuOption(y, this.MenuOptions.SmoothGrid, true, function(){
       World.worldBuffers();
     });
   }
 
   changeLevel(Levels, y, functionToCall) {
+
+    // Change settings
     this._settings.Level_ID = y;
     var index = Levels.Level_ID.indexOf(y);
     this._settings.LevelName = Levels.Name[index];
+
+    // Change URI
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('level');
+      uri.addSearch('level', y);
+      window.history.replaceState('', '', uri.search());
+    }
+
+    // Change view
     if (!(functionToCall === undefined)) {
       functionToCall();
     }
-
-    var uri = new URI(window.location.href);
-    uri.removeSearch("level");
-    uri.addSearch("level", y);
-    window.history.replaceState("","",uri.search());
   }
 
   // Other Options
@@ -643,10 +756,13 @@ export class UI {
     if (!(functionToRun === undefined)) {
       functionToRun();
     }
-    var uri = new URI(window.location.href);
-    uri.removeSearch("date");
-    uri.addSearch("date", this._settings.CurrDate);
-    window.history.replaceState("", "", uri.search());
+
+    if (this._settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch('date');
+      uri.addSearch('date', this._settings.CurrDate);
+      window.history.replaceState('', '', uri.search());
+    }
   }
 
   LoadSphereData(Data, Settings) {
@@ -654,15 +770,15 @@ export class UI {
   }
 
   ChangeMonth(Data, Settings, newMonth) {
-    var currYear = this._settings.CurrDate.substring(0, 4);
-    var newDate = currYear + "-" + newMonth + "-01";
+    const currYear = this._settings.CurrDate.substring(0, 4);
+    const newDate = currYear + '-' + newMonth + '-01';
     this.ChangeDate(newDate, function(){Data.LoadSphereData(Settings.LayerSettings)});
   }
 
   ChangeYear(Data, Settings, newYear, padLeft) {
     newYear = padLeft(newYear, 4);
-    var currMonth = this._settings.CurrDate.substring(5, 7);
-    var newDate = newYear + "-" + currMonth + "-01";
+    const currMonth = this._settings.CurrDate.substring(5, 7);
+    const newDate = newYear + '-' + currMonth + '-01';
     this.ChangeDate(newDate, function(){Data.LoadSphereData(Settings.LayerSettings)});
   }
 
@@ -958,6 +1074,7 @@ export class UI {
     });
   }
   */
+
   createCsvFromGriddedData(RawData) {
     var csvContent = "data:text/csv;charset=utf-8,";
 

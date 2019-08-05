@@ -14,6 +14,9 @@ export enum GlobeViewType {
 
 export class Settings {
 
+  // Debug settings
+  EnableUri = false;
+
   // Layer Relating settings
   Levels : any;
   Datasets: Dataset[];
