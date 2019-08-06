@@ -47,6 +47,33 @@ export class Legend {
     const y = d3.scaleLinear().range([300, 0]).domain([this._settings.minValue, this._settings.maxValue]);
     const yAxis = d3.axisRight(y);
 
-    key.append('g').attr('class', 'y axis').attr('transform', 'translate(41,10)').call(yAxis).append('text').attr('transform', 'rotate(-90)').attr('y', 50).attr('dy', '.71em').style('text-anchor', 'end').text('Temperature (' + this._settings.TemperatureSymbol + ')');
+    // Get the units type
+    let legendUnits = '';
+    switch (this._settings.DataUnits) {
+      case 'Kelvins':
+      case 'degK':
+        switch (this._settings.TemperatureType) {
+          case 'C':
+            legendUnits = 'Temperature (' + this._settings.TemperatureSymbol + ')';
+            break;
+          default :
+            legendUnits = this._settings.DataUnits;
+        }
+        break;
+      default :
+        legendUnits = this._settings.DataUnits;
+    }
+
+    // Create the legend label
+    key.append('g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(41,10)')
+      .call(yAxis)
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 50)
+      .attr('dy', '.71em')
+      .style('text-anchor', 'end')
+      .text(legendUnits);
   }
 }
