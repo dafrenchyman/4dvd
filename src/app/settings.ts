@@ -3,7 +3,6 @@ import {Dataset} from "./Dataset";
  * Created by dafre on 5/11/2017.
  */
 
-declare var glMatrix : any;
 import * as glMatrix from 'gl-matrix';
 
 export enum GlobeViewType {

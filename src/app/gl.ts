@@ -11,7 +11,7 @@ import {GlobeViewType, Settings} from "./settings";
 import {ColorMap} from "./ColorMap";
 import {World} from "./world";
 import {Lines} from "./lines";
-import {Observable} from "rxjs/Observable";
+/*import {Observable} from "rxjs/Observable";*/
 
 export class Shaders {
   public lineShader: WebGLProgramEnh;

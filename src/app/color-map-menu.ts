@@ -1,5 +1,5 @@
 import {Component, Inject, ViewChild} from '@angular/core';
-import {MD_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA} from '@angular/material';
 import {ColorMap} from './ColorMap';
 import {createElement} from '@angular/core/src/view/element';
 
@@ -26,7 +26,7 @@ export class ColorMapMenu {
     }[]
   }[];
 
-  constructor(@Inject(MD_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this._colorMapGradient = data;
 
     // Draw small preview gradient in menu

@@ -9,7 +9,7 @@
  *
  * The current setup is for so-called "evergreen" browsers; the last versions of browsers that
  * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),
- * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.
+ * Edge >= 13 on the desng update @angular/cli --migrate-only --from=ktop, and iOS 10 and Chrome on mobile.
  *
  * Learn more in https://angular.io/docs/ts/latest/guide/browser-support.html
  */
@@ -42,7 +42,6 @@
 
 /** Evergreen browsers require these. **/
 import 'core-js/es6/reflect';
-import 'core-js/es7/reflect';
 
 
 /** ALL Firefox browsers require the following to support `@angular/animation`. **/

@@ -1,7 +1,7 @@
 
 <div id="DatasetMenu">
-<h2 md-dialog-title>Datasets</h2>
-<md-dialog-content>
+<h2 mat-dialog-title>Datasets</h2>
+<mat-dialog-content>
 
   <!--div id="datasetList"></div>
   <li *ngFor="let dataset of _MenuDataFull">
@@ -11,13 +11,13 @@
   <ul>
     <li *ngFor="let item of list">
       <ul *ngIf="item.children.length > 0">
-        <button md-raised-button (click)="OpenDatasetDialog(item.children)">"{{item.title}}"</button>
+        <button mat-raised-button (click)="OpenDatasetDialog(item.children)">"{{item.title}}"</button>
       </ul>
       <ul *ngIf="item.children.length == 0">
-        <button md-button [md-dialog-close]="item.FullName" (click)="SelectDataset(item)">"{{item.title}}"</button>
+        <button mat-button [mat-dialog-close]="item.FullName" (click)="SelectDataset(item)">"{{item.title}}"</button>
       </ul>
     </li>
   </ul>
 
-</md-dialog-content>
+</mat-dialog-content>
 </div>

@@ -1,5 +1,5 @@
 import {Component, Inject, ViewChild} from '@angular/core';
-import {MD_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 import {Settings} from "./settings";
 import {Helpers} from "./helpers";
@@ -10,7 +10,7 @@ import {TimeseriesData} from "./timeseriesData";
  */
 
 declare var jQuery: any;
-declare var c3 : any;
+declare var c3: any;
 
 @Component({
   templateUrl: './timeseries-menu.html',
@@ -65,7 +65,7 @@ export class TimeseriesMenu {
     return this.levelsLoaded == this.multi.length && this.levelsLoaded > 0 ? true : false;
   }
 
-  public constructor (@Inject(MD_DIALOG_DATA) public data: any) {
+  public constructor (@Inject(MAT_DIALOG_DATA) public data: any) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
