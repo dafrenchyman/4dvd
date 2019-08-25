@@ -8,19 +8,19 @@ import { AppComponent } from './app.component';
 import { ColorMapMenu } from './color-map-menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MdCheckboxModule,
-  MdCardModule,
-  MdSelectModule,
-  MdIconModule,
-  MdInputModule,
-  MdRadioModule,
-  MdSlideToggleModule,
-  MdListModule,
-  MdSidenavModule,
-  MdDialogModule,
-  MdTabsModule,
-  MdButtonModule,
-  MdSliderModule} from '@angular/material';
+  MatCheckboxModule,
+  MatCardModule,
+  MatSelectModule,
+  MatIconModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSlideToggleModule,
+  MatListModule,
+  MatSidenavModule,
+  MatDialogModule,
+  MatTabsModule,
+  MatButtonModule,
+  MatSliderModule} from '@angular/material';
 import {} from '@angular/material';
 import { GetJson } from './getJson';
 import {ViewComponent} from './view.component';
@@ -41,19 +41,19 @@ import {TimeseriesMenu} from './timeseries-menu';
     HttpModule,
     BrowserAnimationsModule,
     NgxChartsModule,
-    MdCheckboxModule,
-    MdCardModule,
-    MdSelectModule,
-    MdIconModule,
-    MdInputModule,
-    MdRadioModule,
-    MdSlideToggleModule,
-    MdSidenavModule,
-    MdDialogModule,
-    MdTabsModule,
-    MdListModule,
-    MdSliderModule,
-    MdButtonModule
+    MatCheckboxModule,
+    MatCardModule,
+    MatSelectModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatSidenavModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatListModule,
+    MatSliderModule,
+    MatButtonModule
   ],
   providers: [
     GetJson,

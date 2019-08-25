@@ -15,7 +15,7 @@ import {Helpers} from "./helpers";
 import {WebGLProgramEnh} from "./WebGLProgramEnh";
 
 import * as glMatrix from 'gl-matrix';
-import {MdDialog} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {ColorMapMenu} from "./color-map-menu";
 import {DatasetMenu} from "./dataset-menu";
 import {TimeseriesMenu} from "./timeseries-menu";
@@ -366,7 +366,9 @@ export class ViewComponent implements OnInit {
       data: this._model});
   }
 
-  public yearSlider : number = 0;
+  public yearSlider: number = 0;
+  public tickInterval = 'auto';
+  public thumbLabel = true;
 
   currMonth : string = '01';
   months = [
@@ -433,7 +435,7 @@ export class ViewComponent implements OnInit {
   }
 
 
-  constructor(getJson : GetJson, public dialog: MdDialog) {
+  constructor(getJson : GetJson, public dialog: MatDialog) {
     this.inCanvas = false;
     this.inMenu = false;
     this._getJson = getJson;
@@ -608,9 +610,9 @@ export class ViewComponent implements OnInit {
     }
 
     var str = "";
-    var k = shaderScript.firstChild;
+    var k = <Node> shaderScript.firstChild;
     while (k) {
-      if (k.nodeType == 3) {
+      if (k.nodeType === 3) {
         str += k.textContent;
       }
       k = k.nextSibling;
@@ -709,7 +711,7 @@ export class ViewComponent implements OnInit {
 
   handleLoadedTexture (webglTxEnh: WebGLTextureEnh) {
     this.GL.bindTexture(this.GL.TEXTURE_2D, webglTxEnh.texture);
-    this.GL.pixelStorei(this.GL.UNPACK_FLIP_Y_WEBGL, true);
+    this.GL.pixelStorei(this.GL.UNPACK_FLIP_Y_WEBGL, 1); // True
     this.GL.texImage2D(this.GL.TEXTURE_2D, 0, this.GL.RGBA, this.GL.RGBA, this.GL.UNSIGNED_BYTE, webglTxEnh.image);
     this.GL.texParameteri(this.GL.TEXTURE_2D, this.GL.TEXTURE_MAG_FILTER, this.GL.LINEAR);
     this.GL.texParameteri(this.GL.TEXTURE_2D, this.GL.TEXTURE_MIN_FILTER, this.GL.LINEAR);

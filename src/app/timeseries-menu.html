@@ -1,6 +1,6 @@
 <div id="TimeseriesPlot">
-  <h2 md-dialog-title>Timeseries</h2>
-  <md-dialog-content>
+  <h2 mat-dialog-title>Timeseries</h2>
+  <mat-dialog-content>
 
       <ngx-charts-line-chart *ngIf="DataAvailable()"
         [view]="view"
@@ -18,15 +18,15 @@
         [autoScale]="autoScale">
       </ngx-charts-line-chart>
       <br>
-      <button md-raised-button (click)="createCsvFromTimeseriesData()">Download Data</button>
+      <button mat-raised-button (click)="createCsvFromTimeseriesData()">Download Data</button>
 
-  </md-dialog-content>
-  <md-dialog-actions>
+  </mat-dialog-content>
+  <mat-dialog-actions>
 
-    <md-checkbox *ngFor="let level of GetLevels()"
+    <mat-checkbox *ngFor="let level of GetLevels()"
                  [checked]="IsSelected(level)"
                  (click)="ToggleTimeseries(level)"> {{ level.Name }}
-    </md-checkbox>
+    </mat-checkbox>
 
-  </md-dialog-actions>
+  </mat-dialog-actions>
 </div>

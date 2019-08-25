@@ -15,11 +15,11 @@ fi
 
 # Build the branch
 if [ "${CIRCLE_BRANCH}" == "master" ]; then
-  ng build --env=prod
+  ng build #--env=prod
   COPY_PATH=""
 else
   echo "Building branch: ${CIRCLE_BRANCH}"
-  ng build --env=prod --deployUrl "/beta/${CIRCLE_BRANCH}/"
+  ng build --deployUrl "/beta/${CIRCLE_BRANCH}/" #--env=prod
   COPY_PATH=beta/${CIRCLE_BRANCH}/
 fi
 

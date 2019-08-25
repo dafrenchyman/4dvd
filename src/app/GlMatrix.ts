@@ -8,7 +8,7 @@ export class GlMatrix {
 
   public static vec3: {
     add(out: number[], a: number[], b: number[]) : number[],
-    clone(a : number[]) : number[],
+    clone(a: number[]): number[],
     create() : number[],
     cross(out: number[], a: number[], b: number[]) : number[],
     dist(a: number[], b : number[]),

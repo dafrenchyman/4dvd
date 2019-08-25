@@ -1,5 +1,5 @@
 import {Component, Inject, ViewChild} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialog, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 
 declare var d3: any;
 
@@ -52,7 +52,7 @@ export class DatasetMenu {
     DefaultLevel: string
   }[];
 
-  constructor(@Inject(MD_DIALOG_DATA) public data: any, public dialog: MdDialog, public dialogRef: MdDialogRef<DatasetMenu>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public dialogRef: MatDialogRef<DatasetMenu>) {
     this._MenuDataFull = data;
     this.list = data;
     this.dialogRef = dialogRef;
