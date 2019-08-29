@@ -29,22 +29,23 @@ declare var jQuery: any;
   // providers: [GetJson]
 })
 export class ViewComponent implements OnInit {
-  datasetTitle= 'Change the current dataset';
-  timeTitle= 'Change the year and month';
-  graphicTitle= 'Change visual settings';
-  infoTitle= 'Download current data';
-  colorMapDesc= 'Changes the color of data visualization';
-  gridboxDesc= 'Modifies texture details';
-  pacificDesc= 'In 2D view, centers the map on the Pacific Ocean';
-  islandDesc= 'Toggles the inclusion of minor islands';
-  latLonDesc= 'Toggles visibility of lat/lon lines';
-  geoLineDes= 'Toggles visibility of geographical lines';
-  timeZoneDesc= 'Toggles visibility of time zones';
-  bumpDesc= 'Toggles the simulation of elevation on the current globe view';
-  viewDesc= 'Toggles different types of map view';
-  coastDesc= 'Toggles rendered quality of coastlines';
-  riverDesc= 'Toggles rendered quality of rivers';
-  lakeDesc= 'Toggles rendered quality of lakes';
+  datasetTitle = 'Change the current dataset';
+  timeTitle = 'Change the year and month';
+  graphicTitle = 'Change visual settings';
+  infoTitle = 'Download current data';
+  colorMapDesc = 'Changes the color of data visualization';
+  gridboxDesc = 'Modifies texture details';
+  pacificDesc = 'In 2D view, centers the map to the Pacific Ocean';
+  islandDesc = 'Toggles the inclusion of minor islands';
+  latLonDesc = 'Toggles visibility of lat/lon lines';
+  geoLineDes = 'Toggles visibility of geographical lines';
+  timeZoneDesc = 'Toggles visibility of time zones';
+  bumpDesc = 'Toggles the simulation of elevation on the current globe view';
+  viewDesc = 'Toggles different types of map view';
+  coastDesc = 'Toggles rendered quality of coastlines';
+  riverDesc = 'Toggles rendered quality of rivers';
+  lakeDesc = 'Toggles rendered quality of lakes';
+  displayLoc = 'right';
 
   ngOnInit(): void {
   }

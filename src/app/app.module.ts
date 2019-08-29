@@ -20,7 +20,8 @@ import {
   MatDialogModule,
   MatTabsModule,
   MatButtonModule,
-  MatSliderModule} from '@angular/material';
+  MatSliderModule, MatTooltipModule
+} from '@angular/material';
 import {} from '@angular/material';
 import { GetJson } from './getJson';
 import {ViewComponent} from './view.component';
@@ -53,7 +54,8 @@ import {TimeseriesMenu} from './timeseries-menu';
     MatTabsModule,
     MatListModule,
     MatSliderModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [
     GetJson,

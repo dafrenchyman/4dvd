@@ -6,7 +6,7 @@
       <mat-tab-group>
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon title='{{datasetTitle}}'>list</mat-icon>
+            <mat-icon matTooltip='{{datasetTitle}}'>list</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Dataset Settings</h5>
@@ -33,7 +33,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon title="{{timeTitle}}">event</mat-icon>
+            <mat-icon matTooltip="{{timeTitle}}">event</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Date</h5>
@@ -80,7 +80,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon title="{{graphicTitle}}">brush</mat-icon>
+            <mat-icon matTooltip="{{graphicTitle}}">brush</mat-icon>
           </ng-template>
 
             <div class="TabHeading">
@@ -89,17 +89,18 @@
 
           <mat-list>
             <mat-list-item>
-              <button mat-raised-button (click)="OpenColorMapDialog()" title="{{colorMapDesc}}"><mat-icon>palette</mat-icon> ColorMaps</button>
+              <button mat-raised-button (click)="OpenColorMapDialog()" matTooltip="{{colorMapDesc}}" matTooltipPosition="{{displayLoc}}"><mat-icon>palette</mat-icon> ColorMaps</button>
             </mat-list-item>
           </mat-list>
-          <mat-list>
+          <mat-list >
             <mat-divider></mat-divider>
 
             <!-- Smoothed Gridboxes -->
             <mat-list-item>
               <mat-slide-toggle
+                matTooltip="{{gridboxDesc}}"
+                matTooltipPosition="{{displayLoc}}"
                 class="example-margin"
-                title="{{gridboxDesc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.smoothGrid"
                 (change)="changeSmoothGrid()">
@@ -111,7 +112,8 @@
             <mat-list-item>
               <mat-slide-toggle
                 class="example-margin"
-                title="{{pacificDesc}}"
+                matTooltip="{{pacificDesc}}"
+                matTooltipPosition="{{displayLoc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.pacificCentered"
                 (change)="changePacificCentered()">
@@ -123,7 +125,8 @@
             <mat-list-item>
               <mat-slide-toggle
                 class="example-margin"
-                title="{{islandDesc}}"
+                matTooltip="{{islandDesc}}"
+                matTooltipPosition="{{displayLoc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.minorIslands"
                 (change)="changeMinorIslandsLines()">
@@ -135,7 +138,8 @@
             <mat-list-item>
               <mat-slide-toggle
                 class="example-margin"
-                title="{{latLonDesc}}"
+                matTooltip="{{latLonDesc}}"
+                matTooltipPosition="{{displayLoc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.latlonlines"
                 (change)="changeLatlonlines()">
@@ -147,7 +151,8 @@
             <mat-list-item>
               <mat-slide-toggle
                 class="example-margin"
-                title="{{geoLineDes}}"
+                matTooltip="{{geoLineDes}}"
+                matTooltipPosition="{{displayLoc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.geolines"
                 (change)="changeGeolines()">
@@ -159,7 +164,8 @@
             <mat-list-item>
               <mat-slide-toggle
                 class="example-margin"
-                title="{{timeZoneDesc}}"
+                matTooltip="{{timeZoneDesc}}"
+                matTooltipPosition="{{displayLoc}}"
                 [color]="'primary'"
                 [checked]="viewSettingsSelected.timezones"
                 (change)="changeTimezones()">
@@ -171,7 +177,7 @@
           <mat-divider></mat-divider>
 
           <!-- Bump Mapping -->
-          <div class="section" style="margin-left: 20px;" title="{{bumpDesc}}">
+          <div class="section" style="margin-left: 20px;" matTooltip="{{bumpDesc}}" matTooltipPosition="{{displayLoc}}">
             <h6>Bump Mapping</h6>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.bumpMapping">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.bumpMapping" [value]="curr" (change)="changeBumpMapping(curr)">
@@ -182,7 +188,7 @@
           <mat-divider></mat-divider>
 
           <!-- Globe View -->
-          <div class="section" style="margin-left: 20px;" title="{{viewDesc}}">
+          <div class="section" style="margin-left: 20px;" matTooltip="{{viewDesc}}" matTooltipPosition="{{displayLoc}}">
             <h6>Globe View</h6>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.view">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.view" [value]="curr" (change)="selectView(curr)">
@@ -193,7 +199,7 @@
           <mat-divider></mat-divider>
 
           <!-- Coasts -->
-          <div class="section" style="margin-left: 20px;" title="{{coastDesc}}">
+          <div class="section" style="margin-left: 20px;" matTooltip="{{coastDesc}}" matTooltipPosition="{{displayLoc}}">
             <h6>Coasts</h6>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.coasts">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.coasts" [value]="curr" (change)="selectCoasts(curr)">
@@ -204,7 +210,7 @@
           <mat-divider></mat-divider>
 
           <!-- Rivers -->
-          <div class="section" style="margin-left: 20px;" title="{{riverDesc}}">
+          <div class="section" style="margin-left: 20px;" matTooltip="{{riverDesc}}" matTooltipPosition="{{displayLoc}}">
             <h6>Rivers</h6>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.rivers">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.rivers" [value]="curr" (change)="selectRiver(curr)">
@@ -215,7 +221,7 @@
           <mat-divider></mat-divider>
 
           <!-- Lakes -->
-          <div class="section" style="margin-left: 20px;" title="{{lakeDesc}}">
+          <div class="section" style="margin-left: 20px;" matTooltip="{{lakeDesc}}" matTooltipPosition="{{displayLoc}}">
             <h6>Lakes</h6>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.lakes">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.lakes" [value]="curr" (change)="selectLakes(curr)">
@@ -230,7 +236,7 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon title="{{infoTitle}}">info</mat-icon>
+            <mat-icon matTooltip="{{infoTitle}}">info</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Information</h5>
@@ -246,7 +252,7 @@
       </mat-tab-group>
     </mat-sidenav>
 
-    <button mat-mini-fab id="sideNavButton" class="example-fab" (click)="sidenav.toggle()">
+    <button mat-mini-fab id="sideNavButton" class="example-fab" (click)="sidenav.toggle()" matTooltip="Settings" matTooltipPosition="below">
       <mat-icon>add</mat-icon>
     </button>
 
