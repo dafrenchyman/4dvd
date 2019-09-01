@@ -67,7 +67,7 @@
             <mat-label>Month</mat-label>
             <mat-list>
               <mat-list-item>
-                <mat-select placeholder="Month" [(ngModel)]="currMonth" (change)="ChangeMonth()">
+                <mat-select placeholder="Month" [(value)]="currMonth" (selectionChange)="ChangeMonth()">
                   <mat-option *ngFor="let month of months" [value]="month.value">
                     {{ month.viewValue }}
                   </mat-option>
