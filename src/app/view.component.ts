@@ -348,11 +348,13 @@ export class ViewComponent implements OnInit {
     const dialogRef = this.dialog.open(DatasetMenu, {data: settings});
     dialogRef.afterClosed().subscribe(dataset => {
 
-      const selectedDataset = this._model.settings.Datasets.find(myObj => myObj.FullName === dataset.FullName);
-      if (selectedDataset != null) {
-        this._controller.loadLevels(selectedDataset);
-        this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
-        this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
+      if (dataset != null) {
+        const selectedDataset = this._model.settings.Datasets.find(myObj => myObj.FullName === dataset.FullName);
+        if (selectedDataset != null) {
+          this._controller.loadLevels(selectedDataset);
+          this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+          this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
+        }
       }
     });
   }
