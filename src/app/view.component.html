@@ -11,11 +11,13 @@
           <div class="TabHeading">
             <h5>Dataset Settings</h5>
           </div>
-          <mat-list>
-            <mat-list-item>
-              <button mat-raised-button (click)="OpenDatasetDialog()">Datasets</button>
-            </mat-list-item>
-          </mat-list>
+          <div class="MatButton">
+            <mat-list>
+              <mat-list-item>
+                <button mat-raised-button (click)="OpenDatasetDialog()">Datasets</button>
+              </mat-list-item>
+            </mat-list>
+          </div>
           <mat-list>
             <mat-divider></mat-divider>
           </mat-list>
@@ -83,15 +85,16 @@
             <mat-icon matTooltip="{{graphicTitle}}">brush</mat-icon>
           </ng-template>
 
-            <div class="TabHeading">
-              <h5>Graphical Settings</h5>
-            </div>
-
-          <mat-list>
-            <mat-list-item>
-              <button mat-raised-button (click)="OpenColorMapDialog()" matTooltip="{{colorMapDesc}}" matTooltipPosition="{{displayLoc}}"><mat-icon>palette</mat-icon> ColorMaps</button>
-            </mat-list-item>
-          </mat-list>
+          <div class="TabHeading">
+            <h5>Graphical Settings</h5>
+          </div>
+          <div class="MatButton">
+            <mat-list>
+              <mat-list-item>
+                <button mat-raised-button (click)="OpenColorMapDialog()" matTooltip="{{colorMapDesc}}" matTooltipPosition="{{displayLoc}}"><mat-icon>palette</mat-icon> ColorMaps</button>
+              </mat-list-item>
+            </mat-list>
+          </div>
           <mat-list >
             <mat-divider></mat-divider>
 
@@ -241,12 +244,47 @@
           <div class="TabHeading">
             <h5>Information</h5>
           </div>
+          <!-- Work in Progress
 
-          <mat-list>
-            <mat-list-item>
-              <button mat-raised-button (click)="createCsvFromGriddedData()">Download Data</button>
-            </mat-list-item>
-          </mat-list>
+          <div class="InfoText">
+            <p><Strong>Original File Location:</Strong> {{this._model.settings.Dataset.OriginalLocation}} </p>
+            <p><Strong>Units:</Strong> {{this._model.settings.Dataset.Units}} </p>
+            <p><Strong>Date Range:</Strong> {{this._model.settings.Dataset.StartDate}} to {{this._model.settings.Dataset.EndDate}} </p>
+          </div>
+
+          -->
+
+          <div class="MatButton">
+            <mat-list>
+              <mat-list-item>
+                <button mat-raised-button (click)="createCsvFromGriddedData()">Download Data</button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="TabHeading">
+            <h5>Helpful Links</h5>
+          </div>
+          <div style="text-align: center">
+            <a href="https://github.com/dafrenchyman/4dvd" target="_blank">Github</a>
+            <br>
+            <a href="https://www.sdsu.edu/" target="_blank">San Diego State University</a>
+            <br>
+            <a href="https://c2s2.sdsu.edu/" target="_blank">SDSU Climate Science</a>
+            <br>
+          </div>
+
+          <br>
+          <mat-divider></mat-divider>
+
+          <div class="TabHeading">
+            <h5>Copyright</h5>
+          </div>
+
+          <p class="InfoText">Copyright (C) 2013-2018, San Diego State University Research Foundation. Created by Julien Pierret and Dr. Samuel Shen, San Diego State University.</p>
+
 
         </mat-tab>
       </mat-tab-group>
