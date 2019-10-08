@@ -240,11 +240,11 @@ export class ViewComponent implements OnInit {
     if (this._model != null) {
       if (this._model.settings != null) {
         if (this._model.settings.LevelName != null && this._model.settings.CurrDate != null) {
-          return this._model.settings.LevelName + " | " + this._model.settings.CurrDate;
+          return this._model.settings.LevelName + " | " + this._model.settings.CurrDate.substring(0, 7);
         }
       }
-   }
-   return "";
+    }
+    return "";
   }
 
   public GetMinYear() : number {
@@ -385,7 +385,7 @@ export class ViewComponent implements OnInit {
     {value: '08', viewValue: 'August'},
     {value: '09', viewValue: 'September'},
     {value: '10', viewValue: 'October'},
-    {value: '11', viewValue: 'Novenmber'},
+    {value: '11', viewValue: 'November'},
     {value: '12', viewValue: 'December'}
   ];
 

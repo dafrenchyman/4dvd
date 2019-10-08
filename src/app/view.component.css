@@ -1,4 +1,3 @@
-
 #Legend {
   position: absolute;
   display: block;
@@ -67,9 +66,9 @@ md-sidenav {
 
 .mat-tab-label, .mat-tab-label-active{
   min-width: 0!important;
-  width: 52px !important;
-  padding: 3px!important;
-  margin: 3px!important;
+  width: 60px !important;
+  padding: 4px!important;
+  margin: 4px!important;
 }
 
 
@@ -94,15 +93,7 @@ md-sidenav {
   text-align: center;
   font-size: 30px;
   z-index: 6;
-  color: white;
-  text-shadow: -1px -1px 0 #000000,
-  1px -1px 0 #000000,
-  -1px 1px 0 #000000,
-  1px 1px 0 #000000,
-  -2px 0 0 #000000,
-  2px 0 0 #000000,
-  0 2px 0 #000000,
-  0 -2px 0 #000000;
+  color: black;
 }
 
 #ClimateDate {
@@ -126,6 +117,7 @@ md-sidenav {
 
 
 html, body, material-app, md-sidenav-container, .my-content {
+  outline: black solid thin;
   margin: 0;
   width: 100%;
   height: 100%;
@@ -153,7 +145,33 @@ html, body, material-app, md-sidenav-container, .my-content {
   margin: 10px;
 }
 
-.MatButton{
-  margin-left: 20%;
+.MatButton1{
+  margin-right: 30%;
+  margin-left: 30%;
+  width: fit-content;
   margin-bottom: 10px;
+}
+
+.MatButton2{
+  margin-right: 60px;
+  margin-left: 60px;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.MatButton3{
+  margin-right: 60px;
+  margin-left: 70px;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.MenTab{
+  font-size: 14px;
+}
+
+.mat-slide-toggle-content,
+.mat-radio-label-content{
+  font-size: 14px;
+  color: black;
 }
