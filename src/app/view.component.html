@@ -1,10 +1,17 @@
 <div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
+  <div mat-fab id="close" class="hidden">
+    <button id="closebutton" mat-icon-button style="position: absolute; left: 275px; top: 49px; z-index: 10; color: #FFFFFF" (click)="sidenav.toggle()" (click)="unhide(this,'close')">
+      <mat-icon matTooltip="{{exitsidenav}}">close</mat-icon>
+    </button>
+  </div>
   <mat-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden"  id="WebglCanvas">
-    <mat-sidenav id="Menu" #sidenav mode="push"  opened="false" style="background-color: white; overflow:auto; width: 300px" (onmouseover)="inMenu = true;">
+
+    <mat-sidenav id="Menu" #sidenav opened="false" style="background-color: white; overflow:auto; width: 275px; display: flex" (onmouseover)="inMenu = true;">
+
       <mat-tab-group>
         <mat-tab>
           <ng-template mat-tab-label>
-            <p class="MenTab" matTooltip='{{datasetTitle}}'>Data <br> Selection</p>
+            <mat-icon matTooltip='{{datasetTitle}}'>list</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Dataset Settings</h5>
@@ -33,7 +40,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <p class="MenTab" matTooltip="{{timeTitle}}">Time <br> Selection</p>
+            <mat-icon matTooltip="{{timeTitle}}">event</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Date</h5>
@@ -80,7 +87,7 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <p class="MenTab" matTooltip="{{graphicTitle}}">Graphic <br> Options</p>
+            <mat-icon matTooltip="{{graphicTitle}}">brush</mat-icon>
           </ng-template>
 
           <div class="TabHeading">
@@ -237,7 +244,7 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <p class="MenTab"  matTooltip="{{infoTitle}}">Data <br> Download</p>
+            <mat-icon  matTooltip="{{infoTitle}}">info</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Information</h5>
@@ -288,10 +295,10 @@
       </mat-tab-group>
     </mat-sidenav>
 
-    <button mat-raised-button color="accent" id="sideNavButton" style="" class="example-fab" (click)="sidenav.toggle()" matTooltip="Settings" matTooltipPosition="below">
-      <span style="font-size: 14px">Menu</span>
+    <button mat-button id="sideNavButton" style="" [disableRipple]="true" class="example-fab" (click)="sidenav.toggle()" (click)="unhide(this,'close')" matTooltip="Settings" matTooltipPosition="below">
+      {{onClick('close')}}
+      <mat-icon>menu</mat-icon>
     </button>
-
 
     <div id="Legend"></div>
 

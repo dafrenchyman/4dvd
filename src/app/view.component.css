@@ -74,7 +74,7 @@ md-sidenav {
 
 #sideNavButton {
   position: absolute;
-  left: 20px;
+  left: 10px;
   top: 10px;
   z-index: 10;
 }
@@ -93,7 +93,15 @@ md-sidenav {
   text-align: center;
   font-size: 30px;
   z-index: 6;
-  color: black;
+  color: white;
+  text-shadow: -1px -1px 0 #000000,
+  1px -1px 0 #000000,
+  -1px 1px 0 #000000,
+  1px 1px 0 #000000,
+  -2px 0 0 #000000,
+  2px 0 0 #000000,
+  0 2px 0 #000000,
+  0 -2px 0 #000000;
 }
 
 #ClimateDate {
@@ -117,7 +125,6 @@ md-sidenav {
 
 
 html, body, material-app, md-sidenav-container, .my-content {
-  outline: black solid thin;
   margin: 0;
   width: 100%;
   height: 100%;
@@ -146,22 +153,22 @@ html, body, material-app, md-sidenav-container, .my-content {
 }
 
 .MatButton1{
-  margin-right: 30%;
-  margin-left: 30%;
+  margin-right: 75px;
+  margin-left: 75px;
   width: fit-content;
   margin-bottom: 10px;
 }
 
 .MatButton2{
-  margin-right: 60px;
-  margin-left: 60px;
+  margin-right: 50px;
+  margin-left: 50px;
   width: fit-content;
   margin-bottom: 10px;
 }
 
 .MatButton3{
-  margin-right: 60px;
-  margin-left: 70px;
+  margin-right: 57px;
+  margin-left: 57px;
   width: fit-content;
   margin-bottom: 10px;
 }
@@ -174,4 +181,29 @@ html, body, material-app, md-sidenav-container, .my-content {
 .mat-radio-label-content{
   font-size: 14px;
   color: black;
+}
+
+.hidden{
+  visibility: hidden;
+  position: absolute;
+  left: 300px;
+  top: 50px;
+}
+
+.unhidden{
+  visibility: visible;
+}
+
+.close{
+  border: none;
+}
+
+button:focus{
+  outline: none;
+  border: none;
+  margin: 0px;
+}
+
+closebutton:focus{
+  background: none;
 }

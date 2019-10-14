@@ -46,6 +46,7 @@ export class ViewComponent implements OnInit {
   riverDesc = 'Toggles rendered quality of rivers';
   lakeDesc = 'Toggles rendered quality of lakes';
   displayLoc = 'right';
+  exitsidenav = 'Closes the settings tab';
 
   ngOnInit(): void {
   }
@@ -53,7 +54,31 @@ export class ViewComponent implements OnInit {
   @ViewChild('ClimateSystem') climateSystemRef: ElementRef;
   @ViewChild('WebglCanvas') webglCanvasRef: ElementRef;
   @ViewChild('sidenav') menuRef: ElementRef;
+  @ViewChild('sidenav') sidenav: any;
+  opened: any = false;
 
+  onClick(divID): void{
+    const item = document.getElementById(divID);
+    if(item) {
+      if (this.sidenav.opened) {
+        item.className = 'unhidden';
+      } else {
+        item.className = 'hidden';
+      }
+    }
+  }
+  unhide(clickedButton, divID): void {
+    const item = document.getElementById(divID);
+    if (item) {
+      if (item.className === 'hidden') {
+        item.className = 'unhidden';
+        clickedButton.value = 'hide';
+      } else {
+        item.className = 'hidden';
+        clickedButton.value = 'unhide';
+      }
+    }
+  }
   viewSettingsOptions : any = {
     rivers : ["Low", "Medium", "High", "None"],
     lakes : ["Low", "Medium", "High", "None"],
