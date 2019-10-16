@@ -46,6 +46,7 @@ export class ViewComponent implements OnInit {
   riverDesc = 'Toggles rendered quality of rivers';
   lakeDesc = 'Toggles rendered quality of lakes';
   displayLoc = 'right';
+  exitsidenav = 'Closes the settings tab';
 
   ngOnInit(): void {
   }
@@ -53,7 +54,31 @@ export class ViewComponent implements OnInit {
   @ViewChild('ClimateSystem') climateSystemRef: ElementRef;
   @ViewChild('WebglCanvas') webglCanvasRef: ElementRef;
   @ViewChild('sidenav') menuRef: ElementRef;
+  @ViewChild('sidenav') sidenav: any;
+  opened: any = false;
 
+  onClick(divID): void{
+    const item = document.getElementById(divID);
+    if(item) {
+      if (this.sidenav.opened) {
+        item.className = 'unhidden';
+      } else {
+        item.className = 'hidden';
+      }
+    }
+  }
+  unhide(clickedButton, divID): void {
+    const item = document.getElementById(divID);
+    if (item) {
+      if (item.className === 'hidden') {
+        item.className = 'unhidden';
+        clickedButton.value = 'hide';
+      } else {
+        item.className = 'hidden';
+        clickedButton.value = 'unhide';
+      }
+    }
+  }
   viewSettingsOptions : any = {
     rivers : ["Low", "Medium", "High", "None"],
     lakes : ["Low", "Medium", "High", "None"],
@@ -240,11 +265,11 @@ export class ViewComponent implements OnInit {
     if (this._model != null) {
       if (this._model.settings != null) {
         if (this._model.settings.LevelName != null && this._model.settings.CurrDate != null) {
-          return this._model.settings.LevelName + " | " + this._model.settings.CurrDate;
+          return this._model.settings.LevelName + " | " + this._model.settings.CurrDate.substring(0, 7);
         }
       }
-   }
-   return "";
+    }
+    return "";
   }
 
   public GetMinYear() : number {
@@ -385,7 +410,7 @@ export class ViewComponent implements OnInit {
     {value: '08', viewValue: 'August'},
     {value: '09', viewValue: 'September'},
     {value: '10', viewValue: 'October'},
-    {value: '11', viewValue: 'Novenmber'},
+    {value: '11', viewValue: 'November'},
     {value: '12', viewValue: 'December'}
   ];
 

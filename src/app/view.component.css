@@ -1,4 +1,3 @@
-
 #Legend {
   position: absolute;
   display: block;
@@ -67,15 +66,15 @@ md-sidenav {
 
 .mat-tab-label, .mat-tab-label-active{
   min-width: 0!important;
-  width: 52px !important;
-  padding: 3px!important;
-  margin: 3px!important;
+  width: 60px !important;
+  padding: 4px!important;
+  margin: 4px!important;
 }
 
 
 #sideNavButton {
   position: absolute;
-  left: 20px;
+  left: 10px;
   top: 10px;
   z-index: 10;
 }
@@ -153,7 +152,58 @@ html, body, material-app, md-sidenav-container, .my-content {
   margin: 10px;
 }
 
-.MatButton{
-  margin-left: 20%;
+.MatButton1{
+  margin-right: 75px;
+  margin-left: 75px;
+  width: fit-content;
   margin-bottom: 10px;
+}
+
+.MatButton2{
+  margin-right: 50px;
+  margin-left: 50px;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.MatButton3{
+  margin-right: 57px;
+  margin-left: 57px;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.MenTab{
+  font-size: 14px;
+}
+
+.mat-slide-toggle-content,
+.mat-radio-label-content{
+  font-size: 14px;
+  color: black;
+}
+
+.hidden{
+  visibility: hidden;
+  position: absolute;
+  left: 300px;
+  top: 50px;
+}
+
+.unhidden{
+  visibility: visible;
+}
+
+.close{
+  border: none;
+}
+
+button:focus{
+  outline: none;
+  border: none;
+  margin: 0px;
+}
+
+closebutton:focus{
+  background: none;
 }

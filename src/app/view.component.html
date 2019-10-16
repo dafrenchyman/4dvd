@@ -1,8 +1,13 @@
-
-
 <div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
+  <div mat-fab id="close" class="hidden">
+    <button id="closebutton" mat-icon-button style="position: absolute; left: 275px; top: 49px; z-index: 10; color: #FFFFFF" (click)="sidenav.toggle()" (click)="unhide(this,'close')">
+      <mat-icon matTooltip="{{exitsidenav}}">close</mat-icon>
+    </button>
+  </div>
   <mat-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden"  id="WebglCanvas">
-    <mat-sidenav id="Menu" #sidenav mode="push"  opened="false" style="background-color: white; overflow:auto;" (onmouseover)="inMenu = true;">
+
+    <mat-sidenav id="Menu" #sidenav opened="false" style="background-color: white; overflow:auto; width: 275px; display: flex" (onmouseover)="inMenu = true;">
+
       <mat-tab-group>
         <mat-tab>
           <ng-template mat-tab-label>
@@ -11,7 +16,7 @@
           <div class="TabHeading">
             <h5>Select Datasets</h5>
           </div>
-          <div class="MatButton">
+          <div class="MatButton1">
             <mat-list>
               <mat-list-item>
                 <button mat-raised-button (click)="OpenDatasetDialog()">Climate Data</button>
@@ -23,7 +28,7 @@
           </mat-list>
 
           <div class="section" style="margin-left: 20px;">
-            <h6>Layers</h6>
+            <h6>Air Pressure Layers</h6>
             <mat-radio-group class="radio-group">
               <mat-radio-button class="radio-button" *ngFor="let level of GetLevels()" [checked]="level.Selected" [value]="level.Name" (change)="ChangeLevel(level.Level_ID)">
                 {{ level.Name }}
@@ -88,7 +93,7 @@
           <div class="TabHeading">
             <h5>Graphical Settings</h5>
           </div>
-          <div class="MatButton">
+          <div class="MatButton2">
             <mat-list>
               <mat-list-item>
                 <button mat-raised-button (click)="OpenColorMapDialog()" matTooltip="{{colorMapDesc}}" matTooltipPosition="{{displayLoc}}"><mat-icon>palette</mat-icon> ColorMaps</button>
@@ -99,7 +104,7 @@
             <mat-divider></mat-divider>
 
             <!-- Smoothed Gridboxes -->
-            <mat-list-item>
+            <mat-list-item style="color: black ">
               <mat-slide-toggle
                 matTooltip="{{gridboxDesc}}"
                 matTooltipPosition="{{displayLoc}}"
@@ -181,7 +186,7 @@
 
           <!-- Bump Mapping -->
           <div class="section" style="margin-left: 20px;" matTooltip="{{bumpDesc}}" matTooltipPosition="{{displayLoc}}">
-            <h6>Bump Mapping</h6>
+            <h5><u>Bump Mapping</u></h5>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.bumpMapping">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.bumpMapping" [value]="curr" (change)="changeBumpMapping(curr)">
                 {{curr}}
@@ -192,7 +197,7 @@
 
           <!-- Globe View -->
           <div class="section" style="margin-left: 20px;" matTooltip="{{viewDesc}}" matTooltipPosition="{{displayLoc}}">
-            <h6>Globe View</h6>
+            <h5><u>Globe View</u></h5>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.view">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.view" [value]="curr" (change)="selectView(curr)">
                 {{curr}}
@@ -203,7 +208,7 @@
 
           <!-- Coasts -->
           <div class="section" style="margin-left: 20px;" matTooltip="{{coastDesc}}" matTooltipPosition="{{displayLoc}}">
-            <h6>Coasts</h6>
+            <h5><u>Coasts</u></h5>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.coasts">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.coasts" [value]="curr" (change)="selectCoasts(curr)">
                 {{curr}}
@@ -214,7 +219,7 @@
 
           <!-- Rivers -->
           <div class="section" style="margin-left: 20px;" matTooltip="{{riverDesc}}" matTooltipPosition="{{displayLoc}}">
-            <h6>Rivers</h6>
+            <h5><u>Rivers</u></h5>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.rivers">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.rivers" [value]="curr" (change)="selectRiver(curr)">
                 {{curr}}
@@ -225,7 +230,7 @@
 
           <!-- Lakes -->
           <div class="section" style="margin-left: 20px;" matTooltip="{{lakeDesc}}" matTooltipPosition="{{displayLoc}}">
-            <h6>Lakes</h6>
+            <h5><u>Lakes</u></h5>
             <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.lakes">
               <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.lakes" [value]="curr" (change)="selectLakes(curr)">
                 {{curr}}
@@ -239,7 +244,7 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon matTooltip="{{infoTitle}}">info</mat-icon>
+            <mat-icon  matTooltip="{{infoTitle}}">info</mat-icon>
           </ng-template>
           <div class="TabHeading">
             <h5>Information</h5>
@@ -254,7 +259,7 @@
 
           -->
 
-          <div class="MatButton">
+          <div class="MatButton3">
             <mat-list>
               <mat-list-item>
                 <button mat-raised-button (click)="createCsvFromGriddedData()">Download Data</button>
@@ -290,10 +295,10 @@
       </mat-tab-group>
     </mat-sidenav>
 
-    <button mat-mini-fab id="sideNavButton" class="example-fab" (click)="sidenav.toggle()" matTooltip="Settings" matTooltipPosition="below">
-      <mat-icon>add</mat-icon>
+    <button mat-button id="sideNavButton" style="" [disableRipple]="true" class="example-fab" (click)="sidenav.toggle()" (click)="unhide(this,'close')" matTooltip="Settings" matTooltipPosition="below">
+      {{onClick('close')}}
+      <mat-icon>menu</mat-icon>
     </button>
-
 
     <div id="Legend"></div>
 
@@ -327,4 +332,3 @@
 
   </mat-sidenav-container>
 </div>
-
