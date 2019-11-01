@@ -227,14 +227,23 @@ export class ViewComponent implements OnInit {
   public setModel() {
 
   }
+  public StringToArray(str): string {
+    if (str === '') {
+      return ' ';
+    }
+    let r: any[];
+    r = str.split('|');
+    const newTitle = r[4] + ' | ' + r[5];
+    return newTitle;
+  }
 
-  public GetTitle() : string {
+  public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this._model.settings.FullName;
+        return this.StringToArray(this._model.settings.FullName);
       }
     }
-    return "";
+    return '';
   }
 
   public GridBoxData : Array<number>;

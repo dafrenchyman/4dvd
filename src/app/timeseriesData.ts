@@ -19,7 +19,7 @@ export class  TimeseriesData {
       name: string
     }>();
     for (var counter = 0; counter < rawTimeseriesData.ValueFinal.length; counter++) {
-      var currDate = rawTimeseriesData.Date[counter];
+      var currDate = rawTimeseriesData.Date[counter].substring(0, 7);
       var currValue = rawTimeseriesData.ValueFinal[counter];
       series.push({
         value : currValue,
