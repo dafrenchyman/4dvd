@@ -233,7 +233,7 @@ export class ViewComponent implements OnInit {
     }
     let r: any[];
     r = str.split('|');
-    const newTitle = r[4] + ' | ' + r[5];
+    const newTitle = r[r.length - 2] + ' | ' + r[r.length - 1];
     return newTitle;
   }
 
