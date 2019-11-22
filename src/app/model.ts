@@ -5,6 +5,7 @@
 import {ViewComponent} from "./view.component";
 import {GetJson} from "./getJson";
 import {GlobeViewType, Settings} from "./settings";
+import {Dataset} from "./Dataset";
 import {ColorMap} from "./ColorMap";
 import {Loaders} from "./loaders";
 import {Lines} from "./lines";
@@ -22,10 +23,12 @@ export class Model {
 
   private _observers: Array<ViewComponent>;
   private _getJson: GetJson;
+//  private  selectedFile: any;
 
   public loaders: Loaders;
   public colorMap: ColorMap;
   public settings: Settings;
+
 
 
   public _world: World;
@@ -35,7 +38,6 @@ export class Model {
   private finishedLoading: boolean;
   public legend: Legend;
   public timeseriesData : [TimeseriesData];
-
   public constructor(gl: WebGLRenderingContext, getJson: GetJson) {
     this.finishedLoading = false;
     this._getJson = getJson
@@ -62,12 +64,16 @@ export class Model {
         var results: any = result;
         this.settings.ServerString = results.Server;
         this.loaders = new Loaders(this._getJson, this.settings);
+
       }
+
     );
+
   }
 
   private rawGridData: any;
   private rawTimeseriesData: any;
+
 
   public changeView(view, ui, earthRotationMatrix, earthRotationMatrix_x, earthRotationMatrix_y) {
     switch (view) {
@@ -103,6 +109,22 @@ export class Model {
         alert("Invalid View");
     }
   }
+
+
+
+  public LoadInitialData(selectedDt) {
+    if (selectedDt != null) {
+      this.loadLevels(selectedDt);
+      this.loadDataset(selectedDt, selectedDt.StartDate, 1);
+
+    }
+  }
+
+
+
+
+
+
 
   public loadLevels(dataset) {
     var filename = this.settings.ServerString + 'assets/g_GetLevel.php' + '?dbname=' + dataset.DatabaseStore;
@@ -144,7 +166,6 @@ export class Model {
       var filename = this.settings.ServerString + 'assets/g_GetGridData.php' +
         '?dbname=' + dataset.DatabaseStore + '&date=' + date +
         '&level=' + level_id;
-
       var loader = this._getJson.getAll(filename);
       loader.then(result => {
 

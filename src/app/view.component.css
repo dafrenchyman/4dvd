@@ -1,3 +1,21 @@
+.mat-tab-nav-bar  {
+  font-size: 2.3em;
+  margin-right: 2.9em;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  background-color: transparent;
+
+}
+
+.mat-tab-link{
+  background-color: transparent;
+  color: #000000;
+  font-weight: bold;
+}
+
+
+
 #Legend {
   position: absolute;
   display: block;
@@ -207,3 +225,5 @@ button:focus{
 closebutton:focus{
   background: none;
 }
+
+

@@ -7,6 +7,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { AppComponent } from './app.component';
 import { ColorMapMenu } from './color-map-menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import {
   MatCheckboxModule,
   MatCardModule,
@@ -27,6 +28,8 @@ import { GetJson } from './getJson';
 import {ViewComponent} from './view.component';
 import {DatasetMenu} from './dataset-menu';
 import {TimeseriesMenu} from './timeseries-menu';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { About4dvdComponent } from './about4dvd/about4dvd.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import {TimeseriesMenu} from './timeseries-menu';
     ViewComponent,
     ColorMapMenu,
     DatasetMenu,
-    TimeseriesMenu
+    TimeseriesMenu,
+    About4dvdComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,8 @@ import {TimeseriesMenu} from './timeseries-menu';
     MatListModule,
     MatSliderModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    AppRoutingModule
   ],
   providers: [
     GetJson,

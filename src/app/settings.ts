@@ -43,6 +43,7 @@ export class Settings {
   minValue: number = null;
   animate: boolean = false;
   ServerString : string;
+  selectedFile: Dataset;
 
   private Rivers : any[] = [{
       value: "Low",
@@ -101,6 +102,11 @@ export class Settings {
       file: ""
     }
   ];
+
+  GetSelectedFile(){
+    this.selectedFile = this.Datasets.find(myObj => myObj.FullName === "NOAA|NOAA-CIRES Twentieth Century Reanalysis (V2c)|Pressure Level|Non-Gaussian|Air Temperature|Monthly Mean (1000-10mb)");
+    return this.selectedFile;
+  }
 
   GetBumpmappingFile(value) {
     for (var i = 0; i < this.BumpMapping.length; i++) {

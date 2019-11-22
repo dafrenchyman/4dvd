@@ -1,25 +1,51 @@
+
+<nav mat-tab-nav-bar >
+  <ul>
+    <li class="nav-item" >
+      <a mat-tab-link routerLink="" routerLinkActive="active">Home</a>
+    </li>
+    <li class="nav-item">
+      <a mat-tab-link routerLink="/about4dvd" routerLinkActive="active">About 4DVD</a>
+
+    </li>
+    <li class = "nav-item">
+      <a mat-tab-link (click)="(createCsvFromGriddedData())" routerLink="">Download</a>
+    </li>
+
+  </ul>
+
+</nav>
+<router-outlet></router-outlet>
+
+
 <div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
   <div mat-fab id="close" class="hidden">
     <button id="closebutton" mat-icon-button style="position: absolute; left: 275px; top: 49px; z-index: 10; color: #FFFFFF" (click)="sidenav.toggle()" (click)="unhide(this,'close')">
       <mat-icon matTooltip="{{exitsidenav}}">close</mat-icon>
     </button>
+
   </div>
+
   <mat-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden"  id="WebglCanvas">
 
-    <mat-sidenav id="Menu" #sidenav opened="false" style="background-color: white; overflow:auto; width: 275px; display: flex" (onmouseover)="inMenu = true;">
+    <mat-sidenav id="Menu" #sidenav opened="false" style="background-color: white; overflow:auto; width: 275px; display: flex"  inMenu = true; >
 
       <mat-tab-group>
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon matTooltip='{{datasetTitle}}'>list</mat-icon>
           </ng-template>
+
           <div class="TabHeading">
             <h5>Select Datasets</h5>
           </div>
+
           <div class="MatButton1">
+
             <mat-list>
               <mat-list-item>
-                <button mat-raised-button (click)="OpenDatasetDialog()">Climate Data</button>
+
+                <button mat-raised-button  (click)="OpenDatasetDialog()">Climate Data</button>
               </mat-list-item>
             </mat-list>
           </div>
@@ -32,6 +58,7 @@
             <mat-radio-group class="radio-group">
               <mat-radio-button class="radio-button" *ngFor="let level of GetLevels()" [checked]="level.Selected" [value]="level.Name" (change)="ChangeLevel(level.Level_ID)">
                 {{ level.Name }}
+
               </mat-radio-button>
             </mat-radio-group>
           </div>
@@ -204,7 +231,9 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
+
           <mat-divider></mat-divider>
+
 
           <!-- Coasts -->
           <div class="section" style="margin-left: 20px;" matTooltip="{{coastDesc}}" matTooltipPosition="{{displayLoc}}">
@@ -293,6 +322,7 @@
 
         </mat-tab>
       </mat-tab-group>
+
     </mat-sidenav>
 
     <button mat-button id="sideNavButton" style="" [disableRipple]="true" class="example-fab" (click)="sidenav.toggle()" (click)="unhide(this,'close')" matTooltip="Settings" matTooltipPosition="below">
@@ -301,6 +331,7 @@
     </button>
 
     <div id="Legend"></div>
+
 
     <div id="ClimateTitle"> {{ GetTitle() }} </div>
 
@@ -325,6 +356,8 @@
       </mat-card>
     </div>
 
+
+
     <canvas #ClimateGl id="ClimateGl" (mouseleave)="inCanvas = false;" (mouseenter)='inCanvas = true;' style="position: absolute; z-index: 5; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;"><!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
 
     </canvas>
@@ -332,3 +365,4 @@
 
   </mat-sidenav-container>
 </div>
+

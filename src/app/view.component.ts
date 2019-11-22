@@ -4,7 +4,7 @@
 
 import {Controller} from "./controller";
 import {Model} from "./model";
-import {Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ElementRef, HostListener, ViewChild, ViewEncapsulation} from "@angular/core";
 import {Gl, Shaders} from "./gl";
 import {UI} from "./ui";
 import {GetJson} from "./getJson";
@@ -49,6 +49,8 @@ export class ViewComponent implements OnInit {
   exitsidenav = 'Closes the settings tab';
 
   ngOnInit(): void {
+
+
   }
   @ViewChild('ClimateGl') private _canvas: ElementRef;
   @ViewChild('ClimateSystem') climateSystemRef: ElementRef;
@@ -56,6 +58,7 @@ export class ViewComponent implements OnInit {
   @ViewChild('sidenav') menuRef: ElementRef;
   @ViewChild('sidenav') sidenav: any;
   opened: any = false;
+  flag: any =false;
 
   onClick(divID): void{
     const item = document.getElementById(divID);
@@ -108,6 +111,9 @@ export class ViewComponent implements OnInit {
     pacificCentered: false
   };
 
+  LoadInitialData_1(){
+    this._controller.LoadInitialData();
+  }
   selectView(value) {
     this._controller.changeView(value, this.ui, this.earthRotationMatrix, this.earthRotationMatrix_x, this.earthRotationMatrix_y);
   }
@@ -173,8 +179,10 @@ export class ViewComponent implements OnInit {
   inCanvas : boolean ;
   inMenu : boolean;
 
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+
 
     var tabMenuRefHeight = this.climateSystemRef.nativeElement.parentNode.parentNode.children[0].clientHeight;
     //var componentWidth = this.climateSystemRef.nativeElement.width;
@@ -202,6 +210,7 @@ export class ViewComponent implements OnInit {
       this.ChangeWindowSize(this.viewportWidth, this.viewportHeight);
       this.drawScene(this.ui, this._model.settings);
     }
+
   }
 
 
@@ -220,8 +229,12 @@ export class ViewComponent implements OnInit {
     this.onResize(null);
     this.uiLoader.then( results => {
         this.webGLStart();
+
       }
     );
+
+  // this.onLoadInitial();
+
   }
 
   public setModel() {
@@ -232,8 +245,10 @@ export class ViewComponent implements OnInit {
     if (this._model != null) {
       if (this._model.settings != null) {
         return this._model.settings.FullName;
+
       }
     }
+
     return "";
   }
 
@@ -254,12 +269,13 @@ export class ViewComponent implements OnInit {
   }
 
   public DrawLegend() {
-    if (this._model != null) {
+
       if (this._model.legend != null) {
         this._model.legend.drawLegend();
+
       }
     }
-  }
+
 
   public GetLayerDateLabel() : string {
     if (this._model != null) {
@@ -335,6 +351,7 @@ export class ViewComponent implements OnInit {
    * @param keyPath - The keypath (as an array) we will be adding @param obj
    */
   public generateDatesetMenuItems(obj, keyPath) {
+
     const lastKeyIndex = keyPath.length;
     for (let i = 0; i < lastKeyIndex; ++ i) {
       const key = keyPath[i];
@@ -357,10 +374,13 @@ export class ViewComponent implements OnInit {
       }
       obj = obj[key_location].children;
     }
+
   }
+
 
   OpenDatasetDialog() {
 
+   // alert("OpenDatasetDialog");
     let settings = new Array<any>();
 
     // Generate key/value lookup //
@@ -374,6 +394,7 @@ export class ViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dataset => {
 
       if (dataset != null) {
+       // alert(dataset.FullName)
         const selectedDataset = this._model.settings.Datasets.find(myObj => myObj.FullName === dataset.FullName);
         if (selectedDataset != null) {
           this._controller.loadLevels(selectedDataset);
@@ -465,7 +486,7 @@ export class ViewComponent implements OnInit {
 
   constructor(getJson : GetJson, public dialog: MatDialog) {
     this.inCanvas = false;
-    this.inMenu = false;
+    this.inMenu = true;
     this._getJson = getJson;
 
     this.viewportWidth = 500;
@@ -528,9 +549,11 @@ export class ViewComponent implements OnInit {
 
   webGLStart() {
     this.initGL();
+
     this.uiLoader.then(results => {
         //while (true) {
           this.tick();
+
         //}
       }
     );
@@ -540,9 +563,12 @@ export class ViewComponent implements OnInit {
   private _finishedLoading : boolean = false;
   title: string;
 
+
+
   @HostListener('mousewheel', ['$event']) wheel1(event) {
     this.onMousewheel(event);
   }
+
 
 
   @HostListener('wheel', ['$event']) wheel2(event) {
@@ -550,8 +576,12 @@ export class ViewComponent implements OnInit {
   }
 
 
+
+
+
   private onMousewheel(event) {
     if (this._finishedLoading && this.inCanvas) {
+   //   this._controller.LoadInitialData(this._model.settings.selectedFile);
       this.ui.handleMouseWheel(this._model.settings.globeView, event);
     }
   }
@@ -566,7 +596,6 @@ export class ViewComponent implements OnInit {
   @HostListener('mousemove', ['$event'])
   onMousemove(event) {
     if (this._finishedLoading && this.inCanvas) {
-
       var rotationMatrix = {
         earthRotationMatrix : this.earthRotationMatrix,
         earthRotationMatrix_x : this.earthRotationMatrix_x,
@@ -577,15 +606,29 @@ export class ViewComponent implements OnInit {
       this.earthRotationMatrix_x = results.earthRotationMatrix_x;
       this.earthRotationMatrix_y = results.earthRotationMatrix_y;
     }
+
   }
 
   onCanvas() {
     this.inCanvas = true;
+
+
   }
+
+/*
+  @HostListener('onMouseover', ['$event'])
+   onMouseover(event){
+      alert("calling ")
+      this._controller.LoadInitialData();
+  }
+
+*/
+
 
   @HostListener('mouseup', ['$event'])
   onMouseup(event) {
     if (this._finishedLoading && this.inCanvas) {
+   //   alert(this._model.settings.Datasets.length);
       this.ui.handleMouseUp(this._model._world, this.GL, this._model.settings.globeView, this.pMatrix, this.mvMatrix, this.vMatrix, this.earthRotationMatrix, this.earthRotationMatrix_x, this.earthRotationMatrix_y, event);
     }
   }
@@ -596,10 +639,11 @@ export class ViewComponent implements OnInit {
    */
   initGL () {
     // UI
-    this.uiLoader.then( result => {
-        this.ui = new UI(this._model.settings, result);
-        this._finishedLoading = true;
-      });
+    this.uiLoader.then(result => {
+      this.ui = new UI(this._model.settings, result);
+      this._finishedLoading = true;
+
+    });
 
     this.GL = this._canvas.nativeElement.getContext("experimental-webgl");
     this.viewportWidth = this._canvas.nativeElement.width;
@@ -620,15 +664,16 @@ export class ViewComponent implements OnInit {
 
     this._controller.changeLatLon(this.viewSettingsSelected.latlonlines);
     this._controller.changeMinorIslandsLines(this.viewSettingsSelected.minorIslands);
-
-    //this._controller.loadDataset("mrsharky_jp_Mon_gaus_mono_air_sfc_mon_mean", "0001-01-01", "1");
-    //this._controller.loadDataset("mrsharky_noaa20v2c_Mon_press_air_mon_mean", "1851-01-01", "1");
+    //this._controller.loadDataset("mrsharky_noaa20v2c_Mon_press_air_mon_mean", "0001-01-01", "1");
 
 
     if (!this.GL) {
       alert("Could not initialise WebGL, sorry :-(");
     }
+
   }
+
+
 
 
   getShader (id) {
@@ -771,6 +816,8 @@ export class ViewComponent implements OnInit {
         //this._colorMap.drawLegend();
       }
     }
+
+
   }
 
 
@@ -789,7 +836,9 @@ export class ViewComponent implements OnInit {
 
   tick() {
     requestAnimationFrame(result => this.tick());
+
     this.drawScene(this.ui, this._model.settings);
+
   }
 
   mvPushMatrix() {
@@ -866,6 +915,7 @@ export class ViewComponent implements OnInit {
   }
 
   drawScene(UI, settings) {
+
 
     this.GL.viewport(0, 0, this.GL.canvas.width, this.GL.canvas.height);
     //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -948,6 +998,11 @@ export class ViewComponent implements OnInit {
       // Minor Islands Line Data
       this.processLineData(this._model._lines.MinorIslandsVertex, settings);
     }
+    if(this.flag === false) {
+      this._controller.LoadInitialData();
+      this.flag = true;
+    }
+
   }
 
   private processLineData(input, settings) {
@@ -958,6 +1013,8 @@ export class ViewComponent implements OnInit {
       }
     }
     this.mvPopMatrix();
+
+
   }
 
 }
