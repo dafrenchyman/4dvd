@@ -47,6 +47,7 @@ export class ViewComponent implements OnInit {
   lakeDesc = 'Toggles rendered quality of lakes';
   displayLoc = 'right';
   exitsidenav = 'Closes the settings tab';
+  timeSeriesVal: any;
 
   ngOnInit(): void {
 
@@ -240,22 +241,29 @@ export class ViewComponent implements OnInit {
   public setModel() {
 
   }
+  public StringToArray(str): string {
+    if (str === '') {
+      return ' ';
+    }
+    let r: any[];
+    r = str.split('|');
+    const newTitle = r[r.length - 2] + ' | ' + r[r.length - 1];
+    return newTitle;
+  }
 
-  public GetTitle() : string {
+  public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this._model.settings.FullName;
-
+        return this.StringToArray(this._model.settings.FullName);
       }
     }
-
-    return "";
+    return '';
   }
 
   public GridBoxData : Array<number>;
 
-  public GridboxSelected() : boolean{
-    var value = false;
+  public GridboxSelected(): boolean {
+    let value = false;
     if (this._model != null) {
       if (this._model.settings != null) {
         value = this._model.settings.CurrGridBoxId > 0 ? true : false;
@@ -263,6 +271,9 @@ export class ViewComponent implements OnInit {
         this.GridBoxData[0] = this._model.settings.CurrGridBoxValue;
         this.GridBoxData[1] = this._model.settings.CurrGridBoxLat;
         this.GridBoxData[2] = this._model.settings.CurrGridBoxLon;
+        if (this._model.settings.CurrGridBoxValue !== null) {
+          this.timeSeriesVal = Number(this._model.settings.CurrGridBoxValue.toFixed(4));
+        }
       }
     }
     return value;

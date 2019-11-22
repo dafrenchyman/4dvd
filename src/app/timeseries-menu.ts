@@ -24,7 +24,7 @@ export class TimeseriesMenu {
 
   multi: TimeseriesData[] = new Array<any>();
   view: any[];
-  levelsLoaded : number = 0;
+  levelsLoaded: number = 0;
 
   // options
   showXAxis = true;
@@ -59,7 +59,7 @@ export class TimeseriesMenu {
     return this._model.settings.Levels;
   }
 
-  private _model : Model;
+  private _model: Model;
 
   public DataAvailable() {
     return this.levelsLoaded == this.multi.length && this.levelsLoaded > 0 ? true : false;
