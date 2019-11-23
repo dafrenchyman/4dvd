@@ -3,13 +3,22 @@
   <!--link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
 </head>
 
-
-<div #TabMenuRow id="tabMenuRow" class="row" style="height:100vh; margin-bottom: 0px; overflow:hidden; z-index: 0">
-  <div #TabMenu class="row blue white-text" id="TabMenu" style="margin-bottom: 0px; z-index: 10;">
-    <div class="col blue white-text"><h5>{{title}}</h5></div>
-    <div id="" class="scol s11">
-
+<div
+  #TabMenuRow
+  id="tabMenuRow"
+  class="row"
+  style="height:100vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
+>
+  <div
+    #TabMenu
+    class="row blue white-text"
+    id="TabMenu"
+    style="margin-bottom: 0px; z-index: 10;"
+  >
+    <div class="col blue white-text">
+      <h5>{{ title }}</h5>
     </div>
+    <div id="" class="scol s11"></div>
   </div>
 
   <!--div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
@@ -18,12 +27,10 @@
            style="background-color: white; position: relative; padding-left: 5px; overflow:auto; z-index: 5;">
         <app-menu></app-menu>
       </div>
-      <canvas #ClimateGl id="ClimateGl" class="col s10" style="position: absolute; z-index: 5; margin-bottom: 0px;"><!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
-      <!--/canvas>
+      <canvas #ClimateGl id="ClimateGl" class="col s10" style="position: absolute; z-index: 5; margin-bottom: 0px;" width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
+  <!--/canvas>
     </div>
   </div-->
 
-
-  <climate-view>Loading Climate...</climate-view>
-
+  <app-climate-view>Loading Climate...</app-climate-view>
 </div>

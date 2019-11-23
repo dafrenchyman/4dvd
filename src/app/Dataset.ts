@@ -2,7 +2,7 @@
  * Created by dafre on 7/9/2017.
  */
 
-export class  Dataset {
+export class Dataset {
   public Name: string;
   public FullName: string;
   public Dataset_ID: number;
@@ -13,18 +13,17 @@ export class  Dataset {
   public Units: string;
   public DefaultLevel: string;
 
-  constructor(input : {
-    Name: string,
-    FullName: string,
-    Dataset_ID: number,
-    DatabaseStore: string,
-    OriginalLocation: string,
-    StartDate: string,
-    EndDate: string,
-    Units: string,
-    DefaultLevel: string
-    })
-  {
+  constructor(input: {
+    Name: string;
+    FullName: string;
+    Dataset_ID: number;
+    DatabaseStore: string;
+    OriginalLocation: string;
+    StartDate: string;
+    EndDate: string;
+    Units: string;
+    DefaultLevel: string;
+  }) {
     this.Name = input.Name;
     this.FullName = input.FullName;
     this.Dataset_ID = input.Dataset_ID;
@@ -34,6 +33,5 @@ export class  Dataset {
     this.EndDate = input.EndDate;
     this.Units = input.Units;
     this.DefaultLevel = input.DefaultLevel;
-  };
-
+  }
 }

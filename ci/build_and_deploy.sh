@@ -15,7 +15,7 @@ fi
 
 # Build the branch
 if [ "${CIRCLE_BRANCH}" == "master" ]; then
-  ng build #--env=prod
+  npm run build #--env=prod
   COPY_PATH=""
 else
   echo "Building branch: ${CIRCLE_BRANCH}"

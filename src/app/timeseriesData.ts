@@ -1,28 +1,32 @@
-import {Helpers} from "./helpers";
+import { Helpers } from "./helpers";
 /**
  * Created by dafre on 7/16/2017.
  */
 
-
-export class  TimeseriesData {
+export class TimeseriesData {
   public name: string;
   public level_ID: number;
   public loaded: boolean;
   public visible: boolean;
-  public series: {
-    value: number, name: string
-  }[];
+  public series: Array<{
+    value: number;
+    name: string;
+  }>;
 
   constructor(name: string, level_ID: number, rawTimeseriesData: any) {
-    var series = new Array<{
-      value: number,
-      name: string
+    const series = new Array<{
+      value: number;
+      name: string;
     }>();
-    for (var counter = 0; counter < rawTimeseriesData.ValueFinal.length; counter++) {
-      var currDate = rawTimeseriesData.Date[counter].substring(0, 7);
-      var currValue = rawTimeseriesData.ValueFinal[counter];
+    for (
+      let counter = 0;
+      counter < rawTimeseriesData.ValueFinal.length;
+      counter++
+    ) {
+      const currDate = rawTimeseriesData.Date[counter].substring(0, 7);
+      const currValue = rawTimeseriesData.ValueFinal[counter];
       series.push({
-        value : currValue,
+        value: currValue,
         name: currDate
       });
     }
@@ -32,5 +36,5 @@ export class  TimeseriesData {
     this.loaded = true;
     this.visible = true;
     this.series = series;
-  };
+  }
 }

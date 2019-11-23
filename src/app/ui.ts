@@ -1,4 +1,4 @@
-import {Helpers} from "./helpers";
+import { Helpers } from "./helpers";
 /**
  * Created by dafre on 5/11/2017.
  */
@@ -7,25 +7,27 @@ declare var jQuery: any;
 
 declare var URI: any;
 
-import {GlMatrix} from "./GlMatrix";
-import {GlobeViewType, Settings} from "./settings";
-
+import { GlMatrix } from "./GlMatrix";
+import { GlobeViewType, Settings } from "./settings";
 
 export class UI {
-  mouseDown : boolean;
-  MouseDragging : boolean;
-  lastMouseX : number;
-  lastMouseY : number;
-  inMenu : boolean;
+  mouseDown: boolean;
+  MouseDragging: boolean;
+  lastMouseX: number;
+  lastMouseY: number;
+  inMenu: boolean;
 
-  xMovement : number;
-  yMovement : number;
-  zoomLevel : number;
-  globeDistance : number;
+  xMovement: number;
+  yMovement: number;
+  zoomLevel: number;
+  globeDistance: number;
 
-  MenuOptions : any;
+  MenuOptions: any;
 
-  private _settings : Settings;
+  private _settings: Settings;
+
+  MenuItems: {};
+  MenuData: any[];
 
   constructor(settings: Settings, menuOptions) {
     this._settings = settings;
@@ -43,29 +45,28 @@ export class UI {
     this.globeDistance = -250.0;
   }
 
-  resizeFunction(){};
-
-  MenuItems : {};
-  MenuData : any[];
-
+  resizeFunction() {}
   handleMouseDown(event) {
     event.preventDefault();
     this.mouseDown = true;
-    if (event.type == "mousedown") {// && displaySettings.globeView)
+    if (event.type === "mousedown") {
+      // && displaySettings.globeView)
       this.lastMouseX = event.clientX; // + event.touches[0].clientX;
       this.lastMouseY = event.clientY; // + event.touches[0].clientY;
-    }
-    else if (event.type == "touchstart") {
-      var touch = event.touches[0] || event.changedTouches[0];
+    } else if (event.type === "touchstart") {
+      const touch = event.touches[0] || event.changedTouches[0];
       this.lastMouseX = touch.pageX;
       this.lastMouseY = touch.pageY;
     }
   }
 
-  handleMouseMove (Gl, globeView : GlobeViewType, event) {
+  handleMouseMove(Gl, globeView: GlobeViewType, event) {
     event.preventDefault();
     if (this.mouseDown) {
-      if (event.clientX != this.lastMouseX && event.clientY != this.lastMouseY) {
+      if (
+        event.clientX !== this.lastMouseX &&
+        event.clientY !== this.lastMouseY
+      ) {
         this.MouseDragging = true;
       }
     }
@@ -74,71 +75,82 @@ export class UI {
       return Gl;
     }
 
-    var newX = null;
-    var newY = null;
+    let newX = null;
+    let newY = null;
 
-    if (event.type == "mousemove") {
+    if (event.type === "mousemove") {
       newX = event.clientX; // + event.touches[0].clientX;
       newY = event.clientY; // + event.touches[0].clientY;
-    }
-    else if (event.type == "touchmove") {
+    } else if (event.type === "touchmove") {
       event.preventDefault();
-      var touch = event.touches[0] || event.changedTouches[0];
+      const touch = event.touches[0] || event.changedTouches[0];
       newX = touch.pageX;
       newY = touch.pageY;
     }
 
-    if (globeView == GlobeViewType.ThreeDim || globeView == GlobeViewType.Ortho) {
-
-
+    if (
+      globeView === GlobeViewType.ThreeDim ||
+      globeView === GlobeViewType.Ortho
+    ) {
       // TODO: Need to come up a "real" formula for scaling the rotation speed upon different zoom levels.
-      var scale = null;
-      if (this.zoomLevel <= 0) {
-        scale = 10;
-      }
-      else {
-        scale = (this.zoomLevel - this.globeDistance ) / 10;
-      }
+      const scale =
+        this.zoomLevel <= 0 ? 10 : (this.zoomLevel - this.globeDistance) / 10;
       // Lon Rotation
-      var deltaX = newX - this.lastMouseX;
-      var newRotationMatrix_x = GlMatrix.mat4.create();
+      const deltaX = newX - this.lastMouseX;
+      const newRotationMatrix_x = GlMatrix.mat4.create();
       GlMatrix.mat4.identity(newRotationMatrix_x);
-      GlMatrix.mat4.rotate(newRotationMatrix_x, newRotationMatrix_x, Helpers.degToRad(deltaX / scale), [0, 1, 0]);
-      GlMatrix.mat4.multiply(Gl.earthRotationMatrix_x, newRotationMatrix_x, Gl.earthRotationMatrix_x);
+      GlMatrix.mat4.rotate(
+        newRotationMatrix_x,
+        newRotationMatrix_x,
+        Helpers.degToRad(deltaX / scale),
+        [0, 1, 0]
+      );
+      GlMatrix.mat4.multiply(
+        Gl.earthRotationMatrix_x,
+        newRotationMatrix_x,
+        Gl.earthRotationMatrix_x
+      );
 
       // Lat Rotation
-      var deltaY = newY - this.lastMouseY;
-      var newRotationMatrix_y = GlMatrix.mat4.create();
+      const deltaY = newY - this.lastMouseY;
+      const newRotationMatrix_y = GlMatrix.mat4.create();
       GlMatrix.mat4.identity(newRotationMatrix_y);
 
-      GlMatrix.mat4.rotate(newRotationMatrix_y, newRotationMatrix_y, Helpers.degToRad(deltaY / scale), [1, 0, 0]);
-      GlMatrix.mat4.multiply(Gl.earthRotationMatrix_y, newRotationMatrix_y, Gl.earthRotationMatrix_y);
+      GlMatrix.mat4.rotate(
+        newRotationMatrix_y,
+        newRotationMatrix_y,
+        Helpers.degToRad(deltaY / scale),
+        [1, 0, 0]
+      );
+      GlMatrix.mat4.multiply(
+        Gl.earthRotationMatrix_y,
+        newRotationMatrix_y,
+        Gl.earthRotationMatrix_y
+      );
 
       // Combine the two rotations (we must keep them seperate to make sure we don't "tilt" the axis
-      GlMatrix.mat4.multiply(Gl.earthRotationMatrix, Gl.earthRotationMatrix_y, Gl.earthRotationMatrix_x);
+      GlMatrix.mat4.multiply(
+        Gl.earthRotationMatrix,
+        Gl.earthRotationMatrix_y,
+        Gl.earthRotationMatrix_x
+      );
       this.lastMouseX = newX;
       this.lastMouseY = newY;
     } else {
       // TODO: Need to come up a "real" formula for scaling the rotation speed upon different zoom levels.
-      var scale = null;
-      if (this.zoomLevel <= 0) {
-        scale = 10;
-      }
-      else {
-        scale = (this.zoomLevel) / 2;
-      }
+      const scale = this.zoomLevel <= 0 ? 10 : this.zoomLevel / 2;
       // Lon Rotation
-      var deltaX = 1.0 * (newX - this.lastMouseX) / scale;
-      var deltaY = -1.0 * (newY - this.lastMouseY) / scale;
-      //var newRotationMatrix_x = mat4.create();
+      const deltaX = (1.0 * (newX - this.lastMouseX)) / scale;
+      const deltaY = (-1.0 * (newY - this.lastMouseY)) / scale;
+      // var newRotationMatrix_x = mat4.create();
 
       this.xMovement = this.xMovement + deltaX;
       this.yMovement = this.yMovement + deltaY;
 
-      //mat4.scalar.translate(earthRotationMatrix, [deltaX/scale, deltaY/scale, 0], earthRotationMatrix);
-      //mat4.identity(newRotationMatrix_x);
+      // mat4.scalar.translate(earthRotationMatrix, [deltaX/scale, deltaY/scale, 0], earthRotationMatrix);
+      // mat4.identity(newRotationMatrix_x);
 
-      //mat4.multiply(earthRotationMatrix_x, newRotationMatrix_x, earthRotationMatrix_x);
+      // mat4.multiply(earthRotationMatrix_x, newRotationMatrix_x, earthRotationMatrix_x);
 
       // Lat Rotation
       /*var deltaY = newY - lastMouseY;
@@ -156,63 +168,112 @@ export class UI {
     return Gl;
   }
 
-  handleMouseUp (World, Gl: WebGLRenderingContext, globeView : GlobeViewType, pMatrix, mvMatrix, vMatrix, earthRotationMatrix, earthRotationMatrix_x, earthRotationMatrix_y, event) {
-    var canvas = jQuery("#ClimateGl")[0];
+  handleMouseUp(
+    World,
+    Gl: WebGLRenderingContext,
+    globeView: GlobeViewType,
+    pMatrix,
+    mvMatrix,
+    vMatrix,
+    earthRotationMatrix,
+    earthRotationMatrix_x,
+    earthRotationMatrix_y,
+    event
+  ) {
+    const canvas = jQuery("#ClimateGl")[0];
     this.mouseDown = false;
-    if (!this.MouseDragging && !this.inMenu) { // && document.getElementById("canvas-align").style.display == "block"
+    if (!this.MouseDragging && !this.inMenu) {
+      // && document.getElementById("canvas-align").style.display == "block"
       // Need to reproject the canvas (x,y) into a "ray" going through the "world"
-      var rect = canvas.getBoundingClientRect();
-      var x = event.clientX - rect.left;
-      var y = event.clientY - rect.top;
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
 
-      //mat4.inverse(vMatrix, vMatrix);
+      // mat4.inverse(vMatrix, vMatrix);
 
-      var widthToHeight = Gl.canvas.width / Gl.canvas.height;
+      const widthToHeight = Gl.canvas.width / Gl.canvas.height;
 
       // Calculate click projection (for Unproject to work, needs to be negative farfield)
       // TODO: Need to correct the Unproject to work for positive far field, so this section could be skipped
-      if (globeView == GlobeViewType.Ortho) {
-        var orthoZoom = -1 * this.zoomLevel / (80.0 * 2.0);
-        GlMatrix.mat4.ortho(pMatrix, (-widthToHeight * 80) * orthoZoom, (widthToHeight * 80) * orthoZoom
-          , (-1 * 80) * orthoZoom, (1 * 80) * orthoZoom, 1000, -1000.0);
+      if (globeView === GlobeViewType.Ortho) {
+        const orthoZoom = (-1 * this.zoomLevel) / (80.0 * 2.0);
+        GlMatrix.mat4.ortho(
+          pMatrix,
+          -widthToHeight * 80 * orthoZoom,
+          widthToHeight * 80 * orthoZoom,
+          -1 * 80 * orthoZoom,
+          1 * 80 * orthoZoom,
+          1000,
+          -1000.0
+        );
         GlMatrix.mat4.identity(mvMatrix);
-        GlMatrix.mat4.translate(mvMatrix, mvMatrix, [this.xMovement, this.yMovement, this.globeDistance + this.zoomLevel]);
+        GlMatrix.mat4.translate(mvMatrix, mvMatrix, [
+          this.xMovement,
+          this.yMovement,
+          this.globeDistance + this.zoomLevel
+        ]);
         GlMatrix.mat4.multiply(mvMatrix, mvMatrix, earthRotationMatrix);
-        GlMatrix.mat4.rotate(mvMatrix, mvMatrix, Helpers.degToRad(-90), [1, 0, 0]);
+        GlMatrix.mat4.rotate(mvMatrix, mvMatrix, Helpers.degToRad(-90), [
+          1,
+          0,
+          0
+        ]);
         GlMatrix.mat4.copy(vMatrix, mvMatrix);
       }
 
-      var vec1 = Helpers.Unproject(x, y, 0, Gl.canvas.width, Gl.canvas.height, pMatrix, vMatrix);
-      var vec2 = Helpers.Unproject(x, y, 1, Gl.canvas.width, Gl.canvas.height, pMatrix, vMatrix);
+      const vec1 = Helpers.Unproject(
+        x,
+        y,
+        0,
+        Gl.canvas.width,
+        Gl.canvas.height,
+        pMatrix,
+        vMatrix
+      );
+      const vec2 = Helpers.Unproject(
+        x,
+        y,
+        1,
+        Gl.canvas.width,
+        Gl.canvas.height,
+        pMatrix,
+        vMatrix
+      );
 
       // Origin vector as vec3
-      var origin = GlMatrix.vec3.create();
+      const origin = GlMatrix.vec3.create();
       origin[0] = vec1[0];
       origin[1] = vec1[1];
       origin[2] = vec1[2];
 
       // Direction vector as vec3
-      var direction = GlMatrix.vec3.create();
+      const direction = GlMatrix.vec3.create();
       direction[0] = vec2[0];
       direction[1] = vec2[1];
       direction[2] = vec2[2];
 
-      var points = [];
+      const points = [];
       points.push(vec1);
       points.push(vec2);
 
-      //lineSegmentBuffers(points);
+      // lineSegmentBuffers(points);
 
       // Loop through all of the Triangles that make up the sphere to find which triangles the "ray" intersects with
-      var intersectionPoints = [];
-      var triangleCounter = 0;
+      const intersectionPoints = [];
+      let triangleCounter = 0;
       if (World.hasOwnProperty("SphereTriangles")) {
         while (triangleCounter < World.SphereTriangles.length) {
-          var v0 = World.SphereTriangles[triangleCounter++];
-          var v1 = World.SphereTriangles[triangleCounter++];
-          var v2 = World.SphereTriangles[triangleCounter++];
+          const v0 = World.SphereTriangles[triangleCounter++];
+          const v1 = World.SphereTriangles[triangleCounter++];
+          const v2 = World.SphereTriangles[triangleCounter++];
 
-          var calc = Helpers.TriangleIntersection(v0, v1, v2, direction, origin);
+          const calc = Helpers.TriangleIntersection(
+            v0,
+            v1,
+            v2,
+            direction,
+            origin
+          );
           if (calc.intersects) {
             intersectionPoints.push(calc.point);
           }
@@ -220,24 +281,45 @@ export class UI {
 
         // Calculate which intersection is closest to the camera (we can have two intersections on either side of the globe).
         // Need the one facing the camera
-        var MaxDistance = 10000;
-        var bestPoint = GlMatrix.vec3.create();
-        for (var intersectionCounter = 0; intersectionCounter < intersectionPoints.length; intersectionCounter++) {
-          var currDistance = GlMatrix.vec3.dist(intersectionPoints[intersectionCounter], direction);
-          if (currDistance < MaxDistance) {
-            MaxDistance = currDistance;
-            bestPoint = intersectionPoints[intersectionCounter];
+        let maxDistance = 10000;
+        let bestPoint = GlMatrix.vec3.create();
+        for (const intersectionPoint of intersectionPoints) {
+          const currDistance = GlMatrix.vec3.dist(intersectionPoint, direction);
+          if (currDistance < maxDistance) {
+            maxDistance = currDistance;
+            bestPoint = intersectionPoint;
           }
         }
+        /*for (
+          let intersectionCounter = 0;
+          intersectionCounter < intersectionPoints.length;
+          intersectionCounter++
+        ) {
+          const currDistance = GlMatrix.vec3.dist(
+            intersectionPoints[intersectionCounter],
+            direction
+          );
+          if (currDistance < maxDistance) {
+            maxDistance = currDistance;
+            bestPoint = intersectionPoints[intersectionCounter];
+          }
+        }*/
 
         // Now that we have the coordinates of where the user clicked, find the nearest gridbox
-        var MaxDistance = 10000;
-        var bestGridBox = -1;
+        maxDistance = 10000;
+        let bestGridBox = -1;
         if (GlMatrix.vec3.dist(bestPoint, GlMatrix.vec3.create()) > 0) {
-          for (var gridBoxCounter = 0; gridBoxCounter < World.GridBoxData.length; gridBoxCounter++) {
-            var currDistance = GlMatrix.vec3.dist(bestPoint, World.GridBoxData[gridBoxCounter].point);
-            if (currDistance < MaxDistance) {
-              MaxDistance = currDistance;
+          for (
+            let gridBoxCounter = 0;
+            gridBoxCounter < World.GridBoxData.length;
+            gridBoxCounter++
+          ) {
+            const currDistance = GlMatrix.vec3.dist(
+              bestPoint,
+              World.GridBoxData[gridBoxCounter].point
+            );
+            if (currDistance < maxDistance) {
+              maxDistance = currDistance;
               bestGridBox = gridBoxCounter;
             }
           }
@@ -245,16 +327,16 @@ export class UI {
 
         // If we found a gridbox (if we clicked off of the globe, we wouldn't have found one, update the selected gridbox
         if (bestGridBox > -1) {
-          var gridBox_Id = World.GridBoxData[bestGridBox].gridBox;
-          var lat = World.GridBoxData[bestGridBox].lat;
-          var lon = World.GridBoxData[bestGridBox].lon;
-          var value = World.GridBoxData[bestGridBox].anomaly;
+          const gridBox_Id = World.GridBoxData[bestGridBox].gridBox;
+          const lat = World.GridBoxData[bestGridBox].lat;
+          const lon = World.GridBoxData[bestGridBox].lon;
+          const value = World.GridBoxData[bestGridBox].anomaly;
           this._settings.CurrGridBoxId = gridBox_Id;
           this._settings.CurrGridBoxLat = lat;
           this._settings.CurrGridBoxLon = lon;
           this._settings.CurrGridBoxValue = value;
-          //jQuery( "#slider_year" ).slider(y) );
-          //				LoadTimeseriesData(LayerSettings);
+          // jQuery( "#slider_year" ).slider(y) );
+          // 				LoadTimeseriesData(LayerSettings);
 
           /*jQuery("div#divGridLat").text(lat);
            jQuery("div#divGridLon").text(lon);
@@ -262,74 +344,78 @@ export class UI {
            jQuery("div#divGridLat2").text(lat);
            jQuery("div#divGridLon2").text(lon);*/
 
-          //window.alert("Nearest gridbox location is lat: " + lat + ", lon: " + lon + " for ID#: " + gridBox_Id);
-          //document.getElementById("timeSeriesButton1").style.display = "block";
-          //document.getElementById("gridBoxSize").style.display = "block";
-          //jQuery("div#divGridValue").style.display = "block";
+          // window.alert("Nearest gridbox location is lat: " + lat + ", lon: " + lon + " for ID#: " + gridBox_Id);
+          // document.getElementById("timeSeriesButton1").style.display = "block";
+          // document.getElementById("gridBoxSize").style.display = "block";
+          // jQuery("div#divGridValue").style.display = "block";
         } else {
           this._settings.CurrGridBoxId = -1;
           this._settings.CurrGridBoxLat = null;
           this._settings.CurrGridBoxLon = null;
           this._settings.CurrGridBoxValue = null;
-          //document.getElementById("gridBoxSize").style.display = "none";
+          // document.getElementById("gridBoxSize").style.display = "none";
         }
       }
     }
 
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('rMatrix');
-      uri.removeSearch('rMatrixX');
-      uri.removeSearch('rMatrixY');
-      uri.removeSearch('xMov');
-      uri.removeSearch('yMov');
-      uri.addSearch('rMatrix', earthRotationMatrix);
-      uri.addSearch('rMatrixX', earthRotationMatrix_x);
-      uri.addSearch('rMatrixY', earthRotationMatrix_y);
-      uri.addSearch('xMov', this.xMovement);
-      uri.addSearch('yMov', this.yMovement);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("rMatrix");
+      uri.removeSearch("rMatrixX");
+      uri.removeSearch("rMatrixY");
+      uri.removeSearch("xMov");
+      uri.removeSearch("yMov");
+      uri.addSearch("rMatrix", earthRotationMatrix);
+      uri.addSearch("rMatrixX", earthRotationMatrix_x);
+      uri.addSearch("rMatrixY", earthRotationMatrix_y);
+      uri.addSearch("xMov", this.xMovement);
+      uri.addSearch("yMov", this.yMovement);
+      window.history.replaceState("", "", uri.search());
     }
   }
 
-  handleMouseWheel(globeView : GlobeViewType, event) {
+  handleMouseWheel(globeView: GlobeViewType, event) {
     event.preventDefault();
-    var maxZoom = -75;
-    if (globeView == GlobeViewType.ThreeDim || globeView == GlobeViewType.Ortho) {
+    let maxZoom = -75;
+    if (
+      globeView === GlobeViewType.ThreeDim ||
+      globeView === GlobeViewType.Ortho
+    ) {
       maxZoom = 2;
     }
 
     {
-      this.zoomLevel = this.zoomLevel + (-event.deltaY / 20);
-      var currZoom = -this.globeDistance - this._settings.EarthRadius - maxZoom;
-      if (globeView == GlobeViewType.Ortho) {
+      this.zoomLevel = this.zoomLevel + -event.deltaY / 20;
+      const currZoom =
+        -this.globeDistance - this._settings.EarthRadius - maxZoom;
+      if (globeView === GlobeViewType.Ortho) {
         if (this.zoomLevel > -5) {
           this.zoomLevel = -5;
-          if (this.zoomLevel < (this.globeDistance * 2)) {
-            this.zoomLevel = (this.globeDistance * 2);
+          if (this.zoomLevel < this.globeDistance * 2) {
+            this.zoomLevel = this.globeDistance * 2;
           }
         }
       } else {
         if (this.zoomLevel > currZoom) {
           this.zoomLevel = currZoom;
         }
-        if (this.zoomLevel < (this.globeDistance * 2)) {
-          this.zoomLevel = (this.globeDistance * 2);
+        if (this.zoomLevel < this.globeDistance * 2) {
+          this.zoomLevel = this.globeDistance * 2;
         }
       }
     }
 
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('zoom');
-      uri.addSearch('zoom', this.zoomLevel);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("zoom");
+      uri.addSearch("zoom", this.zoomLevel);
+      window.history.replaceState("", "", uri.search());
     }
   }
 
   GetMenuOption(menuOption, y) {
-    for (var counter = 0; counter < menuOption.values.length; counter++) {
-      if (menuOption.values[counter].option == y) {
+    for (let counter = 0; counter < menuOption.values.length; counter++) {
+      if (menuOption.values[counter].option === y) {
         return menuOption.values[counter];
       }
     }
@@ -338,25 +424,25 @@ export class UI {
 
   ChangeMenuOption(y, menuOption, callbackNow, callbackFunc) {
     // Get values from uri
-    //var uri = new URI(window.location.href);
-    var scriptToLoad = jQuery.Deferred();
+    // var uri = new URI(window.location.href);
+    let scriptToLoad = jQuery.Deferred();
     scriptToLoad.resolve();
-    var menu = this.GetMenuOption(menuOption, y);
-    var filename = menu.file;
+    const menu = this.GetMenuOption(menuOption, y);
+    const filename = menu.file;
     if (filename.length > 0) {
       scriptToLoad = jQuery.getScript(filename);
     }
-    if (callbackNow == true) {
-      jQuery.when(scriptToLoad).done(function () {
+    if (callbackNow === true) {
+      jQuery.when(scriptToLoad).done(() => {
         callbackFunc();
-      })
+      });
     }
     return scriptToLoad;
   }
 
   // Radio button options
-  ChangeBumpMapping (Gl, y) {
-    var menuOption = this.GetMenuOption(this.MenuOptions.BumpMapping, y);
+  ChangeBumpMapping(Gl, y) {
+    const menuOption = this.GetMenuOption(this.MenuOptions.BumpMapping, y);
     if (menuOption.file.length > 0) {
       this._settings.lightingEnabled = true;
       Gl.initTextures(menuOption.file);
@@ -365,9 +451,9 @@ export class UI {
     }
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('bumpMapping');
-      uri.addSearch('bumpMapping', y);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("bumpMapping");
+      uri.addSearch("bumpMapping", y);
+      window.history.replaceState("", "", uri.search());
     }
   }
 
@@ -405,24 +491,23 @@ export class UI {
     }
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('zoom');
-      uri.removeSearch('rMatrix');
-      uri.removeSearch('rMatrixX');
-      uri.removeSearch('rMatrixY');
-      uri.removeSearch('xMov');
-      uri.removeSearch('yMov');
-      uri.addSearch('zoom', this.zoomLevel);
-      uri.addSearch('rMatrix', Gl.earthRotationMatrix);
-      uri.addSearch('rMatrixX', Gl.earthRotationMatrix_x);
-      uri.addSearch('rMatrixY', Gl.earthRotationMatrix_y);
-      uri.addSearch('xMov', this.xMovement);
-      uri.addSearch('yMov', this.yMovement);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("zoom");
+      uri.removeSearch("rMatrix");
+      uri.removeSearch("rMatrixX");
+      uri.removeSearch("rMatrixY");
+      uri.removeSearch("xMov");
+      uri.removeSearch("yMov");
+      uri.addSearch("zoom", this.zoomLevel);
+      uri.addSearch("rMatrix", Gl.earthRotationMatrix);
+      uri.addSearch("rMatrixX", Gl.earthRotationMatrix_x);
+      uri.addSearch("rMatrixY", Gl.earthRotationMatrix_y);
+      uri.addSearch("xMov", this.xMovement);
+      uri.addSearch("yMov", this.yMovement);
+      window.history.replaceState("", "", uri.search());
     }
   }
 
   ChangeGlobeViewMenu(Gl, y) {
-
     // Change the setting
     this.GlobeViewSettings(Gl, y, true);
     this._settings.globeView = y;
@@ -430,275 +515,229 @@ export class UI {
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('globe');
-      uri.addSearch('globe', y);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("globe");
+      uri.addSearch("globe", y);
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change the viewport
-    return this.ChangeMenuOption(y, this.MenuOptions.Globe, true, function() {
+    return this.ChangeMenuOption(y, this.MenuOptions.Globe, true, () => {
       Gl.initBuffers();
     });
   }
 
   ChangeRiversMenu(Lines, y) {
-
     // Change the setting
     this._settings.RiversType = y;
-    if (y === '') {
-      this._settings.rivers = false;
-    } else {
-      this._settings.rivers = true;
-    }
+    this._settings.rivers = y === "" ? false : true;
 
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('rivers');
-      uri.addSearch('rivers', y);
-      window.history.replaceState('', '' , uri.search());
+      uri.removeSearch("rivers");
+      uri.addSearch("rivers", y);
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.Rivers, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.Rivers, true, () => {
       Lines.lineBuffers();
     });
   }
 
   ChangeCoastsMenu(Lines, y) {
-
     // Change the setting
     this._settings.CoastsType = y;
-    if (y === '') {
-      this._settings.coasts = false;
-    } else {
-      this._settings.coasts = true;
-    }
+    this._settings.coasts = y === "" ? false : true;
 
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('coasts');
-      uri.addSearch('coasts', y);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("coasts");
+      uri.addSearch("coasts", y);
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.Coasts, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.Coasts, true, () => {
       Lines.lineBuffers();
     });
   }
 
-  ChangeLakesMenu (Lines, y) {
-
+  ChangeLakesMenu(Lines, y) {
     // Change the setting
     this._settings.LakesType = y;
-    if (y === '') {
-      this._settings.lakes = false;
-    } else {
-      this._settings.lakes = true;
-    }
+    this._settings.lakes = y === "" ? false : true;
 
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('lakes');
-      uri.addSearch('lakes', y);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("lakes");
+      uri.addSearch("lakes", y);
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.Lakes, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.Lakes, true, () => {
       Lines.lineBuffers();
     });
   }
 
   // Toggle button options
-  ChangeMinorIslandsMenu (Lines, y) {
-
+  ChangeMinorIslandsMenu(Lines, y) {
     // Change the settings
-    var y = jQuery('#' + this.MenuOptions.MinorIslands.id)[0].checked;
-    if (y === true) {
-      this._settings.minorIslands = true;
-    } else {
-      this._settings.minorIslands = false;
-    }
+    // const y = jQuery("#" + this.MenuOptions.MinorIslands.id)[0].checked;
+    this._settings.minorIslands = y === true ? true : false;
 
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
       if (y === true) {
-        uri.removeSearch('minorIslands');
-        uri.addSearch('minorIslands', true);
-        window.history.replaceState('', '', uri.search());
+        uri.removeSearch("minorIslands");
+        uri.addSearch("minorIslands", true);
+        window.history.replaceState("", "", uri.search());
       } else {
-        uri.removeSearch('minorIslands');
-        uri.addSearch('minorIslands', false);
-        window.history.replaceState('','', uri.search());
+        uri.removeSearch("minorIslands");
+        uri.addSearch("minorIslands", false);
+        window.history.replaceState("", "", uri.search());
       }
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.MinorIslands, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.MinorIslands, true, () => {
       Lines.lineBuffers();
     });
   }
 
   ChangeTimeZonesMenu(Lines, y) {
-
     // Change the setting
-    var y = jQuery('#'+ this.MenuOptions.TimeZone.id)[0].checked;
-    if (y === true) {
-      this._settings.timeZones = true;
-    } else {
-      this._settings.timeZones = false;
-    }
+    // const y = jQuery("#" + this.MenuOptions.TimeZone.id)[0].checked;
+    this._settings.timeZones = y === true ? true : false;
 
     // Change the URI
     if (this._settings.EnableUri) {
-      var uri = new URI(window.location.href);
+      const uri = new URI(window.location.href);
       if (y === true) {
-        uri.removeSearch('timeZones');
-        uri.addSearch('timeZones', true);
-        window.history.replaceState('', '', uri.search());
+        uri.removeSearch("timeZones");
+        uri.addSearch("timeZones", true);
+        window.history.replaceState("", "", uri.search());
       } else {
-        uri.removeSearch('timeZones');
-        uri.addSearch('timeZones', false);
-        window.history.replaceState('', '', uri.search());
+        uri.removeSearch("timeZones");
+        uri.addSearch("timeZones", false);
+        window.history.replaceState("", "", uri.search());
       }
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.TimeZone, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.TimeZone, true, () => {
       Lines.lineBuffers();
     });
   }
 
   ChangeGeoLinesMenu(Lines, y) {
-
     // Change the settings
-    var y = jQuery('#' + this.MenuOptions.GeoLines.id)[0].checked;
-    if (y === true) {
-      this._settings.geoLines = true;
-    } else {
-      this._settings.geoLines = false;
-    }
+    // const y = jQuery("#" + this.MenuOptions.GeoLines.id)[0].checked;
+    this._settings.geoLines = y === true ? true : false;
 
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('geoLines');
+      uri.removeSearch("geoLines");
       if (y === true) {
-        uri.addSearch('geoLines', true);
+        uri.addSearch("geoLines", true);
       } else {
-        uri.addSearch('geoLines', false);
+        uri.addSearch("geoLines", false);
       }
-      window.history.replaceState('', '', uri.search());
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.GeoLines, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.GeoLines, true, () => {
       Lines.lineBuffers();
     });
   }
 
   ChangeLatLonMenu(Lines, y) {
-
     // Change the settings
-    var y = jQuery('#' + this.MenuOptions.LatLon.id)[0].checked;
-    if (y === true) {
-      this._settings.latLons = true;
-    } else {
-      this._settings.latLons = false;
-    }
+    // const y = jQuery("#" + this.MenuOptions.LatLon.id)[0].checked;
+    this._settings.latLons = y === true ? true : false;
 
     // Change the URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('latlon');
+      uri.removeSearch("latlon");
       if (y === true) {
-        uri.addSearch('latlon', true);
+        uri.addSearch("latlon", true);
       } else {
-        uri.addSearch('latlon', false);
+        uri.addSearch("latlon", false);
       }
-      window.history.replaceState('', '', uri.search());
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change the view
-    this.ChangeMenuOption(y, this.MenuOptions.LatLon, true, function() {
+    this.ChangeMenuOption(y, this.MenuOptions.LatLon, true, () => {
       Lines.lineBuffers();
     });
   }
 
   ChangeCenterMenu(methods, y) {
-
     // Change settings
-    var y = jQuery('#' + this.MenuOptions.PacificCentered.id)[0].checked;
-    if (y === true) {
-      this._settings.pacificCenter = true;
-    } else {
-      this._settings.pacificCenter = false;
-    }
+    // const y = jQuery("#" + this.MenuOptions.PacificCentered.id)[0].checked;
+    this._settings.pacificCenter = y === true ? true : false;
 
     // Change URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('center');
+      uri.removeSearch("center");
       if (y === true) {
-        uri.addSearch('center', true);
+        uri.addSearch("center", true);
       } else {
-        uri.addSearch('center', false);
+        uri.addSearch("center", false);
       }
-      window.history.replaceState('', '', uri.search());
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change view
-    this.ChangeMenuOption(y, this.MenuOptions.PacificCentered, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.PacificCentered, true, () => {
       methods.initBuffers();
     });
   }
 
   ChangeSmoothGridMenu(World, y) {
-
     // Change settings
-    var y = jQuery('#' + this.MenuOptions.SmoothGrid.id)[0].checked;
-    if (y === true) {
-      this._settings.smoothGridBoxValues = true;
-    } else {
-      this._settings.smoothGridBoxValues = false;
-    }
+    // const y = jQuery("#" + this.MenuOptions.SmoothGrid.id)[0].checked;
+    this._settings.smoothGridBoxValues = y === true ? true : false;
 
     // Change URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('smoothGrid');
+      uri.removeSearch("smoothGrid");
       if (y === true) {
-        uri.addSearch('smoothGrid', true);
+        uri.addSearch("smoothGrid", true);
       } else {
-        uri.addSearch('smoothGrid', false);
+        uri.addSearch("smoothGrid", false);
       }
-      window.history.replaceState('', '', uri.search());
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change view
-    this.ChangeMenuOption(y, this.MenuOptions.SmoothGrid, true, function(){
+    this.ChangeMenuOption(y, this.MenuOptions.SmoothGrid, true, () => {
       World.worldBuffers();
     });
   }
 
   changeLevel(Levels, y, functionToCall) {
-
     // Change settings
     this._settings.Level_ID = y;
-    var index = Levels.Level_ID.indexOf(y);
+    const index = Levels.Level_ID.indexOf(y);
     this._settings.LevelName = Levels.Name[index];
 
     // Change URI
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('level');
-      uri.addSearch('level', y);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("level");
+      uri.addSearch("level", y);
+      window.history.replaceState("", "", uri.search());
     }
 
     // Change view
@@ -744,14 +783,14 @@ export class UI {
 
   ChangeDate(newDate, functionToRun) {
     this._settings.CurrDate = newDate;
-    var newYear = parseInt(newDate.substring(0, 4));
-    var newMonth = parseInt(newDate.substring(5, 7));
-    //jQuery("#slider_year").slider(newYear);
-    //jQuery('#mySelect option[value="fg"]').attr('selected', true)
-    //jQuery('#monthMenu option[value="' + newDate.substring(5, 7) + '"]').attr('selected', "selected").attr("selected", true);
-    //jQuery("#monthMenu").selectmenu("refresh");
-    //jQuery("#levelRadio" + this._settings.Level_ID).prop('checked', true).button("refresh");
-    //jQuery('#year').val(newYear.toString());
+    const newYear = parseInt(newDate.substring(0, 4), 10);
+    const newMonth = parseInt(newDate.substring(5, 7), 10);
+    // jQuery("#slider_year").slider(newYear);
+    // jQuery('#mySelect option[value="fg"]').attr('selected', true)
+    // jQuery('#monthMenu option[value="' + newDate.substring(5, 7) + '"]').attr('selected', "selected").attr("selected", true);
+    // jQuery("#monthMenu").selectmenu("refresh");
+    // jQuery("#levelRadio" + this._settings.Level_ID).prop('checked', true).button("refresh");
+    // jQuery('#year').val(newYear.toString());
 
     if (!(functionToRun === undefined)) {
       functionToRun();
@@ -759,27 +798,31 @@ export class UI {
 
     if (this._settings.EnableUri) {
       const uri = new URI(window.location.href);
-      uri.removeSearch('date');
-      uri.addSearch('date', this._settings.CurrDate);
-      window.history.replaceState('', '', uri.search());
+      uri.removeSearch("date");
+      uri.addSearch("date", this._settings.CurrDate);
+      window.history.replaceState("", "", uri.search());
     }
   }
 
-  LoadSphereData(Data, Settings) {
-    Data.LoadSphereData(Settings.LayerSettings);
+  LoadSphereData(Data, settings) {
+    Data.LoadSphereData(settings.LayerSettings);
   }
 
-  ChangeMonth(Data, Settings, newMonth) {
+  ChangeMonth(Data, settings, newMonth) {
     const currYear = this._settings.CurrDate.substring(0, 4);
-    const newDate = currYear + '-' + newMonth + '-01';
-    this.ChangeDate(newDate, function(){Data.LoadSphereData(Settings.LayerSettings)});
+    const newDate = currYear + "-" + newMonth + "-01";
+    this.ChangeDate(newDate, () => {
+      Data.LoadSphereData(settings.LayerSettings);
+    });
   }
 
-  ChangeYear(Data, Settings, newYear, padLeft) {
+  ChangeYear(Data, settings, newYear, padLeft) {
     newYear = padLeft(newYear, 4);
     const currMonth = this._settings.CurrDate.substring(5, 7);
-    const newDate = newYear + '-' + currMonth + '-01';
-    this.ChangeDate(newDate, function(){Data.LoadSphereData(Settings.LayerSettings)});
+    const newDate = newYear + "-" + currMonth + "-01";
+    this.ChangeDate(newDate, () => {
+      Data.LoadSphereData(settings.LayerSettings);
+    });
   }
 
   // Grab options from URL
@@ -1076,20 +1119,27 @@ export class UI {
   */
 
   createCsvFromGriddedData(RawData) {
-    var csvContent = "data:text/csv;charset=utf-8,";
+    let csvContent = "data:text/csv;charset=utf-8,";
 
     // Create the header
     csvContent += "Latitude,Longitude,Value\n";
     if (RawData.Lat.length > 0) {
-      for (var i = 0; i < RawData.Lat.length; i++) {
-        var dataString = RawData.Lat[i] + "," + RawData.Lon[i] + "," + RawData.ValueFinal[i];
+      for (let i = 0; i < RawData.Lat.length; i++) {
+        const dataString =
+          RawData.Lat[i] + "," + RawData.Lon[i] + "," + RawData.ValueFinal[i];
         csvContent += dataString + "\n";
       }
 
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", this._settings.DatabaseStore + "_GridData_" + this._settings.CurrDate + ".csv");
+      link.setAttribute(
+        "download",
+        this._settings.DatabaseStore +
+          "_GridData_" +
+          this._settings.CurrDate +
+          ".csv"
+      );
       link.click();
     } else {
       jQuery("#dialogNoData").dialog("open");
@@ -1110,10 +1160,10 @@ export class UI {
   */
 
   GetDatasetById(Data, id) {
-    for (var i = 0; i < Data.MenuData.length; i++) {
+    for (let i = 0; i < Data.MenuData.length; i++) {
       if (Data.MenuData[i].hasOwnProperty("Dataset_ID")) {
-        var currDataset = Data.MenuData[i];
-        if (currDataset.Dataset_ID == id) {
+        const currDataset = Data.MenuData[i];
+        if (currDataset.Dataset_ID === id) {
           return currDataset;
         }
       }
