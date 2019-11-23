@@ -3,7 +3,6 @@
  */
 
 export class LineVertex {
-
   public PositionBuffer: any[];
   public ColorBuffer: any[];
   public NormalBuffer: any[];
@@ -11,5 +10,4 @@ export class LineVertex {
   public TangentBuffer: any[];
   public BiTangentBuffer: any[];
   public TextureCoordBuffer: any[];
-
 }

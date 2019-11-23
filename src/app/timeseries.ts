@@ -1,63 +1,72 @@
-import {Settings} from "./settings";
-import {Helpers} from "./helpers";
+import { Helpers } from "./helpers";
+import { Settings } from "./settings";
 /**
  * Created by dafre on 5/14/2017.
  */
 
 declare var jQuery: any;
-declare var c3 : any;
+declare var c3: any;
 
 export class Timeseries {
+  public TimeSeriesChart: any;
+  public FinalTimeSeriesData: any;
 
-  public  TimeSeriesChart : any;
-  public  FinalTimeSeriesData : any;
-
-  private _settings : Settings;
-  public constructor (settings : Settings) {
+  private _settings: Settings;
+  public constructor(settings: Settings) {
     this._settings = settings;
   }
 
-  public GenerateFirstTimeSeriesChart (RawTimeseriesData, Levels, level_id) {
+  public GenerateFirstTimeSeriesChart(RawTimeseriesData, Levels, level_id) {
     if (this._settings.CurrGridBoxId > 0) {
-
-      RawTimeseriesData.ValueFinal = Helpers.ProcessRawDataValue(RawTimeseriesData.Value, this._settings);
+      RawTimeseriesData.ValueFinal = Helpers.ProcessRawDataValue(
+        RawTimeseriesData.Value,
+        this._settings
+      );
       this.FinalTimeSeriesData = new Map();
 
-      var Dates = [];
-      var Values = [];
-      for (var counter = 0; counter < RawTimeseriesData.ValueFinal.length; counter++) {
-        var currDate = RawTimeseriesData.Date[counter];
-        var currValue = RawTimeseriesData.ValueFinal[counter];
+      const Dates = [];
+      const Values = [];
+      for (
+        let counter = 0;
+        counter < RawTimeseriesData.ValueFinal.length;
+        counter++
+      ) {
+        const currDate = RawTimeseriesData.Date[counter];
+        const currValue = RawTimeseriesData.ValueFinal[counter];
         Dates.push(currDate);
         Values.push(currValue);
       }
-      this.FinalTimeSeriesData.set(level_id, {Date: Dates, Value: Values});
+      this.FinalTimeSeriesData.set(level_id, { Date: Dates, Value: Values });
 
-      var timeSeriesArray = [];
-      var timeData_date = this.FinalTimeSeriesData.get(level_id).Date.slice(0);
+      const timeSeriesArray = [];
+      const timeData_date = this.FinalTimeSeriesData.get(level_id).Date.slice(
+        0
+      );
       timeData_date.unshift("Date");
-      var timeData_data = this.FinalTimeSeriesData.get(level_id).Value.slice(0);
-      var levelIndex = Levels.Level_ID.indexOf(level_id.toString());
-      var levelName = Levels.Name[levelIndex];
+      const timeData_data = this.FinalTimeSeriesData.get(level_id).Value.slice(
+        0
+      );
+      const levelIndex = Levels.Level_ID.indexOf(level_id.toString());
+      const levelName = Levels.Name[levelIndex];
       timeSeriesArray.push(timeData_date);
       timeData_data.unshift(levelName);
       timeSeriesArray.push(timeData_data);
 
       this.TimeSeriesChart = c3.generate({
-        bindto: '#TimeSeriesChart',
+        bindto: "#TimeSeriesChart",
         data: {
-          x: 'Date',
+          x: "Date",
           columns: timeSeriesArray,
-          onclick: function (d, element) {
-            //ChangeDate(RawTimeseriesData.Date[d.index], function(){LoadSphereData(this._settings);});
+          onclick(d, element) {
+            // ChangeDate(RawTimeseriesData.Date[d.index], function(){LoadSphereData(this._settings);});
           }
         },
         axis: {
           x: {
-            label: 'Date',
-            type: 'timeseries',
+            label: "Date",
+            type: "timeseries",
             tick: {
-              format: '%Y-%m'
+              format: "%Y-%m"
             }
           },
           y: {
@@ -65,7 +74,7 @@ export class Timeseries {
           }
         },
         zoom: { enabled: true },
-        transition:  {duration: 0}
+        transition: { duration: 0 }
       });
     }
   }
@@ -76,8 +85,8 @@ export class Timeseries {
    * @constructor
    */
   RemoveLevelFromTimeSeries(Levels, level_id) {
-    var levelIndex = Levels.Level_ID.indexOf(level_id.toString());
-    var levelName = Levels.Name[levelIndex];
+    const levelIndex = Levels.Level_ID.indexOf(level_id.toString());
+    const levelName = Levels.Name[levelIndex];
     this.TimeSeriesChart.load({
       unload: [levelName]
     });
@@ -86,22 +95,31 @@ export class Timeseries {
   AddLevelsToTimeSeries(RawTimeseriesData, Levels, level_id) {
     if (this._settings.CurrGridBoxId > 0) {
       if (!this.FinalTimeSeriesData.has(level_id)) {
-        RawTimeseriesData.ValueFinal = Helpers.ProcessRawDataValue(RawTimeseriesData.Value, this._settings);
-        var Dates = [];
-        var Values = [];
-        for (var counter = 0; counter < RawTimeseriesData.ValueFinal.length; counter++) {
-          var currDate = RawTimeseriesData.Date[counter];
-          var currValue = RawTimeseriesData.ValueFinal[counter];
+        RawTimeseriesData.ValueFinal = Helpers.ProcessRawDataValue(
+          RawTimeseriesData.Value,
+          this._settings
+        );
+        const Dates = [];
+        const Values = [];
+        for (
+          let counter = 0;
+          counter < RawTimeseriesData.ValueFinal.length;
+          counter++
+        ) {
+          const currDate = RawTimeseriesData.Date[counter];
+          const currValue = RawTimeseriesData.ValueFinal[counter];
           Dates.push(currDate);
           Values.push(currValue);
         }
-        this.FinalTimeSeriesData.set(level_id, {Date: Dates, Value: Values});
+        this.FinalTimeSeriesData.set(level_id, { Date: Dates, Value: Values });
       }
 
-      var timeSeriesArray = [];
-      var timeData_data = this.FinalTimeSeriesData.get(level_id).Value.slice(0);
-      var levelIndex = Levels.Level_ID.indexOf(level_id.toString());
-      var levelName = Levels.Name[levelIndex];
+      const timeSeriesArray = [];
+      const timeData_data = this.FinalTimeSeriesData.get(level_id).Value.slice(
+        0
+      );
+      const levelIndex = Levels.Level_ID.indexOf(level_id.toString());
+      const levelName = Levels.Name[levelIndex];
       timeData_data.unshift(levelName);
       timeSeriesArray.push(timeData_data);
       this.TimeSeriesChart.load({
@@ -111,31 +129,42 @@ export class Timeseries {
   }
 
   createCsvFromTimeseriesData(Levels) {
-    var csvContent = "data:text/csv;charset=utf-8,";
+    let csvContent = "data:text/csv;charset=utf-8,";
 
     // Create the header
     csvContent += "Level Name,Date,Value\n";
 
     if (this.FinalTimeSeriesData.size > 0) {
-      this.FinalTimeSeriesData.forEach(function (currTimeData, level_id) {
-        var levelIndex = Levels.Level_ID.indexOf(level_id.toString());
-        var levelName = Levels.Name[levelIndex];
+      this.FinalTimeSeriesData.forEach((currTimeData, level_id) => {
+        const levelIndex = Levels.Level_ID.indexOf(level_id.toString());
+        const levelName = Levels.Name[levelIndex];
 
-        for (var i = 0; i < currTimeData.Date.length; i++) {
-          var dataString = levelName + "," + currTimeData.Date[i] + "," + currTimeData.Value[i];
+        for (let i = 0; i < currTimeData.Date.length; i++) {
+          const dataString =
+            levelName +
+            "," +
+            currTimeData.Date[i] +
+            "," +
+            currTimeData.Value[i];
           csvContent += dataString + "\n";
         }
       }, this.FinalTimeSeriesData);
 
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", this._settings.DatabaseStore +
-        "_Timeseries_Lat" + this._settings.CurrGridBoxLat +
-        "_Lon" + this._settings.CurrGridBoxLon + ".csv");
+      link.setAttribute(
+        "download",
+        this._settings.DatabaseStore +
+          "_Timeseries_Lat" +
+          this._settings.CurrGridBoxLat +
+          "_Lon" +
+          this._settings.CurrGridBoxLon +
+          ".csv"
+      );
       link.click();
     } else {
-      jQuery( "#dialogNoData" ).dialog( "open" );
+      jQuery("#dialogNoData").dialog("open");
     }
 
     /*if (RawTimeseriesData.Level_ID.length > 0) {
@@ -158,5 +187,4 @@ export class Timeseries {
      link.click();
      */
   }
-
 }

@@ -3,28 +3,28 @@
  */
 // tslint:disable:member-ordering
 // import * as glMatrix from 'gl-matrix';
-import {GlMatrix} from './GlMatrix';
-import {Settings} from './settings';
+import { GlMatrix } from "./GlMatrix";
+import { Settings } from "./settings";
 
 export class Helpers {
-
   public static LeftPad(num: number, size: number): string {
-    let s = num + '';
-    while (s.length < size) { s = '0' + s; }
+    let s = num + "";
+    while (s.length < size) {
+      s = "0" + s;
+    }
     return s;
   }
 
-
-  public static CelsiusToFahrenheit (celsius: number) {
+  public static CelsiusToFahrenheit(celsius: number) {
     return celsius * (9 / 5) + 32;
   }
 
-  public static FahrenheitToCelsius (fahrenheit: number) {
+  public static FahrenheitToCelsius(fahrenheit: number) {
     return (fahrenheit - 32) * (5 / 9);
   }
 
   public static KelvinToCelsius(kelvin: number) {
-    return (kelvin - 273.15);
+    return kelvin - 273.15;
   }
 
   /***
@@ -33,7 +33,7 @@ export class Helpers {
    * @returns {number}
    */
   public static degToRad(degrees) {
-    return degrees * Math.PI / 180;
+    return (degrees * Math.PI) / 180;
   }
 
   public static cartesianToSphere(lonInRad, latInRad, radius) {
@@ -56,27 +56,36 @@ export class Helpers {
     normal[0] = x;
     normal[1] = y;
     normal[2] = z;
-    GlMatrix.mat4.rotate(tanRotMatrix, tanRotMatrix, this.degToRad(90), [0, 0, 1]);
+    GlMatrix.mat4.rotate(tanRotMatrix, tanRotMatrix, this.degToRad(90), [
+      0,
+      0,
+      1
+    ]);
     GlMatrix.mat4.multiplyVec3(tangent, tanRotMatrix, normal);
 
     // BiTangent
     const biTangent = GlMatrix.vec3.create();
     const biTanRotMatrix = GlMatrix.mat4.create();
-    GlMatrix.mat4.rotate(biTanRotMatrix, biTanRotMatrix, this.degToRad(-90), normal);
+    GlMatrix.mat4.rotate(
+      biTanRotMatrix,
+      biTanRotMatrix,
+      this.degToRad(-90),
+      normal
+    );
     GlMatrix.mat4.multiplyVec3(biTangent, biTanRotMatrix, tangent);
 
     const values = {
-      coordinates: {x: radius * x, y: radius * y, z: radius * z},
-      normals: {x: x, y: y, z: z},
-      tangents: {x: tangent[0], y: tangent[1], z: tangent[2]},
-      biTangents: {x: biTangent[0], y: biTangent[1], z: biTangent[2]}
+      coordinates: { x: radius * x, y: radius * y, z: radius * z },
+      normals: { x, y, z },
+      tangents: { x: tangent[0], y: tangent[1], z: tangent[2] },
+      biTangents: { x: biTangent[0], y: biTangent[1], z: biTangent[2] }
     };
 
     return values;
   }
 
   padLeft(nr, n, str) {
-    return Array(n - String(nr).length + 1).join(str || '0') + nr;
+    return Array(n - String(nr).length + 1).join(str || "0") + nr;
   }
 
   // or as a Number prototype method:
@@ -84,26 +93,25 @@ export class Helpers {
   return Array(n-String(this).length+1).join(str||'0')+this;
 }*/
 
-
   ProcessRawDataValue(LayerSettings, rawValues) {
     let valueFinal = [];
     switch (LayerSettings.DataUnits) {
-      case 'Kelvins':
-      case 'degK':
+      case "Kelvins":
+      case "degK":
         switch (LayerSettings.TemperatureType) {
-          case 'C':
+          case "C":
             for (let i = 0; i < rawValues.length; i++) {
               valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
             }
             break;
-          default :
+          default:
             valueFinal = rawValues;
         }
         break;
-      default :
+      default:
         valueFinal = rawValues;
     }
-    return(valueFinal);
+    return valueFinal;
   }
 
   cartesianToSphere(lonInRad, latInRad, radius) {
@@ -126,20 +134,29 @@ export class Helpers {
     normal[0] = x;
     normal[1] = y;
     normal[2] = z;
-    GlMatrix.mat4.rotate(tanRotMatrix, tanRotMatrix, Helpers.degToRad(90), [0, 0, 1]);
+    GlMatrix.mat4.rotate(tanRotMatrix, tanRotMatrix, Helpers.degToRad(90), [
+      0,
+      0,
+      1
+    ]);
     GlMatrix.mat4.multiplyVec3(tangent, tanRotMatrix, normal);
 
     // BiTangent
     const biTangent = GlMatrix.vec3.create();
     const biTanRotMatrix = GlMatrix.mat4.create();
-    GlMatrix.mat4.rotate(biTanRotMatrix, biTanRotMatrix, Helpers.degToRad(-90), normal);
+    GlMatrix.mat4.rotate(
+      biTanRotMatrix,
+      biTanRotMatrix,
+      Helpers.degToRad(-90),
+      normal
+    );
     GlMatrix.mat4.multiplyVec3(biTangent, biTanRotMatrix, tangent);
 
     const values = {
-      coordinates: {x: radius * x, y: radius * y, z: radius * z},
-      normals: {x: x, y: y, z: z},
-      tangents: {x: tangent[0], y: tangent[1], z: tangent[2]},
-      biTangents: {x: biTangent[0], y: biTangent[1], z: biTangent[2]}
+      coordinates: { x: radius * x, y: radius * y, z: radius * z },
+      normals: { x, y, z },
+      tangents: { x: tangent[0], y: tangent[1], z: tangent[2] },
+      biTangents: { x: biTangent[0], y: biTangent[1], z: biTangent[2] }
     };
 
     return values;
@@ -147,25 +164,32 @@ export class Helpers {
 
   // Unproject the canvas (x,y) to coordinates in the "world." Z values is the depth into the world. You'll need to call this
   // function twice to get a "ray" in the world that is then usable.
-  public static Unproject(winx, winy, winz, viewportWidth, viewPortHeight, pMatrix, vMatrix) {
-
+  public static Unproject(
+    winx,
+    winy,
+    winz,
+    viewportWidth,
+    viewPortHeight,
+    pMatrix,
+    vMatrix
+  ) {
     // This was a pain. Eventually found this site: http://trac.bookofhook.com/bookofhook/trac.cgi/wiki/MousePicking
     // and just went through the math piece by piece.
 
     // Clipping coordinates
-    let n = GlMatrix.vec4.create();
+    const n = GlMatrix.vec4.create();
     n[0] = (2 * winx) / viewportWidth - 1.0;
     n[1] = -1 * ((2 * winy) / viewPortHeight - 1.0);
     n[2] = 2.0 * winz - 1.0;
     n[3] = 1.0;
 
     // Viewspace Values
-    let viewspaceMatrix = GlMatrix.mat4.create();
+    const viewspaceMatrix = GlMatrix.mat4.create();
     GlMatrix.mat4.copy(viewspaceMatrix, pMatrix);
     GlMatrix.mat4.invert(viewspaceMatrix, viewspaceMatrix);
 
     // Clipping space to viewspace
-    let viewspaceVector = GlMatrix.vec4.create();
+    const viewspaceVector = GlMatrix.vec4.create();
     GlMatrix.mat4.multiply(viewspaceVector, viewspaceMatrix, n);
 
     viewspaceVector[0] = viewspaceVector[0] / viewspaceVector[3];
@@ -174,11 +198,11 @@ export class Helpers {
     viewspaceVector[3] = 1.0;
 
     // Viewspace to Modelspace
-    let viewMatrix = GlMatrix.mat4.create();
+    const viewMatrix = GlMatrix.mat4.create();
     GlMatrix.mat4.copy(viewMatrix, vMatrix);
     GlMatrix.mat4.invert(viewMatrix, viewMatrix);
 
-    let out = GlMatrix.vec4.create();
+    const out = GlMatrix.vec4.create();
     GlMatrix.mat4.multiply(out, viewMatrix, viewspaceVector);
     return out;
   }
@@ -186,32 +210,42 @@ export class Helpers {
   //
   // From http://geomalgorithms.com/a06-_intersect-2.html
   public static TriangleIntersection(V0, V1, V2, P0, P1) {
-    const  SMALL_NUM = 0.00000001;
-    let returnValue = {
+    const SMALL_NUM = 0.00000001;
+    const returnValue = {
       intersects: false,
       point: null
     };
 
-    let u = GlMatrix.vec3.create(), v = GlMatrix.vec3.create(), n = GlMatrix.vec3.create();              // triangle vectors
-    let dir = GlMatrix.vec3.create(), w0 = GlMatrix.vec3.create(), w = GlMatrix.vec3.create();           // ray vectors
-    let r, a, b;              // params to calc ray-plane intersect
-    let I = GlMatrix.vec3.create();
+    const u = GlMatrix.vec3.create(); // triangle vectors
+    const v = GlMatrix.vec3.create();
+    const n = GlMatrix.vec3.create();
+
+    const dir = GlMatrix.vec3.create();
+    const w0 = GlMatrix.vec3.create();
+    let w = GlMatrix.vec3.create(); // ray vectors
+    let r; // params to calc ray-plane intersect
+    let a;
+    let b;
+    const I = GlMatrix.vec3.create();
 
     // get triangle edge vectors and plane normal
     GlMatrix.vec3.sub(u, V1, V0);
     GlMatrix.vec3.sub(v, V2, V0);
-    GlMatrix.vec3.cross(n, u, v);              			// cross product
-    if (n[0] === 0 && n[1] === 0 && n[2] === 0) {   // triangle is degenerate
+    GlMatrix.vec3.cross(n, u, v); // cross product
+    if (n[0] === 0 && n[1] === 0 && n[2] === 0) {
+      // triangle is degenerate
       // return -1;							// do not deal with this case
       return returnValue;
     }
 
-    GlMatrix.vec3.sub(dir, P1, P0);              		// ray direction vector
+    GlMatrix.vec3.sub(dir, P1, P0); // ray direction vector
     GlMatrix.vec3.sub(w0, P0, V0);
     a = -1.0 * GlMatrix.vec3.dot(n, w0);
     b = GlMatrix.vec3.dot(n, dir);
-    if (Math.abs(b) < SMALL_NUM) {     			// ray is  parallel to triangle plane
-      if (a === 0) {                			// ray lies in triangle plane
+    if (Math.abs(b) < SMALL_NUM) {
+      // ray is  parallel to triangle plane
+      if (a === 0) {
+        // ray lies in triangle plane
         // return 2;
         return returnValue;
       } else {
@@ -222,22 +256,28 @@ export class Helpers {
 
     // get intersect point of ray with triangle plane
     r = a / b;
-    if (r < 0.0) {                   // ray goes away from triangle
+    if (r < 0.0) {
+      // ray goes away from triangle
       // return 0;					// => no intersect
       return returnValue;
     }
     // for a segment, also test if (r > 1.0) => no intersect
 
-    let rvec = GlMatrix.vec3.create();
+    const rvec = GlMatrix.vec3.create();
     rvec[0] = r;
     rvec[1] = r;
     rvec[2] = r;
-    let I1 = GlMatrix.vec3.create();
+    const I1 = GlMatrix.vec3.create();
     GlMatrix.vec3.multiply(I1, rvec, dir);
-    GlMatrix.vec3.add(I, P0, I1);            // intersect point of ray and plane
+    GlMatrix.vec3.add(I, P0, I1); // intersect point of ray and plane
 
     // is I inside T?
-    let uu, uv, vv, wu, wv, D;
+    let uu;
+    let uv;
+    let vv;
+    let wu;
+    let wv;
+    let D;
     uu = GlMatrix.vec3.dot(u, u);
     uv = GlMatrix.vec3.dot(u, v);
     vv = GlMatrix.vec3.dot(v, v);
@@ -247,14 +287,17 @@ export class Helpers {
     D = uv * uv - uu * vv;
 
     // get and test parametric coords
-    let s, t;
+    let s;
+    let t;
     s = (uv * wv - vv * wu) / D;
-    if (s < 0.0 || s > 1.0) {         // I is outside T
+    if (s < 0.0 || s > 1.0) {
+      // I is outside T
       // return 0;
       return returnValue;
     }
     t = (uv * wu - uu * wv) / D;
-    if (t < 0.0 || (s + t) > 1.0) {  // I is outside T
+    if (t < 0.0 || s + t > 1.0) {
+      // I is outside T
       // return 0;
       return returnValue;
     }
@@ -269,53 +312,53 @@ export class Helpers {
 
   public static ArrayMax(input: number[]) {
     return Math.max.apply(null, input);
-  };
-
-  public static ProcessRawDataValue (rawValues, settings: Settings) {
-  let valueFinal = [];
-  switch (settings.DataUnits) {
-    case 'Kelvins':
-    case 'degK':
-      switch (settings.TemperatureType) {
-        case 'C':
-          for (let i = 0; i < rawValues.length; i++) {
-            valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
-          }
-          break;
-        default :
-          valueFinal = rawValues;
-      }
-      break;
-    default :
-      valueFinal = rawValues;
   }
-  return(valueFinal);
-}
 
+  public static ProcessRawDataValue(rawValues, settings: Settings) {
+    let valueFinal = [];
+    switch (settings.DataUnits) {
+      case "Kelvins":
+      case "degK":
+        switch (settings.TemperatureType) {
+          case "C":
+            for (let i = 0; i < rawValues.length; i++) {
+              valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
+            }
+            break;
+          default:
+            valueFinal = rawValues;
+        }
+        break;
+      default:
+        valueFinal = rawValues;
+    }
+    return valueFinal;
+  }
 
   public static ArrayMin(input: number[]) {
     return Math.min.apply(null, input);
-  };
+  }
 
   public static ArrayContains(v: any[], match: any): boolean {
     for (let i = 0; i < v.length; i++) {
-      if (v[i] === match) { return true; }
+      if (v[i] === match) {
+        return true;
+      }
     }
     return false;
-  };
+  }
 
   public static ArrayUnique(input: any[]): any[] {
-    let arr = [];
+    const arr = [];
     for (let i = 0; i < input.length; i++) {
       if (!this.ArrayContains(arr, input[i])) {
         arr.push(input[i]);
       }
     }
     return arr;
-  };
-  public static StringReplaceAll = function(search, replacement, target) {
+  }
+
+  public static StringReplaceAll(search, replacement, target) {
     return target.split(search).join(replacement);
-  };
-
-
+  }
 }

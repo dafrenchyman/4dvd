@@ -2,60 +2,65 @@
  * Created by dafre on 5/14/2017.
  */
 
-import {Settings} from "./settings";
-import {Helpers} from "./helpers";
-import {GetJson} from "./getJson";
-import {Dataset} from "./Dataset";
+import { Dataset } from "./Dataset";
+import { GetJson } from "./getJson";
+import { Helpers } from "./helpers";
+import { Settings } from "./settings";
 
 declare var jQuery: any;
 declare var URI: any;
 
 export class Loaders {
-  MenuItems : any;
-  MenuData : any[];
+  MenuItems: any;
+  MenuData: any[];
 
-  private _settings : Settings;
-  private _getJson : GetJson;
+  private _settings: Settings;
+  private _getJson: GetJson;
   private _levels: any;
-  private _serverString : string;
-  private _rawData : any;
-  private _rawTimeseriesData : any;
+  private _serverString: string;
+  private _rawData: any;
+  private _rawTimeseriesData: any;
 
-  public constructor(getJson : GetJson, settings : Settings) {
+  public constructor(getJson: GetJson, settings: Settings) {
     this._settings = settings;
     this._getJson = getJson;
     this._serverString = settings.ServerString;
 
-    this.MenuData = new Array();
-    this.MenuItems = new Object();
+    this.MenuData = [];
+    this.MenuItems = {};
 
     // Begin
     this.LoadDatasets();
   }
 
-  public LoadDatasets () {
+  public LoadDatasets() {
     // Load with Angular2
-    var datasetLoader = this._getJson.getAll(this._serverString + 'assets/g_datasets.php');
-    datasetLoader.then( result => {
-      var results : any = result;
-      var currId = 0;
-      var MenuDataFull : Dataset[] = [];
-      //this.MenuItems.id = 0;
-      for (var counter = 0; counter < results.Name.length; counter++)
-      {
-        var datasetStructure = results.Name[counter].split("|");
-        var currStructure = datasetStructure;
-        var currMenu = this.MenuItems;
-        var parentId = 0;
-        for (var structCounter = 0; structCounter < currStructure.length; structCounter++) {
-          var currProperty = currStructure[structCounter];
-          if(!currMenu.hasOwnProperty(currProperty)) {
+    const datasetLoader = this._getJson.getAll(
+      this._serverString + "assets/g_datasets.php"
+    );
+    datasetLoader.then(result => {
+      const results: any = result;
+      let currId = 0;
+      const MenuDataFull: Dataset[] = [];
+      // this.MenuItems.id = 0;
+      for (let counter = 0; counter < results.Name.length; counter++) {
+        const datasetStructure = results.Name[counter].split("|");
+        const currStructure = datasetStructure;
+        let currMenu = this.MenuItems;
+        let parentId = 0;
+        for (
+          let structCounter = 0;
+          structCounter < currStructure.length;
+          structCounter++
+        ) {
+          const currProperty = currStructure[structCounter];
+          if (!currMenu.hasOwnProperty(currProperty)) {
             currMenu[currProperty] = {};
             currMenu[currProperty].id = ++currId;
             currMenu[currProperty].parentId = parentId;
             if (structCounter === currStructure.length - 1) {
-              MenuDataFull.push(new Dataset(
-                {
+              MenuDataFull.push(
+                new Dataset({
                   Name: currProperty,
                   FullName: results.Name[counter],
                   Dataset_ID: results.Dataset_ID[counter],
@@ -70,7 +75,7 @@ export class Loaders {
 
               this.MenuData.push({
                 id: currId,
-                parentId: parentId,
+                parentId,
                 name: currProperty,
                 FullName: results.Name[counter],
                 Dataset_ID: results.Dataset_ID[counter],
@@ -84,7 +89,7 @@ export class Loaders {
             } else {
               this.MenuData.push({
                 id: currId,
-                parentId: parentId,
+                parentId,
                 name: currProperty
               });
             }
@@ -94,7 +99,6 @@ export class Loaders {
         }
       }
       this._settings.Datasets = MenuDataFull;
-
     });
 
     /*var scriptToLoad = jQuery.Deferred();
@@ -108,29 +112,43 @@ export class Loaders {
     return scriptToLoad;*/
   }
 
-  public LoadLevelData () :any {
-    var filename = this._serverString + 'assets/g_GetLevel.php' +'?dbname=' + this._settings.DatabaseStore;
-    var datasetLoader = this._getJson.getAll(filename);
-    datasetLoader.then( result => {
+  public LoadLevelData(): any {
+    const filename =
+      this._serverString +
+      "assets/g_GetLevel.php" +
+      "?dbname=" +
+      this._settings.DatabaseStore;
+    const datasetLoader = this._getJson.getAll(filename);
+    datasetLoader.then(result => {
       this._levels = result;
 
       // Layer Selection buttons
       jQuery("#Levels").empty();
-      for (var i = 0; i < this._levels.Name.length; i++) {
-        var checked = '';
-        if (i == 0) {
-          checked = 'checked="checked"'
+      for (let i = 0; i < this._levels.Name.length; i++) {
+        let checked = "";
+        if (i === 0) {
+          checked = 'checked="checked"';
         }
-        var level_id = this._levels.Level_ID[i];
-        var name = this._levels.Name[i];
+        const level_id = this._levels.Level_ID[i];
+        const name = this._levels.Name[i];
 
         // Layers
-        var radioBtn = jQuery('<input type="radio" id="levelRadio' + parseInt(level_id) +
-          '" onchange="UI.changeLevel(this.value, function(){UI.LoadSphereData();})" value="' + level_id +
-          '" name="levelRadio" ' + checked + '><label for="levelRadio' + level_id + '">' + name + '</label>');
-        radioBtn.appendTo('#Levels');
+        const radioBtn = jQuery(
+          '<input type="radio" id="levelRadio' +
+            parseInt(level_id, 10) +
+            '" onchange="UI.changeLevel(this.value, function(){UI.LoadSphereData();})" value="' +
+            level_id +
+            '" name="levelRadio" ' +
+            checked +
+            '><label for="levelRadio' +
+            level_id +
+            '">' +
+            name +
+            "</label>"
+        );
+        radioBtn.appendTo("#Levels");
       }
-      //$("#Levels").buttonset();
+      // $("#Levels").buttonset();
       /*if (!(callbackFunc === undefined)) {
         callbackFunc();
       }*/
@@ -144,60 +162,38 @@ export class Loaders {
     return this._levels;
   }
 
-  public LoadSphereDataMenu (callbackFunc) {
-    var filename = this._serverString + 'assets/g_GetGridData.php' +
-      '?dbname=' + this._settings.DatabaseStore + '&date=' + this._settings.CurrDate +
-      '&level=' + this._settings.Level_ID;
-    var datasetLoader = this._getJson.getAll(filename);
-    datasetLoader.then( result => {
+  public LoadSphereDataMenu(callbackFunc) {
+    const filename =
+      this._serverString +
+      "assets/g_GetGridData.php" +
+      "?dbname=" +
+      this._settings.DatabaseStore +
+      "&date=" +
+      this._settings.CurrDate +
+      "&level=" +
+      this._settings.Level_ID;
+    const datasetLoader = this._getJson.getAll(filename);
+    datasetLoader.then(result => {
       this._rawData = result;
-        if(this._settings.LevelName.length > 0) {
-          jQuery("div#divDate").text(this._settings.LevelName + ' | ' + this._settings.CurrDate);
-        } else {
-          jQuery("div#divDate").text(this._settings.CurrDate);
-        }
-
-        this._rawData.ValueFinal = [];
-        this._rawData.ValueFinal = Helpers.ProcessRawDataValue(this._rawData.Value, this._settings);
-        this._settings.originalMaxValue = Helpers.ArrayMax(this._rawData.ValueFinal);
-        this._settings.originalMinValue = Helpers.ArrayMin(this._rawData.ValueFinal);
-        jQuery("#upperBoundLimit").val(this._settings.originalMaxValue);
-        jQuery("#lowerBoundLimit").val(this._settings.originalMinValue);
-        this._settings.maxValue = Helpers.ArrayMax(this._rawData.ValueFinal);
-        this._settings.minValue = Helpers.ArrayMin(this._rawData.ValueFinal);
-
-        if (!(callbackFunc === undefined)) {
-          callbackFunc();
-        }
-
-        // Add the datasetID to the input options
-        if (this._settings.EnableUri) {
-          const uri = new URI(window.location.href);
-          uri.removeSearch('database');
-          uri.addSearch('database', this._settings.Dataset_ID);
-          window.history.replaceState('', '', uri.search());
-        }
-    });
-  }
-
-  public LoadSphereData (callbackFunc) {
-
-    var filename = this._serverString + 'assets/g_GetGridData.php' +
-      '?dbname=' + this._settings.DatabaseStore + '&date=' + this._settings.CurrDate +
-      '&level=' + this._settings.Level_ID;
-    var datasetLoader = this._getJson.getAll(filename);
-    datasetLoader.then( result => {
-      this._rawData = result;
-      if(this._settings.LevelName.length > 0) {
-        jQuery("div#divDate").text(this._settings.LevelName + ' | ' + this._settings.CurrDate);
+      if (this._settings.LevelName.length > 0) {
+        jQuery("div#divDate").text(
+          this._settings.LevelName + " | " + this._settings.CurrDate
+        );
       } else {
         jQuery("div#divDate").text(this._settings.CurrDate);
       }
 
       this._rawData.ValueFinal = [];
-      this._rawData.ValueFinal = Helpers.ProcessRawDataValue(this._rawData.Value, this._settings);
-      this._settings.originalMaxValue = Helpers.ArrayMax(this._rawData.ValueFinal);
-      this._settings.originalMinValue = Helpers.ArrayMin(this._rawData.ValueFinal);
+      this._rawData.ValueFinal = Helpers.ProcessRawDataValue(
+        this._rawData.Value,
+        this._settings
+      );
+      this._settings.originalMaxValue = Helpers.ArrayMax(
+        this._rawData.ValueFinal
+      );
+      this._settings.originalMinValue = Helpers.ArrayMin(
+        this._rawData.ValueFinal
+      );
       jQuery("#upperBoundLimit").val(this._settings.originalMaxValue);
       jQuery("#lowerBoundLimit").val(this._settings.originalMinValue);
       this._settings.maxValue = Helpers.ArrayMax(this._rawData.ValueFinal);
@@ -210,17 +206,68 @@ export class Loaders {
       // Add the datasetID to the input options
       if (this._settings.EnableUri) {
         const uri = new URI(window.location.href);
-        uri.removeSearch('database');
-        uri.addSearch('database', this._settings.Dataset_ID);
-        window.history.replaceState('', '', uri.search());
+        uri.removeSearch("database");
+        uri.addSearch("database", this._settings.Dataset_ID);
+        window.history.replaceState("", "", uri.search());
       }
     });
   }
 
-  public LoadJscData (fileToLoad, callbackFunc) {
-    var datasetLoader = this._getJson.getAll(fileToLoad);
-    var resultsToReturn;
-    datasetLoader.then( result => {
+  public LoadSphereData(callbackFunc) {
+    const filename =
+      this._serverString +
+      "assets/g_GetGridData.php" +
+      "?dbname=" +
+      this._settings.DatabaseStore +
+      "&date=" +
+      this._settings.CurrDate +
+      "&level=" +
+      this._settings.Level_ID;
+    const datasetLoader = this._getJson.getAll(filename);
+    datasetLoader.then(result => {
+      this._rawData = result;
+      if (this._settings.LevelName.length > 0) {
+        jQuery("div#divDate").text(
+          this._settings.LevelName + " | " + this._settings.CurrDate
+        );
+      } else {
+        jQuery("div#divDate").text(this._settings.CurrDate);
+      }
+
+      this._rawData.ValueFinal = [];
+      this._rawData.ValueFinal = Helpers.ProcessRawDataValue(
+        this._rawData.Value,
+        this._settings
+      );
+      this._settings.originalMaxValue = Helpers.ArrayMax(
+        this._rawData.ValueFinal
+      );
+      this._settings.originalMinValue = Helpers.ArrayMin(
+        this._rawData.ValueFinal
+      );
+      jQuery("#upperBoundLimit").val(this._settings.originalMaxValue);
+      jQuery("#lowerBoundLimit").val(this._settings.originalMinValue);
+      this._settings.maxValue = Helpers.ArrayMax(this._rawData.ValueFinal);
+      this._settings.minValue = Helpers.ArrayMin(this._rawData.ValueFinal);
+
+      if (!(callbackFunc === undefined)) {
+        callbackFunc();
+      }
+
+      // Add the datasetID to the input options
+      if (this._settings.EnableUri) {
+        const uri = new URI(window.location.href);
+        uri.removeSearch("database");
+        uri.addSearch("database", this._settings.Dataset_ID);
+        window.history.replaceState("", "", uri.search());
+      }
+    });
+  }
+
+  public LoadJscData(fileToLoad, callbackFunc) {
+    const datasetLoader = this._getJson.getAll(fileToLoad);
+    let resultsToReturn;
+    datasetLoader.then(result => {
       resultsToReturn = result;
     });
 
@@ -230,62 +277,54 @@ export class Loaders {
     return resultsToReturn;
   }
 
-  public LoadTimeseriesData () {
-    var filename = this._serverString +
-      'assets/g_GetTimeseriesData.php?dbname=' + this._settings.DatabaseStore +
-      '&gridboxId=' + this._settings.CurrGridBoxId +
-      '&level=' + this._settings.Level_ID;
-    var datasetLoader = this._getJson.getAll(filename);
-    datasetLoader.then( result => {
+  public LoadTimeseriesData() {
+    const filename =
+      this._serverString +
+      "assets/g_GetTimeseriesData.php?dbname=" +
+      this._settings.DatabaseStore +
+      "&gridboxId=" +
+      this._settings.CurrGridBoxId +
+      "&level=" +
+      this._settings.Level_ID;
+    const datasetLoader = this._getJson.getAll(filename);
+    datasetLoader.then(result => {
       this._rawTimeseriesData = result;
 
       document.getElementById("timeSeries").style.display = "block";
 
       // Set Timeseries Buttons
       jQuery("#TimeSeriesLevels").empty();
-      for (var i = 0; i < this._levels.Name.length; i++) {
-        var checked = '';
-        if (this._settings.Level_ID == this._levels.Level_ID[i]) {
-          checked = 'checked="checked"'
+      for (let i = 0; i < this._levels.Name.length; i++) {
+        let checked = "";
+        if (this._settings.Level_ID === this._levels.Level_ID[i]) {
+          checked = 'checked="checked"';
         }
-        var level_id = this._levels.Level_ID[i];
-        var name = this._levels.Name[i];
+        const level_id = this._levels.Level_ID[i];
+        const name = this._levels.Name[i];
 
-        var timeBtn = jQuery('<label for="timeseries_'+ level_id + '">' + name + '</label>' +
-          '<input type="checkbox" onclick="UI.ChangeTimeSeries(this);" ' + checked + ' name="timeseries_'+ level_id + '" id="timeseries_'+ level_id +'">');
-        timeBtn.appendTo('#TimeSeriesLevels');
+        const timeBtn = jQuery(
+          '<label for="timeseries_' +
+            level_id +
+            '">' +
+            name +
+            "</label>" +
+            '<input type="checkbox" onclick="UI.ChangeTimeSeries(this);" ' +
+            checked +
+            ' name="timeseries_' +
+            level_id +
+            '" id="timeseries_' +
+            level_id +
+            '">'
+        );
+        timeBtn.appendTo("#TimeSeriesLevels");
 
-        jQuery( function() {
-          jQuery('input').button();
-          //$( "input" ).checkboxradio();
-        } );
-
+        jQuery(() => {
+          jQuery("input").button();
+          // $( "input" ).checkboxradio();
+        });
       }
 
-      //GenerateFirstTimeSeriesChart(this._settings.Level_ID);
+      // GenerateFirstTimeSeriesChart(this._settings.Level_ID);
     });
   }
-
-  /*
-  AddTimeseriesData (level_id) {
-    if (!FinalTimeSeriesData.has(level_id)) {
-      var head = document.getElementsByTagName('head')[0];
-      try {
-        head.removeChild(d.getElementById('LoadTimeseriesData'));
-      } catch (e) {
-      }
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.id = 'LoadTimeseriesData';
-      script.src = 'php/g_GetTimeseriesData.php?dbname=' + settings.DatabaseStore + '&gridboxId=' + settings.CurrGridBoxId + '&level=' + level_id;
-      script.onload = function () {
-        document.getElementById("timeSeries").style.display = "block";
-        AddLevelsToTimeSeries(level_id);
-      };
-      head.appendChild(script);
-    } else {
-      AddLevelsToTimeSeries(level_id);
-    }
-  }
-  */
 }

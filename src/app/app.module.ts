@@ -1,40 +1,40 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import {Http, HttpModule, JsonpModule} from '@angular/http';
-import {APP_BASE_HREF} from '@angular/common';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import { AppComponent } from './app.component';
-import { ColorMapMenu } from './color-map-menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { APP_BASE_HREF } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { Http, HttpModule, JsonpModule } from "@angular/http";
 import {
-  MatCheckboxModule,
+  MatButtonModule,
   MatCardModule,
-  MatSelectModule,
+  MatCheckboxModule,
+  MatDialogModule,
   MatIconModule,
   MatInputModule,
-  MatRadioModule,
-  MatSlideToggleModule,
   MatListModule,
+  MatRadioModule,
+  MatSelectModule,
   MatSidenavModule,
-  MatDialogModule,
+  MatSliderModule,
+  MatSlideToggleModule,
   MatTabsModule,
-  MatButtonModule,
-  MatSliderModule, MatTooltipModule
-} from '@angular/material';
-import {} from '@angular/material';
-import { GetJson } from './getJson';
-import {ViewComponent} from './view.component';
-import {DatasetMenu} from './dataset-menu';
-import {TimeseriesMenu} from './timeseries-menu';
+  MatTooltipModule
+} from "@angular/material";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { AppComponent } from "./app.component";
+import { ColorMapMenuComponent } from "./color-map-menu.component";
+import { DatasetMenuComponent } from "./dataset-menu.component";
+import { GetJson } from "./getJson";
+import { TimeseriesMenuComponent } from "./timeseries-menu.component";
+import { ViewComponent } from "./view.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ViewComponent,
-    ColorMapMenu,
-    DatasetMenu,
-    TimeseriesMenu
+    ColorMapMenuComponent,
+    DatasetMenuComponent,
+    TimeseriesMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -57,11 +57,12 @@ import {TimeseriesMenu} from './timeseries-menu';
     MatButtonModule,
     MatTooltipModule
   ],
-  providers: [
-    GetJson,
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
+  providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent],
-  entryComponents: [ColorMapMenu, DatasetMenu, TimeseriesMenu]
+  entryComponents: [
+    ColorMapMenuComponent,
+    DatasetMenuComponent,
+    TimeseriesMenuComponent
+  ]
 })
-export class AppModule { }
+export class AppModule {}

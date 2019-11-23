@@ -3,7 +3,7 @@
  */
 
 export class WebGLBufferEnh {
-  buffer : WebGLBuffer;
-  itemSize : number;
-  numItems : number;
+  buffer: WebGLBuffer;
+  itemSize: number;
+  numItems: number;
 }

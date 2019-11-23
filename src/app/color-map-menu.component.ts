@@ -1,7 +1,7 @@
-import {Component, Inject, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material';
-import {ColorMap} from './ColorMap';
-import {createElement} from '@angular/core/src/view/element';
+import { Component, Inject, ViewChild } from "@angular/core";
+import { createElement } from "@angular/core/src/view/element";
+import { MAT_DIALOG_DATA } from "@angular/material";
+import { ColorMap } from "./ColorMap";
 
 declare var d3: any;
 
@@ -9,22 +9,20 @@ declare var d3: any;
  * Created by dafre on 6/1/2017.
  */
 
-
 @Component({
-  templateUrl: './color-map-menu.html'
+  templateUrl: "./color-map-menu.component.html"
 })
-export class ColorMapMenu {
-
-  private _colorMapGradient: {
-    Name: string,
-    ColorMaps: ColorMap,
-    IdName: string,
-    FullName: string,
-    Gradient: {
-      Offset: string,
-      StopColor: string
-    }[]
-  }[];
+export class ColorMapMenuComponent {
+  private _colorMapGradient: Array<{
+    Name: string;
+    ColorMaps: ColorMap;
+    IdName: string;
+    FullName: string;
+    Gradient: Array<{
+      Offset: string;
+      StopColor: string;
+    }>;
+  }>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this._colorMapGradient = data;
@@ -55,10 +53,5 @@ export class ColorMapMenu {
       key.append("rect").attr("x", 0).attr("y", 0).attr("width", w - 4).attr("height", h)
         .style("fill", "url(#" + gradientId + ")");//.attr("transform", "translate(0,10)");
     }*/
-
-
-
   }
-
-
 }
