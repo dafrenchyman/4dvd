@@ -1,7 +1,9 @@
 <div id="TimeseriesPlot">
+  <button id="closebutton" mat-icon-button style="left: 1425px; top: 0px; z-index: 1000; color: #000000" (click)="closeTimeSeries()">
+    <mat-icon matTooltip="Exit Time Series">close</mat-icon>
+  </button>
   <h2 mat-dialog-title>Time Series</h2>
   <mat-dialog-content>
-
       <ngx-charts-line-chart *ngIf="DataAvailable()"
         [view]="view"
         [scheme]="colorScheme"
@@ -14,15 +16,18 @@
         [showXAxisLabel]="showXAxisLabel"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
+        [yAxisLabel]="yValTitle()"
         [autoScale]="autoScale">
       </ngx-charts-line-chart>
       <br>
       <button mat-raised-button (click)="createCsvFromTimeseriesData()">Download Data</button>
+      <br>
+      <p>Latitude: {{this._model.settings.CurrGridBoxLat}}</p>
+      <p>Longitude: {{this._model.settings.CurrGridBoxLon}}</p>
 
   </mat-dialog-content>
+  <h2 mat-dialog-title style="text-align: center"><u>Pressure Layers</u></h2>
   <mat-dialog-actions>
-
     <mat-checkbox *ngFor="let level of GetLevels()"
                  [checked]="IsSelected(level)"
                  (click)="ToggleTimeseries(level)"> {{ level.Name }}

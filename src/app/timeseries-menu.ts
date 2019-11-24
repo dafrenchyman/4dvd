@@ -1,5 +1,5 @@
 import {Component, Inject, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 import {Settings} from "./settings";
 import {Helpers} from "./helpers";
@@ -33,13 +33,13 @@ export class TimeseriesMenu {
   timeline = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Time';
+  xAxisLabel = 'Date';
   showYAxisLabel = true;
   yAxisLabel = 'Value';
 
   colorScheme = {
-    domain: ["#a6cee3",
-      "#1f78b4",
+    domain: ["#1f78b4",
+      "#a6cee3",
       "#b2df8a",
       "#33a02c",
       "#fb9a99",
@@ -58,14 +58,15 @@ export class TimeseriesMenu {
   public GetLevels() {
     return this._model.settings.Levels;
   }
-
   private _model: Model;
 
   public DataAvailable() {
     return this.levelsLoaded == this.multi.length && this.levelsLoaded > 0 ? true : false;
   }
 
-  public constructor (@Inject(MAT_DIALOG_DATA) public data: any) {
+  public constructor (
+    private dialogRef: MatDialogRef<TimeseriesMenu>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -77,6 +78,23 @@ export class TimeseriesMenu {
         this.loadTimeseries(this._model.settings.Dataset, this._model.settings.CurrGridBoxId, currLevel.Level_ID, currLevel.Name);
       }
     }
+  }
+  closeTimeSeries() {
+    this.dialogRef.close();
+  }
+  yValTitle(): String {
+    if (!this.DataAvailable()) {
+      return 'Value';
+    }
+    let r: any[];
+    r = this._model.settings.FullName.split('|');
+    if (r.length < 5) {
+      return 'Precipitation';
+    }
+    if (r[r.length - 2] === 'Air Temperature') {
+      return r[r.length - 2].concat(' (\xB0C)');
+    }
+    return r[r.length - 2];
   }
 
   public IsSelected(level) : boolean {

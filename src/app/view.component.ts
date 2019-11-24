@@ -234,8 +234,10 @@ export class ViewComponent implements OnInit {
     }
     let r: any[];
     r = str.split('|');
-    const newTitle = r[r.length - 2] + ' | ' + r[r.length - 1];
-    return newTitle;
+    if (r.length < 5) {
+      return 'Precipitation';
+    }
+    return r[r.length - 2];
   }
 
   public GetTitle(): string {
@@ -259,7 +261,7 @@ export class ViewComponent implements OnInit {
         this.GridBoxData[1] = this._model.settings.CurrGridBoxLat;
         this.GridBoxData[2] = this._model.settings.CurrGridBoxLon;
         if (this._model.settings.CurrGridBoxValue !== null) {
-          this.timeSeriesVal = Number(this._model.settings.CurrGridBoxValue.toFixed(4));
+          this.timeSeriesVal = Number(this._model.settings.CurrGridBoxValue.toFixed(2));
         }
       }
     }
