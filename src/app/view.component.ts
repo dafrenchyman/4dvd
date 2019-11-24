@@ -720,6 +720,7 @@ export class ViewComponent implements OnInit {
         const selectedDataset = this._model.settings.Datasets.find(
           myObj => myObj.FullName === datasetToGet
         );
+        this._controller.loadLevels(selectedDataset);
         this._controller.loadDataset(
           selectedDataset,
           selectedDataset.StartDate,
