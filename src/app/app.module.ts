@@ -21,6 +21,7 @@ import {
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { About4dvdComponent } from "./about4dvd.component";
 import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetMenuComponent } from "./dataset-menu.component";
@@ -31,10 +32,11 @@ import { ViewComponent } from "./view.component";
 @NgModule({
   declarations: [
     AppComponent,
-    ViewComponent,
+    About4dvdComponent,
     ColorMapMenuComponent,
     DatasetMenuComponent,
-    TimeseriesMenuComponent
+    TimeseriesMenuComponent,
+    ViewComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import { ViewComponent } from "./view.component";
   providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent],
   entryComponents: [
+    About4dvdComponent,
     ColorMapMenuComponent,
     DatasetMenuComponent,
     TimeseriesMenuComponent
