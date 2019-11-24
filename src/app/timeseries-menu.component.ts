@@ -48,7 +48,7 @@ export class TimeseriesMenuComponent {
       "#cab2d6",
       "#6a3d9a",
       "#ffff99",
-      "#b15928]"
+      "#b15928"
     ]
   };
 
