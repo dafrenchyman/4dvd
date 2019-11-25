@@ -46,10 +46,6 @@ path.domain {
   text-align: center;
 }
 
-md-sidenav {
-  width: 250px;
-}
-
 .mat-slider-horizontal {
   min-width: 200px !important;
   width: 200px;
