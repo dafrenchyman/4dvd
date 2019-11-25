@@ -15,10 +15,21 @@
     id="TabMenu"
     style="margin-bottom: 0px; z-index: 10;"
   >
-    <div class="col blue white-text">
+    <div class="col s6 blue white-text">
       <h5>{{ title }}</h5>
     </div>
-    <div id="" class="scol s11"></div>
+    <div id="QuickButtons" class="col s6" align="right">
+      <div class="AboutButton">
+        <button
+          mat-raised-button
+          (click)="OpenAboutDialog()"
+          matTooltip="About 4DVD"
+          matTooltipPosition="right"
+        >
+          <mat-icon>info</mat-icon> About
+        </button>
+      </div>
+    </div>
   </div>
 
   <!--div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
