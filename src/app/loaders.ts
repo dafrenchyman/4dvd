@@ -21,6 +21,8 @@ export class Loaders {
   private _rawData: any;
   private _rawTimeseriesData: any;
 
+  public datasetLoader: Promise<object>;
+
   public constructor(getJson: GetJson, settings: Settings) {
     this._settings = settings;
     this._getJson = getJson;
@@ -35,10 +37,10 @@ export class Loaders {
 
   public LoadDatasets() {
     // Load with Angular2
-    const datasetLoader = this._getJson.getAll(
+    this.datasetLoader = this._getJson.getAll(
       this._serverString + "assets/g_datasets.php"
     );
-    datasetLoader.then(result => {
+    this.datasetLoader.then(result => {
       const results: any = result;
       let currId = 0;
       const MenuDataFull: Dataset[] = [];

@@ -28,7 +28,7 @@ export class Model {
   public _world: World;
   public _lines: Lines;
   private colorMapLoader: Promise<object>;
-  private settingsLoader: Promise<object>;
+  public settingsLoader: Promise<object>;
   private finishedLoading: boolean;
   public legend: Legend;
   public timeseriesData: [TimeseriesData];

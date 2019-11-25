@@ -459,7 +459,6 @@ export class ViewComponent implements OnInit {
     const settings = new Array<any>();
 
     // Generate key/value lookup //
-    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this._model.settings.Datasets.length; i++) {
       const currFullName = this._model.settings.Datasets[i].FullName;
       const datasetPath = currFullName.split("|", -1);
@@ -713,8 +712,22 @@ export class ViewComponent implements OnInit {
       this.viewSettingsSelected.minorIslands
     );
 
-    // this._controller.loadDataset("mrsharky_jp_Mon_gaus_mono_air_sfc_mon_mean", "0001-01-01", "1");
-    // this._controller.loadDataset("mrsharky_noaa20v2c_Mon_press_air_mon_mean", "1851-01-01", "1");
+    // Load an initial dataset upon loading the website
+    this._model.settingsLoader.then(() => {
+      this._model.loaders.datasetLoader.then(() => {
+        const datasetToGet =
+          "NOAA|NOAA-CIRES Twentieth Century Reanalysis (V2c)|Pressure Level|Non-Gaussian|Air Temperature|Monthly Mean (1000-10mb)";
+        const selectedDataset = this._model.settings.Datasets.find(
+          myObj => myObj.FullName === datasetToGet
+        );
+        this._controller.loadLevels(selectedDataset);
+        this._controller.loadDataset(
+          selectedDataset,
+          selectedDataset.StartDate,
+          1
+        );
+      });
+    });
 
     if (!this.GL) {
       alert("Could not initialise WebGL, sorry :-(");
