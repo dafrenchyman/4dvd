@@ -228,22 +228,11 @@ export class ViewComponent implements OnInit {
   public setModel() {
 
   }
-  public StringToArray(str): string {
-    if (str === '') {
-      return ' ';
-    }
-    let r: any[];
-    r = str.split('|');
-    if (r.length < 5) {
-      return 'Precipitation';
-    }
-    return r[r.length - 2];
-  }
 
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this.StringToArray(this._model.settings.FullName);
+        return this._model.settings.StringToArray(this._model.settings.FullName);
       }
     }
     return '';

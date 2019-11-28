@@ -86,15 +86,12 @@ export class TimeseriesMenu {
     if (!this.DataAvailable()) {
       return 'Value';
     }
-    let r: any[];
-    r = this._model.settings.FullName.split('|');
-    if (r.length < 5) {
-      return 'Precipitation';
+    const yTitle = this._model.settings.StringToArray(this._model.settings.FullName);
+    if (yTitle === 'Air Temperature') {
+      return yTitle.concat(' (\xB0C)');
+    } else {
+      return yTitle;
     }
-    if (r[r.length - 2] === 'Air Temperature') {
-      return r[r.length - 2].concat(' (\xB0C)');
-    }
-    return r[r.length - 2];
   }
 
   public IsSelected(level) : boolean {

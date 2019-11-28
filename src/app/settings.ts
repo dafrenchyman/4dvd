@@ -138,6 +138,18 @@ export class Settings {
     return null;
   }
 
+  StringToArray(str): string {
+    if (str === '') {
+      return ' ';
+    }
+    let r: any[];
+    r = str.split('|');
+    if (r.length < 5) {
+      return 'Precipitation';
+    }
+    return r[r.length - 2];
+  }
+
   // display related settings
   currColormapName: string = "Color Brewer 2.0|Diverging|Zero Centered|11-class Spectral Inverse";
   smoothGridBoxValues: boolean = true;
