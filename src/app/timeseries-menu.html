@@ -1,7 +1,5 @@
+
 <div id="TimeseriesPlot">
-  <button id="closebutton" mat-icon-button style="left: 1425px; top: 0px; z-index: 1000; color: #000000" (click)="closeTimeSeries()">
-    <mat-icon matTooltip="Exit Time Series">close</mat-icon>
-  </button>
   <h2 mat-dialog-title>Time Series</h2>
   <mat-dialog-content>
       <ngx-charts-line-chart *ngIf="DataAvailable()"
@@ -24,6 +22,9 @@
       <br>
       <p>Latitude: {{this._model.settings.CurrGridBoxLat}}</p>
       <p>Longitude: {{this._model.settings.CurrGridBoxLon}}</p>
+      <br>
+      <br>
+      <button mat-raised-button (click)="closeTimeSeries()">Close Time Series</button>
 
   </mat-dialog-content>
   <h2 mat-dialog-title style="text-align: center"><u>Pressure Layers</u></h2>
