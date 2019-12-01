@@ -38,19 +38,18 @@ export class AppComponent {
 }
 
 function getLogoLocation() {
-  if (UrlExists('../assets/4DVDLogoV1.png')){
-    return '../assets/4DVDLogoV1.png'
-  } else if (UrlExists('/beta/LogoAndTimeSeries2/assets/4DVDLogoV1.png')){
-    return '/beta/LogoAndTimeSeries2/assets/4DVDLogoV1.png'
+  if (UrlExists("../assets/4DVDLogoV1.png")) {
+    return "../assets/4DVDLogoV1.png";
+  } else if (UrlExists("/beta/LogoAndTimeSeries2/assets/4DVDLogoV1.png")) {
+    return "/beta/LogoAndTimeSeries2/assets/4DVDLogoV1.png";
   } else {
-    return '../assets/4DVDLogoV1.png';
+    return "../assets/4DVDLogoV1.png";
   }
 }
 
-function UrlExists(url)
-{
+function UrlExists(url) {
   const http = new XMLHttpRequest();
-  http.open('HEAD', url, false);
+  http.open("HEAD", url, false);
   http.send();
   return http.status !== 404;
 }

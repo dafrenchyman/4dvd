@@ -309,7 +309,9 @@ export class ViewComponent implements OnInit {
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this._model.settings.StringToArray(this._model.settings.FullName);
+        return this._model.settings.StringToArray(
+          this._model.settings.FullName
+        );
       }
     }
     return "";

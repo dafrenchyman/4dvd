@@ -15,29 +15,36 @@
     id="TabMenu"
     style="margin-bottom: 0px; z-index: 10;"
   >
-    <div id="QuickButtons" class="col s6" align="right" style="float: right; display: inline-block">
-    <div class="AboutButton">
-      <button
-        mat-raised-button
-        (click)="OpenAboutDialog()"
-        matTooltip="About 4DVD"
-        matTooltipPosition="right"
-      >
-        <mat-icon>info</mat-icon> About
-      </button>
-    </div>
-  </div>
-    <img src="{{logo}}"
-         alt="4DVD Logo"
-         onClick="window.location.href=window.location.href"
-         style="height: 45px; width: 45px; margin-top: 5px; margin-left: 5px" align="left"
-    >
     <div
-      class="col s6 blue white-text" style="position: absolute; margin-left: 50px"
+      id="QuickButtons"
+      class="col s6"
+      align="right"
+      style="float: right; display: inline-block"
+    >
+      <div class="AboutButton">
+        <button
+          mat-raised-button
+          (click)="OpenAboutDialog()"
+          matTooltip="About 4DVD"
+          matTooltipPosition="right"
+        >
+          <mat-icon>info</mat-icon> About
+        </button>
+      </div>
+    </div>
+    <img
+      src="{{ logo }}"
+      alt="4DVD Logo"
+      onClick="window.location.href=window.location.href"
+      style="height: 45px; width: 45px; margin-top: 5px; margin-left: 5px"
+      align="left"
+    />
+    <div
+      class="col s6 blue white-text"
+      style="position: absolute; margin-left: 50px"
     >
       <h5>{{ title }}</h5>
     </div>
-
   </div>
 
   <!--div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">

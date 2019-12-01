@@ -194,13 +194,13 @@ export class Settings {
   }
 
   StringToArray(str): string {
-    if (str === '') {
-      return ' ';
+    if (str === "") {
+      return " ";
     }
     let r: any[];
-    r = str.split('|');
+    r = str.split("|");
     if (r.length < 5) {
-      return 'Precipitation';
+      return "Precipitation";
     }
     return r[r.length - 2];
   }

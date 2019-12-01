@@ -1,7 +1,7 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
 
-import {MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef } from "@angular/material/dialog";
 import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { Settings } from "./settings";
@@ -68,8 +68,10 @@ export class TimeseriesMenuComponent {
       : false;
   }
 
-  public constructor(private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
-                     @Inject(MAT_DIALOG_DATA) public data: any) {
+  public constructor(
+    private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -104,11 +106,13 @@ export class TimeseriesMenuComponent {
   }
   yValTitle() {
     if (!this.DataAvailable()) {
-      return 'Value';
+      return "Value";
     }
-    const yTitle = this._model.settings.StringToArray(this._model.settings.FullName);
-    if (yTitle === 'Air Temperature') {
-      return yTitle.concat(' (\xB0C)');
+    const yTitle = this._model.settings.StringToArray(
+      this._model.settings.FullName
+    );
+    if (yTitle === "Air Temperature") {
+      return yTitle.concat(" (\xB0C)");
     } else {
       return yTitle;
     }
