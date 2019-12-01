@@ -26,7 +26,7 @@ import { Model } from "./model";
 export class AppComponent {
   private _getJson: GetJson;
   title = "4DVD (4-Dimensional Visual Delivery of Big Climate Data)";
-
+  logo = getLogoLocation();
   constructor(getJson: GetJson, public dialog: MatDialog) {
     this._getJson = getJson;
   }
@@ -35,4 +35,22 @@ export class AppComponent {
     const dialogRef = this.dialog.open(About4dvdComponent, {});
     dialogRef.afterClosed().subscribe(() => {});
   }
+}
+
+function getLogoLocation() {
+  if (UrlExists('../assets/4DVDLogoV1.png')){
+    return '../assets/4DVDLogoV1.png'
+  } else if (UrlExists('/beta/LogoAndTimeSeries2/assets/4DVDLogoV1.png')){
+    return '/beta/LogoAndTimeSeries2/assets/4DVDLogoV1.png'
+  } else {
+    return '../assets/4DVDLogoV1.png';
+  }
+}
+
+function UrlExists(url)
+{
+  const http = new XMLHttpRequest();
+  http.open('HEAD', url, false);
+  http.send();
+  return http.status !== 404;
 }

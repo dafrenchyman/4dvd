@@ -193,6 +193,18 @@ export class Settings {
     return null;
   }
 
+  StringToArray(str): string {
+    if (str === '') {
+      return ' ';
+    }
+    let r: any[];
+    r = str.split('|');
+    if (r.length < 5) {
+      return 'Precipitation';
+    }
+    return r[r.length - 2];
+  }
+
   constructor() {
     this.lightDirection = glMatrix.vec3.create();
     this.CurrGridBoxId = -1;

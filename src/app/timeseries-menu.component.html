@@ -14,7 +14,7 @@
       [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel"
       [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
+      [yAxisLabel]="yValTitle()"
       [autoScale]="autoScale"
     >
     </ngx-charts-line-chart>
@@ -22,7 +22,20 @@
     <button mat-raised-button (click)="createCsvFromTimeseriesData()">
       Download Data
     </button>
+    <br>
+    <p>Latitude: {{this._model.settings.CurrGridBoxLat}}</p>
+    <p>Longitude: {{this._model.settings.CurrGridBoxLon}}</p>
+    <br>
+    <br>
+    <button mat-raised-button (click)="closeTimeSeries()">
+      Close Time Series
+    </button>
   </mat-dialog-content>
+  <h2 mat-dialog-title
+      style="text-align: center"
+  >
+    <u>Pressure Layers</u>
+  </h2>
   <mat-dialog-actions>
     <mat-checkbox
       *ngFor="let level of GetLevels()"
