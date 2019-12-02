@@ -1,18 +1,16 @@
 import { ElementRef } from "@angular/core";
 import { GetJson } from "./getJson";
 import { Model } from "./model";
-import { ViewComponent } from "./view.component";
+
 /**
  * Created by dafre on 5/16/2017.
  */
 
 export class Controller {
   private _model: Model;
-  private _view: ViewComponent;
 
-  public constructor(model: Model, view: ViewComponent) {
+  public constructor(model: Model) {
     this._model = model;
-    this._view = view;
   }
 
   public changeLatLon(enabled: boolean) {

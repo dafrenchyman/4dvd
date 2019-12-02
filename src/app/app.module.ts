@@ -27,7 +27,6 @@ import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetMenuComponent } from "./dataset-menu.component";
 import { GetJson } from "./getJson";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
-import { ViewComponent } from "./view.component";
 
 @NgModule({
   declarations: [
@@ -35,8 +34,7 @@ import { ViewComponent } from "./view.component";
     About4dvdComponent,
     ColorMapMenuComponent,
     DatasetMenuComponent,
-    TimeseriesMenuComponent,
-    ViewComponent
+    TimeseriesMenuComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@
  * Created by dafre on 5/16/2017.
  */
 
+import { AppComponent } from "./app.component";
 import { ColorMap } from "./ColorMap";
 import { GetJson } from "./getJson";
 import { GlMatrix } from "./GlMatrix";
@@ -11,14 +12,14 @@ import { Lines } from "./lines";
 import { Loaders } from "./loaders";
 import { GlobeViewType, Settings } from "./settings";
 import { TimeseriesData } from "./timeseriesData";
-import { ViewComponent } from "./view.component";
+
 import { World } from "./world";
 
 declare var jQuery: any;
 declare var URI: any;
 
 export class Model {
-  private _observers: ViewComponent[];
+  private _observers: AppComponent[];
   private _getJson: GetJson;
 
   public loaders: Loaders;
@@ -375,8 +376,8 @@ export class Model {
     });
   }
 
-  public RegisterObserver(view: ViewComponent) {
-    this._observers.push(view);
+  public RegisterObserver(appc: AppComponent) {
+    this._observers.push(appc);
   }
 
   public ChangeColorMap(colorMap) {
