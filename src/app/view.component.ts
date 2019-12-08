@@ -3,6 +3,7 @@
  */
 
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   HostListener,
@@ -36,7 +37,7 @@ declare var jQuery: any;
   encapsulation: ViewEncapsulation.None
   // providers: [GetJson]
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit, AfterViewInit {
   datasetTitle = "Change the current dataset";
   timeTitle = "Change the year and month";
   graphicTitle = "Change visual settings";

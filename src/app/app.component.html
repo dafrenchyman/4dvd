@@ -29,6 +29,18 @@
           <mat-icon>info</mat-icon> About
         </button>
       </div>
+      <div id="DownloadButton" class="col s9" align="right">
+        <div class="DataDownload">
+          <button
+            mat-raised-button
+            (click)="climate.createCsvFromGriddedData()"
+            matTooltip="Data Download"
+            matTooltipPosition="right"
+          >
+            Data Download
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -43,5 +55,5 @@
     </div>
   </div-->
 
-  <app-climate-view>Loading Climate...</app-climate-view>
+  <app-climate-view #climate>Loading Climate...</app-climate-view>
 </div>
