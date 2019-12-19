@@ -193,7 +193,7 @@ export class Settings {
     return null;
   }
 
-  StringToArray(str): string {
+  GenerateTitle(str): string {
     if (str === "") {
       return " ";
     }

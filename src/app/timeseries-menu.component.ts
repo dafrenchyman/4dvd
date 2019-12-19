@@ -108,7 +108,7 @@ export class TimeseriesMenuComponent {
     if (!this.DataAvailable()) {
       return "Value";
     }
-    const yTitle = this._model.settings.StringToArray(
+    const yTitle = this._model.settings.GenerateTitle(
       this._model.settings.FullName
     );
     if (yTitle === "Air Temperature") {

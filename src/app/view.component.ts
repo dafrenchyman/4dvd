@@ -310,7 +310,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this._model.settings.StringToArray(
+        return this._model.settings.GenerateTitle(
           this._model.settings.FullName
         );
       }
