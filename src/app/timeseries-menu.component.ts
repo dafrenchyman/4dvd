@@ -209,7 +209,7 @@ export class TimeseriesMenuComponent {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore +
+        this._model.settings.Dataset.DatabaseStore.substr(9, this._model.settings.Dataset.DatabaseStore.length) +
           "_Timeseries_Lat" +
           this._model.settings.CurrGridBoxLat +
           "_Lon" +
