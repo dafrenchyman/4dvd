@@ -1,6 +1,6 @@
-<div id="TimeseriesPlot">
+<div id="TimeseriesPlot" style="overflow-y: hidden; overflow-x: hidden; max-width: 100%; max-height: 100%">
   <h2 mat-dialog-title>Time Series</h2>
-  <div style="position: absolute; top: 80px; right: 205px;">
+  <div style="position: absolute; top: 8%; right: 11%;">
     <button mat-icon-button (click)="closeTimeSeries()">
       <mat-icon matTooltip="Exit Time Series">close</mat-icon>
     </button>
@@ -30,12 +30,12 @@
     <br />
     <p>Latitude: {{ this._model.settings.CurrGridBoxLat }}</p>
     <p>Longitude: {{ this._model.settings.CurrGridBoxLon }}</p>
-    <h3 mat-dialog-title>
+    <h4 mat-dialog-title>
       <u>Pressure Layers</u>
-    </h3>
-    <mat-dialog-actions>
+    </h4>
+    <mat-dialog-actions style="column-count: auto;">
       <mat-checkbox
-        style="margin-right: 20px;"
+        style="margin-right: 5px;"
         *ngFor="let level of GetLevels()"
         [checked]="IsSelected(level)"
         (click)="ToggleTimeseries(level)"
