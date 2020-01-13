@@ -284,6 +284,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
     // this.tabMenuRowRef.nativeElement.style.marginBottom = "0px";
     // jQuery('#tabMenuRow')[0].style.marginBottom = "0px";
@@ -305,20 +306,13 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   public setModel() {}
-  public StringToArray(str): string {
-    if (str === "") {
-      return " ";
-    }
-    let r: any[];
-    r = str.split("|");
-    const newTitle = r[r.length - 2] + " | " + r[r.length - 1];
-    return newTitle;
-  }
 
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this.StringToArray(this._model.settings.FullName);
+        return this._model.settings.GenerateTitle(
+          this._model.settings.FullName
+        );
       }
     }
     return "";
@@ -335,7 +329,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
         this.GridBoxData[2] = this._model.settings.CurrGridBoxLon;
         if (this._model.settings.CurrGridBoxValue !== null) {
           this.timeSeriesVal = Number(
-            this._model.settings.CurrGridBoxValue.toFixed(4)
+            this._model.settings.CurrGridBoxValue.toFixed(2)
           );
         }
       }
@@ -564,7 +558,10 @@ export class ViewComponent implements OnInit, AfterViewInit {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore +
+        this._model.settings.Dataset.DatabaseStore.substr(
+          9,
+          this._model.settings.Dataset.DatabaseStore.length
+        ) +
           "_GridData_" +
           this._model.settings.CurrDate +
           ".csv"

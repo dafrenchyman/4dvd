@@ -1,6 +1,7 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
 
+import { MatDialogRef } from "@angular/material/dialog";
 import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { Settings } from "./settings";
@@ -31,14 +32,14 @@ export class TimeseriesMenuComponent {
   timeline = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = "Time";
+  xAxisLabel = "Date";
   showYAxisLabel = true;
   yAxisLabel = "Value";
 
   colorScheme = {
     domain: [
-      "#a6cee3",
       "#1f78b4",
+      "#a6cee3",
       "#b2df8a",
       "#33a02c",
       "#fb9a99",
@@ -67,7 +68,10 @@ export class TimeseriesMenuComponent {
       : false;
   }
 
-  public constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  public constructor(
+    private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -95,6 +99,22 @@ export class TimeseriesMenuComponent {
           currLevel.Name
         );
       }
+    }
+  }
+  closeTimeSeries() {
+    this.dialogRef.close();
+  }
+  yValTitle() {
+    if (!this.DataAvailable()) {
+      return "Value";
+    }
+    const yTitle = this._model.settings.GenerateTitle(
+      this._model.settings.FullName
+    );
+    if (yTitle === "Air Temperature") {
+      return yTitle.concat(" (\xB0C)");
+    } else {
+      return yTitle;
     }
   }
 
@@ -189,7 +209,10 @@ export class TimeseriesMenuComponent {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore +
+        this._model.settings.Dataset.DatabaseStore.substr(
+          9,
+          this._model.settings.Dataset.DatabaseStore.length
+        ) +
           "_Timeseries_Lat" +
           this._model.settings.CurrGridBoxLat +
           "_Lon" +
