@@ -432,10 +432,24 @@
 
     <div id="Legend"></div>
 
-    <div id="ClimateTitle" (click)="OpenDatasetDialog()" style="cursor: pointer" matTooltip="{{titleToolTip}}">{{ GetTitle() }}</div>
+    <div
+      id="ClimateTitle"
+      (click)="OpenDatasetDialog()"
+      style="cursor: pointer"
+      matTooltip="{{ titleToolTip }}"
+    >
+      {{ GetTitle() }}
+    </div>
 
-    <div id="ClimateDate" (click)="selectedIndex = 1" (click)="sidenav.toggle()" style="cursor: pointer"
-         matTooltip="{{layerDate}}">{{ GetLayerDateLabel() }}</div>
+    <div
+      id="ClimateDate"
+      (click)="selectedIndex = 1"
+      (click)="sidenav.toggle()"
+      style="cursor: pointer"
+      matTooltip="{{ layerDate }}"
+    >
+      {{ GetLayerDateLabel() }}
+    </div>
 
     <div id="TimeseriesBox">
       <mat-card *ngIf="GridboxSelected()">
