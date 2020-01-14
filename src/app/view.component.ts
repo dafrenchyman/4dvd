@@ -38,6 +38,7 @@ declare var jQuery: any;
   // providers: [GetJson]
 })
 export class ViewComponent implements OnInit, AfterViewInit {
+  selectedIndex = 0;
   datasetTitle = "Change the current dataset";
   timeTitle = "Change the year and month";
   graphicTitle = "Change visual settings";
@@ -56,6 +57,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
   lakeDesc = "Toggles rendered quality of lakes";
   displayLoc = "right";
   exitsidenav = "Closes the settings tab";
+  layerDate = "Click to change the date";
+  titleToolTip = "Click to change data set";
   timeSeriesVal: any;
   @ViewChild("ClimateGl") private _canvas: ElementRef;
   @ViewChild("ClimateSystem") climateSystemRef: ElementRef;
