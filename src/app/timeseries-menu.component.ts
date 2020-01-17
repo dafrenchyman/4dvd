@@ -57,6 +57,9 @@ export class TimeseriesMenuComponent {
   autoScale = true;
 
   private _model: Model;
+  private dateJson: any;
+  private valJson: any;
+  private serJson: any;
 
   public GetLevels() {
     return this._model.settings.Levels;
@@ -101,6 +104,21 @@ export class TimeseriesMenuComponent {
       }
     }
   }
+  chartToolTipDate(jsonString) {
+    console.log(jsonString);
+    this.dateJson = jsonString;
+    let nameIndex = this.dateJson.indexOf("name");
+    nameIndex += 8;
+    return this.dateJson.substr(nameIndex, 7);
+  }
+
+  chartToolTipVal(jsonString) {
+    this.valJson = jsonString;
+    let valueIndex = this.valJson.indexOf("value");
+    valueIndex += 8;
+    return this.valJson.substr(valueIndex, 5);
+  }
+
   closeTimeSeries() {
     this.dialogRef.close();
   }

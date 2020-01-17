@@ -25,6 +25,15 @@
       [yAxisLabel]="yValTitle()"
       [autoScale]="autoScale"
     >
+      <ng-template #tooltipTemplate let-model="model">
+        <p> <b>Date:</b> {{chartToolTipDate(model | json)}}</p>
+        <p> <b>{{yValTitle()}}:</b> {{chartToolTipVal(model | json)}} </p>
+      </ng-template>
+
+      <ng-template #seriesTooltipTemplate let-model="model">
+        <p> <b>Date:</b> {{chartToolTipDate(model | json)}}</p>
+        <p> <b>{{yValTitle()}}:</b> {{chartToolTipVal(model | json)}} </p>
+      </ng-template>
     </ngx-charts-line-chart>
     <br />
     <button mat-raised-button (click)="createCsvFromTimeseriesData()">
