@@ -26,18 +26,14 @@
       [autoScale]="autoScale"
     >
       <ng-template #tooltipTemplate let-model="model">
-        <p>
-          <b>Date:</b> {{ chartToolTipDate(model | json) }}
-        </p>
+        <p><b>Date:</b> {{ chartToolTipDate(model | json) }}</p>
         <p>
           <b>{{ yValTitle() }}:</b> {{ chartToolTipVal(model | json) }}
         </p>
       </ng-template>
 
       <ng-template #seriesTooltipTemplate let-model="model">
-        <p>
-          <b>Date:</b> {{ chartToolTipDate(model | json) }}
-        </p>
+        <p><b>Date:</b> {{ chartToolTipDate(model | json) }}</p>
         <p>
           <b>{{ yValTitle() }}:</b> {{ chartToolTipVal(model | json) }}
         </p>
