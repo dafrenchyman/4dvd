@@ -27,7 +27,7 @@
       style="background-color: white; overflow:auto; width: 290px; display: flex"
       (onmouseover)="inMenu = true"
     >
-      <mat-tab-group>
+      <mat-tab-group [selectedIndex]="selectedIndex">
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon matTooltip="{{ datasetTitle }}">list</mat-icon>
@@ -420,6 +420,7 @@
       style=""
       [disableRipple]="true"
       class="example-fab"
+      (click)="selectedIndex = 0"
       (click)="sidenav.toggle()"
       (click)="unhide(this,'close')"
       matTooltip="Settings"
@@ -431,9 +432,9 @@
 
     <div id="Legend"></div>
 
-    <div id="ClimateTitle">{{ GetTitle() }}</div>
+    <div id="ClimateTitle" (click)="OpenDatasetDialog()" style="cursor: pointer" matTooltip="{{titleToolTip}}">{{ GetTitle() }}</div>
 
-    <div id="ClimateDate">{{ GetLayerDateLabel() }}</div>
+    <div id="ClimateDate" (click)="selectedIndex = 1" (click)="sidenav.toggle()" style="cursor: pointer" matTooltip="{{layerDateTT}}">{{ GetLayerDateLabel() }}</div>
 
     <div id="TimeseriesBox">
       <mat-card *ngIf="GridboxSelected()">
