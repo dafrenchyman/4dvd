@@ -312,7 +312,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this._model.settings.GenerateTitle(this._model.settings.FullName);
+        return this._model.settings.GenerateTitle(
+          this._model.settings.FullName
+        );
       }
     }
     return "";
@@ -558,7 +560,10 @@ export class ViewComponent implements OnInit, AfterViewInit {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore.substr(9, this._model.settings.Dataset.DatabaseStore.length) +
+        this._model.settings.Dataset.DatabaseStore.substr(
+          9,
+          this._model.settings.Dataset.DatabaseStore.length
+        ) +
           "_GridData_" +
           this._model.settings.CurrDate +
           ".csv"
