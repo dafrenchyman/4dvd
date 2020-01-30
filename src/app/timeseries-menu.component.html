@@ -1,8 +1,11 @@
 <div id="TimeseriesPlot">
   <h2 mat-dialog-title>Time Series</h2>
   <div style="position: absolute; top: 8%; right: 11%">
-    <button mat-icon-button (click)="closeTimeSeries()">
-      <mat-icon matTooltip="Exit Time Series">close</mat-icon>
+    <button
+      mat-icon-button
+      (click)="closeTimeSeries()"
+      >
+        <mat-icon matTooltip="Exit Time Series">close</mat-icon>
     </button>
   </div>
   <mat-dialog-content>
@@ -23,27 +26,25 @@
       [autoScale]="autoScale"
     >
       <ng-template #tooltipTemplate let-model="model">
-        <p><b>Date:</b> {{ chartToolTipDate(model | json) }}</p>
-        <p>
-          <b>{{ yValTitle() }}:</b> {{ chartToolTipVal(model | json) }}
-        </p>
+        <p> <b>Date:</b> {{chartToolTipDate(model | json)}}</p>
+        <p> <b>{{yValTitle()}}:</b> {{chartToolTipVal(model | json)}}</p>
       </ng-template>
       <ng-template #seriesTooltipTemplate let-model="model">
-        <p><b>Date:</b> {{ chartToolTipDate(model | json) }}</p>
-        <p>
-          <b>{{ yValTitle() }}:</b> {{ chartToolTipVal(model | json) }}
-        </p>
+        <p> <b>Date:</b> {{chartToolTipDate(model | json)}}</p>
+        <p> <b>{{yValTitle()}}:</b> {{chartToolTipVal(model | json)}}</p>
       </ng-template>
     </ngx-charts-line-chart>
     <br />
     <button mat-raised-button (click)="createCsvFromTimeseriesData()">
       Download Data
     </button>
-    <br />
-    <p>Latitude: {{ this._model.settings.CurrGridBoxLat }}</p>
-    <p>Longitude: {{ this._model.settings.CurrGridBoxLon }}</p>
+    <br>
+    <p>Latitude: {{this._model.settings.CurrGridBoxLat}}</p>
+    <p>Longitude: {{this._model.settings.CurrGridBoxLon}}</p>
   </mat-dialog-content>
-  <h2 mat-dialog-title style="text-align: center">
+  <h2 mat-dialog-title
+      style="text-align: center"
+  >
     <u>Pressure Layers</u>
   </h2>
   <mat-dialog-actions>

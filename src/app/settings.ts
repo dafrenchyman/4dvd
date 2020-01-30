@@ -164,7 +164,7 @@ export class Settings {
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
-      return "Precipitation";
+      return 'Precipitation';
     }
     return r[r.length - 2];
   }
