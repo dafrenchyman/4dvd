@@ -1,7 +1,6 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
 
-import { MatDialogRef } from '@angular/material/dialog';
 import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { Settings } from "./settings";
@@ -32,14 +31,14 @@ export class TimeseriesMenuComponent {
   timeline = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = "Date";
+  xAxisLabel = "Time";
   showYAxisLabel = true;
   yAxisLabel = "Value";
 
   colorScheme = {
     domain: [
-      "#1f78b4",
       "#a6cee3",
+      "#1f78b4",
       "#b2df8a",
       "#33a02c",
       "#fb9a99",
@@ -57,8 +56,6 @@ export class TimeseriesMenuComponent {
   autoScale = true;
 
   private _model: Model;
-  private dateJson: any;
-  private valJson: any;
 
   public GetLevels() {
     return this._model.settings.Levels;
@@ -70,8 +67,7 @@ export class TimeseriesMenuComponent {
       : false;
   }
 
-  public constructor(private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
-                     @Inject(MAT_DIALOG_DATA) public data: any) {
+  public constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -99,36 +95,6 @@ export class TimeseriesMenuComponent {
           currLevel.Name
         );
       }
-    }
-  }
-
-  chartToolTipDate(jsonString) {
-    this.dateJson = jsonString;
-    let nameIndex = this.dateJson.indexOf("name");
-    nameIndex += 8;
-    return this.dateJson.substr(nameIndex, 7);
-  }
-
-  chartToolTipVal(jsonString) {
-    this.valJson = jsonString;
-    let valueIndex = this.dateJson.indexOf("value");
-    valueIndex += 8;
-    return this.dateJson.substr(valueIndex, 5);
-  }
-
-  closeTimeSeries() {
-    this.dialogRef.close();
-  }
-
-  yValTitle() {
-    if (!this.DataAvailable()){
-      return 'Value';
-    }
-    const yTitle = this._model.settings.GenerateTitle(this._model.settings.FullName);
-    if (yTitle === 'Air Temperature') {
-      return yTitle.concat(' (\xB0C)');
-    } else {
-      return yTitle;
     }
   }
 
@@ -223,7 +189,7 @@ export class TimeseriesMenuComponent {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore.substr(9, this._model.settings.Dataset.DatabaseStore.length) +
+        this._model.settings.Dataset.DatabaseStore +
           "_Timeseries_Lat" +
           this._model.settings.CurrGridBoxLat +
           "_Lon" +
