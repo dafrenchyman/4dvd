@@ -1,29 +1,36 @@
 <div id="TimeseriesPlot">
-  <h2 mat-dialog-title>Time Series</h2>
-  <mat-dialog-content>
-    <ngx-charts-line-chart
-      *ngIf="DataAvailable()"
-      [view]="view"
-      [scheme]="colorScheme"
-      [timeline]="timeline"
-      [results]="multi"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [autoScale]="autoScale"
-    >
-    </ngx-charts-line-chart>
+  <div id="print-section">
+    <div class="main">
+    <h2 mat-dialog-title>Time Series</h2>
+      <button id="graph_button" [useExistingCss]="true"  printSectionId="print-section" ngxPrint>
+        Save Graph
+      </button>
+      <mat-dialog-content>
+      <ngx-charts-line-chart
+        *ngIf="DataAvailable()"
+        [view]="view"
+        [scheme]="colorScheme"
+        [timeline]="timeline"
+        [results]="multi"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [autoScale]="autoScale"
+      >
+     </ngx-charts-line-chart>
+
     <br />
-    <button mat-raised-button (click)="createCsvFromTimeseriesData()">
+    <button id="Download_button" mat-raised-button (click)="createCsvFromTimeseriesData()">
       Download Data
     </button>
-  </mat-dialog-content>
-  <mat-dialog-actions>
+    </mat-dialog-content>
+      </div>
+    <mat-dialog-actions>
     <mat-checkbox
       *ngFor="let level of GetLevels()"
       [checked]="IsSelected(level)"
@@ -32,4 +39,5 @@
       {{ level.Name }}
     </mat-checkbox>
   </mat-dialog-actions>
+</div>
 </div>
