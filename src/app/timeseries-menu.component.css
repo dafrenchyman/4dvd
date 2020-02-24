@@ -1,2 +1,23 @@
 #TimeseriesPlot {
+
+}
+h2 {
+  margin: 0;
+  display: inline-block;
+}
+#graph_button {
+  float: right;
+}
+@media print {
+  *{
+    -webkit-print-color-adjust: exact !important;
+
+  }
+  #graph_button{
+    display:none;
+  }
+  #Download_button{
+    display:none;
+  }
+  @page {size: landscape}
 }
