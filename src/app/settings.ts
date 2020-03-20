@@ -166,7 +166,7 @@ export class Settings {
     if (r.length < 5) {
       return "Precipitation";
     }
-    return r[r.length - 2] + " | " +  r[r.length - 1];
+    return r[r.length - 2] + " | " + r[r.length - 1];
   }
 
   public GenerateAxisTitle(str): string {

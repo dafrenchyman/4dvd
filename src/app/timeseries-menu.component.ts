@@ -25,9 +25,9 @@ export class TimeseriesMenuComponent {
   view: any[];
   levelsLoaded = 0;
   toolTipData: Array<{
-    date: string,
-    value: string,
-    layer: string,
+    date: string;
+    value: string;
+    layer: string;
   }>;
 
   // options
@@ -128,12 +128,12 @@ export class TimeseriesMenuComponent {
     this.toolTipData = [];
     const jsonArr = jsonString.split("{"); // counter,, jsonArr.length = n + 1 where n is number of layers selected
     for (let i = 1; i < jsonArr.length; i++) {
-      const v = jsonArr[i].split("value\": ");
-      const d = jsonArr[i].split("name\": ");
-      const series = jsonArr[i].split("series\": ");
-      const l = series[1].split("\""); // layer
-      v[1] = v[1].substr(0,4); // value
-      d[1] = d[1].substr(1,7); // date
+      const v = jsonArr[i].split('value": ');
+      const d = jsonArr[i].split('name": ');
+      const series = jsonArr[i].split('series": ');
+      const l = series[1].split('"'); // layer
+      v[1] = v[1].substr(0, 4); // value
+      d[1] = d[1].substr(1, 7); // date
       this.toolTipData.push({
         date: d[1],
         value: v[1],
@@ -158,10 +158,15 @@ export class TimeseriesMenuComponent {
     if (!this.DataAvailable()) {
       return "Value";
     }
-    const yTitle = this._model.settings.GenerateAxisTitle(this._model.settings.FullName);
+    const yTitle = this._model.settings.GenerateAxisTitle(
+      this._model.settings.FullName
+    );
     if (yTitle === "Air Temperature" || yTitle === "Soil Temperature") {
       return yTitle.concat(" (\xB0C)");
-    } else if ((yTitle === "Volumetric Soil Moisture") || (yTitle === "ice thickness")) {
+    } else if (
+      yTitle === "Volumetric Soil Moisture" ||
+      yTitle === "ice thickness"
+    ) {
       return yTitle;
     } else {
       return yTitle + " (" + this._model.settings.DataUnits + ")";

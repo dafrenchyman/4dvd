@@ -24,19 +24,23 @@
     >
       <ng-template #tooltipTemplate let-model="model">
         <div *ngFor="let data of getToolTipData(model | json)">
-          <p><u><b>Date:</b> {{data.date}}</u></p>
           <p>
-            <b>{{ yValTitle() }}:</b> {{ data.value }}<br/>
-            <b>Layer: </b> {{data.layer}}
+            <u><b>Date:</b> {{ data.date }}</u>
+          </p>
+          <p>
+            <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
+            <b>Layer: </b> {{ data.layer }}
           </p>
         </div>
       </ng-template>
       <ng-template #seriesTooltipTemplate let-model="model">
-        <p><u><b>Date:</b> {{chartToolTipDate(model | json)}}</u></p>
+        <p>
+          <u><b>Date:</b> {{ chartToolTipDate(model | json) }}</u>
+        </p>
         <div *ngFor="let data of getToolTipData(model | json)">
           <p>
-            <b>{{ yValTitle() }}:</b> {{ data.value }}<br/>
-            <b>Layer: </b> {{data.layer}}
+            <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
+            <b>Layer: </b> {{ data.layer }}
           </p>
         </div>
       </ng-template>
