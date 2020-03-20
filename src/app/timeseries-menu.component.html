@@ -23,16 +23,22 @@
       [autoScale]="autoScale"
     >
       <ng-template #tooltipTemplate let-model="model">
-        <p><b>Date:</b> {{ chartToolTipDate(model | json) }}</p>
-        <p>
-          <b>{{ yValTitle() }}:</b> {{ chartToolTipVal(model | json) }}
-        </p>
+        <div *ngFor="let data of getToolTipData(model | json)">
+          <p><u><b>Date:</b> {{data.date}}</u></p>
+          <p>
+            <b>{{ yValTitle() }}:</b> {{ data.value }}<br/>
+            <b>Layer: </b> {{data.layer}}
+          </p>
+        </div>
       </ng-template>
       <ng-template #seriesTooltipTemplate let-model="model">
-        <p><b>Date:</b> {{ chartToolTipDate(model | json) }}</p>
-        <p>
-          <b>{{ yValTitle() }}:</b> {{ chartToolTipVal(model | json) }}
-        </p>
+        <p><u><b>Date:</b> {{chartToolTipDate(model | json)}}</u></p>
+        <div *ngFor="let data of getToolTipData(model | json)">
+          <p>
+            <b>{{ yValTitle() }}:</b> {{ data.value }}<br/>
+            <b>Layer: </b> {{data.layer}}
+          </p>
+        </div>
       </ng-template>
     </ngx-charts-line-chart>
     <br />
@@ -40,8 +46,8 @@
       Download Data
     </button>
     <br />
-    <p>Latitude: {{ this._model.settings.CurrGridBoxLat }}</p>
-    <p>Longitude: {{ this._model.settings.CurrGridBoxLon }}</p>
+    <p>Latitude: {{ getLat() }}</p>
+    <p>Longitude: {{ getLon() }}</p>
   </mat-dialog-content>
   <h2 mat-dialog-title style="text-align: center">
     <u>Pressure Layers</u>

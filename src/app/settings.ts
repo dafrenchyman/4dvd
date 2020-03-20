@@ -166,6 +166,18 @@ export class Settings {
     if (r.length < 5) {
       return "Precipitation";
     }
+    return r[r.length - 2] + " | " +  r[r.length - 1];
+  }
+
+  public GenerateAxisTitle(str): string {
+    if (str === "") {
+      return " ";
+    }
+    let r: any[];
+    r = str.split("|");
+    if (r.length < 5) {
+      return "Precipitation";
+    }
     return r[r.length - 2];
   }
 

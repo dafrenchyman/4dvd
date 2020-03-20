@@ -324,8 +324,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
         value = this._model.settings.CurrGridBoxId > 0 ? true : false;
         this.GridBoxData = new Array<number>(3);
         this.GridBoxData[0] = this._model.settings.CurrGridBoxValue;
-        this.GridBoxData[1] = this._model.settings.CurrGridBoxLat;
-        this.GridBoxData[2] = this._model.settings.CurrGridBoxLon;
+        this.GridBoxData[1] = Number(this._model.settings.CurrGridBoxLat.toFixed(2));
+        this.GridBoxData[2] = Number(this._model.settings.CurrGridBoxLon.toFixed(2));
         if (this._model.settings.CurrGridBoxValue !== null) {
           this.timeSeriesVal = Number(
             this._model.settings.CurrGridBoxValue.toFixed(2)

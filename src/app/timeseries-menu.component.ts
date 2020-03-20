@@ -24,6 +24,11 @@ export class TimeseriesMenuComponent {
   multi: TimeseriesData[] = new Array<any>();
   view: any[];
   levelsLoaded = 0;
+  toolTipData: Array<{
+    date: string,
+    value: string,
+    layer: string,
+  }>;
 
   // options
   showXAxis = true;
@@ -58,7 +63,22 @@ export class TimeseriesMenuComponent {
 
   private _model: Model;
   private dateJson: any;
-  private valJson: any;
+
+  getLat() {
+    if (String(this._model.settings.CurrGridBoxLat).length > 7) {
+      return this._model.settings.CurrGridBoxLat.toFixed(2);
+    } else {
+      return this._model.settings.CurrGridBoxLat;
+    }
+  }
+
+  getLon() {
+    if (String(this._model.settings.CurrGridBoxLon).length > 7) {
+      return this._model.settings.CurrGridBoxLon.toFixed(2);
+    } else {
+      return this._model.settings.CurrGridBoxLon;
+    }
+  }
 
   public GetLevels() {
     return this._model.settings.Levels;
@@ -104,18 +124,30 @@ export class TimeseriesMenuComponent {
     }
   }
 
+  getToolTipData(jsonString) {
+    this.toolTipData = [];
+    const jsonArr = jsonString.split("{"); // counter,, jsonArr.length = n + 1 where n is number of layers selected
+    for (let i = 1; i < jsonArr.length; i++) {
+      const v = jsonArr[i].split("value\": ");
+      const d = jsonArr[i].split("name\": ");
+      const series = jsonArr[i].split("series\": ");
+      const l = series[1].split("\""); // layer
+      v[1] = v[1].substr(0,4); // value
+      d[1] = d[1].substr(1,7); // date
+      this.toolTipData.push({
+        date: d[1],
+        value: v[1],
+        layer: l[1]
+      });
+    }
+    return this.toolTipData;
+  }
+
   chartToolTipDate(jsonString) {
     this.dateJson = jsonString;
     let nameIndex = this.dateJson.indexOf("name");
     nameIndex += 8;
     return this.dateJson.substr(nameIndex, 7);
-  }
-
-  chartToolTipVal(jsonString) {
-    this.valJson = jsonString;
-    let valueIndex = this.dateJson.indexOf("value");
-    valueIndex += 8;
-    return this.dateJson.substr(valueIndex, 5);
   }
 
   closeTimeSeries() {
@@ -126,13 +158,13 @@ export class TimeseriesMenuComponent {
     if (!this.DataAvailable()) {
       return "Value";
     }
-    const yTitle = this._model.settings.GenerateTitle(
-      this._model.settings.FullName
-    );
-    if (yTitle === "Air Temperature") {
+    const yTitle = this._model.settings.GenerateAxisTitle(this._model.settings.FullName);
+    if (yTitle === "Air Temperature" || yTitle === "Soil Temperature") {
       return yTitle.concat(" (\xB0C)");
-    } else {
+    } else if ((yTitle === "Volumetric Soil Moisture") || (yTitle === "ice thickness")) {
       return yTitle;
+    } else {
+      return yTitle + " (" + this._model.settings.DataUnits + ")";
     }
   }
 
