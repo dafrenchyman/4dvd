@@ -1,27 +1,27 @@
 <div id="TimeseriesPlot">
-  <h2 mat-dialog-title>Time Series</h2>
-  <div style="position: absolute; top: 8%; right: 11%">
-    <button mat-icon-button (click)="closeTimeSeries()">
-      <mat-icon matTooltip="Exit Time Series">close</mat-icon>
-    </button>
-  </div>
-  <mat-dialog-content>
-    <ngx-charts-line-chart
-      *ngIf="DataAvailable()"
-      [view]="view"
-      [scheme]="colorScheme"
-      [timeline]="timeline"
-      [results]="multi"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yValTitle()"
-      [autoScale]="autoScale"
-    >
+  <div id="print-section">
+    <div class="main">
+    <h2 mat-dialog-title>Time Series</h2>
+      <button id="graph_button" [useExistingCss]="true"  printSectionId="print-section" ngxPrint>
+        Save Graph
+      </button>
+      <mat-dialog-content>
+      <ngx-charts-line-chart
+        *ngIf="DataAvailable()"
+        [view]="view"
+        [scheme]="colorScheme"
+        [timeline]="timeline"
+        [results]="multi"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [autoScale]="autoScale"
+      >
       <ng-template #tooltipTemplate let-model="model">
         <div *ngFor="let data of getToolTipData(model | json)">
           <p>
@@ -46,7 +46,7 @@
       </ng-template>
     </ngx-charts-line-chart>
     <br />
-    <button mat-raised-button (click)="createCsvFromTimeseriesData()">
+    <button id="Download_button" mat-raised-button (click)="createCsvFromTimeseriesData()">
       Download Data
     </button>
     <br />
@@ -65,4 +65,5 @@
       {{ level.Name }}
     </mat-checkbox>
   </mat-dialog-actions>
+</div>
 </div>
