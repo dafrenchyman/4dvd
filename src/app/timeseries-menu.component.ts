@@ -183,21 +183,32 @@ export class TimeseriesMenuComponent {
       this._model.settings.FullName
     );
     let dataUnits;
+<<<<<<< HEAD
     valueTitle === "Air Temperature" || valueTitle === "Soil Temperature" // Air Temp DataUnits are degK, Soil Temp does not have a DataUnits value
+=======
+    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature"
+>>>>>>> ID - Modified downloaded CSV files to be easier to read and understand
       ? (dataUnits = "degC")
       : (dataUnits = this._model.settings.DataUnits);
 
     // Create the header
+<<<<<<< HEAD
     if (this._model.settings.LevelName === "Default") { // if dataset is single level
       csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level\n`;
     } else {
       csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level [${this._model.settings.LevelName.split(" ")[1]}]\n`;
     }
+=======
+    csvContent += `Level [${
+      this._model.settings.LevelName.split(" ")[1]
+    }],Date,${valueTitle} [${dataUnits}],Latitude,Longitude\n`;
+>>>>>>> ID - Modified downloaded CSV files to be easier to read and understand
 
     if (this.multi.length > 0) {
       for (let counter = 0; counter < this.multi.length; counter++) {
         const currLevelId = this.multi[counter].level_ID;
         const currLevelLoaded = this.multi[counter].loaded;
+<<<<<<< HEAD
         let levelName = this.multi[counter].name.split(" ")[0]; // Remove "millibar" in level name
         if (levelName === "Default"){ levelName = "Single Level";} // default = single level dataset
         const currTimeseries = this.multi[counter].series;
@@ -206,6 +217,21 @@ export class TimeseriesMenuComponent {
           i === 0 // Create subheader line that includes non repeating values
             ? (dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`) :
             (dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)}`);
+=======
+        const levelName = this.multi[counter].name.split(" ")[0];
+        const currTimeseries = this.multi[counter].series;
+        let dataString;
+        for (let i = 0; i < currTimeseries.length; i++) {
+          i === 0
+            ? (dataString = `${levelName},${
+                currTimeseries[i].name
+              },${currTimeseries[i].value.toFixed(
+                3
+              )},${this.getLat()},${this.getLon()}`)
+            : (dataString = ` ,${currTimeseries[i].name},${currTimeseries[
+                i
+              ].value.toFixed(3)}`);
+>>>>>>> ID - Modified downloaded CSV files to be easier to read and understand
           csvContent += dataString + "\n";
         }
       }
