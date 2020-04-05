@@ -21,7 +21,7 @@ import {
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
-import {NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from "ngx-print";
 import { About4dvdComponent } from "./about4dvd.component";
 import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";

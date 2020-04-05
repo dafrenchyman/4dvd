@@ -157,6 +157,30 @@ export class Settings {
   rGlobe: 0;
   lastTime: 0;
 
+  public GenerateTitle(str): string {
+    if (str === "") {
+      return " ";
+    }
+    let r: any[];
+    r = str.split("|");
+    if (r.length < 5) {
+      return "Precipitation";
+    }
+    return r[r.length - 2] + " | " + r[r.length - 1];
+  }
+
+  public GenerateAxisTitle(str): string {
+    if (str === "") {
+      return " ";
+    }
+    let r: any[];
+    r = str.split("|");
+    if (r.length < 5) {
+      return "Precipitation";
+    }
+    return r[r.length - 2];
+  }
+
   GetBumpmappingFile(value) {
     for (let i = 0; i < this.BumpMapping.length; i++) {
       if (value === this.BumpMapping[i].value) {
