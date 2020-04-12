@@ -554,7 +554,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     const levelUnits = this._model.settings.LevelName.split(" ")[1];
     let dataUnits;
-<<<<<<< HEAD
     valueTitle === "Air Temperature" || valueTitle === "Soil Temperature" // Air Temp DataUnits are degK, Soil Temp does not have a DataUnits value
       ? (dataUnits = "degC")
       : (dataUnits = this._model.settings.DataUnits);
@@ -569,35 +568,13 @@ export class ViewComponent implements OnInit, AfterViewInit {
       level = level.split(" ")[0];
     }
 
-=======
-    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature"
-      ? (dataUnits = "degC")
-      : (dataUnits = this._model.settings.DataUnits);
-
-    // Create the header
-    csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${
-      this._model.settings.LevelName.split(" ")[1]
-    }],Date\n`;
->>>>>>> ID - Modified downloaded CSV files to be easier to read and understand
     const rawData = this._model._world.GetRawData();
     let dataString;
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
-<<<<<<< HEAD
         i === 0 ? // Create initial subheader line that includes non repeating values
           (dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)},${level},${this._model.settings.CurrDate.substring(0, 7)}`) :
           (dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)}`);
-=======
-        i === 0
-          ? (dataString = `${rawData.Lat[i]},${
-              rawData.Lon[i]
-            },${rawData.ValueFinal[i].toFixed(3)},${
-              this._model.settings.LevelName.split(" ")[0]
-            },${this._model.settings.CurrDate.substring(0, 7)}`)
-          : (dataString = `${rawData.Lat[i]},${
-              rawData.Lon[i]
-            },${rawData.ValueFinal[i].toFixed(3)}`);
->>>>>>> ID - Modified downloaded CSV files to be easier to read and understand
         csvContent += dataString + "\n";
       }
 
