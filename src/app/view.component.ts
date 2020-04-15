@@ -572,9 +572,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     let dataString;
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
-        i === 0 ? // Create initial subheader line that includes non repeating values
-          (dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)},${level},${this._model.settings.CurrDate.substring(0, 7)}`) :
-          (dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)}`);
+          dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)},${level},${this._model.settings.CurrDate.substring(0, 7)}`;
         csvContent += dataString + "\n";
       }
 
