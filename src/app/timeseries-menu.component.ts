@@ -203,9 +203,7 @@ export class TimeseriesMenuComponent {
         const currTimeseries = this.multi[counter].series;
         let dataString;
         for (let i = 0; i < currTimeseries.length; i++) {
-          i === 0 // Create subheader line that includes non repeating values
-            ? (dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`) :
-            (dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)}`);
+            dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`;
           csvContent += dataString + "\n";
         }
       }
