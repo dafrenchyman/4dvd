@@ -11,7 +11,14 @@
       >
         Save Graph
       </button>
-      <button mat-icon-button (click)="this.closeTimeSeries()" class="closeBtn" matTooltip="Close Time Series Chart"><mat-icon>close</mat-icon></button>
+      <button
+        mat-icon-button
+        (click)="this.closeTimeSeries()"
+        class="closeBtn"
+        matTooltip="Close Time Series Chart"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
       <mat-dialog-content>
         <ngx-charts-line-chart
           *ngIf="DataAvailable()"
