@@ -1,11 +1,11 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
 
+import { MatDialogRef } from "@angular/material/dialog";
 import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeseriesData } from "./timeseriesData";
-import {MatDialogRef} from '@angular/material/dialog';
 /**
  * Created by dafre on 5/14/2017.
  */
@@ -88,8 +88,10 @@ export class TimeseriesMenuComponent {
     return this.levelsLoaded === this.multi.length && this.levelsLoaded > 0;
   }
 
-  public constructor(private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
-                     @Inject(MAT_DIALOG_DATA) public data: any) {
+  public constructor(
+    private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -168,7 +170,6 @@ export class TimeseriesMenuComponent {
       return yTitle + " (" + this._model.settings.DataUnits + ")";
     }
   }
-
 
   public IsSelected(level): boolean {
     const selected = false;
