@@ -157,7 +157,8 @@ export class Settings {
   rGlobe: 0;
   lastTime: 0;
 
-  public GenerateTitle(str): string { // Title for main view.. returns in format: "DatasetName | Pressure Level"
+  public GenerateTitle(str): string {
+    // Title for main view.. returns in format: "DatasetName | Pressure Level"
     if (str === "") {
       return " ";
     }
@@ -166,11 +167,12 @@ export class Settings {
     if (r.length < 5) {
       return "Precipitation | Single Level";
     }
-    return r[r.length - 2] + " | " +  r[r.length - 1];
+    return r[r.length - 2] + " | " + r[r.length - 1];
   }
 
-  GenerateSimpleTitle(str): string{ // Title without units.. returns in format: "DatasetName"
-    if(str === "") {
+  GenerateSimpleTitle(str): string {
+    // Title without units.. returns in format: "DatasetName"
+    if (str === "") {
       return " ";
     }
     let r: any[];
@@ -182,11 +184,12 @@ export class Settings {
     }
   }
 
-  JustUnits(): string { // returns just the units.. in format: "Units"
+  JustUnits(): string {
+    // returns just the units.. in format: "Units"
     const title = this.GenerateSimpleTitle(this.FullName);
     if (title === "Air Temperature" || title === "Soil Temperature") {
       return "\xB0C";
-  } else {
+    } else {
       return this.DataUnits;
     }
   }
@@ -197,11 +200,10 @@ export class Settings {
       lat = Math.abs(lat);
       return lat + "\xB0 S";
     } else if (lat > 0) {
-      return lat + "\xB0 N"
+      return lat + "\xB0 N";
     } else {
       return lat;
     }
-
   }
 
   GetLonWithDir() {
@@ -210,7 +212,7 @@ export class Settings {
       lon = Math.abs(lon);
       return lon + "\xB0 W";
     } else if (lon > 0) {
-      return lon + "\xB0 E"
+      return lon + "\xB0 E";
     } else {
       return lon;
     }

@@ -438,9 +438,20 @@
     <div id="TimeseriesBox">
       <mat-card *ngIf="GridboxSelected()">
         <mat-list>
-          <mat-list-item> {{this._model.settings.GenerateSimpleTitle(this._model.settings.FullName)}}: {{ this.timeSeriesVal }} {{this._model.settings.JustUnits()}}</mat-list-item>
-          <mat-list-item> Lat: {{ this._model.settings.GetLatWithDir() }} </mat-list-item>
-          <mat-list-item> Lon: {{ this._model.settings.GetLonWithDir() }} </mat-list-item>
+          <mat-list-item>
+            {{
+              this._model.settings.GenerateSimpleTitle(
+                this._model.settings.FullName
+              )
+            }}: {{ this.timeSeriesVal }}
+            {{ this._model.settings.JustUnits() }}</mat-list-item
+          >
+          <mat-list-item>
+            Lat: {{ this._model.settings.GetLatWithDir() }}
+          </mat-list-item>
+          <mat-list-item>
+            Lon: {{ this._model.settings.GetLonWithDir() }}
+          </mat-list-item>
           <mat-list-item>
             <button mat-raised-button (click)="OpenTimeseriesDialog()">
               Time Series
