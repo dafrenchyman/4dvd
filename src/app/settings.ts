@@ -187,7 +187,7 @@ export class Settings {
   JustUnits(): string {
     // returns just the units.. in format: "Units"
     const title = this.GenerateSimpleTitle(this.FullName);
-    if (title === "Air Temperature" || title === "Soil Temperature") {
+    if (title.search("Temperature") >= 0) {
       return "\xB0C";
     } else {
       return this.DataUnits;
