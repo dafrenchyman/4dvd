@@ -25,13 +25,6 @@ h2 {
   #TimeseriesPlot {
     width: auto;
   }
-  #Download_button,
-  .closeBtn {
-    display: none;
-  }
-  #TimeseriesPlot {
-    width: auto;
-  }
   @page {
     size: landscape;
   }
