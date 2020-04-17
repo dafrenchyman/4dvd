@@ -157,6 +157,65 @@ export class Settings {
   rGlobe: 0;
   lastTime: 0;
 
+  public GenerateTitle(str): string { // Title for main view.. returns in format: "DatasetName | Pressure Level"
+    if (str === "") {
+      return " ";
+    }
+    let r: any[];
+    r = str.split("|");
+    if (r.length < 5) {
+      return "Precipitation | Single Level";
+    }
+    return r[r.length - 2] + " | " +  r[r.length - 1];
+  }
+
+  GenerateSimpleTitle(str): string{ // Title without units.. returns in format: "DatasetName"
+    if(str === "") {
+      return " ";
+    }
+    let r: any[];
+    r = str.split("|");
+    if (r.length < 5) {
+      return "Precipitation";
+    } else {
+      return r[r.length - 2];
+    }
+  }
+
+  JustUnits(): string { // returns just the units.. in format: "Units"
+    const title = this.GenerateSimpleTitle(this.FullName);
+    if (title === "Air Temperature" || title === "Soil Temperature") {
+      return "\xB0C";
+  } else {
+      return this.DataUnits;
+    }
+  }
+
+  GetLatWithDir() {
+    let lat = Number(this.CurrGridBoxLat.toFixed(2));
+    if (lat < 0) {
+      lat = Math.abs(lat);
+      return lat + "\xB0 S";
+    } else if (lat > 0) {
+      return lat + "\xB0 N"
+    } else {
+      return lat;
+    }
+
+  }
+
+  GetLonWithDir() {
+    let lon = Number(this.CurrGridBoxLon.toFixed(2));
+    if (lon < 0) {
+      lon = Math.abs(lon);
+      return lon + "\xB0 W";
+    } else if (lon > 0) {
+      return lon + "\xB0 E"
+    } else {
+      return lon;
+    }
+  }
+
   GetBumpmappingFile(value) {
     for (let i = 0; i < this.BumpMapping.length; i++) {
       if (value === this.BumpMapping[i].value) {
