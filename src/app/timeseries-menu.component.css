@@ -17,11 +17,13 @@ h2 {
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  #graph_button {
+  #graph_button,
+  #Download_button,
+  .closeBtn {
     display: none;
   }
-  #Download_button {
-    display: none;
+  #TimeseriesPlot {
+    width: auto;
   }
   #Download_button,
   .closeBtn {
