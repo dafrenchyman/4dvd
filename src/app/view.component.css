@@ -187,6 +187,6 @@ button:focus {
   margin: 0px;
 }
 
-closebutton:focus {
+.closebutton:focus {
   background: none;
 }
