@@ -157,6 +157,7 @@ export class Settings {
   rGlobe: 0;
   lastTime: 0;
 
+  // TODO: HACK: We should move this to the database. So the value just comes from a column so we don't need this function
   public GenerateTitle(str): string {
     // Title for main view.. returns in format: "DatasetName | Pressure Level"
     if (str === "") {
@@ -170,6 +171,7 @@ export class Settings {
     return r[r.length - 2] + " | " + r[r.length - 1];
   }
 
+  // TODO: HACK: We should move this to the database. So the value just comes from a column so we don't need this function
   GenerateSimpleTitle(str): string {
     // Title without units.. returns in format: "DatasetName"
     if (str === "") {
@@ -184,6 +186,7 @@ export class Settings {
     }
   }
 
+  // TODO: HACK: We should move this to the database. So the value just comes from a column so we don't need this function
   JustUnits(): string {
     // returns just the units.. in format: "Units"
     const title = this.GenerateSimpleTitle(this.FullName);
