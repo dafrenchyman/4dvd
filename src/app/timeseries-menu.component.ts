@@ -87,10 +87,21 @@ export class TimeseriesMenuComponent {
     return this.levelsLoaded === this.multi.length && this.levelsLoaded > 0;
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> prettier/tslint
   public constructor(
     private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+<<<<<<< HEAD
+=======
+  public constructor(private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
+                     @Inject(MAT_DIALOG_DATA) public data: any) {
+>>>>>>> rebase
+=======
+>>>>>>> prettier/tslint
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -121,7 +132,11 @@ export class TimeseriesMenuComponent {
     }
   }
 
-  getSeriesToolTipData(jsonString) { // Get graph tool tip data for multiple levels
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  getSeriesToolTipData(jsonString) {
+    // Get graph tool tip data for multiple levels
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
     for (let i = 0; i < jsonArr.length; i++) {
@@ -129,26 +144,82 @@ export class TimeseriesMenuComponent {
         date: jsonArr[i].name, // date
         value: jsonArr[i].value.toFixed(4), // value
         layer: jsonArr[i].series // layer
+=======
+  getToolTipData(jsonString) {
+=======
+  getSeriesToolTipData(jsonString) { // Get graph tool tip data for multiple levels
+>>>>>>> rebase 2
+=======
+  getSeriesToolTipData(jsonString) {
+    // Get graph tool tip data for multiple levels
+>>>>>>> rebase 3
+    this.toolTipData = [];
+    const jsonArr = JSON.parse(jsonString);
+    for (let i = 0; i < jsonArr.length; i++) {
+      this.toolTipData.push({
+<<<<<<< HEAD
+        date: d[1],
+        value: v[1],
+        layer: l[1]
+>>>>>>> rebase
+=======
+        date: jsonArr[i].name, // date
+        value: jsonArr[i].value.toFixed(4), // value
+        layer: jsonArr[i].series // layer
+>>>>>>> rebase 2
       });
     }
     return this.toolTipData;
   }
 
-  getToolTipData(jsonString) { // Get graph tool tip data for a single level
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  getToolTipData(jsonString) {
+    // Get graph tool tip data for a single level
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
-      this.toolTipData.push({
-        date: jsonArr.name, // date
-        value: jsonArr.value.toFixed(4), // value
-        layer: jsonArr.series // layer
-      });
-      return this.toolTipData;
-    }
+    this.toolTipData.push({
+      date: jsonArr.name, // date
+      value: jsonArr.value.toFixed(4), // value
+      layer: jsonArr.series // layer
+    });
+    return this.toolTipData;
+  }
 
-    getTTDate(jsonString) {
-      return JSON.parse(jsonString)[0].name; // return just date
-    }
+  getTTDate(jsonString) {
+    return JSON.parse(jsonString)[0].name; // return just date
+=======
+  chartToolTipDate(jsonString) {
+    this.dateJson = jsonString;
+    let nameIndex = this.dateJson.indexOf("name");
+    nameIndex += 8;
+    return this.dateJson.substr(nameIndex, 7);
+>>>>>>> rebase
+  }
+=======
+  getToolTipData(jsonString) { // Get graph tool tip data for a single level
+=======
+  getToolTipData(jsonString) {
+    // Get graph tool tip data for a single level
+>>>>>>> rebase 3
+    this.toolTipData = [];
+    const jsonArr = JSON.parse(jsonString);
+    this.toolTipData.push({
+      date: jsonArr.name, // date
+      value: jsonArr.value.toFixed(4), // value
+      layer: jsonArr.series // layer
+    });
+    return this.toolTipData;
+  }
 
+<<<<<<< HEAD
+>>>>>>> rebase 2
+=======
+  getTTDate(jsonString) {
+    return JSON.parse(jsonString)[0].name; // return just date
+  }
+>>>>>>> rebase 3
 
   closeTimeSeries() {
     this.dialogRef.close();
@@ -173,6 +244,13 @@ export class TimeseriesMenuComponent {
     }
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> rebase
+=======
+>>>>>>> prettier/tslint
   public IsSelected(level): boolean {
     const selected = false;
     for (let counter = 0; counter < this.multi.length; counter++) {
