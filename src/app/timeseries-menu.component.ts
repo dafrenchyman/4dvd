@@ -62,7 +62,6 @@ export class TimeseriesMenuComponent {
   autoScale = true;
 
   private _model: Model;
-  private dateJson: any;
 
   public GetLevels() {
     return this._model.settings.Levels;
@@ -122,8 +121,8 @@ export class TimeseriesMenuComponent {
     }
   }
 
-  getSeriesToolTipData(jsonString) {
-    // Get graph tool tip data for multiple levels
+
+  getSeriesToolTipData(jsonString) { // Get graph tool tip data for multiple levels
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
     for (let i = 0; i < jsonArr.length; i++) {
@@ -136,21 +135,22 @@ export class TimeseriesMenuComponent {
     return this.toolTipData;
   }
 
-  getToolTipData(jsonString) {
-    // Get graph tool tip data for a single level
+
+  getToolTipData(jsonString) { // Get graph tool tip data for a single level
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
-    this.toolTipData.push({
-      date: jsonArr.name, // date
-      value: jsonArr.value.toFixed(4), // value
-      layer: jsonArr.series // layer
-    });
-    return this.toolTipData;
-  }
+      this.toolTipData.push({
+        date: jsonArr.name, // date
+        value: jsonArr.value.toFixed(4), // value
+        layer: jsonArr.series // layer
+      });
+      return this.toolTipData;
+    }
 
-  getTTDate(jsonString) {
-    return JSON.parse(jsonString)[0].name; // return just date
-  }
+    getTTDate(jsonString) {
+      return JSON.parse(jsonString)[0].name; // return just date
+    }
+    
 
   closeTimeSeries() {
     this.dialogRef.close();
