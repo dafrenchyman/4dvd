@@ -157,6 +157,7 @@ export class Settings {
   rGlobe: 0;
   lastTime: 0;
 
+  // TODO: Change "Default" in database with "Single Layer"
   levelCheck(str) {
     if (str === "Default") {
       return "Single Level";
