@@ -62,7 +62,6 @@ export class TimeseriesMenuComponent {
   autoScale = true;
 
   private _model: Model;
-  private dateJson: any;
 
   public GetLevels() {
     return this._model.settings.Levels;
@@ -122,31 +121,34 @@ export class TimeseriesMenuComponent {
     }
   }
 
-  getToolTipData(jsonString) {
+  getSeriesToolTipData(jsonString) { // Get graph tool tip data for multiple levels
     this.toolTipData = [];
-    const jsonArr = jsonString.split("{"); // counter,, jsonArr.length = n + 1 where n is number of layers selected
-    for (let i = 1; i < jsonArr.length; i++) {
-      const v = jsonArr[i].split('value": ');
-      const d = jsonArr[i].split('name": ');
-      const series = jsonArr[i].split('series": ');
-      const l = series[1].split('"'); // layer
-      v[1] = v[1].substr(0, 4); // value
-      d[1] = d[1].substr(1, 7); // date
+    const jsonArr = JSON.parse(jsonString);
+    for (let i = 0; i < jsonArr.length; i++) {
       this.toolTipData.push({
-        date: d[1],
-        value: v[1],
-        layer: l[1]
+        date: jsonArr[i].name, // date
+        value: jsonArr[i].value.toFixed(4), // value
+        layer: jsonArr[i].series // layer
       });
     }
     return this.toolTipData;
   }
 
-  chartToolTipDate(jsonString) {
-    this.dateJson = jsonString;
-    let nameIndex = this.dateJson.indexOf("name");
-    nameIndex += 8;
-    return this.dateJson.substr(nameIndex, 7);
-  }
+  getToolTipData(jsonString) { // Get graph tool tip data for a single level
+    this.toolTipData = [];
+    const jsonArr = JSON.parse(jsonString);
+      this.toolTipData.push({
+        date: jsonArr.name, // date
+        value: jsonArr.value.toFixed(4), // value
+        layer: jsonArr.series // layer
+      });
+      return this.toolTipData;
+    }
+
+    getTTDate(jsonString) {
+      return JSON.parse(jsonString)[0].name; // return just date
+    }
+
 
   closeTimeSeries() {
     this.dialogRef.close();
