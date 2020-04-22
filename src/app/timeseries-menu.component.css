@@ -11,15 +11,33 @@ h2 {
 #graph_button {
   position: absolute;
   top: 13px;
+<<<<<<< HEAD
+<<<<<<< HEAD
   right: 40px;
+=======
+  right: 80px;
+>>>>>>> rebase
+=======
+  right: 40px;
+>>>>>>> rebase 2
 }
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
   }
+<<<<<<< HEAD
+<<<<<<< HEAD
   #graph_button,
   #Download_button,
   .closeBtn {
+=======
+  #graph_button,#Download_button,.closeBtn {
+>>>>>>> rebase
+=======
+  #graph_button,
+  #Download_button,
+  .closeBtn {
+>>>>>>> prettier/tslint
     display: none;
   }
   #TimeseriesPlot {
@@ -32,6 +50,8 @@ h2 {
 .closeBtn {
   position: absolute;
   top: 10px;
+<<<<<<< HEAD
+<<<<<<< HEAD
   right: 0;
   color: black;
   background-color: #ffffff;
@@ -40,4 +60,22 @@ h2 {
 .closeBtn:active,
 :after {
   background-color: #ffffff;
+=======
+  right: 30px;
+=======
+  right: 0;
+>>>>>>> rebase 2
+  color: black;
+  background-color: #ffffff;
+}
+
+<<<<<<< HEAD
+.closeBtn:active, :after {
+  background-color: #FFFFFF;
+>>>>>>> rebase
+=======
+.closeBtn:active,
+:after {
+  background-color: #ffffff;
+>>>>>>> prettier/tslint
 }
