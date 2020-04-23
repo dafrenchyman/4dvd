@@ -179,7 +179,7 @@ export class TimeseriesMenuComponent {
 
   createCsvFromTimeseriesData() {
     let csvContent = "data:text/csv;charset=utf-8,";
-    const valueTitle = this._model.settings.GenerateAxisTitle(
+    const valueTitle = this._model.settings.GenerateSimpleTitle(
       this._model.settings.FullName
     );
     let dataUnits;
