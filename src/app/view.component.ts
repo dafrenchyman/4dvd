@@ -305,20 +305,13 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   public setModel() {}
-  public StringToArray(str): string {
-    if (str === "") {
-      return " ";
-    }
-    let r: any[];
-    r = str.split("|");
-    const newTitle = r[r.length - 2] + " | " + r[r.length - 1];
-    return newTitle;
-  }
 
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this.StringToArray(this._model.settings.FullName);
+        return this._model.settings.GenerateTitle(
+          this._model.settings.FullName
+        );
       }
     }
     return "";
@@ -328,7 +321,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     let value = false;
     if (this._model != null) {
       if (this._model.settings != null) {
-        value = this._model.settings.CurrGridBoxId > 0 ? true : false;
+        value = this._model.settings.CurrGridBoxId > 0;
         this.GridBoxData = new Array<number>(3);
         this.GridBoxData[0] = this._model.settings.CurrGridBoxValue;
         this.GridBoxData[1] = this._model.settings.CurrGridBoxLat;
@@ -549,7 +542,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   createCsvFromGriddedData() {
     let csvContent = "data:text/csv;charset=utf-8,";
 
-    const valueTitle = this._model.settings.GenerateAxisTitle(
+    const valueTitle = this._model.settings.GenerateSimpleTitle(
       this._model.settings.FullName
     );
     const levelUnits = this._model.settings.LevelName.split(" ")[1];
