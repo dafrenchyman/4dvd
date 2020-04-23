@@ -560,11 +560,14 @@ export class ViewComponent implements OnInit, AfterViewInit {
     let level = this._model.settings.LevelName;
 
     // Create Header
-    if (level === "Default") { // Default = Dataset with single level
+    if (level === "Default") {
+      // Default = Dataset with single level
       level = "Single Level";
       csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level,Date\n`;
     } else {
-      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${level.split(" ")[1]}],Date\n`;
+      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${
+        level.split(" ")[1]
+      }],Date\n`;
       level = level.split(" ")[0];
     }
 
@@ -572,7 +575,12 @@ export class ViewComponent implements OnInit, AfterViewInit {
     let dataString;
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
-          dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)},${level},${this._model.settings.CurrDate.substring(0, 7)}`;
+        dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[
+          i
+        ].toFixed(3)},${level},${this._model.settings.CurrDate.substring(
+          0,
+          7
+        )}`;
         csvContent += dataString + "\n";
       }
 
@@ -586,7 +594,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this._model.settings.Dataset.DatabaseStore.length
         ) +
           "_GridData_" +
-          this._model.settings.CurrDate.substr(0,7) +
+          this._model.settings.CurrDate.substr(0, 7) +
           ".csv"
       );
       link.click();
