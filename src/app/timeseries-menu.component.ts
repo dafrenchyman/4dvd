@@ -192,9 +192,8 @@ export class TimeseriesMenuComponent {
       // if dataset is single level
       csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level\n`;
     } else {
-      csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level [${
-        this._model.settings.LevelName.split(" ")[1]
-      }]\n`;
+      const level_name = this._model.settings.LevelName.split(" ")[1];
+      csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level [${level_name}]\n`;
     }
 
     if (this.multi.length > 0) {
