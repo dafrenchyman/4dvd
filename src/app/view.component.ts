@@ -542,7 +542,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   createCsvFromGriddedData() {
     let csvContent = "data:text/csv;charset=utf-8,";
 
-    const valueTitle = this._model.settings.GenerateAxisTitle(
+    const valueTitle = this._model.settings.GenerateSimpleTitle(
       this._model.settings.FullName
     );
     const levelUnits = this._model.settings.LevelName.split(" ")[1];
