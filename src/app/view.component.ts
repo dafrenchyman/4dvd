@@ -305,13 +305,20 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   public setModel() {}
+  public StringToArray(str): string {
+    if (str === "") {
+      return " ";
+    }
+    let r: any[];
+    r = str.split("|");
+    const newTitle = r[r.length - 2] + " | " + r[r.length - 1];
+    return newTitle;
+  }
 
   public GetTitle(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return this._model.settings.GenerateTitle(
-          this._model.settings.FullName
-        );
+        return this.StringToArray(this._model.settings.FullName);
       }
     }
     return "";
@@ -321,7 +328,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     let value = false;
     if (this._model != null) {
       if (this._model.settings != null) {
-        value = this._model.settings.CurrGridBoxId > 0;
+        value = this._model.settings.CurrGridBoxId > 0 ? true : false;
         this.GridBoxData = new Array<number>(3);
         this.GridBoxData[0] = this._model.settings.CurrGridBoxValue;
         this.GridBoxData[1] = this._model.settings.CurrGridBoxLat;
@@ -547,25 +554,27 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     const levelUnits = this._model.settings.LevelName.split(" ")[1];
     let dataUnits;
-    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature" // Air Temp DataUnits are degK, Soil Temp does not have a DataUnits value
+    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature"
       ? (dataUnits = "degC")
       : (dataUnits = this._model.settings.DataUnits);
-    let level = this._model.settings.LevelName;
 
-    // Create Header
-    if (level === "Default") { // Default = Dataset with single level
-      level = "Single Level";
-      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level,Date\n`;
-    } else {
-      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${level.split(" ")[1]}],Date\n`;
-      level = level.split(" ")[0];
-    }
-
+    // Create the header
+    csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${
+      this._model.settings.LevelName.split(" ")[1]
+    }],Date\n`;
     const rawData = this._model._world.GetRawData();
     let dataString;
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
-          dataString = `${rawData.Lat[i]},${rawData.Lon[i]},${rawData.ValueFinal[i].toFixed(3)},${level},${this._model.settings.CurrDate.substring(0, 7)}`;
+        i === 0
+          ? (dataString = `${rawData.Lat[i]},${
+              rawData.Lon[i]
+            },${rawData.ValueFinal[i].toFixed(3)},${
+              this._model.settings.LevelName.split(" ")[0]
+            },${this._model.settings.CurrDate.substring(0, 7)}`)
+          : (dataString = `${rawData.Lat[i]},${
+              rawData.Lon[i]
+            },${rawData.ValueFinal[i].toFixed(3)}`);
         csvContent += dataString + "\n";
       }
 
@@ -579,7 +588,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this._model.settings.Dataset.DatabaseStore.length
         ) +
           "_GridData_" +
-          this._model.settings.CurrDate.substr(0,7) +
+          this._model.settings.CurrDate +
           ".csv"
       );
       link.click();

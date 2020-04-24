@@ -183,27 +183,32 @@ export class TimeseriesMenuComponent {
       this._model.settings.FullName
     );
     let dataUnits;
-    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature" // Air Temp DataUnits are degK, Soil Temp does not have a DataUnits value
+    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature"
       ? (dataUnits = "degC")
       : (dataUnits = this._model.settings.DataUnits);
 
     // Create the header
-    if (this._model.settings.LevelName === "Default") { // if dataset is single level
-      csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level\n`;
-    } else {
-      csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level [${this._model.settings.LevelName.split(" ")[1]}]\n`;
-    }
+    csvContent += `Level [${
+      this._model.settings.LevelName.split(" ")[1]
+    }],Date,${valueTitle} [${dataUnits}],Latitude,Longitude\n`;
 
     if (this.multi.length > 0) {
       for (let counter = 0; counter < this.multi.length; counter++) {
         const currLevelId = this.multi[counter].level_ID;
         const currLevelLoaded = this.multi[counter].loaded;
-        let levelName = this.multi[counter].name.split(" ")[0]; // Remove "millibar" in level name
-        if (levelName === "Default"){ levelName = "Single Level";} // default = single level dataset
+        const levelName = this.multi[counter].name.split(" ")[0];
         const currTimeseries = this.multi[counter].series;
         let dataString;
         for (let i = 0; i < currTimeseries.length; i++) {
-            dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`;
+          i === 0
+            ? (dataString = `${levelName},${
+                currTimeseries[i].name
+              },${currTimeseries[i].value.toFixed(
+                3
+              )},${this.getLat()},${this.getLon()}`)
+            : (dataString = ` ,${currTimeseries[i].name},${currTimeseries[
+                i
+              ].value.toFixed(3)}`);
           csvContent += dataString + "\n";
         }
       }
