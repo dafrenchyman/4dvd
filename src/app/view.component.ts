@@ -542,13 +542,32 @@ export class ViewComponent implements OnInit, AfterViewInit {
   createCsvFromGriddedData() {
     let csvContent = "data:text/csv;charset=utf-8,";
 
+    const valueTitle = this._model.settings.GenerateAxisTitle(
+      this._model.settings.FullName
+    );
+    const levelUnits = this._model.settings.LevelName.split(" ")[1];
+    let dataUnits;
+    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature"
+      ? (dataUnits = "degC")
+      : (dataUnits = this._model.settings.DataUnits);
+
     // Create the header
-    csvContent += "Latitude,Longitude,Value\n";
+    csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${
+      this._model.settings.LevelName.split(" ")[1]
+    }],Date\n`;
     const rawData = this._model._world.GetRawData();
+    let dataString;
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
-        const dataString =
-          rawData.Lat[i] + "," + rawData.Lon[i] + "," + rawData.ValueFinal[i];
+        i === 0
+          ? (dataString = `${rawData.Lat[i]},${
+              rawData.Lon[i]
+            },${rawData.ValueFinal[i].toFixed(3)},${
+              this._model.settings.LevelName.split(" ")[0]
+            },${this._model.settings.CurrDate.substring(0, 7)}`)
+          : (dataString = `${rawData.Lat[i]},${
+              rawData.Lon[i]
+            },${rawData.ValueFinal[i].toFixed(3)}`);
         csvContent += dataString + "\n";
       }
 
@@ -557,7 +576,10 @@ export class ViewComponent implements OnInit, AfterViewInit {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore +
+        this._model.settings.Dataset.DatabaseStore.substr(
+          9,
+          this._model.settings.Dataset.DatabaseStore.length
+        ) +
           "_GridData_" +
           this._model.settings.CurrDate +
           ".csv"
