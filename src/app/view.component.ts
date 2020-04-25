@@ -542,13 +542,37 @@ export class ViewComponent implements OnInit, AfterViewInit {
   createCsvFromGriddedData() {
     let csvContent = "data:text/csv;charset=utf-8,";
 
-    // Create the header
-    csvContent += "Latitude,Longitude,Value\n";
+    const valueTitle = this._model.settings.GenerateSimpleTitle(
+      this._model.settings.FullName
+    );
+    const levelUnits = this._model.settings.LevelName.split(" ")[1];
+    let dataUnits;
+    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature" // Air Temp DataUnits are degK, Soil Temp does not have a DataUnits value
+      ? (dataUnits = "degC")
+      : (dataUnits = this._model.settings.DataUnits);
+    let level = this._model.settings.LevelName;
+
+    // Create Header
+    if (level === "Default") {
+      // Default = Dataset with single level
+      level = "Single Level";
+      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level,Date\n`;
+    } else {
+      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${
+        level.split(" ")[1]
+      }],Date\n`;
+      level = level.split(" ")[0];
+    }
+
     const rawData = this._model._world.GetRawData();
+    let dataString;
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
-        const dataString =
-          rawData.Lat[i] + "," + rawData.Lon[i] + "," + rawData.ValueFinal[i];
+        const lat = rawData.Lat[i];
+        const lon = rawData.Lon[i];
+        const value = rawData.ValueFinal[i].toFixed(3);
+        const date = this._model.settings.CurrDate.substring(0, 7);
+        dataString = `${lat},${lon},${value},${level},${date}`;
         csvContent += dataString + "\n";
       }
 
@@ -557,9 +581,12 @@ export class ViewComponent implements OnInit, AfterViewInit {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore +
+        this._model.settings.Dataset.DatabaseStore.substr(
+          9,
+          this._model.settings.Dataset.DatabaseStore.length
+        ) +
           "_GridData_" +
-          this._model.settings.CurrDate +
+          this._model.settings.CurrDate.substr(0, 7) +
           ".csv"
       );
       link.click();
