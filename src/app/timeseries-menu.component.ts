@@ -61,6 +61,22 @@ export class TimeseriesMenuComponent {
     return this._model.settings.Levels;
   }
 
+  getLat() {
+    if (String(this._model.settings.CurrGridBoxLat).length > 7) {
+      return this._model.settings.CurrGridBoxLat.toFixed(2);
+    } else {
+      return this._model.settings.CurrGridBoxLat;
+    }
+  }
+
+  getLon() {
+    if (String(this._model.settings.CurrGridBoxLon).length > 7) {
+      return this._model.settings.CurrGridBoxLon.toFixed(2);
+    } else {
+      return this._model.settings.CurrGridBoxLon;
+    }
+  }
+
   public DataAvailable() {
     return this.levelsLoaded === this.multi.length && this.levelsLoaded > 0
       ? true
@@ -163,23 +179,37 @@ export class TimeseriesMenuComponent {
 
   createCsvFromTimeseriesData() {
     let csvContent = "data:text/csv;charset=utf-8,";
+    const valueTitle = this._model.settings.GenerateSimpleTitle(
+      this._model.settings.FullName
+    );
+    let dataUnits;
+    valueTitle === "Air Temperature" || valueTitle === "Soil Temperature" // Air Temp DataUnits are degK, Soil Temp does not have a DataUnits value
+      ? (dataUnits = "degC")
+      : (dataUnits = this._model.settings.DataUnits);
 
     // Create the header
-    csvContent += "Level Name,Date,Value\n";
+    if (this._model.settings.LevelName === "Default") {
+      // if dataset is single level
+      csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level\n`;
+    } else {
+      const level_name = this._model.settings.LevelName.split(" ")[1];
+      csvContent += `Date,${valueTitle} [${dataUnits}],Latitude,Longitude,Level [${level_name}]\n`;
+    }
 
     if (this.multi.length > 0) {
       for (let counter = 0; counter < this.multi.length; counter++) {
         const currLevelId = this.multi[counter].level_ID;
         const currLevelLoaded = this.multi[counter].loaded;
-        const levelName = this.multi[counter].name;
+        let levelName = this.multi[counter].name.split(" ")[0]; // Remove "millibar" in level name
+        if (levelName === "Default") {
+          levelName = "Single Level";
+        } // default = single level dataset
         const currTimeseries = this.multi[counter].series;
+        let dataString;
         for (let i = 0; i < currTimeseries.length; i++) {
-          const dataString =
-            levelName +
-            "," +
-            currTimeseries[i].name +
-            "," +
-            currTimeseries[i].value;
+          dataString = `${currTimeseries[i].name},${currTimeseries[
+            i
+          ].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`;
           csvContent += dataString + "\n";
         }
       }
@@ -189,7 +219,10 @@ export class TimeseriesMenuComponent {
       link.setAttribute("href", encodedUri);
       link.setAttribute(
         "download",
-        this._model.settings.Dataset.DatabaseStore +
+        this._model.settings.Dataset.DatabaseStore.substr(
+          9,
+          this._model.settings.Dataset.DatabaseStore.length
+        ) +
           "_Timeseries_Lat" +
           this._model.settings.CurrGridBoxLat +
           "_Lon" +
