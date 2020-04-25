@@ -201,15 +201,13 @@ export class TimeseriesMenuComponent {
         const currLevelId = this.multi[counter].level_ID;
         const currLevelLoaded = this.multi[counter].loaded;
         let levelName = this.multi[counter].name.split(" ")[0]; // Remove "millibar" in level name
-        if (levelName === "Default") {
-          levelName = "Single Level";
-        } // default = single level dataset
+        if (levelName === "Default"){ levelName = "Single Level";} // default = single level dataset
         const currTimeseries = this.multi[counter].series;
         let dataString;
         for (let i = 0; i < currTimeseries.length; i++) {
-          dataString = `${currTimeseries[i].name},${currTimeseries[
-            i
-          ].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`;
+          i === 0 // Create subheader line that includes non repeating values
+            ? (dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`) :
+            (dataString = `${currTimeseries[i].name},${currTimeseries[i].value.toFixed(3)}`);
           csvContent += dataString + "\n";
         }
       }
