@@ -1,6 +1,7 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { createElement } from "@angular/core/src/view/element";
 import { MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef } from "@angular/material/dialog";
 import { ColorMap } from "./ColorMap";
 
 declare var d3: any;
@@ -13,8 +14,7 @@ declare var d3: any;
   templateUrl: "./color-map-menu.component.html"
 })
 export class ColorMapMenuComponent {
-  private _colorMapGradient: Array<{
-    Name: string;
+  public _colorMapGradient: Array<{
     ColorMaps: ColorMap;
     IdName: string;
     FullName: string;
@@ -24,7 +24,61 @@ export class ColorMapMenuComponent {
     }>;
   }>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  min = 0;
+  max = 17;
+  inverse = false;
+
+  // closes color map menu
+  closeColorMaps() {
+    this.dialogRef.close();
+  }
+
+  // checks if the current index is the inverse version. Displays depending on the state of the inverse switch
+  indexSkip(num) {
+    if (this.inverse) {
+      if (num % 2 === 1) {
+        return true;
+      }
+    } else {
+      if (num % 2 === 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // inverse switch
+  toggleInverseMaps() {
+    this.inverse ? (this.inverse = false) : (this.inverse = true);
+  }
+
+  // method to change the range of the ColorMap for loop
+  changeColors(btn) {
+    if (btn === 0) {
+      this.min = 0;
+      this.max = 17;
+    } else if (btn === 1) {
+      this.min = 18;
+      this.max = 35;
+    } else if (btn === 2) {
+      this.min = 36;
+      this.max = 59;
+    } else if (btn === 3) {
+      this.min = 60;
+      this.max = 71;
+    } else if (btn === 4) {
+      this.min = 72;
+      this.max = 91;
+    } else if (btn === 5) {
+      this.min = 92;
+      this.max = 101;
+    }
+  }
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<ColorMapMenuComponent>
+  ) {
     this._colorMapGradient = data;
 
     // Draw small preview gradient in menu
