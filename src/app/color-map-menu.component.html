@@ -18,21 +18,21 @@
     <div class="buttonsRow">
       <button
         mat-raised-button
-        (click)="changeColors(0)"
+        (click)="changeColorMapSelection('CB Non-Centered')"
         style="width:30%; margin: 5px"
       >
         Color Brewer 2.0 | Non-Centered
       </button>
       <button
         mat-raised-button
-        (click)="changeColors(1)"
+        (click)="changeColorMapSelection('CB Zero-Centered')"
         style="width:30%; margin: 5px"
       >
         Color Brewer 2.0 | Zero-Centered
       </button>
       <button
         mat-raised-button
-        (click)="changeColors(2)"
+        (click)="changeColorMapSelection('CB Multi-hue')"
         style="width:30%; margin: 5px"
       >
         Color Brewer 2.0 | Multi-hue
@@ -41,21 +41,21 @@
     <div class="buttonsRow">
       <button
         mat-raised-button
-        (click)="changeColors(3)"
+        (click)="changeColorMapSelection('CB Single-hue')"
         style="width: 30%; margin: 5px"
       >
         Color Brewer 2.0 | Single-hue
       </button>
       <button
         mat-raised-button
-        (click)="changeColors(4)"
+        (click)="changeColorMapSelection('Matlab')"
         style="width:30%; margin: 5px"
       >
         Matlab
       </button>
       <button
         mat-raised-button
-        (click)="changeColors(5)"
+        (click)="changeColorMapSelection('Other')"
         style="width:30%; margin: 5px"
       >
         Other

@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from "@angular/core";
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { createElement } from "@angular/core/src/view/element";
 import { MAT_DIALOG_DATA } from "@angular/material";
 import { MatDialogRef } from "@angular/material/dialog";
@@ -13,7 +13,7 @@ declare var d3: any;
 @Component({
   templateUrl: "./color-map-menu.component.html"
 })
-export class ColorMapMenuComponent {
+export class ColorMapMenuComponent implements OnInit{
   public _colorMapGradient: Array<{
     ColorMaps: ColorMap;
     IdName: string;
@@ -24,6 +24,14 @@ export class ColorMapMenuComponent {
     }>;
   }>;
 
+  buttonDictionary: Array<{
+    colorMapName: string,
+    ranges: {
+      min: number,
+      max: number
+    }
+  }>;
+  
   min = 0;
   max = 17;
   inverse = false;
@@ -52,27 +60,60 @@ export class ColorMapMenuComponent {
     this.inverse ? (this.inverse = false) : (this.inverse = true);
   }
 
-  // method to change the range of the ColorMap for loop
-  changeColors(btn) {
-    if (btn === 0) {
-      this.min = 0;
-      this.max = 17;
-    } else if (btn === 1) {
-      this.min = 18;
-      this.max = 35;
-    } else if (btn === 2) {
-      this.min = 36;
-      this.max = 59;
-    } else if (btn === 3) {
-      this.min = 60;
-      this.max = 71;
-    } else if (btn === 4) {
-      this.min = 72;
-      this.max = 91;
-    } else if (btn === 5) {
-      this.min = 92;
-      this.max = 101;
+  // method to change the range of the ColorMaps via buttons
+  changeColorMapSelection(btn) {
+    for (let i = 0; i < this.buttonDictionary.length; i++) {
+      if (btn === this.buttonDictionary[i].colorMapName) {
+        this.min = this.buttonDictionary[i].ranges.min;
+        this.max = this.buttonDictionary[i].ranges.max;
+      }
     }
+  }
+
+  ngOnInit(): void {
+    this.buttonDictionary = [];
+    this.buttonDictionary.push({
+      colorMapName: 'CB Non-Centered',
+      ranges: {
+        min: 0,
+        max: 17
+      }
+    });
+    this.buttonDictionary.push({
+      colorMapName: 'CB Zero-Centered',
+      ranges: {
+        min: 18,
+        max: 35
+      }
+    });
+    this.buttonDictionary.push({
+      colorMapName: 'CB Multi-hue',
+      ranges: {
+        min: 36,
+        max: 59
+      }
+    });
+    this.buttonDictionary.push({
+      colorMapName: 'CB Single-hue',
+      ranges: {
+        min: 60,
+        max: 71
+      }
+    });
+    this.buttonDictionary.push({
+      colorMapName: 'Matlab',
+      ranges: {
+        min: 72,
+        max: 91
+      }
+    });
+    this.buttonDictionary.push({
+      colorMapName: 'Other',
+      ranges: {
+        min: 92,
+        max: 101
+      }
+    });
   }
 
   constructor(
