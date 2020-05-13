@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { createElement } from "@angular/core/src/view/element";
 import { MAT_DIALOG_DATA } from "@angular/material";
 import { MatDialogRef } from "@angular/material/dialog";
@@ -13,7 +13,7 @@ declare var d3: any;
 @Component({
   templateUrl: "./color-map-menu.component.html"
 })
-export class ColorMapMenuComponent implements OnInit{
+export class ColorMapMenuComponent implements OnInit {
   public _colorMapGradient: Array<{
     ColorMaps: ColorMap;
     IdName: string;
@@ -25,13 +25,13 @@ export class ColorMapMenuComponent implements OnInit{
   }>;
 
   buttonDictionary: Array<{
-    colorMapName: string,
+    colorMapName: string;
     ranges: {
-      min: number,
-      max: number
-    }
+      min: number;
+      max: number;
+    };
   }>;
-  
+
   min = 0;
   max = 17;
   inverse = false;
@@ -73,42 +73,42 @@ export class ColorMapMenuComponent implements OnInit{
   ngOnInit(): void {
     this.buttonDictionary = [];
     this.buttonDictionary.push({
-      colorMapName: 'CB Non-Centered',
+      colorMapName: "CB Non-Centered",
       ranges: {
         min: 0,
         max: 17
       }
     });
     this.buttonDictionary.push({
-      colorMapName: 'CB Zero-Centered',
+      colorMapName: "CB Zero-Centered",
       ranges: {
         min: 18,
         max: 35
       }
     });
     this.buttonDictionary.push({
-      colorMapName: 'CB Multi-hue',
+      colorMapName: "CB Multi-hue",
       ranges: {
         min: 36,
         max: 59
       }
     });
     this.buttonDictionary.push({
-      colorMapName: 'CB Single-hue',
+      colorMapName: "CB Single-hue",
       ranges: {
         min: 60,
         max: 71
       }
     });
     this.buttonDictionary.push({
-      colorMapName: 'Matlab',
+      colorMapName: "Matlab",
       ranges: {
         min: 72,
         max: 91
       }
     });
     this.buttonDictionary.push({
-      colorMapName: 'Other',
+      colorMapName: "Other",
       ranges: {
         min: 92,
         max: 101
