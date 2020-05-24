@@ -5,7 +5,6 @@ import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeseriesData } from "./timeseriesData";
-import {MatDialogRef} from '@angular/material/dialog';
 /**
  * Created by dafre on 5/14/2017.
  */
@@ -24,11 +23,6 @@ export class TimeseriesMenuComponent {
   multi: TimeseriesData[] = new Array<any>();
   view: any[];
   levelsLoaded = 0;
-  toolTipData: Array<{
-    date: string;
-    value: string;
-    layer: string;
-  }>;
 
   // options
   showXAxis = true;
@@ -43,8 +37,8 @@ export class TimeseriesMenuComponent {
 
   colorScheme = {
     domain: [
-      "#1f78b4",
       "#a6cee3",
+      "#1f78b4",
       "#b2df8a",
       "#33a02c",
       "#fb9a99",
@@ -62,7 +56,6 @@ export class TimeseriesMenuComponent {
   autoScale = true;
 
   private _model: Model;
-  private dateJson: any;
 
   public GetLevels() {
     return this._model.settings.Levels;
@@ -85,11 +78,12 @@ export class TimeseriesMenuComponent {
   }
 
   public DataAvailable() {
-    return this.levelsLoaded === this.multi.length && this.levelsLoaded > 0;
+    return this.levelsLoaded === this.multi.length && this.levelsLoaded > 0
+      ? true
+      : false;
   }
 
-  public constructor(private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
-                     @Inject(MAT_DIALOG_DATA) public data: any) {
+  public constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this._model = data;
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
@@ -119,56 +113,6 @@ export class TimeseriesMenuComponent {
       }
     }
   }
-
-  getToolTipData(jsonString) {
-    this.toolTipData = [];
-    const jsonArr = jsonString.split("{"); // counter,, jsonArr.length = n + 1 where n is number of layers selected
-    for (let i = 1; i < jsonArr.length; i++) {
-      const v = jsonArr[i].split('value": ');
-      const d = jsonArr[i].split('name": ');
-      const series = jsonArr[i].split('series": ');
-      const l = series[1].split('"'); // layer
-      v[1] = v[1].substr(0, 4); // value
-      d[1] = d[1].substr(1, 7); // date
-      this.toolTipData.push({
-        date: d[1],
-        value: v[1],
-        layer: l[1]
-      });
-    }
-    return this.toolTipData;
-  }
-
-  chartToolTipDate(jsonString) {
-    this.dateJson = jsonString;
-    let nameIndex = this.dateJson.indexOf("name");
-    nameIndex += 8;
-    return this.dateJson.substr(nameIndex, 7);
-  }
-
-  closeTimeSeries() {
-    this.dialogRef.close();
-  }
-
-  yValTitle() {
-    if (!this.DataAvailable()) {
-      return "Value";
-    }
-    const yTitle = this._model.settings.GenerateSimpleTitle(
-      this._model.settings.FullName
-    );
-    if (yTitle.search("Temperature") >= 0) {
-      return yTitle.concat(" (\xB0C)");
-    } else if (
-      yTitle === "Volumetric Soil Moisture" ||
-      yTitle === "ice thickness"
-    ) {
-      return yTitle;
-    } else {
-      return yTitle + " (" + this._model.settings.DataUnits + ")";
-    }
-  }
-
 
   public IsSelected(level): boolean {
     const selected = false;

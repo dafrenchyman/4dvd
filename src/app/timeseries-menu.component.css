@@ -1,40 +1,23 @@
 #TimeseriesPlot {
-  position: relative;
-  overflow-x: hidden;
-  height: 100%;
-  width: 100%;
 }
 h2 {
   margin: 0;
   display: inline-block;
 }
 #graph_button {
-  position: absolute;
-  top: 13px;
-  right: 80px;
+  float: right;
 }
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  #graph_button,#Download_button,.closeBtn {
+  #graph_button {
     display: none;
   }
-  #TimeseriesPlot {
-    width: auto;
+  #Download_button {
+    display: none;
   }
   @page {
     size: landscape;
   }
-}
-.closeBtn {
-  position: absolute;
-  top: 10px;
-  right: 30px;
-  color: black;
-  background-color: #FFFFFF;
-}
-
-.closeBtn:active, :after {
-  background-color: #FFFFFF;
 }
