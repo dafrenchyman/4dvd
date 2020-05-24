@@ -17,9 +17,7 @@ h2 {
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  #graph_button,
-  #Download_button,
-  .closeBtn {
+  #graph_button,#Download_button,.closeBtn {
     display: none;
   }
   #TimeseriesPlot {
@@ -34,10 +32,9 @@ h2 {
   top: 10px;
   right: 30px;
   color: black;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
-.closeBtn:active,
-:after {
-  background-color: #ffffff;
+.closeBtn:active, :after {
+  background-color: #FFFFFF;
 }
