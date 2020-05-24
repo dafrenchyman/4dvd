@@ -49,9 +49,9 @@
           </ng-template>
           <ng-template #seriesTooltipTemplate let-model="model">
             <p>
-              <u><b>Date:</b> {{ getTTDate(model | json) }}</u>
+              <u><b>Date:</b> {{ chartToolTipDate(model | json) }}</u>
             </p>
-            <div *ngFor="let data of getSeriesToolTipData(model | json)">
+            <div *ngFor="let data of getToolTipData(model | json)">
               <p>
                 <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
                 <b>Layer: </b> {{ this._model.settings.levelCheck(data.layer) }}
