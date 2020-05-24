@@ -157,14 +157,6 @@ export class Settings {
   rGlobe: 0;
   lastTime: 0;
 
-  levelCheck(str) {
-    if (str === "Default") {
-      return "Single Level";
-    } else {
-      return str;
-    }
-  }
-
   // TODO: HACK: We should move this to the database. So the value just comes from a column so we don't need this function
   public GenerateTitle(str): string {
     // Title for main view.. returns in format: "DatasetName | Pressure Level"

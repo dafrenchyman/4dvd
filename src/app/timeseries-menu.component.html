@@ -3,7 +3,6 @@
     <div class="main">
       <h2 mat-dialog-title>Time Series</h2>
       <button
-        mat-raised-button
         id="graph_button"
         [useExistingCss]="true"
         printSectionId="print-section"
@@ -11,7 +10,6 @@
       >
         Save Graph
       </button>
-      <button mat-icon-button (click)="this.closeTimeSeries()" class="closeBtn" matTooltip="Close Time Series Chart"><mat-icon>close</mat-icon></button>
       <mat-dialog-content>
         <ngx-charts-line-chart
           *ngIf="DataAvailable()"
@@ -26,31 +24,9 @@
           [showXAxisLabel]="showXAxisLabel"
           [showYAxisLabel]="showYAxisLabel"
           [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yValTitle()"
+          [yAxisLabel]="yAxisLabel"
           [autoScale]="autoScale"
         >
-          <ng-template #tooltipTemplate let-model="model">
-            <div *ngFor="let data of getToolTipData(model | json)">
-              <p>
-                <u><b>Date:</b> {{ data.date }}</u>
-              </p>
-              <p>
-                <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
-                <b>Layer: </b> {{ this._model.settings.levelCheck(data.layer) }}
-              </p>
-            </div>
-          </ng-template>
-          <ng-template #seriesTooltipTemplate let-model="model">
-            <p>
-              <u><b>Date:</b> {{ chartToolTipDate(model | json) }}</u>
-            </p>
-            <div *ngFor="let data of getToolTipData(model | json)">
-              <p>
-                <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
-                <b>Layer: </b> {{ this._model.settings.levelCheck(data.layer) }}
-              </p>
-            </div>
-          </ng-template>
         </ngx-charts-line-chart>
 
         <br />
@@ -71,7 +47,7 @@
         [checked]="IsSelected(level)"
         (click)="ToggleTimeseries(level)"
       >
-        {{ this._model.settings.levelCheck(level.Name) }}
+        {{ level.Name }}
       </mat-checkbox>
     </mat-dialog-actions>
   </div>
