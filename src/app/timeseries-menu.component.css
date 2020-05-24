@@ -17,7 +17,12 @@ h2 {
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  #graph_button,
+  #graph_button {
+    display: none;
+  }
+  #Download_button {
+    display: none;
+  }
   #Download_button,
   .closeBtn {
     display: none;
