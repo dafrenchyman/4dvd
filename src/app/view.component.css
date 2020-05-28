@@ -15,6 +15,13 @@
   z-index: 6;
 }
 
+#LevelsBox {
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
+  z-index: 10;
+}
+
 #Legend text {
   fill: white;
   text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000,
@@ -169,8 +176,6 @@ md-sidenav-container,
 .hidden {
   visibility: hidden;
   position: absolute;
-  left: 300px;
-  top: 50px;
 }
 
 .unhidden {
@@ -189,4 +194,8 @@ button:focus {
 
 .closebutton:focus {
   background: none;
+}
+
+mat-sidenav-content.mat-drawer-content {
+  overflow: hidden;
 }

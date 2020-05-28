@@ -1,14 +1,15 @@
 <div
   #ClimateSystem
   id="ClimateSystem"
-  style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;"
+  style="max-height:100%; z-index: 2; margin-bottom: 0;"
   class="row"
 >
-  <div mat-fab id="close" class="hidden">
+  <div id="close" class="hidden">
     <button
       id="closebutton"
       mat-icon-button
       style="position: absolute; left: 290px; top: 49px; z-index: 10; color: #FFFFFF"
+      (click)="selectedIndex = 0"
       (click)="sidenav.toggle()"
       (click)="unhide(this,'close')"
     >
@@ -25,9 +26,9 @@
       #sidenav
       opened="false"
       style="background-color: white; overflow:auto; width: 290px; display: flex"
-      (onmouseover)="inMenu = true"
+      (close)="selectedIndex = 0"
     >
-      <mat-tab-group>
+      <mat-tab-group [(selectedIndex)]="selectedIndex">
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon matTooltip="{{ datasetTitle }}">list</mat-icon>
@@ -140,7 +141,8 @@
                   matTooltip="{{ colorMapDesc }}"
                   matTooltipPosition="{{ displayLoc }}"
                 >
-                  <mat-icon>palette</mat-icon> ColorMaps
+                  <mat-icon>palette</mat-icon>
+                  ColorMaps
                 </button>
               </mat-list-item>
             </mat-list>
@@ -428,12 +430,139 @@
       {{ onClick("close") }}
       <mat-icon>menu</mat-icon>
     </button>
+    <div id="ClimateDate">
+      <span
+        class="levelLabel"
+        (click)="changeState('level')"
+        style="cursor: pointer;"
+        matTooltip="Click to change pressure level"
+        >{{ GetLevelLabel() }}</span
+      >
+      |
+      <span
+        class="dateLabel"
+        (click)="changeState('date')"
+        style="cursor: pointer"
+        matTooltip="Click to change date"
+        >{{ GetDateLabel() }}</span
+      >
+    </div>
+    <div
+      [@EnterLeave]="currentStateLevel"
+      style="max-width: 250px; max-height: 310px; z-index: 10; position: absolute;"
+      [exclude]="'.dateLabel,.levelLabel'"
+      [excludeBeforeClick]="true"
+      (clickOutside)="outsideClick('level')"
+    >
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Air Pressure Levels</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="overflow-y: auto; height: 310px">
+          <mat-radio-group class="radio-group">
+            <mat-radio-button
+              class="radio-button"
+              *ngFor="let level of GetLevels()"
+              [checked]="level.Selected"
+              [value]="level.Name"
+              (change)="ChangeLevel(level.Level_ID)"
+              (click)="changeState('level')"
+            >
+              {{ level.Name }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div
+      [@EnterLeave]="currentStateDate"
+      style="max-width: 250px; max-height: 310px;z-index: 10;"
+      [exclude]="'.dateLabel,.levelLabel,.mat-select-panel'"
+      [excludeBeforeClick]="true"
+      (clickOutside)="outsideClick('date')"
+    >
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Date</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="height: 310px">
+          <div class="section" style="margin-left: 10px;">
+            <mat-label>Year</mat-label>
+            <mat-list>
+              <mat-list-item>
+                <mat-slider
+                  [(ngModel)]="yearSlider"
+                  [max]="GetMaxYear()"
+                  [min]="GetMinYear()"
+                  [step]="1"
+                  [thumbLabel]="true"
+                  [tickInterval]="tickInterval"
+                  (change)="ChangeYear()"
+                >
+                </mat-slider>
+              </mat-list-item>
+              <mat-list-item id="yearInput">
+                <mat-form-field>
+                  <input
+                    matInput
+                    [(ngModel)]="yearSlider"
+                    (change)="ChangeYear()"
+                    type="number"
+                  />
+                </mat-form-field>
+              </mat-list-item>
+            </mat-list>
+          </div>
 
-    <div id="Legend"></div>
+          <mat-divider></mat-divider>
 
-    <div id="ClimateTitle">{{ GetTitle() }}</div>
+          <div class="section" style="margin-left: 10px; margin-top: 20px;">
+            <mat-label>Month</mat-label>
+            <mat-list>
+              <mat-list-item>
+                <mat-select
+                  placeholder="Month"
+                  [(value)]="currMonth"
+                  (selectionChange)="ChangeMonth()"
+                >
+                  <mat-option
+                    *ngFor="let month of months"
+                    [value]="month.value"
+                  >
+                    {{ month.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <button
+            mat-raised-button
+            (click)="changeState('date')"
+            style="display: flex; align-items: center; justify-content: center;"
+          >
+            Close
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-    <div id="ClimateDate">{{ GetLayerDateLabel() }}</div>
+    <div
+      id="Legend"
+      (click)="OpenColorMapDialog()"
+      style="cursor: pointer"
+      matTooltip="Click to change color map"
+      matTooltipPosition="above"
+    ></div>
+
+    <div
+      id="ClimateTitle"
+      (click)="OpenDatasetDialog()"
+      matTooltip="{{ datasetTitle }}"
+      matTooltipPosition="below"
+      style="cursor: pointer;"
+    >
+      {{ GetTitle() }}
+    </div>
 
     <div id="TimeseriesBox">
       <mat-card *ngIf="GridboxSelected()">
@@ -460,7 +589,6 @@
         </mat-list>
       </mat-card>
     </div>
-
     <canvas
       #ClimateGl
       id="ClimateGl"

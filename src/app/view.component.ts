@@ -11,6 +11,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from "@angular/core";
+import { ClickOutsideModule } from "ng-click-outside";
 import { Controller } from "./controller";
 import { GetJson } from "./getJson";
 import { Gl } from "./gl";
@@ -23,6 +24,13 @@ import { UI } from "./ui";
 import { WebGLProgramEnh } from "./WebGLProgramEnh";
 import { WebGLTextureEnh } from "./WebGLTextureEnh";
 
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from "@angular/animations";
 import { MatDialog } from "@angular/material";
 import * as glMatrix from "gl-matrix";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
@@ -34,10 +42,33 @@ declare var jQuery: any;
   selector: "app-climate-view",
   templateUrl: "./view.component.html",
   styleUrls: ["./view.component.css"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger("EnterLeave", [
+      state(
+        "initial",
+        style({
+          position: "absolute",
+          bottom: "140px",
+          right: "-300px"
+        })
+      ),
+      state(
+        "final",
+        style({
+          position: "absolute",
+          bottom: "140px",
+          right: "20px"
+        })
+      ),
+      transition("final=>initial", animate("200ms")),
+      transition("initial=>final", animate("200ms"))
+    ])
+  ]
   // providers: [GetJson]
 })
 export class ViewComponent implements OnInit, AfterViewInit {
+  selectedIndex = 0;
   datasetTitle = "Change the current dataset";
   timeTitle = "Change the year and month";
   graphicTitle = "Change visual settings";
@@ -155,8 +186,35 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   private _finishedLoading = false;
   title: string;
+  currentStateDate = "initial";
+  currentStateLevel = "initial";
 
   ngOnInit(): void {}
+
+  outsideClick(box) {
+    if (
+      (box === "date" && this.currentStateDate === "final") ||
+      (box === "level" && this.currentStateLevel === "final")
+    ) {
+      this.changeState(box);
+    }
+  }
+
+  changeState(box) {
+    if (box === "date") {
+      this.currentStateDate =
+        this.currentStateDate === "initial" ? "final" : "initial";
+      if (this.currentStateLevel === "final") {
+        this.currentStateLevel = "initial";
+      }
+    } else {
+      this.currentStateLevel =
+        this.currentStateLevel === "initial" ? "final" : "initial";
+      if (this.currentStateDate === "final") {
+        this.currentStateDate = "initial";
+      }
+    }
+  }
 
   onClick(divID): void {
     const item = document.getElementById(divID);
@@ -164,6 +222,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
       item.className = this.sidenav.opened ? "unhidden" : "hidden";
     }
   }
+
   unhide(clickedButton, divID): void {
     const item = document.getElementById(divID);
     if (item) {
@@ -344,21 +403,25 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public GetLayerDateLabel(): string {
+  public GetLevelLabel(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        if (
-          this._model.settings.LevelName != null &&
-          this._model.settings.CurrDate != null
-        ) {
-          const level = this._model.settings.levelCheck(
-            this._model.settings.LevelName
-          );
-          return `${level} | ${this._model.settings.CurrDate.substring(0, 7)}`;
+        if (this._model.settings.LevelName != null) {
+          return this._model.settings.LevelName;
         }
       }
     }
     return "";
+  }
+
+  public GetDateLabel(): string {
+    if (this._model != null) {
+      if (this._model.settings != null) {
+        if (this._model.settings.CurrDate != null) {
+          return this._model.settings.CurrDate.substring(0, 7);
+        }
+      }
+    }
   }
 
   public GetMinYear(): number {
