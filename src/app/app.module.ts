@@ -21,6 +21,7 @@ import {
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { ClickOutsideModule } from "ng-click-outside";
 import { NgxPrintModule } from "ngx-print";
 import { About4dvdComponent } from "./about4dvd.component";
 import { AppComponent } from "./app.component";
@@ -41,6 +42,7 @@ import { ViewComponent } from "./view.component";
   ],
   imports: [
     BrowserModule,
+    ClickOutsideModule,
     FormsModule,
     HttpModule,
     BrowserAnimationsModule,
