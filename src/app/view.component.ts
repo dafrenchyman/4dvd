@@ -403,17 +403,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public GetLayerDateLabel(): string {
+  public GetLevelLabel(): string {
     if (this._model != null) {
       if (this._model.settings != null) {
-        if (
-          this._model.settings.LevelName != null &&
-          this._model.settings.CurrDate != null
-        ) {
-          const level = this._model.settings.levelCheck(
-            this._model.settings.LevelName
-          );
-          return `${level} | ${this._model.settings.CurrDate.substring(0, 7)}`;
+        if (this._model.settings.LevelName != null) {
+          return this._model.settings.LevelName;
         }
       }
     }
