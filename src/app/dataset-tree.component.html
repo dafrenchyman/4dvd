@@ -1,0 +1,27 @@
+<mat-dialog-content>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button class="button1" disabled></button>
+      <button mat-icon-button class="button" (click)="SelectDataset(node)">
+        {{ node.title }}
+      </button>
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: hasChild"
+      matTreeNodePadding
+    >
+      <button
+        mat-icon-button
+        matTreeNodeToggle
+        [attr.aria-label]="'toggle ' + node.title"
+      >
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+        </mat-icon>
+        {{ node.title }}
+      </button>
+    </mat-tree-node>
+  </mat-tree>
+</mat-dialog-content>

@@ -1,0 +1,27 @@
+.button1 {
+  border: 2px solid #2196f3;
+  background-color: #2196f3;
+  padding: 5px 5px;
+  border-radius: 50%;
+}
+
+.mat-icon-button:focus {
+  background-color: transparent;
+}
+.mat-icon-button:hover {
+  background-color: white;
+}
+
+.mat-icon-button {
+  color: black;
+  padding: 0px 10px;
+  width: 400px;
+  cursor: pointer;
+  margin-right: 10px;
+  display: inline-block;
+  border-radius: 0%;
+  text-align: left;
+}
+.mat-icon {
+  color: #2196f3;
+}
