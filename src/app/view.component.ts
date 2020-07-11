@@ -34,6 +34,10 @@ import {
 import { MatDialog } from "@angular/material";
 import * as glMatrix from "gl-matrix";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
+<<<<<<< HEAD
+=======
+import { DatasetMenuComponent } from "./dataset-menu.component";
+>>>>>>> SI: Data Tree functionality is implemented.  New component DataTreeComponent was added Data-tree-component which has the mat-tree functionality.
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 declare var jQuery: any;
@@ -512,6 +516,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
   /* This function is used to load Precipitation Data in oneclick from TopDataset Button
    */
+
   private LoadPrecipitation() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Precipitation|Single Level|Monthly Mean")
@@ -521,6 +526,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
   /* This function is used to load Air Temperature Data in oneclick from TopDataset Button
    */
+
   private LoadAirTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Non-Gaussian|Air Temperature|Monthly Mean")
@@ -528,6 +534,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
   }
+
   private OpenDataTreeDialog() {
     const settings = new Array<any>();
 

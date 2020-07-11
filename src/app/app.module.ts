@@ -77,6 +77,10 @@ import { ViewComponent } from "./view.component";
   entryComponents: [
     About4dvdComponent,
     ColorMapMenuComponent,
+<<<<<<< HEAD
+=======
+    DatasetMenuComponent,
+>>>>>>> SI: Data Tree functionality is implemented.  New component DataTreeComponent was added Data-tree-component which has the mat-tree functionality.
     TimeseriesMenuComponent,
     DatasetTreeComponent
   ]
