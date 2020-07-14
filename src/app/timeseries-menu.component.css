@@ -46,3 +46,26 @@ h2 {
 :after {
   background-color: #ffffff;
 }
+
+::ng-deep
+  .mat-dialog-actions
+  .mat-checkbox
+  .mat-checkbox-layout
+  .mat-checkbox-label,
+::ng-deep
+  #print-section
+  > div
+  > mat-dialog-content
+  > ngx-charts-line-chart
+  > ngx-charts-chart
+  > div
+  > ngx-charts-legend
+  > div
+  > div
+  > ul
+  > li
+  > ngx-charts-legend-entry
+  > span
+  > span.legend-label-text {
+  color: black;
+}
