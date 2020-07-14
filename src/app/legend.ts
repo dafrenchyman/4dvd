@@ -17,8 +17,8 @@ export class Legend {
   }
 
   public drawLegend() {
-    const w = 140;
-    const h = 400;
+    const w = 120;
+    const h = 300;
     const colorMap = this._colorMap.GetColorMap(
       this._settings.currColormapName
     );
@@ -81,8 +81,8 @@ export class Legend {
     }
     key
       .append("rect")
-      .attr("width", w - 100)
-      .attr("height", h - 100)
+      .attr("width", w - 80)
+      .attr("height", h)
       .style("fill", "url(#gradient)")
       .attr("transform", "translate(0,10)");
 
