@@ -35,6 +35,7 @@ interface IExampleDataNode {
   styleUrls: ["./dataset-tree.component.css"]
 })
 export class DatasetTreeComponent implements OnInit, AfterViewInit {
+
   private _transformer = (node: IDataNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -57,8 +58,6 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     this.treeControl,
     this.treeFlattener
   );
-
-
   // retrieve Data passed by View Component which is a json object
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
