@@ -19,11 +19,7 @@
       "spaces"
     ],*/
     "interface-over-type-literal": true,
-<<<<<<< HEAD
     "interface-name": true,
-=======
-    "interface-name": false,
->>>>>>> SI: Data Tree functionality is implemented.  New component DataTreeComponent was added Data-tree-component which has the mat-tree functionality.
     "label-position": true,
     /*"max-line-length": [
       true,
