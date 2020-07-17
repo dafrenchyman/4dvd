@@ -56,7 +56,7 @@ h2 {
   padding-right: 5px;
 }
 
-::ng-deep .legend-labels {
+::ng-deep #print-section .legend-labels {
   background-color: white;
 }
 
