@@ -47,25 +47,19 @@ h2 {
   background-color: #ffffff;
 }
 
-::ng-deep
-  .mat-dialog-actions
-  .mat-checkbox
-  .mat-checkbox-layout
-  .mat-checkbox-label,
-::ng-deep
-  #print-section
-  > div
-  > mat-dialog-content
-  > ngx-charts-line-chart
-  > ngx-charts-chart
-  > div
-  > ngx-charts-legend
-  > div
-  > div
-  > ul
-  > li
-  > ngx-charts-legend-entry
-  > span
-  > span.legend-label-text {
+::ng-deep .mat-checkbox-label,
+::ng-deep #print-section .legend-label-text {
   color: black;
+}
+
+::ng-deep .mat-checkbox-label {
+  padding-right: 5px;
+}
+
+::ng-deep .legend-labels {
+  background-color: white;
+}
+
+.mat-checkbox-label {
+  padding-right: 5px;
 }
