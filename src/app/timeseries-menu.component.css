@@ -4,23 +4,25 @@
   height: 100%;
   width: 100%;
 }
-h2 {
-  margin: 0;
-  display: inline-block;
+.title{
+  margin-right: 10px;
 }
-#graph_button {
+.byline {
+  font-size: 1.2rem;
+}
+
+#Menu_button {
+  background-color: #ffffff;
   position: absolute;
-  top: 13px;
-  right: 40px;
+  left: 10px;
+  top: 10px;
+  z-index: 10;
 }
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  #graph_button {
-    display: none;
-  }
-  #Download_button {
+  #Menu_button,.mat-icon {
     display: none;
   }
   #Download_button,
@@ -66,4 +68,8 @@ h2 {
 
 ::ng-deep .mat-dialog-container {
   overflow: hidden;
+}
+
+button:focus {
+  background-color: transparent;
 }
