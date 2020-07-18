@@ -4,8 +4,12 @@
   height: 100%;
   width: 100%;
 }
-.title {
+
+.title{
   margin-right: 10px;
+}
+.byline {
+  font-size: 1.2rem;
 }
 
 #Menu_button {
@@ -56,6 +60,7 @@
   background-color: #ffffff;
 }
 
+
 ::ng-deep .mat-checkbox-label,
 ::ng-deep #print-section .legend-label-text {
   color: black;
@@ -77,6 +82,9 @@
   overflow: hidden;
 }
 
+button:focus {
+  background-color: transparent;
+}
 button:focus {
   background-color: transparent;
 }
