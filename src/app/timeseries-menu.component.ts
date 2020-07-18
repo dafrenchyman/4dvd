@@ -1,6 +1,6 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
-
+import { MatMenuModule} from '@angular/material/menu';
 import { MatDialogRef } from "@angular/material/dialog";
 import { Helpers } from "./helpers";
 import { Model } from "./model";

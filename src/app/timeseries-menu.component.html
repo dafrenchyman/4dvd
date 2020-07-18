@@ -1,25 +1,46 @@
 <div id="TimeseriesPlot">
   <div id="print-section">
     <div class="main">
-      <h2 mat-dialog-title>Time Series</h2>
-      <button
-        mat-raised-button
-        id="graph_button"
-        [useExistingCss]="true"
-        printSectionId="print-section"
-        ngxPrint
+      <div
+          #TabMenu
+          class="row"
+          id="TabMenu"
+          style="margin-bottom: 0px; z-index: 10;"
       >
-        Save Graph
-      </button>
-      <button
-        mat-icon-button
-        (click)="this.closeTimeSeries()"
-        class="closeBtn"
-        matTooltip="Close Time Series Chart"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-      <mat-dialog-content class="lineChart">
+        <div
+          id="QuickButtons"
+          class="col s12"
+          align="left"
+          style="float: right; display: inline-block"
+        >
+          <div class="Menu_button" class="col s1" align="left">
+             <button mat-button
+              [matMenuTriggerFor]="menu"> <mat-icon>menu</mat-icon></button>
+              <mat-menu #menu="matMenu">
+                 <button mat-menu-item [useExistingCss]="true" printSectionId="print-section" ngxPrint >Save Graph</button>
+                 <button mat-menu-item (click)="createCsvFromTimeseriesData()">Download Data</button>
+               </mat-menu>
+           </div>
+           <div class = "title_text" class="col s8" align="center">
+             <h5 class="text-left-right">
+               <span class = "title">{{this._model.settings.GenerateTitle(this._model.settings.FullName)}}</span>
+               <span class="byline">&nbsp;(Latitude: {{ this._model.settings.GetLatWithDir() }}
+                 &nbsp; Longitude: {{ this._model.settings.GetLonWithDir() }})</span>
+             </h5>
+           </div>
+           <div class = "title_text" class="col s12" align="right">
+             <button
+             mat-icon-button
+            (click)="this.closeTimeSeries()"
+            class="closeBtn"
+            matTooltip="Close Time Series Chart"
+             >
+              <mat-icon>close</mat-icon>
+              </button>
+           </div>
+         </div>
+      </div>
+      <mat-dialog-content>
         <ngx-charts-line-chart
           *ngIf="DataAvailable()"
           [view]="view"
@@ -61,15 +82,7 @@
         </ngx-charts-line-chart>
 
         <br />
-        <button
-          id="Download_button"
-          mat-raised-button
-          (click)="createCsvFromTimeseriesData()"
-        >
-          Download Data
-        </button>
-        <p>Latitude: {{ this._model.settings.GetLatWithDir() }}</p>
-        <p>Longitude: {{ this._model.settings.GetLonWithDir() }}</p>
+
       </mat-dialog-content>
     </div>
     <mat-dialog-actions>

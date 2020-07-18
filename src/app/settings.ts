@@ -172,6 +172,7 @@ export class Settings {
     if (str === "") {
       return " ";
     }
+    str = str.replace(/ *\([^)]*\) */g, "");
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
