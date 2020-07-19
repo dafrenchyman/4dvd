@@ -44,6 +44,7 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
       FullName: node.FullName
     };
   };
+
   treeControl = new FlatTreeControl<IExampleDataNode>(
     node => node.level,
     node => node.expandable
@@ -70,7 +71,7 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
 
   hasChild = (_: number, node: IExampleDataNode) => node.expandable;
 
-  SelectDataset(dataset) {
+  private SelectDataset(dataset) {
     // return the select Dataset name to View Component
     this.dialogRef.close(dataset);
   }

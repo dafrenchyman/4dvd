@@ -512,7 +512,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
   /* This function is used to load Precipitation Data in oneclick from TopDataset Button
    */
-
   public LoadPrecipitation() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Precipitation|Single Level|Monthly Mean")
@@ -522,7 +521,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
   /* This function is used to load Air Temperature Data in oneclick from TopDataset Button
    */
-
   public LoadAirTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Non-Gaussian|Air Temperature|Monthly Mean")
@@ -559,19 +557,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
         }
       }
-    });
-  }
-
-  OpenTimeseriesDialog() {
-    const timeseriesHeight =
-      Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
-    const timeseriesWidth =
-      Math.floor(this.viewportWidth - this.viewportWidth * 0.1) + "px";
-    this._model.settings.viewportHeight = this.viewportHeight;
-    this._model.settings.viewportWidth = this.viewportWidth;
-    const dialogRef = this.dialog.open(TimeseriesMenuComponent, {
-      height: timeseriesHeight,
-      data: this._model
     });
   }
 
