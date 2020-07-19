@@ -560,6 +560,19 @@ export class ViewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  OpenTimeseriesDialog() {
+    const timeseriesHeight =
+      Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
+    const timeseriesWidth =
+      Math.floor(this.viewportWidth - this.viewportWidth * 0.1) + "px";
+    this._model.settings.viewportHeight = this.viewportHeight;
+    this._model.settings.viewportWidth = this.viewportWidth;
+    const dialogRef = this.dialog.open(TimeseriesMenuComponent, {
+      height: timeseriesHeight,
+      data: this._model
+    });
+  }
+
   ChangeMonth() {
     this._model.settings.CurrDate =
       Helpers.LeftPad(this.yearSlider, 4) + "-" + this.currMonth + "-01";

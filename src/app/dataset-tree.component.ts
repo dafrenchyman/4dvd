@@ -55,10 +55,12 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     node => node.expandable,
     node => node.children
   );
+
   public dataSource = new MatTreeFlatDataSource(
     this.treeControl,
     this.treeFlattener
   );
+
   // retrieve Data passed by View Component which is a json object
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
