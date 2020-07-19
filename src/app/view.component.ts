@@ -34,7 +34,6 @@ import {
 import { MatDialog } from "@angular/material";
 import * as glMatrix from "gl-matrix";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
-import { DatasetMenuComponent } from "./dataset-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 declare var jQuery: any;
@@ -513,7 +512,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
   /* This function is used to load Precipitation Data in oneclick from TopDataset Button
    */
-  LoadPrecipitation() {
+  private LoadPrecipitation() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Precipitation|Single Level|Monthly Mean")
     );
@@ -522,14 +521,14 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
   /* This function is used to load Air Temperature Data in oneclick from TopDataset Button
    */
-  LoadAirTemperature() {
+  private LoadAirTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Non-Gaussian|Air Temperature|Monthly Mean")
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
   }
-  OpenDataTreeDialog() {
+  private OpenDataTreeDialog() {
     const settings = new Array<any>();
 
     // Generate key/value lookup //
@@ -559,37 +558,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  OpenDatasetDialog() {
-    const settings = new Array<any>();
-
-    // Generate key/value lookup //
-    for (let i = 0; i < this._model.settings.Datasets.length; i++) {
-      const currFullName = this._model.settings.Datasets[i].FullName;
-      const datasetPath = currFullName.split("|", -1);
-      this.generateDatesetMenuItems(settings, datasetPath);
-    }
-
-    const dialogRef = this.dialog.open(DatasetMenuComponent, {
-      data: settings
-    });
-    dialogRef.afterClosed().subscribe(dataset => {
-      if (dataset != null) {
-        const selectedDataset = this._model.settings.Datasets.find(
-          myObj => myObj.FullName === dataset.FullName
-        );
-        if (selectedDataset != null) {
-          this._controller.loadLevels(selectedDataset);
-          this._controller.loadDataset(
-            selectedDataset,
-            selectedDataset.StartDate,
-            1
-          );
-          this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
-        }
-      }
-    });
-  }
-
+  
   OpenTimeseriesDialog() {
     const timeseriesHeight =
       Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
