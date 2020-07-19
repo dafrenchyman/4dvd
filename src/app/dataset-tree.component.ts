@@ -33,14 +33,6 @@ interface ExampleDataNode {
   styleUrls: ["./dataset-tree.component.css"]
 })
 export class DatasetTreeComponent implements OnInit, AfterViewInit {
-  private _transformer = (node: DataNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      title: node.title,
-      level,
-      FullName: node.FullName
-    };
-  };
   treeControl = new FlatTreeControl<ExampleDataNode>(
     node => node.level,
     node => node.expandable
@@ -52,7 +44,15 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     node => node.children
   );
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
- 
+  private _transformer = (node: DataNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      title: node.title,
+      level,
+      FullName: node.FullName
+    };
+  };
+
   // retrieve Data passed by View Component which is a json object
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

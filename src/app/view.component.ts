@@ -558,7 +558,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
   OpenTimeseriesDialog() {
     const timeseriesHeight =
       Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
