@@ -12,7 +12,6 @@ import {
 } from "@angular/material/tree";
 
 // The Json Object passed from View Component consist of title,FullName and children
-
 interface IDataNode {
   title: string;
   FullName: string;
@@ -48,8 +47,16 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     node => node.level,
     node => node.expandable
   );
+
   treeFlattener = new MatTreeFlattener(
-    this._transformer,
+    (node: IDataNode, level: number) => {
+      return {
+        expandable: !!node.children && node.children.length > 0,
+        title: node.title,
+        level,
+        FullName: node.FullName
+      };
+    },
     node => node.level,
     node => node.expandable,
     node => node.children
@@ -59,7 +66,7 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     this.treeControl,
     this.treeFlattener
   );
-  
+
   // retrieve Data passed by View Component which is a json object
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -70,6 +77,7 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     this.dialogRef = dialogRef;
   }
 
+
   hasChild = (_: number, node: IExampleDataNode) => node.expandable;
 
   private SelectDataset(dataset) {
@@ -78,8 +86,11 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {}
+
   ngAfterViewInit() {
     this.treeControl.dataNodes[0].title = "Choose a Dataset";
     this.treeControl.expand(this.treeControl.dataNodes[0]);
   }
-}
+
+  }
+
