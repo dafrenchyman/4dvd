@@ -12,12 +12,13 @@ import {
 } from "@angular/material/tree";
 
 // The Json Object passed from View Component consist of title,FullName and children
-interface DataNode {
+interface IDataNode {
   title: string;
   FullName: string;
-  children?: DataNode[];
+  children?: IDataNode[];
 }
-interface ExampleDataNode {
+
+interface IExampleDataNode {
   expandable: boolean;
   title: string;
   FullName: string;
@@ -33,25 +34,29 @@ interface ExampleDataNode {
   styleUrls: ["./dataset-tree.component.css"]
 })
 export class DatasetTreeComponent implements OnInit, AfterViewInit {
-  private _transformer = (node: DataNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      title: node.title,
-      level,
-      FullName: node.FullName
-    };
-  };
-  treeControl = new FlatTreeControl<ExampleDataNode>(
+  treeControl = new FlatTreeControl<IExampleDataNode>(
     node => node.level,
     node => node.expandable
   );
+
   treeFlattener = new MatTreeFlattener(
-    this._transformer,
+    (node: IDataNode, level: number) => {
+      return {
+        expandable: !!node.children && node.children.length > 0,
+        title: node.title,
+        level,
+        FullName: node.FullName
+      };
+    },
     node => node.level,
     node => node.expandable,
     node => node.children
   );
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  public dataSource = new MatTreeFlatDataSource(
+    this.treeControl,
+    this.treeFlattener
+  );
 
   // retrieve Data passed by View Component which is a json object
   constructor(
@@ -63,16 +68,17 @@ export class DatasetTreeComponent implements OnInit, AfterViewInit {
     this.dialogRef = dialogRef;
   }
 
-  hasChild = (_: number, node: ExampleDataNode) => node.expandable;
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.treeControl.dataNodes[0].title = "Choose a Dataset";
+    this.treeControl.expand(this.treeControl.dataNodes[0]);
+  }
+
+  hasChild = (_: number, node: IExampleDataNode) => node.expandable;
 
   private SelectDataset(dataset) {
     // return the select Dataset name to View Component
     this.dialogRef.close(dataset);
-  }
-
-  ngOnInit(): void {}
-  ngAfterViewInit() {
-    this.treeControl.dataNodes[0].title = "Choose a Dataset";
-    this.treeControl.expand(this.treeControl.dataNodes[0]);
   }
 }
