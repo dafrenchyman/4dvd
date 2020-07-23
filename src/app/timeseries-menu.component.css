@@ -4,11 +4,8 @@
   height: 100%;
   width: 100%;
 }
-.title{
+.title {
   margin-right: 10px;
-}
-.byline {
-  font-size: 1.2rem;
 }
 
 #Menu_button {
@@ -19,10 +16,20 @@
   z-index: 10;
 }
 @media print {
+  .mat-dialog-content {
+    zoom: 70%;
+    max-width: fit-content;
+    max-height: fit-content;
+    margin: 0mm;
+  }
+  .mat-dialog-actions {
+    zoom: 70%;
+  }
   * {
     -webkit-print-color-adjust: exact !important;
   }
-  #Menu_button,.mat-icon {
+  #Menu_button,
+  .mat-icon {
     display: none;
   }
   #Download_button,
