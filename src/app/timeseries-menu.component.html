@@ -2,10 +2,10 @@
   <div id="print-section">
     <div class="main">
       <div
-          #TabMenu
-          class="row"
-          id="TabMenu"
-          style="margin-bottom: 0px; z-index: 10;"
+        #TabMenu
+        class="row"
+        id="TabMenu"
+        style="margin-bottom: 0px; z-index: 10;"
       >
         <div
           id="QuickButtons"
@@ -13,32 +13,49 @@
           align="left"
           style="float: right; display: inline-block"
         >
-          <div class="Menu_button" class="col s1" align="left">
-             <button mat-button
-              [matMenuTriggerFor]="menu"> <mat-icon>menu</mat-icon></button>
-              <mat-menu #menu="matMenu">
-                 <button mat-menu-item [useExistingCss]="true" printSectionId="print-section" ngxPrint >Save Graph</button>
-                 <button mat-menu-item (click)="createCsvFromTimeseriesData()">Download Data</button>
-               </mat-menu>
-           </div>
-           <div class = "title_text" class="col s8" align="center">
-             <h5 class="text-left-right">
-               <span class = "title">{{this._model.settings.GenerateTitle(this._model.settings.FullName)}}</span>
-               <span class="byline">&nbsp;(Latitude: {{ this._model.settings.GetLatWithDir() }}
-                 &nbsp; Longitude: {{ this._model.settings.GetLonWithDir() }})</span>
-             </h5>
-           </div>
-           <div class = "title_text" class="col s12" align="right">
-             <button
-             mat-icon-button
-            (click)="this.closeTimeSeries()"
-            class="closeBtn"
-            matTooltip="Close Time Series Chart"
-             >
-              <mat-icon>close</mat-icon>
+          <div class="Menu_button" class="col s0" align="left">
+            <button mat-button [matMenuTriggerFor]="menu">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                [useExistingCss]="true"
+                printSectionId="print-section"
+                ngxPrint
+              >
+                Save Graph
               </button>
-           </div>
-         </div>
+              <button mat-menu-item (click)="createCsvFromTimeseriesData()">
+                Download Data
+              </button>
+            </mat-menu>
+          </div>
+          <div class="title_text" class="col s8" align="center">
+            <h5 class="text-left-right">
+              <span class="title">{{
+                this._model.settings.GenerateTitle(
+                  this._model.settings.FullName
+                )
+              }}</span>
+              <span class="byline"
+                >&nbsp;(Latitude:
+                {{ this._model.settings.GetLatWithDir() }} &nbsp; Longitude:
+                {{ this._model.settings.GetLonWithDir() }})</span
+              >
+            </h5>
+          </div>
+          <div class="title_text" class="col s12" align="right">
+            <button
+              mat-icon-button
+              (click)="this.closeTimeSeries()"
+              class="closeBtn"
+              matTooltip="Close Time Series Chart"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
       <mat-dialog-content>
         <ngx-charts-line-chart

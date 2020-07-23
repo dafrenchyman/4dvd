@@ -172,8 +172,9 @@ export class Settings {
     if (str === "") {
       return " ";
     }
-    // Remove any text in opening and closing bracket in the Title like (10mb-100mb)
+    //Remove any text in opening and closing bracket in the Title like (10mb-100mb)
     str = str.replace(/ *\([^)]*\) */g, "");
+
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
