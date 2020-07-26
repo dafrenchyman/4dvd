@@ -12,6 +12,7 @@ import {
   ViewEncapsulation
 } from "@angular/core";
 import { ClickOutsideModule } from "ng-click-outside";
+import { ChangeContext, Options } from "ng5-slider";
 import { Controller } from "./controller";
 import { GetJson } from "./getJson";
 import { Gl } from "./gl";
@@ -189,9 +190,175 @@ export class ViewComponent implements OnInit, AfterViewInit {
   currentStateDate = "initial";
   currentStateLevel = "initial";
 
-  ngOnInit(): void {}
+  // slider information
+  dataAvail = false;
+  sliderBtnIcon = "keyboard_arrow_left";
+  scientificNotation = false;
+  SNValue: number;
 
-  outsideClick(box) {
+  // slider variables
+  sliderMinVal: number;
+  sliderMaxVal: number;
+  options: Options = {
+    floor: -40,
+    ceil: 38,
+    vertical: true
+  };
+
+  // update globe and legend based on slider
+  private setGlobeAndLegend() {
+    // if the data was converted to scientific notation, convert values back to correctly color the values on the globe
+    if (this.scientificNotation) {
+      this._model.settings.setSliderMax(
+        this.sliderMaxVal / Math.pow(10, this.SNValue)
+      );
+      this._model.settings.setSliderMin(
+        this.sliderMinVal / Math.pow(10, this.SNValue)
+      );
+      this._model._world.processBuffers();
+      this._model.legend.drawLegend();
+    } else {
+      this._model.settings.setSliderMax(this.sliderMaxVal);
+      this._model.settings.setSliderMin(this.sliderMinVal);
+      this._model._world.processBuffers();
+      this._model.legend.drawLegend();
+    }
+  }
+
+  // update when slider stops moving
+  private onUserChangeEnd(changeContext: ChangeContext): void {
+    this.setGlobeAndLegend();
+  }
+
+  // toggle visibility of slider
+  private toggleSlider() {
+    const legendSlider = document.getElementById("legendSlider").style;
+    const Legend = document.getElementById("Legend").style;
+    if (legendSlider.zIndex === "7") {
+      // NOTE: Changing visibility does not work with ng5-slider
+      legendSlider.zIndex = "-5";
+      Legend.right = "20px";
+      this.sliderBtnIcon = "keyboard_arrow_left";
+    } else {
+      legendSlider.zIndex = "7";
+      Legend.right = "80px";
+      this.sliderBtnIcon = "keyboard_arrow_right";
+    }
+  }
+
+  // update options when a new dataset is loaded
+  private changeOptions() {
+    const newOptions: Options = { ...this.options };
+    newOptions.vertical = true;
+    if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
+      newOptions.step = 1;
+      newOptions.floor = this.getFloor();
+      newOptions.ceil = this.getCeil();
+    } else {
+      newOptions.step = 0.1;
+      // convert values if the data needs to be converted to scientific notation
+      if (this.scientificNotation) {
+        newOptions.floor =
+          this._model.settings.minValue * Math.pow(10, this.SNValue);
+        newOptions.ceil =
+          this._model.settings.maxValue * Math.pow(10, this.SNValue);
+      } else {
+        newOptions.floor = this._model.settings.minValue;
+        newOptions.ceil = this._model.settings.maxValue;
+      }
+    }
+
+    this.options = newOptions;
+  }
+
+  // makes a cleaner slider
+  private getFloor() {
+    if (this._model != null) {
+      if (this._model.settings != null) {
+        return Math.floor(this._model.settings.minValue);
+      }
+    }
+    return 0;
+  }
+
+  private getCeil() {
+    if (this._model != null) {
+      if (this._model.settings != null) {
+        return Math.ceil(this._model.settings.maxValue);
+      }
+    }
+    return 10;
+  }
+
+  // checks if min and max values exist/loaded for sliderPromise()
+  private checkMinMaxVal() {
+    const a = this._model.settings.minValue;
+    const b = this._model.settings.maxValue;
+    if (a != null && b != null) {
+      return "passed";
+    } else {
+      return "failed";
+    }
+  }
+
+  // holds the promise to initialize/update slider
+  private async sliderPromise() {
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const response = this.checkMinMaxVal();
+        if (response === "failed") {
+          reject("failed, slider not able to be initialized");
+        } else {
+          resolve("passed");
+        }
+      }, 3000);
+    });
+
+    return p;
+  }
+
+  // set/update slider when promise returns
+  private setSlider() {
+    this.sliderPromise()
+      .then(() => {
+        this.scientificNotation = false;
+        // data sets with smaller ranges do not need to be rounded
+        if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
+          this.sliderMinVal = Math.floor(this._model.settings.minValue);
+          this.sliderMaxVal = Math.ceil(this._model.settings.maxValue);
+        } else {
+          this.sliderMinVal = this._model.settings.minValue;
+          this.sliderMaxVal = this._model.settings.maxValue;
+        }
+        // if data values are decimals, then we will convert the slider to scientific notation (legend units have exponent)
+        if (
+          this.sliderMaxVal.toExponential()[
+            this.sliderMaxVal.toExponential().length - 2
+          ] === "-"
+        ) {
+          this.scientificNotation = true;
+          this.SNValue = Number(
+            this.sliderMaxVal.toExponential()[
+              this.sliderMaxVal.toExponential().length - 1
+            ]
+          );
+          this.sliderMaxVal *= Math.pow(10, this.SNValue);
+          this.sliderMinVal *= Math.pow(10, this.SNValue);
+        }
+        this.dataAvail = true;
+        this.changeOptions();
+        this.setGlobeAndLegend();
+      })
+      .catch(message => {
+        console.log(message);
+      });
+  }
+
+  ngOnInit(): void {
+    this.setSlider();
+  }
+
+  private outsideClick(box) {
     if (
       (box === "date" && this.currentStateDate === "final") ||
       (box === "level" && this.currentStateLevel === "final")
@@ -200,7 +367,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeState(box) {
+  private changeState(box) {
     if (box === "date") {
       this.currentStateDate =
         this.currentStateDate === "initial" ? "final" : "initial";
@@ -216,14 +383,25 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onClick(divID): void {
+  // Determine where the value in the time series box needs to be rounded
+  private getTimeSeriesBoxValue() {
+    const TSValExp = this.timeSeriesVal.toExponential();
+    if (TSValExp[TSValExp.length - 2] === "-") {
+      const decimalPlace = Number(TSValExp[TSValExp.length - 1]);
+      return this.timeSeriesVal.toFixed(decimalPlace);
+    } else {
+      return this.timeSeriesVal.toFixed(2);
+    }
+  }
+
+  private onClick(divID): void {
     const item = document.getElementById(divID);
     if (item) {
       item.className = this.sidenav.opened ? "unhidden" : "hidden";
     }
   }
 
-  unhide(clickedButton, divID): void {
+  private unhide(clickedButton, divID): void {
     const item = document.getElementById(divID);
     if (item) {
       if (item.className === "hidden") {
@@ -556,6 +734,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
             1
           );
           this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
+          this.setSlider();
         }
       }
     });

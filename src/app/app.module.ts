@@ -24,6 +24,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { ClickOutsideModule } from "ng-click-outside";
+import { Ng5SliderModule } from "ng5-slider";
 import { NgxPrintModule } from "ngx-print";
 import { About4dvdComponent } from "./about4dvd.component";
 import { AppComponent } from "./app.component";
@@ -64,6 +65,7 @@ import { ViewComponent } from "./view.component";
     MatTabsModule,
     MatTooltipModule,
     MatTreeModule,
+    Ng5SliderModule,
     NgxChartsModule,
     NgxPrintModule
   ],

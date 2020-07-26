@@ -10,6 +10,9 @@ declare var d3: any;
 export class Legend {
   private _settings: Settings;
   private _colorMap: ColorMap;
+  public SNValue: number;
+  private legendMax: number;
+  private legendMin: number;
 
   public constructor(colorMap: ColorMap, settings: Settings) {
     this._settings = settings;
@@ -19,6 +22,7 @@ export class Legend {
   public drawLegend() {
     const w = 120;
     const h = 300;
+    this._settings.scientificNotation = false;
     const colorMap = this._colorMap.GetColorMap(
       this._settings.currColormapName
     );
@@ -61,9 +65,9 @@ export class Legend {
       ) {
         currColors = this._colorMap.customColorMapWithMidpointByPercentage(
           colorMap,
-          this._settings.minValue,
+          this._settings.newMin,
           0.0,
-          this._settings.maxValue,
+          this._settings.newMax,
           1.0 - currPercentage
         );
       }
@@ -86,14 +90,26 @@ export class Legend {
       .style("fill", "url(#gradient)")
       .attr("transform", "translate(0,10)");
 
+    // Convert legend to scientific notation
+    const maxExp = this._settings.newMax.toExponential();
+    if (maxExp[maxExp.length - 2] === "-") {
+      this.SNValue = Number(maxExp[maxExp.length - 1]);
+      this.legendMin = this._settings.newMin * Math.pow(10, this.SNValue);
+      this.legendMax = this._settings.newMax * Math.pow(10, this.SNValue);
+      this._settings.scientificNotation = true;
+    } else {
+      this.legendMax = this._settings.newMax;
+      this.legendMin = this._settings.newMin;
+    }
+
     const y = d3
       .scaleLinear()
       .range([300, 0])
-      .domain([this._settings.minValue, this._settings.maxValue]);
+      .domain([this.legendMin, this.legendMax]);
     const yAxis = d3.axisRight(y);
 
     // Get the units type
-    let legendUnits = "";
+    let legendUnits;
     switch (this._settings.DataUnits) {
       case "Kelvins":
       case "degK":
@@ -108,6 +124,10 @@ export class Legend {
         break;
       default:
         legendUnits = this._settings.DataUnits;
+    }
+    // if exponent is negative, add on the scientific notation here
+    if (this._settings.scientificNotation) {
+      legendUnits = `10^-${this.SNValue} ${legendUnits}`;
     }
 
     // Create the legend label
