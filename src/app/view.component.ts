@@ -34,7 +34,7 @@ import {
 import { MatDialog } from "@angular/material";
 import * as glMatrix from "gl-matrix";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
-import { DatasetMenuComponent } from "./dataset-menu.component";
+import { DatasetTreeComponent } from "./dataset-tree.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 declare var jQuery: any;
 
@@ -511,7 +511,26 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  OpenDatasetDialog() {
+  /* This function is used to load Precipitation Data in oneclick from TopDataset Button
+   */
+  public LoadPrecipitation() {
+    const selectedDataset = this._model.settings.Datasets.find(myObj =>
+      myObj.FullName.includes("Precipitation|Single Level|Monthly Mean")
+    );
+    this._controller.loadLevels(selectedDataset);
+    this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+  }
+  /* This function is used to load Air Temperature Data in oneclick from TopDataset Button
+   */
+  public LoadAirTemperature() {
+    const selectedDataset = this._model.settings.Datasets.find(myObj =>
+      myObj.FullName.includes("Non-Gaussian|Air Temperature|Monthly Mean")
+    );
+    this._controller.loadLevels(selectedDataset);
+    this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+  }
+
+  public OpenDataTreeDialog() {
     const settings = new Array<any>();
 
     // Generate key/value lookup //
@@ -520,9 +539,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
       const datasetPath = currFullName.split("|", -1);
       this.generateDatesetMenuItems(settings, datasetPath);
     }
-
-    const dialogRef = this.dialog.open(DatasetMenuComponent, {
-      data: settings
+    const dialogRef = this.dialog.open(DatasetTreeComponent, {
+      data: settings,
+      width: "700px"
     });
     dialogRef.afterClosed().subscribe(dataset => {
       if (dataset != null) {

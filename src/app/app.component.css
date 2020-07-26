@@ -1,14 +1,43 @@
 .AboutButton {
-  margin-right: 20px;
-  margin-left: 20px;
   margin-top: 10px;
-  margin-bottom: 10px;
-  display: inline-block;
+  float: right;
+  font-size: 18px;
 }
 .DataDownload {
   margin-right: 20px;
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 18px;
   display: inline-block;
+}
+.Dataset {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: inline-block;
+}
+.Top_Dataset {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: inline-block;
+}
+button:focus {
+  background-color: #2196f3;
+}
+button.mat-menu-item {
+  background-color: white;
+  font-size: 18px;
+}
+button.mat-menu-item:hover {
+  background-color: #2196f3;
+  color: #fff !important;
+}
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
 }
