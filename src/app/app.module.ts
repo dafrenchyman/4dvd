@@ -18,6 +18,8 @@ import {
   MatTabsModule,
   MatTooltipModule
 } from "@angular/material";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatTreeModule } from "@angular/material/tree";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
@@ -26,7 +28,7 @@ import { NgxPrintModule } from "ngx-print";
 import { About4dvdComponent } from "./about4dvd.component";
 import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
-import { DatasetMenuComponent } from "./dataset-menu.component";
+import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { ViewComponent } from "./view.component";
@@ -36,9 +38,9 @@ import { ViewComponent } from "./view.component";
     AppComponent,
     About4dvdComponent,
     ColorMapMenuComponent,
-    DatasetMenuComponent,
     TimeseriesMenuComponent,
-    ViewComponent
+    ViewComponent,
+    DatasetTreeComponent
   ],
   imports: [
     BrowserModule,
@@ -61,14 +63,16 @@ import { ViewComponent } from "./view.component";
     MatSliderModule,
     MatButtonModule,
     MatTooltipModule,
-    NgxPrintModule
+    NgxPrintModule,
+    MatMenuModule,
+    MatTreeModule
   ],
   providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent],
   entryComponents: [
     About4dvdComponent,
     ColorMapMenuComponent,
-    DatasetMenuComponent,
+    DatasetTreeComponent,
     TimeseriesMenuComponent
   ]
 })
