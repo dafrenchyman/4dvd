@@ -60,6 +60,10 @@ h2 {
   background-color: white;
 }
 
-.mat-checkbox-label {
-  padding-right: 5px;
+.lineChart {
+  min-height: 65vh;
+}
+
+::ng-deep .mat-dialog-container {
+  overflow: hidden;
 }

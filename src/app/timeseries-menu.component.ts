@@ -39,7 +39,6 @@ export class TimeseriesMenuComponent {
   showXAxisLabel = true;
   xAxisLabel = "Time";
   showYAxisLabel = true;
-  yAxisLabel = "Value";
 
   colorScheme = {
     domain: [
@@ -62,13 +61,20 @@ export class TimeseriesMenuComponent {
   autoScale = true;
 
   private _model: Model;
-  private dateJson: any;
+
+  // returns the index of the lone level that is currently selected
+  private lonerLevelCheck(): number {
+    if (this.levelsLoaded <= 1 && this.DataAvailable()) {
+      return this.multi[0].level_ID - 1;
+    }
+    return -1;
+  }
 
   public GetLevels() {
     return this._model.settings.Levels;
   }
 
-  getLat() {
+  private getLat() {
     if (String(this._model.settings.CurrGridBoxLat).length > 7) {
       return this._model.settings.CurrGridBoxLat.toFixed(2);
     } else {
@@ -76,7 +82,7 @@ export class TimeseriesMenuComponent {
     }
   }
 
-  getLon() {
+  private getLon() {
     if (String(this._model.settings.CurrGridBoxLon).length > 7) {
       return this._model.settings.CurrGridBoxLon.toFixed(2);
     } else {
@@ -175,22 +181,6 @@ export class TimeseriesMenuComponent {
     }
   }
 
-  public IsSelected(level): boolean {
-    const selected = false;
-    for (let counter = 0; counter < this.multi.length; counter++) {
-      const currLevelId = this.multi[counter].level_ID;
-      const currLevelLoaded = this.multi[counter].loaded;
-      if (currLevelId === level.Level_ID) {
-        if (currLevelLoaded === true) {
-          if (this.multi[counter].visible === true) {
-            return true;
-          }
-        }
-      }
-    }
-    return selected;
-  }
-
   public ToggleTimeseries(level) {
     // If we've already loaded it, don't load it again
     let alreadyLoaded = false;
@@ -199,9 +189,13 @@ export class TimeseriesMenuComponent {
       const currLevelLoaded = this.multi[counter].loaded;
       if (currLevelId === level.Level_ID) {
         if (currLevelLoaded === true) {
-          this.multi[counter].visible =
-            this.multi[counter].visible === true ? false : true;
+          // If the level has already been loaded, we remove the selected pressure layer and update the graph here
+          this.multi[counter].visible = this.multi[counter].visible !== true;
+          const removeLevel = this.multi.indexOf(this.multi[counter]);
+          this.multi.splice(removeLevel, 1);
+          this.multi = [...this.multi];
           alreadyLoaded = true;
+          this.levelsLoaded--;
         }
       }
     }
