@@ -546,6 +546,27 @@
       </mat-card>
     </div>
 
+    <div *ngIf="dataAvail">
+      <button
+        (click)="toggleSlider()"
+        mat-button
+        matTooltip="Legend slider"
+        class="openLegendSlider"
+        style="position: absolute; z-index: 6; top: 10px; right: 20px"
+      >
+        <mat-icon>{{ sliderBtnIcon }}</mat-icon>
+      </button>
+      <div class="custom-slider">
+        <ng5-slider
+          id="legendSlider"
+          [(value)]="sliderMinVal"
+          [(highValue)]="sliderMaxVal"
+          [options]="options"
+          (userChangeEnd)="onUserChangeEnd($event)"
+        ></ng5-slider>
+      </div>
+    </div>
+
     <div
       id="Legend"
       (click)="OpenColorMapDialog()"
@@ -572,7 +593,7 @@
               this._model.settings.GenerateSimpleTitle(
                 this._model.settings.FullName
               )
-            }}: {{ this.timeSeriesVal.toFixed(2) }}
+            }}: {{ getTimeSeriesBoxValue() }}
             {{ this._model.settings.JustUnits() }}</mat-list-item
           >
           <mat-list-item>
