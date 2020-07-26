@@ -19,7 +19,7 @@
       >
         <mat-icon>close</mat-icon>
       </button>
-      <mat-dialog-content>
+      <mat-dialog-content class="lineChart">
         <ngx-charts-line-chart
           *ngIf="DataAvailable()"
           [view]="view"
@@ -74,9 +74,10 @@
     </div>
     <mat-dialog-actions>
       <mat-checkbox
-        *ngFor="let level of GetLevels()"
-        [checked]="IsSelected(level)"
-        (click)="ToggleTimeseries(level)"
+        *ngFor="let level of GetLevels(); index as checkboxIndex"
+        [checked]="checkboxIndex == 0"
+        [disabled]="lonerLevelCheck() === checkboxIndex"
+        (change)="ToggleTimeseries(level)"
       >
         {{ this._model.settings.levelCheck(level.Name) }}
       </mat-checkbox>
