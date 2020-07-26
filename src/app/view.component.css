@@ -3,9 +3,10 @@
   display: block;
   top: 50px;
   right: 20px;
-  border: none;
   font-size: 20pt;
   z-index: 6;
+  padding-left: 10px;
+  margin: 3px;
 }
 
 #TimeseriesBox {
@@ -23,10 +24,7 @@
 }
 
 #Legend text {
-  fill: white;
-  text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000,
-    1px 1px 0 #000000, -2px 0 0 #000000, 2px 0 0 #000000, 0 2px 0 #000000,
-    0 -2px 0 #000000;
+  fill: black;
 }
 
 path.domain {
@@ -40,6 +38,12 @@ path.domain {
 .axis text {
   font: 18px sans-serif;
   fill: black;
+}
+
+#Legend .axis text {
+  font-size: 20px;
+  fill: black;
+  font-weight: bold;
 }
 
 .axis line,
@@ -91,10 +95,18 @@ path.domain {
   text-align: center;
   font-size: 30px;
   z-index: 6;
-  color: white;
-  text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000,
-    1px 1px 0 #000000, -2px 0 0 #000000, 2px 0 0 #000000, 0 2px 0 #000000,
-    0 -2px 0 #000000;
+  color: black;
+  font-weight: bold;
+  margin: 3px;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+#ClimateTitle:hover,
+#Legend:hover {
+  border: 3px solid gray;
+  border-radius: 7px;
+  margin: 0;
 }
 
 #ClimateDate {
@@ -104,10 +116,7 @@ path.domain {
   right: 20px;
   border: none;
   font-size: 20pt;
-  color: white;
-  text-shadow: /* Outline */ -1px -1px 0 #000000, 1px -1px 0 #000000,
-    -1px 1px 0 #000000, 1px 1px 0 #000000, -2px 0 0 #000000, 2px 0 0 #000000,
-    0 2px 0 #000000, 0 -2px 0 #000000;
+  color: black;
   z-index: 6;
 }
 
@@ -199,3 +208,35 @@ button:focus {
 mat-sidenav-content.mat-drawer-content {
   overflow: hidden;
 }
+
+.levelLabel,
+.dateLabel {
+  color: black;
+  font-weight: bold;
+  margin: 3px;
+}
+
+.levelLabel {
+  padding-right: 3px;
+}
+
+.levelLabel:hover,
+.dateLabel:hover {
+  border: 3px solid gray;
+  border-radius: 7px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.levelLabel:active,
+.dateLabel:active,
+#ClimateTitle:active,
+#Legend:active {
+  opacity: 60%;
+}
+
+.legendRect {
+  border: 3px solid gray;
+  border-radius: 7px;
+}
+
