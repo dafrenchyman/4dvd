@@ -33,6 +33,8 @@ import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { ViewComponent } from "./view.component";
+import { TimeSeriesStatisticsComponent } from './time-series-statistics.component';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ViewComponent } from "./view.component";
     ColorMapMenuComponent,
     DatasetTreeComponent,
     TimeseriesMenuComponent,
-    ViewComponent
+    ViewComponent,
+    TimeSeriesStatisticsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,7 +70,9 @@ import { ViewComponent } from "./view.component";
     MatTreeModule,
     Ng5SliderModule,
     NgxChartsModule,
-    NgxPrintModule
+    NgxPrintModule,
+    MatMenuModule,
+    MatTableModule
   ],
   providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent],
@@ -75,7 +80,9 @@ import { ViewComponent } from "./view.component";
     About4dvdComponent,
     ColorMapMenuComponent,
     DatasetTreeComponent,
-    TimeseriesMenuComponent
+    TimeseriesMenuComponent,
+    TimeSeriesStatisticsComponent
+
   ]
 })
 export class AppModule {}

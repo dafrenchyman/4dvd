@@ -1,0 +1,19 @@
+#TimeSeriesStats {
+    position: relative;
+    overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+  }
+td.mat-cell:nth-child(1) {
+    font-weight: bold;
+    color: darkblue;
+  }
+.mat-row:nth-child(1) .mat-cell {
+    font-weight: bold;
+    color: darkblue;
+}
+
+
+td.mat-cell {
+    width: 200px;
+}
