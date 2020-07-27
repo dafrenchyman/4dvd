@@ -1,10 +1,11 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { Settings } from "./settings";
+import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesData } from "./timeseriesData";
 /**
  * Created by dafre on 5/14/2017.
@@ -95,6 +96,7 @@ export class TimeseriesMenuComponent {
   }
 
   public constructor(
+    public dialog: MatDialog,
     private dialogRef: MatDialogRef<TimeseriesMenuComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -230,6 +232,11 @@ export class TimeseriesMenuComponent {
       const currTimeseries = new TimeseriesData(levelName, level_id, rawData);
       this.multi.push(currTimeseries);
     });
+  }
+
+  private createSummaryStatistics(){
+    const dialogRef = this.dialog.open(TimeSeriesStatisticsComponent, {data: this.multi});
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   createCsvFromTimeseriesData() {

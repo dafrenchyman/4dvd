@@ -84,3 +84,17 @@
 button:focus {
   background-color: transparent;
 }
+
+::ng-deep .mat-checkbox-label,
+::ng-deep #print-section .legend-label-text {
+  color: black;
+}
+::ng-deep .mat-checkbox-label {
+  padding-right: 5px;
+}
+::ng-deep #print-section .legend-labels {
+  background-color: white;
+}
+.mat-checkbox-label {
+  padding-right: 5px;
+}
