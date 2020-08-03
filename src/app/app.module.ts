@@ -40,7 +40,7 @@ import { ViewComponent } from "./view.component";
     ColorMapMenuComponent,
     DatasetTreeComponent,
     TimeseriesMenuComponent,
-    ViewComponent,
+    ViewComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -65,7 +65,7 @@ import { ViewComponent } from "./view.component";
     MatTooltipModule,
     MatTreeModule,
     NgxChartsModule,
-    NgxPrintModule,
+    NgxPrintModule
   ],
   providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent],
