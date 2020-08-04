@@ -331,14 +331,14 @@ export class ViewComponent implements OnInit, AfterViewInit {
     // if data values are decimals, then we will convert the slider to scientific notation (legend units have exponent)
     if (
       this.sliderMaxVal.toExponential()[
-      this.sliderMaxVal.toExponential().length - 2
-        ] === "-"
+        this.sliderMaxVal.toExponential().length - 2
+      ] === "-"
     ) {
       this.scientificNotation = true;
       this.SNValue = Number(
         this.sliderMaxVal.toExponential()[
-        this.sliderMaxVal.toExponential().length - 1
-          ]
+          this.sliderMaxVal.toExponential().length - 1
+        ]
       );
       this.sliderMaxVal *= Math.pow(10, this.SNValue);
       this.sliderMinVal *= Math.pow(10, this.SNValue);
@@ -706,7 +706,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setSlider();
     }, 400);
   }
@@ -718,7 +718,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setSlider();
     }, 400);
   }
@@ -749,7 +749,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
             1
           );
           this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
-          setTimeout(()=> {
+          setTimeout(() => {
             this.setSlider();
           }, 400);
         }
