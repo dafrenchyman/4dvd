@@ -29,6 +29,7 @@ import { NgxPrintModule } from "ngx-print";
 import { About4dvdComponent } from "./about4dvd.component";
 import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
+import { DatasetMenuComponent } from "./dataset-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
@@ -41,7 +42,8 @@ import { ViewComponent } from "./view.component";
     ColorMapMenuComponent,
     DatasetTreeComponent,
     TimeseriesMenuComponent,
-    ViewComponent
+    ViewComponent,
+    DatasetMenuComponent
   ],
   imports: [
     BrowserAnimationsModule,

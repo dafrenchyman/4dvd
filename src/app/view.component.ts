@@ -317,41 +317,50 @@ export class ViewComponent implements OnInit, AfterViewInit {
     return p;
   }
 
-  // set/update slider when promise returns
+  // update the slider's values
+  private updateSlider() {
+    this.scientificNotation = false;
+    // data sets with smaller ranges do not need to be rounded
+    if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
+      this.sliderMinVal = Math.floor(this._model.settings.minValue);
+      this.sliderMaxVal = Math.ceil(this._model.settings.maxValue);
+    } else {
+      this.sliderMinVal = this._model.settings.minValue;
+      this.sliderMaxVal = this._model.settings.maxValue;
+    }
+    // if data values are decimals, then we will convert the slider to scientific notation (legend units have exponent)
+    if (
+      this.sliderMaxVal.toExponential()[
+      this.sliderMaxVal.toExponential().length - 2
+        ] === "-"
+    ) {
+      this.scientificNotation = true;
+      this.SNValue = Number(
+        this.sliderMaxVal.toExponential()[
+        this.sliderMaxVal.toExponential().length - 1
+          ]
+      );
+      this.sliderMaxVal *= Math.pow(10, this.SNValue);
+      this.sliderMinVal *= Math.pow(10, this.SNValue);
+    }
+    this.dataAvail = true;
+    this.changeOptions();
+    this.setGlobeAndLegend();
+  }
+
+  // checks if database has been initialized
   private setSlider() {
-    this.sliderPromise()
-      .then(() => {
-        this.scientificNotation = false;
-        // data sets with smaller ranges do not need to be rounded
-        if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
-          this.sliderMinVal = Math.floor(this._model.settings.minValue);
-          this.sliderMaxVal = Math.ceil(this._model.settings.maxValue);
-        } else {
-          this.sliderMinVal = this._model.settings.minValue;
-          this.sliderMaxVal = this._model.settings.maxValue;
-        }
-        // if data values are decimals, then we will convert the slider to scientific notation (legend units have exponent)
-        if (
-          this.sliderMaxVal.toExponential()[
-            this.sliderMaxVal.toExponential().length - 2
-          ] === "-"
-        ) {
-          this.scientificNotation = true;
-          this.SNValue = Number(
-            this.sliderMaxVal.toExponential()[
-              this.sliderMaxVal.toExponential().length - 1
-            ]
-          );
-          this.sliderMaxVal *= Math.pow(10, this.SNValue);
-          this.sliderMinVal *= Math.pow(10, this.SNValue);
-        }
-        this.dataAvail = true;
-        this.changeOptions();
-        this.setGlobeAndLegend();
-      })
-      .catch(message => {
-        console.log(message);
-      });
+    if (!this.dataAvail) {
+      this.sliderPromise()
+        .then(() => {
+          this.updateSlider();
+        })
+        .catch(message => {
+          console.log(message);
+        });
+    } else {
+      this.updateSlider();
+    }
   }
 
   ngOnInit(): void {
@@ -697,6 +706,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+    setTimeout(()=> {
+      this.setSlider();
+    }, 400);
   }
   /* This function is used to load Air Temperature Data in oneclick from TopDataset Button
    */
@@ -706,6 +718,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+    setTimeout(()=> {
+      this.setSlider();
+    }, 400);
   }
 
   public OpenDataTreeDialog() {
@@ -734,7 +749,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
             1
           );
           this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
-          this.setSlider();
+          setTimeout(()=> {
+            this.setSlider();
+          }, 400);
         }
       }
     });
