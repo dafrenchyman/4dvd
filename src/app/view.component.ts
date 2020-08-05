@@ -708,7 +708,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
     setTimeout(() => {
       this.setSlider();
-    }, 400);
+    }, 500);
   }
   /* This function is used to load Air Temperature Data in oneclick from TopDataset Button
    */
@@ -720,7 +720,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
     setTimeout(() => {
       this.setSlider();
-    }, 400);
+    }, 500);
   }
 
   public OpenDataTreeDialog() {
@@ -751,7 +751,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this.yearSlider = Number(selectedDataset.StartDate.substring(0, 4));
           setTimeout(() => {
             this.setSlider();
-          }, 400);
+          }, 500);
         }
       }
     });
