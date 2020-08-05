@@ -364,24 +364,25 @@
           <div class="TabHeading">
             <h5>Information</h5>
           </div>
-          <!-- Work in Progress
-
-          <div class="InfoText">
-            <p><Strong>Original File Location:</Strong> {{this._model.settings.Dataset.OriginalLocation}} </p>
-            <p><Strong>Units:</Strong> {{this._model.settings.Dataset.Units}} </p>
-            <p><Strong>Date Range:</Strong> {{this._model.settings.Dataset.StartDate}} to {{this._model.settings.Dataset.EndDate}} </p>
-          </div>
-
-          -->
-
-          <div class="MatButton3">
-            <mat-list>
-              <mat-list-item>
-                <button mat-raised-button (click)="createCsvFromGriddedData()">
-                  Download Data
-                </button>
-              </mat-list-item>
-            </mat-list>
+          <div
+            *ngIf="
+              this._model != null &&
+              this._model.settings != null &&
+              this._model.settings.Dataset != null
+            "
+            style="text-align: center"
+          >
+            <a href="{{ this._model.settings.Dataset.OriginalLocation }}">
+              Download Original Data
+            </a>
+            <p>
+              <b>Full Name:</b> {{ this._model.settings.Dataset.FullName
+              }}<br />
+              <b>Date Range:</b>
+              {{ this._model.settings.Dataset.StartDate.slice(0, -3) }} to
+              {{ this._model.settings.Dataset.EndDate.slice(0, -3) }} <br />
+              <b>Units:</b> {{ this._model.settings.JustUnits() }}
+            </p>
           </div>
 
           <mat-divider></mat-divider>
@@ -399,19 +400,6 @@
             >
             <br />
           </div>
-
-          <br />
-          <mat-divider></mat-divider>
-
-          <div class="TabHeading">
-            <h5>Copyright</h5>
-          </div>
-
-          <p class="InfoText">
-            Copyright &copy; 2013-2018, San Diego State University Research
-            Foundation. Created by Dr. Julien Pierret, Dr. Samuel Shen and
-            Climate Informatics Lab, San Diego State University, USA.
-          </p>
         </mat-tab>
       </mat-tab-group>
     </mat-sidenav>
