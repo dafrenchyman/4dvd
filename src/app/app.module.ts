@@ -15,6 +15,7 @@ import {
   MatSidenavModule,
   MatSliderModule,
   MatSlideToggleModule,
+  MatTableModule,
   MatTabsModule,
   MatTooltipModule
 } from "@angular/material";
@@ -31,10 +32,9 @@ import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
+import { TimeSeriesStatisticsComponent } from './time-series-statistics.component';
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { ViewComponent } from "./view.component";
-import { TimeSeriesStatisticsComponent } from './time-series-statistics.component';
-import { MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,10 @@ import { MatTableModule } from '@angular/material';
     NgxChartsModule,
     NgxPrintModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatTreeModule,
+    NgxChartsModule,
+    NgxPrintModule
   ],
   providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent],
@@ -82,7 +85,6 @@ import { MatTableModule } from '@angular/material';
     DatasetTreeComponent,
     TimeseriesMenuComponent,
     TimeSeriesStatisticsComponent
-
   ]
 })
 export class AppModule {}
