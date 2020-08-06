@@ -29,13 +29,12 @@
               <button mat-menu-item (click)="createCsvFromTimeseriesData()">
                 Download Data
               </button>
-              <button mat-menu-item [matMenuTriggerFor]="submenu"> Computational </button>
+              <button mat-menu-item [matMenuTriggerFor]="submenu"> Computing </button>
             </mat-menu>
-              <mat-menu #submenu="matMenu">
+            <mat-menu #submenu="matMenu">
                 <button mat-menu-item (click)="createSummaryStatistics()">
-                Summary Statistics
+                Statistics Summary
                 </button>
-              
             </mat-menu>
           </div>
           <div class="title_text" class="col s8" align="center">

@@ -1,6 +1,6 @@
 import { Component, Inject, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
-import { MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
 import { Model } from "./model";
@@ -234,8 +234,10 @@ export class TimeseriesMenuComponent {
     });
   }
 
-  private createSummaryStatistics(){
-    const dialogRef = this.dialog.open(TimeSeriesStatisticsComponent, {data: this.multi});
+  private createSummaryStatistics() {
+    const dialogRef = this.dialog.open(TimeSeriesStatisticsComponent, {
+      data: this.multi
+    });
     dialogRef.afterClosed().subscribe(() => {});
   }
 
