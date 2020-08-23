@@ -291,13 +291,13 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   // checks if min and max values exist/loaded for sliderPromise()
-  private checkMinMaxVal() {
+  private isMinMaxValid() {
     const a = this._model.settings.minValue;
     const b = this._model.settings.maxValue;
     if (a != null && b != null) {
-      return "passed";
+      return true;
     } else {
-      return "failed";
+      return false;
     }
   }
 
@@ -305,8 +305,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private async sliderPromise() {
     const p = new Promise((resolve, reject) => {
       setTimeout(() => {
-        const response = this.checkMinMaxVal();
-        if (response === "failed") {
+        const isValid = this.isMinMaxValid();
+        if (!isValid) {
           reject("failed, slider not able to be initialized");
         } else {
           resolve("passed");
