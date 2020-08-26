@@ -76,7 +76,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     this.transpose();
     this.fillLabels();
   }
-  transpose() {
+  private transpose() {
     const transposedData = [];
     for (let column = 0; column < this.dataColumns.length; column++) {
       transposedData[column] = {
@@ -91,7 +91,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(transposedData);
   }
 
-  fillLabels() {
+  private fillLabels() {
     this.displayedColumns = ["label"];
     for (let i = 0; i < this._SummaryStatistics.length; i++) {
       this.displayedColumns.push("column" + i);
@@ -101,24 +101,24 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     return inp_data.reduce((a, b) => a + b.value, 0);
   }
 
-  Sort_data(inp_data) {
+  private Sort_data(inp_data) {
     return inp_data.sort((a, b) => {
       return a.value - b.value;
     });
   }
-  Quartile_25(inp_data) {
+  private Quartile_25(inp_data) {
     return this.Quartile(inp_data, 0.25);
   }
 
-  Quartile_50(inp_data) {
+  private Quartile_50(inp_data) {
     return this.Quartile(inp_data, 0.5);
   }
 
-  Quartile_75(inp_data) {
+  private Quartile_75(inp_data) {
     return this.Quartile(inp_data, 0.75);
   }
 
-  Quartile(data, q) {
+  private Quartile(data, q) {
     data = this.Sort_data(data);
     const pos = (data.length - 1) * q;
     const base = Math.floor(pos);
@@ -132,10 +132,10 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  Calc_average(inp_data) {
+  private Calc_average(inp_data) {
     return this.data_Sum(inp_data) / inp_data.length;
   }
-  Calc_variance(inp_data) {
+  private Calc_variance(inp_data) {
     const avg = this.Calc_average(inp_data);
     return (
       inp_data.map(x => Math.pow(x.value - avg, 2)).reduce((a, b) => a + b) /
@@ -143,11 +143,11 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     );
   }
 
-  Calc_standardDeviation(inp_data) {
+  private Calc_standardDeviation(inp_data) {
     return Math.sqrt(this.Calc_variance(inp_data));
   }
 
-  GetData() {
+  private GetData() {
     length = this.multi.length > 5 ? 5 : this.multi.length;
     for (let counter = 0; counter < length; counter++) {
       const currTimeseries = this.multi[counter].series;
@@ -177,5 +177,8 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
         Skewness: skewness(currTimeseries.map(o => o.value)).toFixed(3)
       });
     }
+  }
+  private closeStatistics() {
+    this.dialogRef.close();
   }
 }
