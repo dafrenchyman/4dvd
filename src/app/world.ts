@@ -309,6 +309,12 @@ export class World {
   }
 
   processBuffers() {
+    if (this._settings.newMin == null && this._settings.newMax == null) {
+      // catch if newMin and newMax has not been updated yet
+      this._settings.newMin = this._settings.minValue;
+      this._settings.newMax = this._settings.maxValue;
+    }
+
     // Reset the values because they may have already been set.
     this.WorldVertex.PositionBuffer = [];
     this.WorldVertex.ColorBuffer = [];
@@ -399,25 +405,25 @@ export class World {
           case "customColorMapWithMidpoint":
             color = this._colorMap.customColorMapWithMidpoint(
               colorMap,
-              this._settings.minValue,
+              this._settings.newMin,
               0.0,
-              this._settings.maxValue,
+              this._settings.newMax,
               curValue
             );
             break;
           case "customColorMap":
             color = this._colorMap.customColorMap(
               colorMap,
-              this._settings.minValue,
-              this._settings.maxValue,
+              this._settings.newMin,
+              this._settings.newMax,
               curValue
             );
             break;
           default:
             color = this._colorMap.customColorMap(
               colorMap,
-              this._settings.minValue,
-              this._settings.maxValue,
+              this._settings.newMin,
+              this._settings.newMax,
               curValue
             );
             break;

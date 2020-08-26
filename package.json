@@ -47,6 +47,7 @@
     "jquery": "^2.2.4",
     "materialize-css": "^0.100.1",
     "ng-click-outside": "^6.0.0",
+    "ng5-slider": "^1.2.4",
     "ngx-print": "^1.2.0-beta.3",
     "precise-commits": "^1.0.2",
     "prettier": "^1.19.1",

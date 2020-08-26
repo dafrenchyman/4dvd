@@ -43,6 +43,11 @@ export class Settings {
   animate = false;
   ServerString: string;
 
+  // Legend Slider settings
+  scientificNotation = false;
+  newMin: number;
+  newMax: number;
+
   private Rivers: any[] = [
     {
       value: "Low",
@@ -156,6 +161,24 @@ export class Settings {
 
   rGlobe: 0;
   lastTime: 0;
+
+  setSliderMax(max) {
+    // set max value when the slider updates
+    if (max !== null || max !== this.newMax) {
+      this.newMax = max;
+      return true;
+    }
+    return false;
+  }
+
+  setSliderMin(min) {
+    // set min value when the slider updates
+    if (min !== null || min !== this.newMax) {
+      this.newMin = min;
+      return true;
+    }
+    return false;
+  }
 
   // TODO: Change "Default" in database with "Single Layer"
   levelCheck(str) {
