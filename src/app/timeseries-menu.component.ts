@@ -1,8 +1,12 @@
 import { Component, Inject, ViewChild } from "@angular/core";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef
+} from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
-import {LinearTrendComponent} from "./linear-trend.component";
+import { LinearTrendComponent } from "./linear-trend.component";
 
 import { Model } from "./model";
 import { Settings } from "./settings";
@@ -246,7 +250,8 @@ export class TimeseriesMenuComponent {
       data: {
         data: this.multi,
         title: this.yValTitle()
-    }});
+      }
+    });
     dialogRef.afterClosed().subscribe(() => {});
   }
 

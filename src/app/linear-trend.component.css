@@ -9,8 +9,7 @@
   align-items: flex-start;
   justify-content: left;
 }
-.mat-select
-{
+.mat-select {
   padding: 20px;
 }
 
@@ -23,7 +22,7 @@
 #regression {
   stroke-width: 2px;
   stroke: blue;
-  stroke-dasharray: 10,5;
+  stroke-dasharray: 10, 5;
 }
 .axis path,
 .axis line {
@@ -33,11 +32,11 @@
   shape-rendering: crispEdges;
 }
 
-.mat-raised-button{
+.mat-raised-button {
   position: inherit;
-  margin:20px;
+  margin: 20px;
 }
 
-#equation{
+#equation {
   margin-top: 50px;
 }

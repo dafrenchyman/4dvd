@@ -5,8 +5,7 @@
   width: 100%;
 }
 
-
-.title{
+.title {
   margin-right: 10px;
 }
 
@@ -58,7 +57,6 @@
 :after {
   background-color: #ffffff;
 }
-
 
 ::ng-deep .mat-checkbox-label,
 ::ng-deep #print-section .legend-label-text {
