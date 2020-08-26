@@ -31,6 +31,7 @@ import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
+import { LinearTrendComponent } from './linear-trend.component';
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { ViewComponent } from "./view.component";
@@ -43,7 +44,8 @@ import { ViewComponent } from "./view.component";
     DatasetTreeComponent,
     TimeseriesMenuComponent,
     ViewComponent,
-    TimeSeriesStatisticsComponent
+    TimeSeriesStatisticsComponent,
+    LinearTrendComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -82,7 +84,8 @@ import { ViewComponent } from "./view.component";
     ColorMapMenuComponent,
     DatasetTreeComponent,
     TimeseriesMenuComponent,
-    TimeSeriesStatisticsComponent
+    TimeSeriesStatisticsComponent,
+    LinearTrendComponent
   ]
 })
 export class AppModule {}

@@ -1,8 +1,9 @@
 import { Component, Inject, ViewChild } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
+import {LinearTrendComponent} from "./linear-trend.component";
+
 import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
@@ -35,7 +36,7 @@ export class TimeseriesMenuComponent {
   showXAxis = true;
   showYAxis = true;
   gradient = false;
-  timeline = false;
+  timeline = true;
   showLegend = true;
   showXAxisLabel = true;
   xAxisLabel = "Time";
@@ -238,6 +239,14 @@ export class TimeseriesMenuComponent {
     const dialogRef = this.dialog.open(TimeSeriesStatisticsComponent, {
       data: this.multi
     });
+    dialogRef.afterClosed().subscribe(() => {});
+  }
+  private createLinearTrend() {
+    const dialogRef = this.dialog.open(LinearTrendComponent, {
+      data: {
+        data: this.multi,
+        title: this.yValTitle()
+    }});
     dialogRef.afterClosed().subscribe(() => {});
   }
 

@@ -1,4 +1,14 @@
 <div id="TimeSeriesStats">
+  <div class="title_text" class="col s12" align="top">
+    <button
+      mat-icon-button
+      (click)="this.closeStatistics()"
+      class="closeBtn"
+      matTooltip="Close Statistics Summary Chart"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
   <table mat-table [dataSource]="this.dataSource">
     <ng-container matColumnDef="label" sticky="true">
       <td mat-cell *matCellDef="let row">{{ row.label }}</td>
@@ -13,4 +23,5 @@
 
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+
 </div>
