@@ -58,10 +58,9 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    if(this._model.settings.FullName.includes("Long Term")){
-      alert("Cannot Display Linear Trend For The Selected Data")
-      this.closeLinearTrend()
-
+    if (this._model.settings.FullName.includes("Long Term")) {
+      alert("Cannot Display Linear Trend For The Selected Data");
+      this.closeLinearTrend();
     }
     this.GetData(this.currMonth, this.currlevel);
   }
@@ -157,15 +156,17 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       count = 0;
       sum = 0;
       for (let i = counter; i < this.annual.length; i++) {
-        if (this.annual[counter].name.substr(0, 4) === this.annual[i].name.substr(0, 4)) {
+        if (
+          this.annual[counter].name.substr(0, 4) ===
+          this.annual[i].name.substr(0, 4)
+        ) {
           sum = sum + this.annual[i].value;
           count++;
         } else {
           break;
-
         }
       }
-      val = sum/count;
+      val = sum / count;
 
       this.currTimeseries.push({
         name: this.annual[counter].name.substr(0, 4),
@@ -210,20 +211,24 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
 
      */
 
-    const title = this._model.settings.GenerateTitle(
-      this._model.settings.FullName
-    ) + " ( Latitude: " + this._model.settings.GetLatWithDir() + " Longitude: " + this._model.settings.GetLonWithDir() + " )"
+    const title =
+      this._model.settings.GenerateTitle(this._model.settings.FullName) +
+      " ( Latitude: " +
+      this._model.settings.GetLatWithDir() +
+      " Longitude: " +
+      this._model.settings.GetLonWithDir() +
+      " )";
 
     // chart title
-    svg.append("text")
-      .attr("x", (width)/2 + 10)
+    svg
+      .append("text")
+      .attr("x", width / 2 + 10)
       .attr("y", -5)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .attr("font-weight", 600)
       .style("font-family", "sans-serif")
       .text(title);
-
 
     // y axis label
     svg
@@ -239,7 +244,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     // x axis label
     svg
       .append("text")
-      .attr("x", (width +  margin.right) / 2)
+      .attr("x", (width + margin.right) / 2)
       .attr("y", height + margin.bottom - 10)
       .attr("class", "text-label")
       .attr("text-anchor", "middle")
@@ -285,7 +290,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .attr("font-weight", 900)
       .attr("fill", "blue")
       .style("font-size", "16px")
-      .attr("x", margin.left/2 - 20)
+      .attr("x", margin.left / 2 - 20)
       .attr("y", 30);
 
     // display r-square on the chart
@@ -296,7 +301,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .attr("font-weight", 900)
       .style("font-size", "16px")
       .attr("fill", "blue")
-      .attr("x", margin.left/2 - 20)
+      .attr("x", margin.left / 2 - 20)
       .attr("y", 60);
 
     const x_ticks = Math.round(xLabels.length / 20);
