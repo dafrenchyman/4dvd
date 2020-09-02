@@ -50,6 +50,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   ) {
     this.multi = data.data;
     this.title = data.title;
+    this._model = data.model;
     this.dialogRef = dialogRef;
     this.currlevel = this.multi[0].name;
   }
@@ -57,10 +58,18 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
+    if(this._model.settings.FullName.includes("Long Term")){
+      alert("Cannot Display Linear Trend For The Selected Data")
+      this.closeLinearTrend()
+
+    }
     this.GetData(this.currMonth, this.currlevel);
   }
+  private GetLevels() {
+    return this.multi;
+  }
 
-  leastSquares(input_x, input_y) {
+  private leastSquares(input_x, input_y) {
     this.obj = [];
     const reduceSumFunc = (prev, cur) => prev + cur;
     // Getting the average of x and y which is xbar and ybar
@@ -92,14 +101,10 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     return this.obj;
   }
 
-  GetLevels() {
-    return this.multi;
-  }
-
   public DataAvailable() {
     return this.multi.length > 0;
   }
-  GetData(month, level) {
+  private GetData(month, level) {
     this.currTimeseries = [];
     for (let counter = 0; counter < this.multi.length; counter++) {
       if (this.multi[counter].name.match(level)) {
@@ -114,7 +119,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     this.GetLinearTrend();
   }
 
-  GetUpdatedData(month, level) {
+  public GetUpdatedData(month, level) {
     d3.selectAll("#chart > *").remove();
     if (month === "13") {
       this.GetAnnualData(level);
@@ -123,7 +128,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     }
   }
 
-  GetAnnualData(level) {
+  public GetAnnualData(level) {
     this.currTimeseries = [];
     for (let counter = 0; counter < this.multi.length; counter++) {
       if (this.multi[counter].name.match(level)) {
@@ -142,25 +147,31 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
 
      */
     let sum = 0;
+    let count = 0;
     let val = 0;
-
     for (
       let counter = 0;
       counter < this.annual.length;
-      counter = counter + 12
+      counter = counter + count
     ) {
+      count = 0;
       sum = 0;
-      for (let i = 0; i < 12; i++) {
-        sum = sum + this.annual[counter + i].value;
+      for (let i = counter; i < this.annual.length; i++) {
+        if (this.annual[counter].name.substr(0, 4) === this.annual[i].name.substr(0, 4)) {
+          sum = sum + this.annual[i].value;
+          count++;
+        } else {
+          break;
+
+        }
       }
-      val = sum / 12;
+      val = sum/count;
 
       this.currTimeseries.push({
         name: this.annual[counter].name.substr(0, 4),
         value: val
       });
     }
-
     this.GetLinearTrend();
   }
   GetLinearTrend() {
@@ -180,7 +191,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .range([0, width])
       .padding(0.1);
 
-    const yScale = d3.scaleLinear().range([height, 0]);
+    const yScale = d3.scaleLinear().range([height, 50]);
 
     const xAxis = d3.axisBottom(xScale).ticks(20);
 
@@ -189,27 +200,36 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     const xLabels: string[] = this.currTimeseries.map(o => o.name);
 
     xScale.domain(xLabels);
-    yScale.domain([
-      d3.min(this.currTimeseries.map(o => o.value)) - 1,
-      d3.max(this.currTimeseries.map(o => o.value)) + 1
-    ]);
+    yScale.domain(d3.extent(this.currTimeseries.map(o => o.value)));
 
     /*
-    // chart title
-    svg.append("text")
-      .attr("x", (width + (margin.left + margin.right) )/ 2)
-      .attr("y", 10)
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("font-family", "sans-serif")
-      .text("Linear Trend");
+    yScale.domain([
+      d3.min(this.currTimeseries.map(o => o.value)),
+      d3.max(this.currTimeseries.map(o => o.value))
+    ]);
 
      */
+
+    const title = this._model.settings.GenerateTitle(
+      this._model.settings.FullName
+    ) + " ( Latitude: " + this._model.settings.GetLatWithDir() + " Longitude: " + this._model.settings.GetLonWithDir() + " )"
+
+    // chart title
+    svg.append("text")
+      .attr("x", (width)/2 + 10)
+      .attr("y", -5)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .attr("font-weight", 600)
+      .style("font-family", "sans-serif")
+      .text(title);
+
+
     // y axis label
     svg
       .append("text")
       .attr("x", (margin.left - width + 20) / 2)
-      .attr("y", margin.right - margin.bottom)
+      .attr("y", margin.right - margin.bottom - 20)
       .attr("class", "text-label")
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
@@ -219,7 +239,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     // x axis label
     svg
       .append("text")
-      .attr("x", (width + (margin.left + margin.right)) / 2)
+      .attr("x", (width +  margin.right) / 2)
       .attr("y", height + margin.bottom - 10)
       .attr("class", "text-label")
       .attr("text-anchor", "middle")
@@ -258,24 +278,26 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .text(
         "Equation : " +
           leastSquaresCoeff[0].slope.toFixed(5) +
-          "x + " +
+          " x + " +
           leastSquaresCoeff[0].intercept.toFixed(3)
       )
       .attr("class", "text-label")
       .attr("font-weight", 900)
       .attr("fill", "blue")
-      .attr("x", margin.left)
-      .attr("y", 10 + margin.top);
+      .style("font-size", "16px")
+      .attr("x", margin.left/2 - 20)
+      .attr("y", 30);
 
     // display r-square on the chart
     svg
       .append("text")
-      .text("R² : " + leastSquaresCoeff[0].rSquare.toFixed(3))
+      .text("R-Squared : " + leastSquaresCoeff[0].rSquare.toFixed(3))
       .attr("class", "text-label")
       .attr("font-weight", 900)
+      .style("font-size", "16px")
       .attr("fill", "blue")
-      .attr("x", margin.left)
-      .attr("y", 30 + margin.top);
+      .attr("x", margin.left/2 - 20)
+      .attr("y", 60);
 
     const x_ticks = Math.round(xLabels.length / 20);
 

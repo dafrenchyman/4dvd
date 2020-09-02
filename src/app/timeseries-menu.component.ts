@@ -249,7 +249,8 @@ export class TimeseriesMenuComponent {
     const dialogRef = this.dialog.open(LinearTrendComponent, {
       data: {
         data: this.multi,
-        title: this.yValTitle()
+        title: this.yValTitle(),
+        model: this._model
       }
     });
     dialogRef.afterClosed().subscribe(() => {});
