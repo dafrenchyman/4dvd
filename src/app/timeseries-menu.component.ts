@@ -107,7 +107,7 @@ export class TimeseriesMenuComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this._model = data;
-    if( this._model.settings.FullName.includes("Long Term")){
+    if (this._model.settings.FullName.includes("Long Term")) {
       this.review_btn = true;
     }
     this.levelsLoaded = 1;

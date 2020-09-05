@@ -168,10 +168,10 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   }
 
   // returns the Month name for the Month value
-  private GetMonth(){
-    for( let i=0; i< this.months.length; i++){
-      if( this.months[i].value === this.currMonth){
-        return this.months[i].viewValue
+  private GetMonth() {
+    for (let i = 0; i < this.months.length; i++) {
+      if (this.months[i].value === this.currMonth) {
+        return this.months[i].viewValue;
       }
     }
   }
@@ -200,19 +200,22 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
 
     const yAxis = d3.axisLeft().scale(yScale);
 
-    const xLabels: string[] = this.currTimeseries.map(o => o.name.split("-")[0]);
+    const xLabels: string[] = this.currTimeseries.map(
+      o => o.name.split("-")[0]
+    );
 
     xScale.domain(xLabels);
     yScale.domain(d3.extent(this.currTimeseries.map(o => o.value)));
 
     const month_name = this.GetMonth();
-    const title_name = this._model.settings.GenerateTitle(this._model.settings.FullName)
+    const title_name = this._model.settings.GenerateTitle(
+      this._model.settings.FullName
+    );
     const title =
       month_name +
       "  " +
-      title_name.split("|")[0]+
-      "  at  "
-      +
+      title_name.split("|")[0] +
+      "  at  " +
       this.currlevel +
       " ( Lat: " +
       this._model.settings.GetLatWithDir() +
@@ -241,7 +244,6 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .style("font-size", "16px")
       .attr("transform", "rotate(-90)")
       .text(this.title);
-
 
     // get the x and y values for least squares
     const input_x = d3.range(1, xLabels.length + 1);
@@ -310,8 +312,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(
-        xAxis.tickValues(xticks_val))
+      .call(xAxis.tickValues(xticks_val))
       .selectAll("text")
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
@@ -332,7 +333,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .enter()
       .append("circle")
       .attr("class", "bar")
-      .attr("cx", d => xScale(d.name.substr(0,4)))
+      .attr("cx", d => xScale(d.name.substr(0, 4)))
       .attr("cy", d => yScale(d.value))
       .attr("r", 2.5)
       .attr("color", "gray");
@@ -340,5 +341,4 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   public closeLinearTrend() {
     this.dialogRef.close();
   }
-
 }
