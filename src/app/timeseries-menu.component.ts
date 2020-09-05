@@ -65,6 +65,7 @@ export class TimeseriesMenuComponent {
 
   // line, area
   autoScale = true;
+  review_btn = false;
 
   private _model: Model;
 
@@ -106,6 +107,9 @@ export class TimeseriesMenuComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this._model = data;
+    if( this._model.settings.FullName.includes("Long Term")){
+      this.review_btn = true;
+    }
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
     this.view = [

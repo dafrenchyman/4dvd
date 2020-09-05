@@ -37,9 +37,12 @@
               <button mat-menu-item (click)="createSummaryStatistics()">
                 Statistics Summary
               </button>
-              <button mat-menu-item (click)="createLinearTrend()">
+              <div matTooltip="This functionality is not avaible for the selected dataset"
+                [matTooltipDisabled]="!review_btn">
+              <button  [disabled]="review_btn" color="primary" mat-menu-item (click)="createLinearTrend()">
                 Linear Trend
               </button>
+              </div>
             </mat-menu>
           </div>
           <div class="title_text" class="col s8" align="center">
@@ -50,8 +53,8 @@
                 )
               }}</span>
               <span class="byline"
-                >&nbsp;(Latitude:
-                {{ this._model.settings.GetLatWithDir() }} &nbsp; Longitude:
+                >&nbsp;(Lat:
+                {{ this._model.settings.GetLatWithDir() }} &nbsp; Long:
                 {{ this._model.settings.GetLonWithDir() }})</span
               >
             </h5>

@@ -58,16 +58,17 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    if (this._model.settings.FullName.includes("Long Term")) {
-      alert("Cannot Display Linear Trend For The Selected Data");
-      this.closeLinearTrend();
-    }
     this.GetData(this.currMonth, this.currlevel);
   }
+  // Called from HTML to check for number of levels selected
   private GetLevels() {
     return this.multi;
   }
+  public DataAvailable() {
+    return this.multi.length > 0;
+  }
 
+  // Linear Least Square Regression Analysis code
   private leastSquares(input_x, input_y) {
     this.obj = [];
     const reduceSumFunc = (prev, cur) => prev + cur;
@@ -100,9 +101,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     return this.obj;
   }
 
-  public DataAvailable() {
-    return this.multi.length > 0;
-  }
+  // Fetches data depending on user selected month and Level
   private GetData(month, level) {
     this.currTimeseries = [];
     for (let counter = 0; counter < this.multi.length; counter++) {
@@ -118,6 +117,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     this.GetLinearTrend();
   }
 
+  // When User changes the month or the level
   public GetUpdatedData(month, level) {
     d3.selectAll("#chart > *").remove();
     if (month === "13") {
@@ -127,6 +127,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Calculation for getting Annual data
   public GetAnnualData(level) {
     this.currTimeseries = [];
     for (let counter = 0; counter < this.multi.length; counter++) {
@@ -134,17 +135,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
         this.annual = this.multi[counter].series;
       }
     }
-    /*
-      this.annual.forEach(i => {
-        i.name = i.name.substr(0,4)
-      });
-
-      const result = this.currTimeseries.reduce((acc, it) => {
-        acc[it.name] = acc[it.name] + it.value
-        return acc
-      },{});
-
-     */
+    // Calculating Mean value for all the data belonging to same year
     let sum = 0;
     let count = 0;
     let val = 0;
@@ -175,7 +166,18 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
     }
     this.GetLinearTrend();
   }
-  GetLinearTrend() {
+
+  // returns the Month name for the Month value
+  private GetMonth(){
+    for( let i=0; i< this.months.length; i++){
+      if( this.months[i].value === this.currMonth){
+        return this.months[i].viewValue
+      }
+    }
+  }
+
+  // Drawing the Linear Trend Line using d3
+  private GetLinearTrend() {
     const margin = { top: 20, right: 50, bottom: 100, left: 100 };
     const width = 900 - margin.left - margin.right;
     const height = 700 - margin.top - margin.bottom;
@@ -198,24 +200,23 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
 
     const yAxis = d3.axisLeft().scale(yScale);
 
-    const xLabels: string[] = this.currTimeseries.map(o => o.name);
+    const xLabels: string[] = this.currTimeseries.map(o => o.name.split("-")[0]);
 
     xScale.domain(xLabels);
     yScale.domain(d3.extent(this.currTimeseries.map(o => o.value)));
 
-    /*
-    yScale.domain([
-      d3.min(this.currTimeseries.map(o => o.value)),
-      d3.max(this.currTimeseries.map(o => o.value))
-    ]);
-
-     */
-
+    const month_name = this.GetMonth();
+    const title_name = this._model.settings.GenerateTitle(this._model.settings.FullName)
     const title =
-      this._model.settings.GenerateTitle(this._model.settings.FullName) +
-      " ( Latitude: " +
+      month_name +
+      "  " +
+      title_name.split("|")[0]+
+      "  at  "
+      +
+      this.currlevel +
+      " ( Lat: " +
       this._model.settings.GetLatWithDir() +
-      " Longitude: " +
+      " Long: " +
       this._model.settings.GetLonWithDir() +
       " )";
 
@@ -241,15 +242,6 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .attr("transform", "rotate(-90)")
       .text(this.title);
 
-    // x axis label
-    svg
-      .append("text")
-      .attr("x", (width + margin.right) / 2)
-      .attr("y", height + margin.bottom - 10)
-      .attr("class", "text-label")
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .text("Date");
 
     // get the x and y values for least squares
     const input_x = d3.range(1, xLabels.length + 1);
@@ -265,7 +257,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       leastSquaresCoeff[0].slope * input_x.length +
       leastSquaresCoeff[0].intercept;
     const trendData = [[x1, y1, x2, y2]];
-
+    // Display the Linear Trend Line
     svg
       .append("line")
       .attr("class", "regression")
@@ -283,7 +275,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .text(
         "Equation : " +
           leastSquaresCoeff[0].slope.toFixed(5) +
-          " x + " +
+          " t + " +
           leastSquaresCoeff[0].intercept.toFixed(3)
       )
       .attr("class", "text-label")
@@ -304,21 +296,22 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .attr("x", margin.left / 2 - 20)
       .attr("y", 60);
 
+    // Displaying only 20 ticks on the x axis
     const x_ticks = Math.round(xLabels.length / 20);
+
+    // Filtering the x-axis to display some years
+    const xticks_val = xLabels.filter((o, i) => {
+      if (i % x_ticks === 0) {
+        return o;
+      }
+    });
 
     svg
       .append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(
-        xAxis.tickValues(
-          xLabels.filter((o, i) => {
-            if (i % x_ticks === 0) {
-              return o;
-            }
-          })
-        )
-      )
+        xAxis.tickValues(xticks_val))
       .selectAll("text")
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
@@ -326,42 +319,26 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .style("font-size", 14)
       .attr("transform", d => "rotate(-90)");
 
+    // Plotting y-axis
     svg
       .append("g")
       .attr("class", "y axis")
       .call(yAxis);
 
+    // Scatter Plot
     svg
       .selectAll(".bar")
       .data(this.currTimeseries)
       .enter()
       .append("circle")
       .attr("class", "bar")
-      .attr("cx", d => xScale(d.name))
+      .attr("cx", d => xScale(d.name.substr(0,4)))
       .attr("cy", d => yScale(d.value))
       .attr("r", 2.5)
       .attr("color", "gray");
   }
-  closeLinearTrend() {
+  public closeLinearTrend() {
     this.dialogRef.close();
   }
-  /*
-  yValTitle() {
 
-    const yTitle = this._model.settings.GenerateSimpleTitle(
-      this._model.settings.FullName
-    );
-    if (yTitle.search("Temperature") >= 0) {
-      return yTitle.concat(" (\xB0C)");
-    } else if (
-      yTitle === "Volumetric Soil Moisture" ||
-      yTitle === "ice thickness"
-    ) {
-      return yTitle;
-    } else {
-      return yTitle + " (" + this._model.settings.DataUnits + ")";
-    }
-  }
-
-   */
 }
