@@ -46,9 +46,10 @@ export class HistogramComponent implements OnInit, AfterViewInit {
   }
 
   public drawHist() {
-    const margin = { top: 50, right: 20, bottom: 100, left: 50 };
-    const width = 900 - margin.left - margin.right;
+    const margin = { top: 50, right: 50, bottom: 100, left: 50 };
+    const width = 800 - margin.left - margin.right;
     const height = 700 - margin.top - margin.bottom;
+    //Set the margins for the chart
     const svg = d3
       .select("#hist_div")
       .append("svg")
@@ -57,10 +58,10 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // X axis: scale and draw:
+    // Setting the x-axis using the range of values
     const x = d3
       .scaleLinear()
-      .domain(d3.extent(this.currTimeSeries.map(o => o.value))) // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .domain(d3.extent(this.currTimeSeries.map(o => o.value))) 
       .range([0, width]);
 
     svg
@@ -68,6 +69,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
+    // Setting the x-axis label  
     svg
       .append("text")
       .attr("x", width / 2)
@@ -79,24 +81,24 @@ export class HistogramComponent implements OnInit, AfterViewInit {
 
     // Y axis: initialization
     const y = d3.scaleLinear().range([height, 0]);
-    const yAxis = svg.append("g");
+    
 
-    // set the parameters for the histogram
+    // set the parameters for the histogram using nBin
     const histogram = d3
       .histogram()
       .value(d => d.value)
       .domain(x.domain())
-      .thresholds(x.ticks(this.nBin)); // then the numbers of bins
+      .thresholds(x.ticks(this.nBin)); 
 
-    // And apply this function to data to get the bins
+    // getting the data for histogram
     const bins = histogram(this.currTimeSeries);
 
-    // Y axis: update now that we know the domain
-    y.domain([0, d3.max(bins, d => d.length)]); // d3.hist has to be called before the Y axis obviously
-    yAxis
-      .transition()
-      .duration(1000)
-      .call(d3.axisLeft(y));
+  
+    y.domain([0, d3.max(bins, d => d.length)]); 
+    const yAxis = svg.append("g")
+                  .transition()
+                  .duration(1000)
+                  .call(d3.axisLeft(y));
 
     // Join the rect with the bins data
     const u = svg.selectAll("rect").data(bins);
