@@ -33,7 +33,7 @@ import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetMenuComponent } from "./dataset-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
-import { HistogramComponent } from './histogram.component';
+import { HistogramComponent } from "./histogram.component";
 import { LinearTrendComponent } from "./linear-trend.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
