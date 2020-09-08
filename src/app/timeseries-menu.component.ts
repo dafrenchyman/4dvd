@@ -8,6 +8,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
 import { LinearTrendComponent } from "./linear-trend.component";
 
+import { HistogramComponent } from './histogram.component';
 import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
@@ -258,6 +259,18 @@ export class TimeseriesMenuComponent {
       }
     });
     dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  private createHistogram(){
+    const dialogRef = this.dialog.open(HistogramComponent, {
+      data: {
+        data: this.multi,
+        title: this.yValTitle(),
+        model: this._model
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {});
+
   }
 
   createCsvFromTimeseriesData() {

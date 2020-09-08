@@ -1,0 +1,33 @@
+
+<mat-drawer-container>
+  <div class="title_text" class="col s12" align="right">
+    <button
+      mat-icon-button
+      (click)="this.closeHistogram()"
+      class="closeBtn"
+      matTooltip="Close Histogram Chart"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+<div id="hist_div">
+</div>
+<mat-drawer class="lt-sidenav" mode="side" opened="true">
+  <mat-list>
+    <p>Choose Level</p>
+    <mat-select
+      *ngIf="DataAvailable()"
+      placeholder="Levels"
+      [(value)]="currlevel"
+      (selectionChange)="UpdateLevel(this.currlevel)"
+    >
+      <mat-option *ngFor="let level of GetLevels()" [value]="level.name">
+        {{ level.name }}
+      </mat-option>
+    </mat-select>
+    <mat-divider></mat-divider>
+  <p>Choose #bins</p>
+  <input type="number" min="10" max="100" step="10" value="40" id="nBin" (change)= "UpdateHist($event)">
+</mat-list>
+</mat-drawer>
+</mat-drawer-container>
