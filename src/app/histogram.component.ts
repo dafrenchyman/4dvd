@@ -49,7 +49,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     const margin = { top: 50, right: 50, bottom: 100, left: 50 };
     const width = 800 - margin.left - margin.right;
     const height = 700 - margin.top - margin.bottom;
-    //Set the margins for the chart
+    // Set the margins for the chart
     const svg = d3
       .select("#hist_div")
       .append("svg")
@@ -61,7 +61,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     // Setting the x-axis using the range of values
     const x = d3
       .scaleLinear()
-      .domain(d3.extent(this.currTimeSeries.map(o => o.value))) 
+      .domain(d3.extent(this.currTimeSeries.map(o => o.value)))
       .range([0, width]);
 
     svg
@@ -69,7 +69,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
-    // Setting the x-axis label  
+    // Setting the x-axis label
     svg
       .append("text")
       .attr("x", width / 2)
@@ -81,24 +81,23 @@ export class HistogramComponent implements OnInit, AfterViewInit {
 
     // Y axis: initialization
     const y = d3.scaleLinear().range([height, 0]);
-    
 
     // set the parameters for the histogram using nBin
     const histogram = d3
       .histogram()
       .value(d => d.value)
       .domain(x.domain())
-      .thresholds(x.ticks(this.nBin)); 
+      .thresholds(x.ticks(this.nBin));
 
     // getting the data for histogram
     const bins = histogram(this.currTimeSeries);
 
-  
-    y.domain([0, d3.max(bins, d => d.length)]); 
-    const yAxis = svg.append("g")
-                  .transition()
-                  .duration(1000)
-                  .call(d3.axisLeft(y));
+    y.domain([0, d3.max(bins, d => d.length)]);
+    const yAxis = svg
+      .append("g")
+      .transition()
+      .duration(1000)
+      .call(d3.axisLeft(y));
 
     // Join the rect with the bins data
     const u = svg.selectAll("rect").data(bins);
