@@ -39,7 +39,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     { value: "13", viewValue: "DecJanFeb" },
     { value: "14", viewValue: "MarAprMay" },
     { value: "15", viewValue: "JunJulyAug" },
-    { value: "16", viewValue: "SepOctNov" },
+    { value: "16", viewValue: "SepOctNov" }
   ];
   constructor(
     public dialog: MatDialog,
@@ -108,7 +108,6 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       .attr("font-weight", 600)
       .style("font-family", "sans-serif")
       .text(title);
-
 
     // Setting the x-axis using the range of values
     const x = d3
@@ -196,74 +195,85 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-  public UpdateLevel(month,level) {
+  public UpdateLevel(month, level) {
     d3.selectAll("#hist_div > *").remove();
     this.currTimeSeries = [];
-    if(month >= 13){
-       switch(month) {
-
-         case '13':
-           for (let counter = 0; counter < this.multi.length; counter++) {
-             if (this.multi[counter].name.match(level)) {
-               this.currTimeSeries = this.multi[counter].series.filter((o, i) => {
-                 if ((o.name.substr(5, 7)).includes('12') ||
-                   (o.name.substr(5, 7)).includes('01')
-                   || (o.name.substr(5, 7)).includes('02')) {
-                   return o;
-                 }
-               });
-               break;
-             }
-           }
-           break;
-         case '14':
-           for (let counter = 0; counter < this.multi.length; counter++) {
-             if (this.multi[counter].name.match(level)) {
-               this.currTimeSeries = this.multi[counter].series.filter((o, i) => {
-                 if ((o.name.substr(5, 7)).includes('03') ||
-                   (o.name.substr(5, 7)).includes('04')
-                   || (o.name.substr(5, 7)).includes('05')) {
-                   return o;
-                 }
-               });
-               break;
-             }
-           }
-           break;
-         case '15':
-           for (let counter = 0; counter < this.multi.length; counter++) {
-             if (this.multi[counter].name.match(level)) {
-               this.currTimeSeries = this.multi[counter].series.filter((o, i) => {
-                 if ((o.name.substr(5, 7)).includes('06') ||
-                   (o.name.substr(5, 7)).includes('07')
-                   || (o.name.substr(5, 7)).includes('08')) {
-                   return o;
-                 }
-               });
-               break;
-             }
-           }
-           break;
-         case '16':
-           for (let counter = 0; counter < this.multi.length; counter++) {
-             if (this.multi[counter].name.match(level)) {
-               this.currTimeSeries = this.multi[counter].series.filter((o, i) => {
-                 if ((o.name.substr(5, 7)).includes('09') ||
-                   (o.name.substr(5, 7)).includes('10')
-                   || (o.name.substr(5, 7)).includes('11')) {
-                   return o;
-                 }
-               });
-               break;
-             }
-           }
-           break;
-       }
-
+    if (month >= 13) {
+      switch (month) {
+        case "13":
+          for (let counter = 0; counter < this.multi.length; counter++) {
+            if (this.multi[counter].name.match(level)) {
+              this.currTimeSeries = this.multi[counter].series.filter(
+                (o, i) => {
+                  if (
+                    o.name.substr(5, 7).includes("12") ||
+                    o.name.substr(5, 7).includes("01") ||
+                    o.name.substr(5, 7).includes("02")
+                  ) {
+                    return o;
+                  }
+                }
+              );
+              break;
+            }
+          }
+          break;
+        case "14":
+          for (let counter = 0; counter < this.multi.length; counter++) {
+            if (this.multi[counter].name.match(level)) {
+              this.currTimeSeries = this.multi[counter].series.filter(
+                (o, i) => {
+                  if (
+                    o.name.substr(5, 7).includes("03") ||
+                    o.name.substr(5, 7).includes("04") ||
+                    o.name.substr(5, 7).includes("05")
+                  ) {
+                    return o;
+                  }
+                }
+              );
+              break;
+            }
+          }
+          break;
+        case "15":
+          for (let counter = 0; counter < this.multi.length; counter++) {
+            if (this.multi[counter].name.match(level)) {
+              this.currTimeSeries = this.multi[counter].series.filter(
+                (o, i) => {
+                  if (
+                    o.name.substr(5, 7).includes("06") ||
+                    o.name.substr(5, 7).includes("07") ||
+                    o.name.substr(5, 7).includes("08")
+                  ) {
+                    return o;
+                  }
+                }
+              );
+              break;
+            }
+          }
+          break;
+        case "16":
+          for (let counter = 0; counter < this.multi.length; counter++) {
+            if (this.multi[counter].name.match(level)) {
+              this.currTimeSeries = this.multi[counter].series.filter(
+                (o, i) => {
+                  if (
+                    o.name.substr(5, 7).includes("09") ||
+                    o.name.substr(5, 7).includes("10") ||
+                    o.name.substr(5, 7).includes("11")
+                  ) {
+                    return o;
+                  }
+                }
+              );
+              break;
+            }
+          }
+          break;
       }
-
-    else {
+    } else {
       for (let counter = 0; counter < this.multi.length; counter++) {
         if (this.multi[counter].name.match(level)) {
           this.currTimeSeries = this.multi[counter].series.filter((o, i) => {
