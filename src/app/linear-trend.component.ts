@@ -219,7 +219,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       this.currlevel +
       " ( Lat: " +
       this._model.settings.GetLatWithDir() +
-      " Long: " +
+      ", Lon: " +
       this._model.settings.GetLonWithDir() +
       " )";
 
@@ -229,7 +229,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .attr("x", width / 2 + 10)
       .attr("y", -5)
       .attr("text-anchor", "middle")
-      .style("font-size", "16px")
+      .style("font-size", "20px")
       .attr("font-weight", 600)
       .style("font-family", "sans-serif")
       .text(title);
@@ -317,7 +317,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
       .attr("dy", ".12em")
-      .style("font-size", 14)
+      .style("font-size", "16px")
       .attr("transform", d => "rotate(-90)");
 
     // Plotting y-axis

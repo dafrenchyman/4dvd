@@ -37,9 +37,19 @@
               <button mat-menu-item (click)="createSummaryStatistics()">
                 Statistics Summary
               </button>
-              <button mat-menu-item (click)="createHistogram()">
+              <div
+                matTooltip="This functionality is not avaible for the selected dataset"
+                [matTooltipDisabled]="!review_btn"
+              >
+                <button
+                  [disabled]="review_btn"
+                  color="primary"
+                  mat-menu-item
+                  (click)="createHistogram()"
+                >
                 Plot Histogram
               </button>
+              </div>
               <div
                 matTooltip="This functionality is not avaible for the selected dataset"
                 [matTooltipDisabled]="!review_btn"
@@ -63,8 +73,8 @@
                 )
               }}</span>
               <span class="byline"
-                >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }} &nbsp;
-                Long: {{ this._model.settings.GetLonWithDir() }})</span
+                >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }},
+                Lon: {{ this._model.settings.GetLonWithDir() }})</span
               >
             </h5>
           </div>

@@ -236,9 +236,9 @@ export class Settings {
     let lat = Number(this.CurrGridBoxLat.toFixed(2));
     if (lat < 0) {
       lat = Math.abs(lat);
-      return lat + "\xB0 S";
+      return lat + "\xB0S";
     } else if (lat > 0) {
-      return lat + "\xB0 N";
+      return lat + "\xB0N";
     } else {
       return lat;
     }
@@ -248,9 +248,9 @@ export class Settings {
     let lon = Number(this.CurrGridBoxLon.toFixed(2));
     if (lon < 0) {
       lon = Math.abs(lon);
-      return lon + "\xB0 W";
+      return lon + "\xB0W";
     } else if (lon > 0) {
-      return lon + "\xB0 E";
+      return lon + "\xB0E";
     } else {
       return lon;
     }

@@ -8,11 +8,15 @@ input[type="number"] {
   justify-content: left;
 }
 .mat-select {
-  padding-bottom: 20px;
+  padding-bottom: 40px;
 }
 
 .lt-sidenav {
   padding: 10px;
   height: 100%;
-  width: 200px;
+  width: 250px;
+}
+
+.mat-divider{
+  margin-top: 20px;
 }
