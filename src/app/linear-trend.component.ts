@@ -219,7 +219,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       this.currlevel +
       " ( Lat: " +
       this._model.settings.GetLatWithDir() +
-      " Long: " +
+      ", Lon: " +
       this._model.settings.GetLonWithDir() +
       " )";
 
