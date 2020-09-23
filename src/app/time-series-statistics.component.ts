@@ -76,6 +76,8 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     this.transpose();
     this.fillLabels();
   }
+
+  // Displaying all the calculated data in a tabular form
   private transpose() {
     const transposedData = [];
     for (let column = 0; column < this.dataColumns.length; column++) {
@@ -91,6 +93,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(transposedData);
   }
 
+  // Columns to be displayed on HTML
   private fillLabels() {
     this.displayedColumns = ["label"];
     for (let i = 0; i < this._SummaryStatistics.length; i++) {
@@ -118,6 +121,8 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     return this.Quartile(inp_data, 0.75);
   }
 
+  // Quartiles are values that divide your data into quarters.
+  // Here g is the  quartile that we need to compute
   private Quartile(data, q) {
     data = this.Sort_data(data);
     const pos = (data.length - 1) * q;
@@ -132,9 +137,12 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // calculating average
   private Calc_average(inp_data) {
     return this.data_Sum(inp_data) / inp_data.length;
   }
+  // Calculating Variance sum of the squared distances of each term in the distribution
+  // from the mean (μ), divided by the number of terms in the distribution
   private Calc_variance(inp_data) {
     const avg = this.Calc_average(inp_data);
     return (
@@ -143,11 +151,14 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     );
   }
 
+  // Calculating Standard Deviation which is Square Root of Variance
   private Calc_standardDeviation(inp_data) {
     return Math.sqrt(this.Calc_variance(inp_data));
   }
 
+  // Calculate the Summary Statistics
   private GetData() {
+    // Setting limit to display on 5 levels
     length = this.multi.length > 5 ? 5 : this.multi.length;
     for (let counter = 0; counter < length; counter++) {
       const currTimeseries = this.multi[counter].series;
