@@ -1,6 +1,19 @@
 <mat-drawer-container
   style="width:150vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
 >
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      [useExistingCss]="true"
+      printSectionId="print-section-hist"
+      ngxPrint
+    >
+      Save Graph
+    </button>
+  </mat-menu>
   <div class="title_text" class="col s12" align="right">
     <button
       mat-icon-button
@@ -11,7 +24,9 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
+  <div id="print-section-hist">
   <div id="hist_div"></div>
+  </div>
   <mat-drawer class="lt-sidenav" mode="side" opened="true">
     <mat-list>
       <p>Select</p>
