@@ -2,20 +2,19 @@
   class="lineartrend-container"
   style="width:150vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
 >
-
-    <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      [useExistingCss]="true"
+      printSectionId="print-section-trend"
+      ngxPrint
+    >
+      Save Graph
     </button>
-    <mat-menu #menu="matMenu">
-      <button
-        mat-menu-item
-        [useExistingCss]="true"
-        printSectionId="print-section-trend"
-        ngxPrint
-      >
-        Save Graph
-      </button>
-    </mat-menu>
+  </mat-menu>
   <div class="title_text" class="col s12" align="right">
     <button
       mat-icon-button
@@ -53,8 +52,8 @@
     </mat-list>
   </mat-drawer>
   <div id="print-section-trend">
-  <div class="example-sidenav-content">
-    <div id="chart"></div>
-  </div>
+    <div class="example-sidenav-content">
+      <div id="chart"></div>
+    </div>
   </div>
 </mat-drawer-container>
