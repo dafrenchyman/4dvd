@@ -1,0 +1,89 @@
+<div id="ClimatologyGraph">
+  <div id="climatology-print-section">
+    <div style="display: inline">
+    <h5 style="position: relative; left: 15%"><b>{{getTitle()}}</b></h5>
+    <button mat-button [matMenuTriggerFor]="menu" style="position: absolute; top: 0; background-color: #ffffff;">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        class="buttonColor"
+        mat-menu-item
+        [useExistingCss]="true"
+        printSectionId="climatology-print-section"
+        ngxPrint
+      >
+        Save Graph
+      </button>
+      <button class="buttonColor" mat-menu-item (click)="closeClimateGraph('SeasData')">
+        Mean and Standard Deviation
+      </button>
+      <button class="buttonColor" mat-menu-item (click)="closeClimateGraph('SeasonalTS')">
+        Seasonal Time Series
+      </button>
+    </mat-menu>
+    <div class="col s12">
+      <button
+        mat-icon-button
+        (click)="this.closeClimateGraph('')"
+        class="closeBtn"
+        matTooltip="Close Climatology Chart"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-dialog-content>
+    <ngx-charts-line-chart
+      *ngIf="DataAvailable()"
+      [view]="view"
+      [scheme]="colorScheme"
+      [timeline]="timeline"
+      [results]="masterMulti"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel()"
+      [autoScale]="autoScale"
+    >
+      <ng-template #tooltipTemplate let-model="model">
+        <div *ngFor="let data of getToolTipData(model | json)">
+          <p>
+            <b>{{ data.series }}:</b> {{ data.value }} {{ this._model.settings.JustUnits() }}<br />
+          </p>
+        </div>
+      </ng-template>
+      <ng-template #seriesTooltipTemplate let-model="model">
+        <div *ngFor="let data of getSeriesToolTipData(model | json)">
+          <p>
+            <b>{{data.series}}:</b> {{ data.value }} {{ this._model.settings.JustUnits() }}<br />
+          </p>
+        </div>
+      </ng-template>
+    </ngx-charts-line-chart>
+    <br />
+    <mat-list id="ChangeLevel" *ngIf="this.multi.length > 1">
+      <mat-list-item>
+        <mat-select
+
+          matTooltip="Change Level"
+          placeholder="Level"
+          [(value)]="currLevel"
+          (selectionChange)="ChangeLevel()"
+        >
+          <mat-option
+            *ngFor="let level of levels"
+            [value]="level.value"
+          >
+            {{ level.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+  </div>
+</div>

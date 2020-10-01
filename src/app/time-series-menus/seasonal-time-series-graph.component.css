@@ -1,0 +1,69 @@
+#TimeSeriesSeasonalGraph {
+  position: relative;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: black;
+  background-color: #ffffff;
+}
+
+.closeBtn:active,
+:after {
+  background-color: #ffffff;
+}
+
+::ng-deep .legend-title-text {
+  font-size: 22px !important;
+  height: 20px !important;
+}
+
+::ng-deep .legend-label-text {
+  color: black;
+  font-size: 18px !important;
+  height: 17px !important;
+}
+
+::ng-deep .chart-legend .legend-labels {
+  background-color: white;
+}
+
+.buttonColor, .buttonColor:focus .buttonColor:active, :after {
+  background-color: white;
+}
+
+::ng-deep #TimeSeriesSeasonalGraph .ngx-charts .tick text {
+  font-size: 14px !important;
+}
+
+@media print {
+  .mat-dialog-content {
+    zoom: 90%;
+    max-width: 200%;
+    max-height: 80%;
+    margin: 0;
+  }
+  .mat-dialog-actions {
+    zoom: 90%;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+  }
+  #Menu_button,
+  .mat-icon,
+  #ChangeMonth,
+  .closeBtn {
+    display: none;
+  }
+  #TimeSeriesSeasonalGraph {
+    width: 200%;
+  }
+  @page {
+    size: A4 landscape;
+  }
+}

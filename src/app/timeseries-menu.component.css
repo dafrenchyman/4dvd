@@ -47,7 +47,7 @@
 }
 .closeBtn {
   position: absolute;
-  top: 10px;
+  top: 0;
   right: 0;
   color: black;
   background-color: #ffffff;
@@ -61,6 +61,15 @@
 ::ng-deep .mat-checkbox-label,
 ::ng-deep #print-section .legend-label-text {
   color: black;
+}
+::ng-deep #print-section .legend-label-text {
+  font-size: 18px !important;
+  height: 17px !important;
+}
+
+::ng-deep #print-section .legend-title-text {
+  font-size: 22px !important;
+  height: 20px !important;
 }
 
 ::ng-deep .mat-checkbox-label {

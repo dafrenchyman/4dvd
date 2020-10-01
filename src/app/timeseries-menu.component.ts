@@ -7,6 +7,9 @@ import { LinearTrendComponent } from "./linear-trend.component";
 import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
+import { ClimatologyGraphComponent } from "./time-series-menus/climatology-graph.component";
+import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.component";
+import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
 import { TimeseriesData } from "./timeseriesData";
 /**
  * Created by dafre on 5/14/2017.
@@ -26,11 +29,6 @@ export class TimeseriesMenuComponent {
   multi: TimeseriesData[] = new Array<any>();
   view: any[];
   levelsLoaded = 0;
-  toolTipData: Array<{
-    date: string;
-    value: string;
-    layer: string;
-  }>;
 
   // options
   showXAxis = true;
@@ -45,15 +43,15 @@ export class TimeseriesMenuComponent {
   colorScheme = {
     domain: [
       "#1f78b4",
+      "#33a02c",
+      "#6a3d9a",
+      "#e31a1c",
+      "#ff7f00",
       "#a6cee3",
       "#b2df8a",
-      "#33a02c",
-      "#fb9a99",
-      "#e31a1c",
-      "#fdbf6f",
-      "#ff7f00",
       "#cab2d6",
-      "#6a3d9a",
+      "#fb9a99",
+      "#fdbf6f",
       "#ffff99",
       "#b15928"
     ]
@@ -63,6 +61,76 @@ export class TimeseriesMenuComponent {
   autoScale = true;
   review_btn = false;
   private _model: Model;
+
+  private isEnoughData() {
+    // checks if the dataset is large enough to view seasonal data
+    if (this.DataAvailable()) {
+      return this.multi[0].series.length <= 12;
+    } else {
+      return true;
+    }
+  }
+
+  private createClimaGraph() {
+    // creates the climatology graph dialog box
+    const climateGHeight = "720px";
+    const dialogRef = this.dialog.open(ClimatologyGraphComponent, {
+      height: climateGHeight,
+      data: {
+        data: this.multi,
+        _model: this._model
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "SeasData") {
+        this.createSeasonalMenu();
+      } else if (result === "SeasonalTS") {
+        this.createSeasonalTSGraph();
+      }
+    });
+  }
+
+  private createSeasonalTSGraph() {
+    // creates the seasonal time series graph dialog box
+    const SeasonalTSGHeight = "720px";
+    const dialogRef = this.dialog.open(SeasonalTimeSeriesGraphComponent, {
+      height: SeasonalTSGHeight,
+      width: "90vw",
+      data: {
+        data: this.multi,
+        _model: this._model
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "SeasData") {
+        this.createSeasonalMenu();
+      } else if (result === "ClimaGraph") {
+        this.createClimaGraph();
+      }
+    });
+  }
+
+  private createSeasonalMenu() {
+    // creates the mean and std chart dialog box
+    let menuWidth;
+    if (this.levelsLoaded > 4) {
+      menuWidth = "90vw";
+    } else if (this.levelsLoaded === 1) {
+      menuWidth = "40vw";
+    }
+    const dialogRef = this.dialog.open(SeasonalChartComponent, {
+      data: this.multi,
+      width: menuWidth
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "ClimaGraph") {
+        this.createClimaGraph();
+      } else if (result === "SeasonalTS") {
+        this.createSeasonalTSGraph();
+      }
+    });
+  }
 
   // returns the index of the lone level that is currently selected
   private lonerLevelCheck(): number {
@@ -135,29 +203,11 @@ export class TimeseriesMenuComponent {
   }
 
   getSeriesToolTipData(jsonString) {
-    // Get graph tool tip data for multiple levels
-    this.toolTipData = [];
-    const jsonArr = JSON.parse(jsonString);
-    for (let i = 0; i < jsonArr.length; i++) {
-      this.toolTipData.push({
-        date: jsonArr[i].name, // date
-        value: jsonArr[i].value.toFixed(4), // value
-        layer: jsonArr[i].series // layer
-      });
-    }
-    return this.toolTipData;
+    return this._model.settings.getSeriesToolTipData(jsonString);
   }
 
   getToolTipData(jsonString) {
-    // Get graph tool tip data for a single level
-    this.toolTipData = [];
-    const jsonArr = JSON.parse(jsonString);
-    this.toolTipData.push({
-      date: jsonArr.name, // date
-      value: jsonArr.value.toFixed(4), // value
-      layer: jsonArr.series // layer
-    });
-    return this.toolTipData;
+    return this._model.settings.getToolTipData(jsonString);
   }
 
   getTTDate(jsonString) {

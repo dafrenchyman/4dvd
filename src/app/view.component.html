@@ -8,7 +8,7 @@
     <button
       id="closebutton"
       mat-icon-button
-      style="position: absolute; left: 290px; top: 49px; z-index: 10; color: #FFFFFF"
+      style="position: absolute; left: 290px; top: 49px; z-index: 10; color: #FFFFFF; background-color: transparent"
       (click)="selectedIndex = 0"
       (click)="sidenav.toggle()"
       (click)="unhide(this,'close')"
@@ -409,7 +409,7 @@
       id="sideNavButton"
       style=""
       [disableRipple]="true"
-      class="example-fab"
+      class="example-fab buttonColor"
       (click)="sidenav.toggle()"
       (click)="unhide(this,'close')"
       matTooltip="Settings"
@@ -527,6 +527,7 @@
             mat-raised-button
             (click)="changeState('date')"
             style="display: flex; align-items: center; justify-content: center;"
+            class="buttonColor"
           >
             Close
           </button>
@@ -591,7 +592,11 @@
             Lon: {{ this._model.settings.GetLonWithDir() }}
           </mat-list-item>
           <mat-list-item>
-            <button mat-raised-button (click)="OpenTimeseriesDialog()">
+            <button
+              class="buttonColor"
+              mat-raised-button
+              (click)="OpenTimeseriesDialog()"
+            >
               Time Series
             </button>
           </mat-list-item>
