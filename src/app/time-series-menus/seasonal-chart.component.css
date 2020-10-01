@@ -1,0 +1,63 @@
+#TimeSeriesSeasonal {
+  position: relative;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+td.mat-cell:nth-child(1) {
+  font-weight: bold;
+  color: darkblue;
+}
+
+.mat-row:nth-child(1) .mat-cell {
+  font-weight: bold;
+  color: darkblue;
+}
+
+td.mat-cell {
+  width: 200px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: black;
+  background-color: #ffffff;
+}
+
+.closeBtn:active,
+:after {
+  background-color: #ffffff;
+}
+
+.buttonColor, .buttonColor:focus .buttonColor:active, :after {
+  background-color: white;
+}
+
+@media print {
+  .mat-dialog-content {
+    zoom: 85%;
+    max-width: 200%;
+    max-height: 80%;
+    margin: 0;
+  }
+  .mat-dialog-actions {
+    zoom: 85%;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+  }
+  #Menu_button,
+  .mat-icon,
+  .closeBtn {
+    display: none;
+  }
+  #TimeSeriesSeasonal {
+    width: 200%;
+  }
+  @page {
+    size: A4 landscape;
+  }
+}

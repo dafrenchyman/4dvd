@@ -260,3 +260,10 @@ mat-sidenav-content.mat-drawer-content {
   border: 3px solid gray;
   border-radius: 7px;
 }
+
+.buttonColor,
+.buttonColor:focus,
+.buttonColor:active,
+:after {
+  background-color: white;
+}

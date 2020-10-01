@@ -1,0 +1,98 @@
+<div id="TimeSeriesSeasonalGraph">
+  <div id="seasonal-ts-print-section">
+  <div style="display: inline">
+    <h5 style="position: relative; left: 20%"><b>{{getTitle()}}</b></h5>
+    <button id="Menu_button" mat-button [matMenuTriggerFor]="menu" style="position: absolute; top: 0; background-color: #ffffff;">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        class="buttonColor"
+        mat-menu-item
+        [useExistingCss]="true"
+        printSectionId="seasonal-ts-print-section"
+        ngxPrint
+      >
+        Save Graph
+      </button>
+      <button class="buttonColor" mat-menu-item (click)="closeSeasonalTSGraph('SeasData')">
+        Mean and Standard Deviation
+      </button>
+      <button class="buttonColor" mat-menu-item (click)="closeSeasonalTSGraph('ClimaGraph')">
+        Climatology Graph
+      </button>
+    </mat-menu>
+    <div class="col s12">
+      <button
+        mat-icon-button
+        (click)="this.closeSeasonalTSGraph('')"
+        class="closeBtn"
+        matTooltip="Close Seasonal Time Series Chart"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-dialog-content style="min-width: 78vw" *ngIf="DataAvailable()">
+    <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [timeline]="timeline"
+      [results]="newMulti"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel()"
+      [autoScale]="autoScale"
+      [xAxisTicks]="this.tickArray"
+    >
+      <ng-template #tooltipTemplate let-model="model">
+        <div *ngFor="let data of getToolTipData(model | json)">
+          <p>
+            <u><b>{{isYearOrDate()}}:</b> {{ data.name }}</u>
+          </p>
+          <p>
+            <b>{{ getTTTitle() }}:</b> {{ data.value }}<br />
+            <b>Layer: </b> {{ data.series }}
+          </p>
+        </div>
+      </ng-template>
+      <ng-template #seriesTooltipTemplate let-model="model">
+        <p>
+          <u><b>{{isYearOrDate()}}:</b> {{ getTTYear(model | json) }}</u>
+        </p>
+        <div *ngFor="let data of getSeriesToolTipData(model | json)">
+          <p>
+            <b>{{data.series}}:</b> {{ data.value }} {{ this._model.settings.JustUnits() }}<br />
+          </p>
+        </div>
+      </ng-template>
+    </ngx-charts-line-chart>
+    <br />
+    <p>{{getDateRange()}}</p>
+    <br />
+    <mat-list id="ChangeMonth">
+      <mat-list-item>
+        <mat-select
+          matTooltip="Change Month"
+          placeholder="Month"
+          [(value)]="monthPicked"
+          (selectionChange)="changeMonth()"
+
+        >
+          <mat-option
+            *ngFor="let level of months"
+            [value]="level.viewNum"
+          >
+            {{ level.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+  </div>
+</div>

@@ -32,6 +32,18 @@
               <button mat-menu-item [matMenuTriggerFor]="submenu">
                 Computing
               </button>
+              <div
+                matTooltip="This dataset is not large enough to display seasonal data"
+                [matTooltipDisabled]="!isEnoughData()"
+              >
+                <button
+                  mat-menu-item
+                  [matMenuTriggerFor]="seasMenu"
+                  [disabled]="isEnoughData()"
+                >
+                  View Seasonal Data
+                </button>
+              </div>
             </mat-menu>
             <mat-menu #submenu="matMenu">
               <button mat-menu-item (click)="createSummaryStatistics()">
@@ -52,18 +64,31 @@
                 </button>
               </div>
             </mat-menu>
+            <mat-menu #seasMenu="matMenu">
+              <button mat-menu-item (click)="createSeasonalMenu()">
+                Mean and Standard Deviation
+              </button>
+              <button mat-menu-item (click)="createClimaGraph()">
+                Climatology Graph
+              </button>
+              <button mat-menu-item (click)="createSeasonalTSGraph()">
+                Seasonal Time Series
+              </button>
+            </mat-menu>
           </div>
           <div class="title_text" class="col s8" align="center">
             <h5 class="text-left-right">
-              <span class="title">{{
-                this._model.settings.GenerateTitle(
-                  this._model.settings.FullName
-                )
-              }}</span>
-              <span class="byline"
-                >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }}, Lon:
-                {{ this._model.settings.GetLonWithDir() }})</span
-              >
+              <b>
+                <span class="title">{{
+                  this._model.settings.GenerateTitle(
+                    this._model.settings.FullName
+                  )
+                }}</span>
+                <span class="byline"
+                  >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }}, Lon:
+                  {{ this._model.settings.GetLonWithDir() }})</span
+                >
+              </b>
             </h5>
           </div>
           <div class="title_text" class="col s12" align="right">
@@ -98,11 +123,12 @@
           <ng-template #tooltipTemplate let-model="model">
             <div *ngFor="let data of getToolTipData(model | json)">
               <p>
-                <u><b>Date:</b> {{ data.date }}</u>
+                <u><b>Date:</b> {{ data.name }}</u>
               </p>
               <p>
                 <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
-                <b>Layer: </b> {{ this._model.settings.levelCheck(data.layer) }}
+                <b>Layer: </b>
+                {{ this._model.settings.levelCheck(data.series) }}
               </p>
             </div>
           </ng-template>
@@ -113,7 +139,8 @@
             <div *ngFor="let data of getSeriesToolTipData(model | json)">
               <p>
                 <b>{{ yValTitle() }}:</b> {{ data.value }}<br />
-                <b>Layer: </b> {{ this._model.settings.levelCheck(data.layer) }}
+                <b>Layer: </b>
+                {{ this._model.settings.levelCheck(data.series) }}
               </p>
             </div>
           </ng-template>

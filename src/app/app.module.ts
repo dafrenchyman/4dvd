@@ -36,6 +36,9 @@ import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
 import { GoogleAnalyticsComponent } from "./google-analytics.component";
 import { LinearTrendComponent } from "./linear-trend.component";
+import { ClimatologyGraphComponent } from "./time-series-menus/climatology-graph.component";
+import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.component";
+import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { ViewComponent } from "./view.component";
@@ -49,7 +52,11 @@ import { ViewComponent } from "./view.component";
     ViewComponent,
     TimeSeriesStatisticsComponent,
     LinearTrendComponent,
-    GoogleAnalyticsComponent
+    GoogleAnalyticsComponent,
+    SeasonalChartComponent,
+    ClimatologyGraphComponent,
+    SeasonalTimeSeriesGraphComponent,
+    ViewComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -97,7 +104,10 @@ import { ViewComponent } from "./view.component";
     TimeseriesMenuComponent,
     TimeSeriesStatisticsComponent,
     LinearTrendComponent,
-    GoogleAnalyticsComponent
+    GoogleAnalyticsComponent,
+    SeasonalChartComponent,
+    ClimatologyGraphComponent,
+    SeasonalTimeSeriesGraphComponent
   ]
 })
 export class AppModule {}

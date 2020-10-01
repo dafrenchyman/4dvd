@@ -161,6 +161,37 @@ export class Settings {
 
   rGlobe: 0;
   lastTime: 0;
+  toolTipData: Array<{
+    name: string;
+    series: string;
+    value: string;
+  }>;
+
+  public getToolTipData(jsonString) {
+    // Get graph tool tip data for a single level
+    this.toolTipData = [];
+    const jsonArr = JSON.parse(jsonString);
+    this.toolTipData.push({
+      name: jsonArr.name,
+      value: jsonArr.value.toFixed(2),
+      series: jsonArr.series
+    });
+    return this.toolTipData;
+  }
+
+  public getSeriesToolTipData(jsonString) {
+    // Get graph tool tip data for multiple levels
+    this.toolTipData = [];
+    const jsonArr = JSON.parse(jsonString);
+    for (let i = 0; i < jsonArr.length; i++) {
+      this.toolTipData.push({
+        name: jsonArr[i].name,
+        value: jsonArr[i].value.toFixed(2),
+        series: jsonArr[i].series
+      });
+    }
+    return this.toolTipData;
+  }
 
   setSliderMax(max) {
     // set max value when the slider updates
