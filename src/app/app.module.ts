@@ -23,15 +23,18 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatTreeModule } from "@angular/material/tree";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { ClickOutsideModule } from "ng-click-outside";
 import { Ng5SliderModule } from "ng5-slider";
 import { NgxPrintModule } from "ngx-print";
 import { About4dvdComponent } from "./about4dvd.component";
+import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
+import { GoogleAnalyticsComponent } from "./google-analytics.component";
 import { LinearTrendComponent } from "./linear-trend.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
@@ -45,7 +48,8 @@ import { ViewComponent } from "./view.component";
     TimeseriesMenuComponent,
     ViewComponent,
     TimeSeriesStatisticsComponent,
-    LinearTrendComponent
+    LinearTrendComponent,
+    GoogleAnalyticsComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -76,9 +80,15 @@ import { ViewComponent } from "./view.component";
     MatTableModule,
     MatTreeModule,
     NgxChartsModule,
-    NgxPrintModule
+    NgxPrintModule,
+    RouterModule,
+    AppRoutingModule
   ],
-  providers: [GetJson, { provide: APP_BASE_HREF, useValue: "/" }],
+  providers: [
+    GetJson,
+    { provide: APP_BASE_HREF, useValue: "/" },
+    GoogleAnalyticsComponent
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     About4dvdComponent,
@@ -86,7 +96,8 @@ import { ViewComponent } from "./view.component";
     DatasetTreeComponent,
     TimeseriesMenuComponent,
     TimeSeriesStatisticsComponent,
-    LinearTrendComponent
+    LinearTrendComponent,
+    GoogleAnalyticsComponent
   ]
 })
 export class AppModule {}
