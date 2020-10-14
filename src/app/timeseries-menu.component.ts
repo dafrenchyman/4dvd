@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
@@ -132,12 +132,20 @@ export class TimeseriesMenuComponent {
     });
   }
 
-  // returns the index of the lone level that is currently selected
-  private lonerLevelCheck(): number {
-    if (this.levelsLoaded <= 1 && this.DataAvailable()) {
-      return this.multi[0].level_ID - 1;
+  // returns if a checkbox should be disabled for being the only one checked
+  private lonerLevelCheck(index) {
+    return this.multi.length === 1 && this.multi[0].level_ID - 1 === index;
+  }
+
+  // returns if the checkbox should be checked or not
+  private isChecked(index) {
+    let flag = false;
+    for (let i = 0; i < this.multi.length; i++) {
+      if (this.multi[i].level_ID - 1 === index) {
+        flag = true;
+      }
     }
-    return -1;
+    return flag;
   }
 
   public GetLevels() {
