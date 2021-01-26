@@ -1,4 +1,3 @@
-
 import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
 import {
   MAT_DIALOG_DATA,
@@ -131,9 +130,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     const base = Math.floor(pos);
     const rest = pos - base;
     if (d[base + 1] !== undefined) {
-      return (
-        d[base].value + rest * (d[base + 1].value - d[base].value)
-      );
+      return d[base].value + rest * (d[base + 1].value - d[base].value);
     } else {
       return d[base].value;
     }
@@ -163,9 +160,9 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     // Setting limit to display on 5 levels
     length = this.multi.length > 5 ? 5 : this.multi.length;
     for (let counter = 0; counter < length; counter++) {
-      const currTimeseries = this.multi[counter].series.map(x => Object.assign({}, x));
-      //const currTimeseries = deepCopy(this.multi[counter].series);
-     // this.cTimeseries = currTimeseries;
+      const currTimeseries = this.multi[counter].series.map(x => ({ ...x }));
+      // const currTimeseries = deepCopy(this.multi[counter].series);
+      // this.cTimeseries = currTimeseries;
       this._SummaryStatistics.push({
         Mean: parseFloat(this.Calc_average(currTimeseries).toFixed(3)),
         Min: Math.min
