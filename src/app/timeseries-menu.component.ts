@@ -238,7 +238,9 @@ export class TimeseriesMenuComponent {
     const dialogRef = this.dialog.open(TimeSeriesStatisticsComponent, {
       data: this.multi
     });
+    // return dialogRef.afterClosed();
     dialogRef.afterClosed().subscribe(() => {});
+    
   }
 
   createCsvFromTimeseriesData() {

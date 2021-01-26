@@ -1,3 +1,4 @@
+
 import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
 import {
   MAT_DIALOG_DATA,
@@ -31,6 +32,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     Kurtosis: number;
   }>;
   multi: TimeseriesData[] = new Array<any>();
+
   dataColumns = [
     "Levels",
     "Min",
@@ -123,17 +125,17 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
 
   // Quartiles are values that divide your data into quarters.
   // Here g is the  quartile that we need to compute
-  private Quartile(data, q) {
-    data = this.Sort_data(data);
-    const pos = (data.length - 1) * q;
+  private Quartile(d, q) {
+    d = this.Sort_data(d);
+    const pos = (d.length - 1) * q;
     const base = Math.floor(pos);
     const rest = pos - base;
-    if (data[base + 1] !== undefined) {
+    if (d[base + 1] !== undefined) {
       return (
-        data[base].value + rest * (data[base + 1].value - data[base].value)
+        d[base].value + rest * (d[base + 1].value - d[base].value)
       );
     } else {
-      return data[base].value;
+      return d[base].value;
     }
   }
 
@@ -161,7 +163,9 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     // Setting limit to display on 5 levels
     length = this.multi.length > 5 ? 5 : this.multi.length;
     for (let counter = 0; counter < length; counter++) {
-      const currTimeseries = this.multi[counter].series;
+      const currTimeseries = this.multi[counter].series.map(x => Object.assign({}, x));
+      //const currTimeseries = deepCopy(this.multi[counter].series);
+     // this.cTimeseries = currTimeseries;
       this._SummaryStatistics.push({
         Mean: parseFloat(this.Calc_average(currTimeseries).toFixed(3)),
         Min: Math.min
