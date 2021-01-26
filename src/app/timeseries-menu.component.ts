@@ -240,7 +240,6 @@ export class TimeseriesMenuComponent {
     });
     // return dialogRef.afterClosed();
     dialogRef.afterClosed().subscribe(() => {});
-    
   }
 
   createCsvFromTimeseriesData() {
