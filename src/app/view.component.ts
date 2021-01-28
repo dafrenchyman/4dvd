@@ -730,14 +730,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
-  }
-
-  public LoadSurfaceTemperature() {
-    const selectedDataset = this._model.settings.Datasets.find(myObj =>
-      myObj.FullName.includes("Global Surface Temperature|Monthly Mean")
-    );
-    this._controller.loadLevels(selectedDataset);
-    this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+    setTimeout(() => {
+      this.setSlider();
+    }, 700);
   }
 
   public OpenDataTreeDialog() {
