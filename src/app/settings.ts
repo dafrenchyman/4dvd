@@ -201,7 +201,7 @@ export class Settings {
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
-      return "Precipitation | Single Level";
+      return r[1] + " | " + r[r.length - 1];
     }
     return r[r.length - 2] + " | " + r[r.length - 1];
   }
@@ -215,7 +215,7 @@ export class Settings {
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
-      return "Precipitation";
+      return r[1];
     } else {
       return r[r.length - 2];
     }
