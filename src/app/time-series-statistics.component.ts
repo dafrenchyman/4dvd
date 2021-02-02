@@ -76,7 +76,9 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     this.transpose();
     this.fillLabels();
   }
-  transpose() {
+
+  // Displaying all the calculated data in a tabular form
+  private transpose() {
     const transposedData = [];
     for (let column = 0; column < this.dataColumns.length; column++) {
       transposedData[column] = {
@@ -91,7 +93,8 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(transposedData);
   }
 
-  fillLabels() {
+  // Columns to be displayed on HTML
+  private fillLabels() {
     this.displayedColumns = ["label"];
     for (let i = 0; i < this._SummaryStatistics.length; i++) {
       this.displayedColumns.push("column" + i);
@@ -101,41 +104,44 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     return inp_data.reduce((a, b) => a + b.value, 0);
   }
 
-  Sort_data(inp_data) {
+  private Sort_data(inp_data) {
     return inp_data.sort((a, b) => {
       return a.value - b.value;
     });
   }
-  Quartile_25(inp_data) {
+  private Quartile_25(inp_data) {
     return this.Quartile(inp_data, 0.25);
   }
 
-  Quartile_50(inp_data) {
+  private Quartile_50(inp_data) {
     return this.Quartile(inp_data, 0.5);
   }
 
-  Quartile_75(inp_data) {
+  private Quartile_75(inp_data) {
     return this.Quartile(inp_data, 0.75);
   }
 
-  Quartile(data, q) {
-    data = this.Sort_data(data);
-    const pos = (data.length - 1) * q;
+  // Quartiles are values that divide your data into quarters.
+  // Here g is the  quartile that we need to compute
+  private Quartile(d, q) {
+    d = this.Sort_data(d);
+    const pos = (d.length - 1) * q;
     const base = Math.floor(pos);
     const rest = pos - base;
-    if (data[base + 1] !== undefined) {
-      return (
-        data[base].value + rest * (data[base + 1].value - data[base].value)
-      );
+    if (d[base + 1] !== undefined) {
+      return d[base].value + rest * (d[base + 1].value - d[base].value);
     } else {
-      return data[base].value;
+      return d[base].value;
     }
   }
 
-  Calc_average(inp_data) {
+  // calculating average
+  private Calc_average(inp_data) {
     return this.data_Sum(inp_data) / inp_data.length;
   }
-  Calc_variance(inp_data) {
+  // Calculating Variance sum of the squared distances of each term in the distribution
+  // from the mean (μ), divided by the number of terms in the distribution
+  private Calc_variance(inp_data) {
     const avg = this.Calc_average(inp_data);
     return (
       inp_data.map(x => Math.pow(x.value - avg, 2)).reduce((a, b) => a + b) /
@@ -143,14 +149,19 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     );
   }
 
-  Calc_standardDeviation(inp_data) {
+  // Calculating Standard Deviation which is Square Root of Variance
+  private Calc_standardDeviation(inp_data) {
     return Math.sqrt(this.Calc_variance(inp_data));
   }
 
-  GetData() {
+  // Calculate the Summary Statistics
+  private GetData() {
+    // Setting limit to display on 5 levels
     length = this.multi.length > 5 ? 5 : this.multi.length;
     for (let counter = 0; counter < length; counter++) {
-      const currTimeseries = this.multi[counter].series;
+      const currTimeseries = this.multi[counter].series.map(x => ({ ...x }));
+      // const currTimeseries = deepCopy(this.multi[counter].series);
+      // this.cTimeseries = currTimeseries;
       this._SummaryStatistics.push({
         Mean: parseFloat(this.Calc_average(currTimeseries).toFixed(3)),
         Min: Math.min
@@ -178,7 +189,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  closeStatistics() {
+  private closeStatistics() {
     this.dialogRef.close();
   }
 }

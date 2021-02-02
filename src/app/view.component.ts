@@ -722,13 +722,17 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this.setSlider();
     }, 700);
   }
-
+  /* This function is used to load Global Surface Temperature Data in oneclick from TopDataset Button
+   */
   public LoadSurfaceTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Global Surface Temperature|Monthly Mean")
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
+    setTimeout(() => {
+      this.setSlider();
+    }, 700);
   }
 
   public OpenDataTreeDialog() {
