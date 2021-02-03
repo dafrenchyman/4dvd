@@ -201,6 +201,9 @@ export class Settings {
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
+      // TODO: These returns should be replaced with a new column from the database.
+      // there is some backend work to be done to return this column correctly
+      // for now, we are dependant on how we name the climate databases in the 4dvd database
       return r[1] + " | " + r[r.length - 1];
     }
     return r[r.length - 2] + " | " + r[r.length - 1];
@@ -215,6 +218,9 @@ export class Settings {
     let r: any[];
     r = str.split("|");
     if (r.length < 5) {
+      // TODO: These returns should be replaced with a new column from the database.
+      // there is some backend work to be done to return this column correctly
+      // for now, we are dependant on how we name the climate databases in the 4dvd database
       return r[1];
     } else {
       return r[r.length - 2];
