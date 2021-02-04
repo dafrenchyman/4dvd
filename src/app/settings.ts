@@ -122,10 +122,10 @@ export class Settings {
 
   // display related settings
   currColormapName =
-    "Color Brewer 2.0|Diverging|Zero Centered|11-class Spectral Inverse";
+    "Color Brewer 2.0|Diverging|Non Centered|11-class Spectral Inverse";
   smoothGridBoxValues = true;
   globeView: GlobeViewType = GlobeViewType.Ortho;
-  functionForColorMap = "customColorMapWithMidpoint";
+  functionForColorMap = "customColorMap";
   CoastsType = "./assets/ne_110m_coastline.json";
   LakesType = "Low";
   RiversType = "Low";
