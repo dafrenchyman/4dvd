@@ -205,6 +205,14 @@ export class ViewComponent implements OnInit, AfterViewInit {
     vertical: true
   };
 
+  // Waits for the dataset to be updated to correctly
+  // update the legend slider with up to date data
+  private waitForDataLoad() {
+    setTimeout(() => {
+      this.updateSlider();
+    }, 1000); // TODO: Remove setTimeout and make the update more efficient
+  }
+
   // update globe and legend based on slider
   private setGlobeAndLegend() {
     // if the data was converted to scientific notation, convert values back to correctly color the values on the globe
@@ -790,6 +798,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this._model.settings.CurrDate,
       this._model.settings.Level_ID
     );
+
+    this.waitForDataLoad();
   }
 
   ChangeYear() {
@@ -807,6 +817,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this._model.settings.CurrDate,
       this._model.settings.Level_ID
     );
+
+    this.waitForDataLoad();
   }
 
   ChangeLevel(level_id: number) {
@@ -815,6 +827,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this._model.settings.CurrDate,
       level_id
     );
+
+    this.waitForDataLoad();
   }
 
   OpenColorMapDialog() {
