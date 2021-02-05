@@ -31,7 +31,6 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
     Kurtosis: number;
   }>;
   multi: TimeseriesData[] = new Array<any>();
-
   dataColumns = [
     "Levels",
     "Min",
