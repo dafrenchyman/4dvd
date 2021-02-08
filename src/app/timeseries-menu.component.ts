@@ -3,11 +3,11 @@ import { MAT_DIALOG_DATA } from "@angular/material";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
+import { LinearTrendComponent } from "./linear-trend.component";
 import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesData } from "./timeseriesData";
-import { LinearTrendComponent } from "./linear-trend.component";
 /**
  * Created by dafre on 5/14/2017.
  */
@@ -255,7 +255,7 @@ export class TimeseriesMenuComponent {
       }
     });
     dialogRef.afterClosed().subscribe(() => {});
-  }	  
+  }
 
   createCsvFromTimeseriesData() {
     let csvContent = "data:text/csv;charset=utf-8,";
