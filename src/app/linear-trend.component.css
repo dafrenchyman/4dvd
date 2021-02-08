@@ -1,0 +1,42 @@
+.lineartrend--container {
+  width: 700px;
+  height: 700px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.lt-sidenav-content {
+  display: -webkit-inline-flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+.mat-select {
+  padding: 20px;
+}
+
+.lt-sidenav {
+  padding: 20px;
+  height: 100%;
+  width: 250px;
+}
+
+#regression {
+  stroke-width: 2px;
+  stroke: blue;
+  stroke-dasharray: 10, 5;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: grey;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.mat-raised-button {
+  position: inherit;
+  margin: 20px;
+}
+
+#equation {
+  margin-top: 50px;
+}

@@ -37,6 +37,20 @@
               <button mat-menu-item (click)="createSummaryStatistics()">
                 Statistics Summary
               </button>
+            
+          <div
+                matTooltip="This functionality is not available for the selected dataset"
+                [matTooltipDisabled]="!review_btn"
+              >
+                <button
+                  [disabled]="review_btn"
+                  color="primary"
+                  mat-menu-item
+                  (click)="createLinearTrend()"
+                >
+                  Linear Trend
+                </button>
+              </div>
             </mat-menu>
           </div>
           <div class="title_text" class="col s8" align="center">

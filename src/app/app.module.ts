@@ -35,7 +35,7 @@ import { GetJson } from "./getJson";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { ViewComponent } from "./view.component";
-
+import { LinearTrendComponent } from "./linear-trend.component";
 @NgModule({
   declarations: [
     About4dvdComponent,
@@ -44,7 +44,8 @@ import { ViewComponent } from "./view.component";
     DatasetTreeComponent,
     TimeseriesMenuComponent,
     ViewComponent,
-    TimeSeriesStatisticsComponent
+    TimeSeriesStatisticsComponent,
+    LinearTrendComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -84,7 +85,8 @@ import { ViewComponent } from "./view.component";
     ColorMapMenuComponent,
     DatasetTreeComponent,
     TimeseriesMenuComponent,
-    TimeSeriesStatisticsComponent
+    TimeSeriesStatisticsComponent,
+    LinearTrendComponent
   ]
 })
 export class AppModule {}
