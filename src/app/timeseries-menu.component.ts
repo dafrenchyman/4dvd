@@ -7,6 +7,7 @@ import { Model } from "./model";
 import { Settings } from "./settings";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesData } from "./timeseriesData";
+import { LinearTrendComponent } from "./linear-trend.component";
 /**
  * Created by dafre on 5/14/2017.
  */
@@ -60,7 +61,7 @@ export class TimeseriesMenuComponent {
 
   // line, area
   autoScale = true;
-
+  review_btn = false;
   private _model: Model;
 
   // returns the index of the lone level that is currently selected
@@ -101,6 +102,9 @@ export class TimeseriesMenuComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this._model = data;
+    if (this._model.settings.FullName.includes("Long Term")) {
+      this.review_btn = true;
+    }
     this.levelsLoaded = 1;
     this.multi = new Array<any>();
     this.view = [
@@ -241,6 +245,17 @@ export class TimeseriesMenuComponent {
     // return dialogRef.afterClosed();
     dialogRef.afterClosed().subscribe(() => {});
   }
+
+  private createLinearTrend() {
+    const dialogRef = this.dialog.open(LinearTrendComponent, {
+      data: {
+        data: this.multi,
+        title: this.yValTitle(),
+        model: this._model
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {});
+  }	  
 
   createCsvFromTimeseriesData() {
     let csvContent = "data:text/csv;charset=utf-8,";
