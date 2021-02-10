@@ -48,7 +48,9 @@ export class AppComponent {
   }
 
   public OpenAboutDialog() {
-    const dialogRef = this.dialog.open(About4dvdComponent, {});
+    const dialogRef = this.dialog.open(About4dvdComponent, {
+      autoFocus: false
+    });
     dialogRef.afterClosed().subscribe(() => {});
   }
 }
