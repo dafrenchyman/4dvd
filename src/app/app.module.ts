@@ -1,4 +1,5 @@
 import { APP_BASE_HREF } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Http, HttpModule, JsonpModule } from "@angular/http";
@@ -82,7 +83,8 @@ import { ViewComponent } from "./view.component";
     NgxChartsModule,
     NgxPrintModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     GetJson,
