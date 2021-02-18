@@ -55,8 +55,7 @@ import { ViewComponent } from "./view.component";
     GoogleAnalyticsComponent,
     SeasonalChartComponent,
     ClimatologyGraphComponent,
-    SeasonalTimeSeriesGraphComponent,
-    ViewComponent
+    SeasonalTimeSeriesGraphComponent
   ],
   imports: [
     BrowserAnimationsModule,
