@@ -61,3 +61,16 @@ td.mat-cell {
     size: A4 landscape;
   }
 }
+
+#Menu_Title {
+  display: flex;
+}
+
+#Menu {
+  position: relative;
+}
+
+#Title {
+  width: 86%;
+  text-align: center;
+}

@@ -1,6 +1,6 @@
 #ClimatologyGraph {
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   height: 100%;
   width: 100%;
 }
@@ -66,4 +66,17 @@
   @page {
     size: A4 landscape;
   }
+}
+
+#Menu_Title {
+  display: flex;
+}
+
+#Menu {
+  position: relative;
+}
+
+#Title {
+  width: 78%;
+  text-align: center;
 }
