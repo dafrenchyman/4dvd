@@ -13,10 +13,28 @@
           align="left"
           style="float: right; display: inline-block"
         >
-          <div class="Menu_button" class="col s0" align="left">
-            <button mat-button [matMenuTriggerFor]="menu">
-              <mat-icon>menu</mat-icon>
-            </button>
+          <div id="Menu_Title">
+            <div id="Menu">
+              <button mat-button [matMenuTriggerFor]="menu">
+                <mat-icon>menu</mat-icon>
+              </button>
+            </div>
+            <div id="Title">
+              <h5>
+                <b>
+                <span class="title">{{
+                  this._model.settings.GenerateTitle(
+                    this._model.settings.FullName
+                  )
+                  }}</span>
+                  <span class="byline"
+                  >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }}, Lon:
+                    {{ this._model.settings.GetLonWithDir() }})</span
+                  >
+                </b>
+              </h5>
+            </div>
+          </div>
             <mat-menu #menu="matMenu">
               <button
                 mat-menu-item
@@ -75,22 +93,6 @@
                 Seasonal Time Series
               </button>
             </mat-menu>
-          </div>
-          <div class="title_text" class="col s8" align="center">
-            <h5 class="text-left-right">
-              <b>
-                <span class="title">{{
-                  this._model.settings.GenerateTitle(
-                    this._model.settings.FullName
-                  )
-                }}</span>
-                <span class="byline"
-                  >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }}, Lon:
-                  {{ this._model.settings.GetLonWithDir() }})</span
-                >
-              </b>
-            </h5>
-          </div>
           <div class="title_text" class="col s12" align="right">
             <button
               mat-icon-button
