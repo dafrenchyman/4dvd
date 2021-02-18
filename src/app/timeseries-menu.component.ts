@@ -6,10 +6,10 @@ import { Helpers } from "./helpers";
 import { LinearTrendComponent } from "./linear-trend.component";
 import { Model } from "./model";
 import { Settings } from "./settings";
-import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { ClimatologyGraphComponent } from "./time-series-menus/climatology-graph.component";
 import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.component";
 import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
+import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesData } from "./timeseriesData";
 /**
  * Created by dafre on 5/14/2017.

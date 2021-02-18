@@ -22,77 +22,77 @@
             <div id="Title">
               <h5>
                 <b>
-                <span class="title">{{
-                  this._model.settings.GenerateTitle(
-                    this._model.settings.FullName
-                  )
+                  <span class="title">{{
+                    this._model.settings.GenerateTitle(
+                      this._model.settings.FullName
+                    )
                   }}</span>
                   <span class="byline"
-                  >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }}, Lon:
-                    {{ this._model.settings.GetLonWithDir() }})</span
+                    >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }},
+                    Lon: {{ this._model.settings.GetLonWithDir() }})</span
                   >
                 </b>
               </h5>
             </div>
           </div>
-            <mat-menu #menu="matMenu">
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              [useExistingCss]="true"
+              printSectionId="print-section"
+              ngxPrint
+            >
+              Save Graph
+            </button>
+            <button mat-menu-item (click)="createCsvFromTimeseriesData()">
+              Download Data
+            </button>
+            <button mat-menu-item [matMenuTriggerFor]="submenu">
+              Computing
+            </button>
+            <div
+              matTooltip="This dataset is not large enough to display seasonal data"
+              [matTooltipDisabled]="!isEnoughData()"
+            >
               <button
                 mat-menu-item
-                [useExistingCss]="true"
-                printSectionId="print-section"
-                ngxPrint
+                [matMenuTriggerFor]="seasMenu"
+                [disabled]="isEnoughData()"
               >
-                Save Graph
+                View Seasonal Data
               </button>
-              <button mat-menu-item (click)="createCsvFromTimeseriesData()">
-                Download Data
-              </button>
-              <button mat-menu-item [matMenuTriggerFor]="submenu">
-                Computing
-              </button>
-              <div
-                matTooltip="This dataset is not large enough to display seasonal data"
-                [matTooltipDisabled]="!isEnoughData()"
-              >
-                <button
-                  mat-menu-item
-                  [matMenuTriggerFor]="seasMenu"
-                  [disabled]="isEnoughData()"
-                >
-                  View Seasonal Data
-                </button>
-              </div>
-            </mat-menu>
-            <mat-menu #submenu="matMenu">
-              <button mat-menu-item (click)="createSummaryStatistics()">
-                Statistics Summary
-              </button>
+            </div>
+          </mat-menu>
+          <mat-menu #submenu="matMenu">
+            <button mat-menu-item (click)="createSummaryStatistics()">
+              Statistics Summary
+            </button>
 
-              <div
-                matTooltip="This functionality is not available for the selected dataset"
-                [matTooltipDisabled]="!review_btn"
+            <div
+              matTooltip="This functionality is not available for the selected dataset"
+              [matTooltipDisabled]="!review_btn"
+            >
+              <button
+                [disabled]="review_btn"
+                color="primary"
+                mat-menu-item
+                (click)="createLinearTrend()"
               >
-                <button
-                  [disabled]="review_btn"
-                  color="primary"
-                  mat-menu-item
-                  (click)="createLinearTrend()"
-                >
-                  Linear Trend
-                </button>
-              </div>
-            </mat-menu>
-            <mat-menu #seasMenu="matMenu">
-              <button mat-menu-item (click)="createSeasonalMenu()">
-                Mean and Standard Deviation
+                Linear Trend
               </button>
-              <button mat-menu-item (click)="createClimaGraph()">
-                Climatology Graph
-              </button>
-              <button mat-menu-item (click)="createSeasonalTSGraph()">
-                Seasonal Time Series
-              </button>
-            </mat-menu>
+            </div>
+          </mat-menu>
+          <mat-menu #seasMenu="matMenu">
+            <button mat-menu-item (click)="createSeasonalMenu()">
+              Mean and Standard Deviation
+            </button>
+            <button mat-menu-item (click)="createClimaGraph()">
+              Climatology Graph
+            </button>
+            <button mat-menu-item (click)="createSeasonalTSGraph()">
+              Seasonal Time Series
+            </button>
+          </mat-menu>
           <div class="title_text" class="col s12" align="right">
             <button
               mat-icon-button
