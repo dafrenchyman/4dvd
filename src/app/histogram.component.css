@@ -1,22 +1,22 @@
 input[type="number"] {
-    height: 1rem;
-    border-bottom: none;
-  }
-  .lt-sidenav-content {
-    display: -webkit-inline-flex;
-    align-items: flex-start;
-    justify-content: left;
-  }
-  .mat-select {
-    padding-bottom: 40px;
-  }
-  
-  .lt-sidenav {
-    padding: 10px;
-    height: 100%;
-    width: 250px;
-  }
-  
-  .mat-divider {
-    margin-top: 20px;
-  }
+  height: 1rem;
+  border-bottom: none;
+}
+.lt-sidenav-content {
+  display: -webkit-inline-flex;
+  align-items: flex-start;
+  justify-content: left;
+}
+.mat-select {
+  padding-bottom: 40px;
+}
+
+.lt-sidenav {
+  padding: 10px;
+  height: 100%;
+  width: 250px;
+}
+
+.mat-divider {
+  margin-top: 20px;
+}
