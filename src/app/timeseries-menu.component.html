@@ -82,18 +82,18 @@
               </button>
             </div>
             <div
-            matTooltip="This functionality is not avaible for the selected dataset"
-            [matTooltipDisabled]="!review_btn"
-          >
-            <button
-              [disabled]="review_btn"
-              color="primary"
-              mat-menu-item
-              (click)="createHistogram()"
+              matTooltip="This functionality is not avaible for the selected dataset"
+              [matTooltipDisabled]="!review_btn"
             >
-              Plot Histogram
-            </button>
-          </div>
+              <button
+                [disabled]="review_btn"
+                color="primary"
+                mat-menu-item
+                (click)="createHistogram()"
+              >
+                Plot Histogram
+              </button>
+            </div>
           </mat-menu>
           <mat-menu #seasMenu="matMenu">
             <button mat-menu-item (click)="createSeasonalMenu()">

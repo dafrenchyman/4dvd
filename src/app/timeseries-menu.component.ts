@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from "@angular/material";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatMenuModule } from "@angular/material/menu";
 import { Helpers } from "./helpers";
+import { HistogramComponent } from "./histogram.component";
 import { LinearTrendComponent } from "./linear-trend.component";
 import { Model } from "./model";
 import { Settings } from "./settings";
@@ -11,7 +12,6 @@ import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.compo
 import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesData } from "./timeseriesData";
-import { HistogramComponent } from "./histogram.component";
 /**
  * Created by dafre on 5/14/2017.
  */
@@ -317,7 +317,6 @@ export class TimeseriesMenuComponent {
   }
 
   private createHistogram() {
-    
     const dialogRef = this.dialog.open(HistogramComponent, {
       data: {
         data: this.multi,
