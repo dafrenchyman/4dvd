@@ -35,6 +35,7 @@ import { AppComponent } from "./app.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
+import { HistogramComponent } from "./histogram.component";
 import { GoogleAnalyticsComponent } from "./google-analytics.component";
 import { LinearTrendComponent } from "./linear-trend.component";
 import { ClimatologyGraphComponent } from "./time-series-menus/climatology-graph.component";
@@ -56,7 +57,8 @@ import { ViewComponent } from "./view.component";
     GoogleAnalyticsComponent,
     SeasonalChartComponent,
     ClimatologyGraphComponent,
-    SeasonalTimeSeriesGraphComponent
+    SeasonalTimeSeriesGraphComponent,
+    HistogramComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -108,7 +110,8 @@ import { ViewComponent } from "./view.component";
     GoogleAnalyticsComponent,
     SeasonalChartComponent,
     ClimatologyGraphComponent,
-    SeasonalTimeSeriesGraphComponent
+    SeasonalTimeSeriesGraphComponent,
+    HistogramComponent
   ]
 })
 export class AppModule {}

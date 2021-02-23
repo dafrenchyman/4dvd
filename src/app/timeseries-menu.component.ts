@@ -11,6 +11,7 @@ import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.compo
 import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesData } from "./timeseriesData";
+import { HistogramComponent } from "./histogram.component";
 /**
  * Created by dafre on 5/14/2017.
  */
@@ -306,6 +307,18 @@ export class TimeseriesMenuComponent {
 
   private createLinearTrend() {
     const dialogRef = this.dialog.open(LinearTrendComponent, {
+      data: {
+        data: this.multi,
+        title: this.yValTitle(),
+        model: this._model
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  private createHistogram() {
+    
+    const dialogRef = this.dialog.open(HistogramComponent, {
       data: {
         data: this.multi,
         title: this.yValTitle(),
