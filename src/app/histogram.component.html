@@ -1,33 +1,35 @@
 <mat-drawer-container
-  class="lineartrend-container"
   style="width:150vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
 >
-<button mat-button [matMenuTriggerFor]="menu">
-  <mat-icon>menu</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
-  <button
-    mat-menu-item
-    [useExistingCss]="true"
-    printSectionId="print-section-trend"
-    ngxPrint
-  >
-    Save Graph
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
   </button>
-</mat-menu>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      [useExistingCss]="true"
+      printSectionId="print-section-hist"
+      ngxPrint
+    >
+      Save Graph
+    </button>
+  </mat-menu>
   <div class="title_text" class="col s12" align="right">
     <button
       mat-icon-button
-      (click)="this.closeLinearTrend()"
+      (click)="this.closeHistogram()"
       class="closeBtn"
-      matTooltip="Close Linear Trend Chart"
+      matTooltip="Close Histogram Chart"
     >
       <mat-icon>close</mat-icon>
     </button>
   </div>
+  <div id="print-section-hist">
+    <div id="hist_div"></div>
+  </div>
   <mat-drawer class="lt-sidenav" mode="side" opened="true">
     <mat-list>
-      <p>Select Month and Level</p>
+      <p>Select</p>
       <mat-select placeholder="Month" [(value)]="currMonth">
         <mat-option *ngFor="let month of months" [value]="month.value">
           {{ month.viewValue }}
@@ -45,16 +47,21 @@
       <button
         id="GetData"
         mat-raised-button
-        (click)="GetUpdatedData(currMonth, currlevel)"
+        (click)="UpdateLevel(currMonth, currlevel)"
       >
-        Get Linear Trend
+        Get Histogram
       </button>
+      <mat-divider></mat-divider>
+      <p>Select number of bins</p>
+      <input
+        type="number"
+        min="10"
+        max="150"
+        step="10"
+        value="40"
+        id="nBin"
+        (change)="UpdateHist($event)"
+      />
     </mat-list>
   </mat-drawer>
-
-  <div id="print-section-trend">
-    <div class="example-sidenav-content">
-      <div id="chart"></div>
-    </div>
-    </div>
 </mat-drawer-container>
