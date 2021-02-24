@@ -174,7 +174,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
       .duration(1000)
       .attr("x", 1)
       .attr("transform", d => "translate(" + x(d.x0) + "," + y(d.length) + ")")
-      .attr("width", d => x(d.x1) - x(d.x0) - 1)
+      .attr("width", d => x(d.x1) - x(d.x0) )
       .attr("height", d => height - y(d.length))
       .style("fill", "#1f78b4");
 
