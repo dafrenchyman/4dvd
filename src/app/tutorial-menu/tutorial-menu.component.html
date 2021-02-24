@@ -1,0 +1,365 @@
+<div>
+<mat-horizontal-stepper>
+  <!-- Changes the default stepper icon -->
+  <ng-template matStepperIcon="edit">
+    <mat-icon>done</mat-icon>
+  </ng-template>
+
+  <mat-step>
+    <ng-template matStepLabel>Welcome!</ng-template>
+    <div>
+      <h3>Welcome to 4DVD!</h3>
+      <h5><u>Brief Description</u></h5>
+      <div class="bottom-buffer">
+        <p >
+          4-Dimensional Visual Delivery of Big Climate Data, or 4DVD, is a digital
+          technology that can quickly and easily visualize and deliver historical climate
+          data. The technology is a software and has a friendly website interface. The
+          4DVD software can be applied to visualize and deliver any kind of space-time
+          data, ranging from air temperature to precipitation to wind speeds to even
+          humidity. Because of its friendly interface and fast speed, 4DVD can deliver
+          historical climate data to the general public, school students, and seniors, in
+          addition to scientists.
+        </p>
+      </div>
+      <mat-divider></mat-divider>
+          <div class="txt-center">
+          <h5>
+            <u>Prefer another style of tutorial?</u><br/>
+          </h5>
+            <iframe
+              width="280"
+              height="158"
+              src="https://www.youtube.com/embed/VFvWAFo4Lp8"
+              frameborder="0"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+            <p></p>
+            <button mat-raised-button (click)="this.getPDF()">
+              Basic Functions of 4DVD Tutorial PDF
+            </button></div>
+    </div>
+    <div>
+      <button class="buttonColor" mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Top Row</ng-template>
+    <div>
+      <h3>Top Row</h3>
+      <p>
+        "Top Row" refers to the blue bar at the top of the 4DVD website.
+      </p>
+      <mat-divider></mat-divider>
+      <mat-grid-list cols="4" rowHeight="4:1" gutterSize="15px" class="top-buffer">
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+          <p>Click the 4DVD Logo to refresh the page</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <img
+            src="/assets/4DVDLogoV1.png"
+            alt="4DVD Logo Demo Button"
+            class="logo"
+            matTooltip="Demo Button"
+            matTooltipPosition="right"
+          />
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <p>Click Top Datasets to view our top picked datasets</p>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <button
+            mat-button
+            matTooltip="Demo Button"
+            matTooltipPosition="right"
+            class="btn-background"
+          >
+            Top Datasets
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <p>Click Datasets to open an advanced menu to view all the datasets 4DVD has to offer</p>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <button
+            mat-button
+            matTooltip="Demo Button"
+            matTooltipPosition="right"
+            class="btn-background"
+          >
+            Datasets
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <p>Click Download Data to download a csv of the global data at the current date and level</p>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <button
+            mat-button
+            matTooltip="Demo Button"
+            matTooltipPosition="right"
+            class="btn-background"
+          >
+            Download Data
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile >
+          <div class="desc-grid-tile">
+            <p>Click About for more info on 4DVD</p>
+          </div>
+
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <button
+            mat-button
+            matTooltip="Demo Button"
+            matTooltipPosition="right"
+            class="btn-background"
+          >
+            <mat-icon>info</mat-icon> About
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div>
+      <button class="buttonColor" mat-button matStepperPrevious>Back</button>
+      <button class="buttonColor" mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Main View</ng-template>
+    <div>
+      <h3>Main View</h3>
+      <p>
+        "Main View" refers to everything UNDER the top row.
+      </p>
+      <mat-divider></mat-divider>
+      <mat-grid-list cols="4" rowHeight="4:1" gutterSize="15px" class="top-buffer">
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+            <p>Click the Title to open the dataset menu. This is an alternative to the dataset button on the top row.</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <div id="ClimateTitle" class="title-demo" matTooltip="Demo Title">
+           Dataset Type | Data Collection Type
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+            <p>Click the Hamburger to view more settings in a conventional menu.</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <button mat-button matTooltip="Demo Button" class="openLegendSlider"><mat-icon>menu</mat-icon></button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+            <p>Click the Legend to open the Color Map Menu (shown later in the tutorial).</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <p>
+            *Located underneath the About button*
+          </p>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+            <p>Click the Arrow button above the Legend to show the Legend Slider.</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <button
+            mat-button
+            matTooltip="Demo Button"
+            class="openLegendSlider"
+          >
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+            <p>Click the Level's value on the bottom right to change the current Level.</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <span class="levelLabel" matTooltip="Demo Button">
+            Level
+          </span>
+          <span matTooltip="This is to change the date!">
+            | date
+          </span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="desc-grid-tile">
+            <p>Click the Date value on the bottom right to change the current Date.</p>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="demo-grid-tile">
+          <span matTooltip="This is to change the level!">
+            level |
+          </span>
+          <span class="dateLabel" matTooltip="Demo Button">
+            Date
+          </span>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div>
+      <button class="buttonColor" mat-button matStepperPrevious>Back</button>
+      <button class="buttonColor" mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Globe View</ng-template>
+    <div>
+      <h3>Globe View</h3>
+      <p>"Globe View" refers to just the globe/map of the earth.</p>
+      <mat-divider></mat-divider>
+      <div class="top-buffer">
+        <mat-list>
+          <mat-list-item>
+            <span class="bullet-point">
+              <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+            <span>
+              Click anywhere on the globe for the "Time Series Box" to pop up in the bottom left, showing the lat/lon and data value of the place on the globe you clicked at. You will also notice a button to open the Time Series Menu (explained later in the tutorial).
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <span class="bullet-point">
+            <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+            <span>
+              Drag on the globe to rotate the globe.
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <span class="bullet-point">
+              <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+            <span>
+              Scroll to zoom in and out of the globe.
+            </span>
+          </mat-list-item>
+          <mat-list-item>
+            <span class="bullet-point">
+              <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+            <span>
+              You can change the globe to be a 2D map if you click the hamburger -> paint brush -> scroll down to "Globe View"
+            </span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <div>
+      <button class="buttonColor" mat-button matStepperPrevious>Back</button>
+      <button class="buttonColor" mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Time Series Menu</ng-template>
+    <div>
+      <h3>Time Series Menu</h3>
+      <p>The "Time Series Menu" also features more advanced graphs and charts (climatology, statistics summary, linear trend, seasonal time series, mean and standard deviation) if you click the hamburger in the top left of the Time Series Menu!</p>
+      <mat-divider></mat-divider>
+      <div>
+        <mat-grid-list cols="4" rowHeight="3:1" gutterSize="15px" class="top-buffer">
+          <mat-grid-tile>
+            <div class="desc-grid-tile">
+              <p>Located inside the "Time Series Box", click the "Time Series" button to access the Time Series (TS) Menu.</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile class="demo-grid-tile">
+            <div class="txt-center" matTooltip="Demo Button">
+              <button class="buttonColor" mat-raised-button>Time Series</button>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="desc-grid-tile">
+              <p>Click the hamburger on the top left to save the graph, download a csv of the current viewed TS data, and/or view advanced graphs/charts.</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile class="demo-grid-tile">
+            <div class="txt-center" matTooltip="Demo Button">
+              <button class="buttonColor" mat-raised-button><mat-icon>menu</mat-icon></button>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="desc-grid-tile">
+              <p>Under the TS graph are checkboxes with the different levels you can view (Note: some datasets are single level)</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile class="demo-grid-tile">
+            <div class="txt-center">
+              <mat-checkbox class="check-buffer" matTooltip="Demo Checkbox">Level 1</mat-checkbox>
+              <mat-checkbox class="check-buffer" matTooltip="Demo Checkbox">Level 2</mat-checkbox>
+              <mat-checkbox matTooltip="Demo Checkbox">Level 3</mat-checkbox>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="desc-grid-tile">
+              <p>Hover over the TS graph to view tooltips that gives more accurate info.</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile class="demo-grid-tile">
+            <div class="tooltip-demo" matTooltip="Demo TS Graph Tooltip">
+              <p><u><b>Date:</b> YYYY-MM</u></p>
+              <p><b>Data Type (Units):</b> Value</p>
+              <p><b>Level: </b> Value</p>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+    <div>
+      <button class="buttonColor" mat-button matStepperPrevious>Back</button>
+      <button class="buttonColor" mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Color Map Menu</ng-template>
+    <div>
+      <h3>Color Map Menu</h3>
+      <p>The "Color Map Menu" features a large collection of different ways to color the globe to suit your needs. The default color map is Color Brewer 2.0 | Diverging | Non Centered | 11-class Spectral Inverse.</p>
+      <mat-divider></mat-divider>
+    </div>
+    <div>
+      <mat-list>
+        <mat-list-item>
+            <span class="bullet-point">
+              <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+          <span>
+              Click on the Legend (under the About button on the Top Row) to open the Color Map Menu.
+            </span>
+        </mat-list-item>
+        <mat-list-item>
+            <span class="bullet-point">
+              <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+          <span>
+              The Color Map Menu is organized under 6 buttons. 4 Color Brewer 2.0 options, Matlab, and Other.
+            </span>
+        </mat-list-item>
+        <mat-list-item>
+            <span class="bullet-point">
+              <mat-icon class="circle-icon">circle</mat-icon>
+            </span>
+          <span>
+              You can also click the "Inverse Color Maps" slider at the top of the Color Map Menu to use the inverse versions of the color maps.
+            </span>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div>
+      <button class="buttonColor" mat-button matStepperPrevious>Back</button>
+      <button class="buttonColor" mat-button (click)="closeTutorialMenu()">Finish</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+</div>

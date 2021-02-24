@@ -1,0 +1,6 @@
+.buttonColor,
+.buttonColor:focus,
+.buttonColor:active,
+:after {
+  background-color: white;
+}

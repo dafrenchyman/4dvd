@@ -20,7 +20,10 @@ import {
   MatTabsModule,
   MatTooltipModule
 } from "@angular/material";
+import { MatGridListModule } from "@angular/material/grid-list";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatStepperModule } from "@angular/material/stepper";
 import { MatTreeModule } from "@angular/material/tree";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -43,6 +46,7 @@ import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.compo
 import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
+import { TutorialMenuComponent } from './tutorial-menu/tutorial-menu.component';
 import { ViewComponent } from "./view.component";
 @NgModule({
   declarations: [
@@ -58,7 +62,8 @@ import { ViewComponent } from "./view.component";
     SeasonalChartComponent,
     ClimatologyGraphComponent,
     SeasonalTimeSeriesGraphComponent,
-    HistogramComponent
+    HistogramComponent,
+    TutorialMenuComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -92,7 +97,10 @@ import { ViewComponent } from "./view.component";
     NgxPrintModule,
     RouterModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    MatStepperModule,
+    MatGridListModule
   ],
   providers: [
     GetJson,
@@ -111,7 +119,8 @@ import { ViewComponent } from "./view.component";
     SeasonalChartComponent,
     ClimatologyGraphComponent,
     SeasonalTimeSeriesGraphComponent,
-    HistogramComponent
+    HistogramComponent,
+    TutorialMenuComponent
   ]
 })
 export class AppModule {}

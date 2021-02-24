@@ -1,0 +1,79 @@
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  background-color: #2196f3;
+}
+
+::ng-deep div.mat-step-icon-state-edit.mat-step-icon {
+  background-color: #2196f3;
+}
+
+#ClimateTitle {
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+.txt-center, .tooltip-demo {
+  text-align: center;
+}
+
+.bullet-point {
+  align-content: center;
+  height: 24px;
+  width: 24px;
+}
+
+::ng-deep .mat-checkbox-label {
+  color: black;
+}
+
+.demo-grid-tile {
+  background-color: lightgrey
+}
+
+.desc-grid-tile {
+  width: 100%;
+  text-align: left;
+}
+
+.circle-icon {
+  font-size: 10px;
+}
+
+.logo {
+  height: 45px;
+  width: 45px;
+  margin-top: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.title-demo {
+  position: static !important;
+}
+
+.top-buffer {
+  margin-top: 20px;
+}
+
+.bottom-buffer {
+  margin-bottom: 20px;
+}
+
+.check-buffer {
+  margin-right: 5px;
+}
+
+.btn-background {
+  background-color: #FFFFFF;
+}
+
+.tooltip-demo {
+  font-size: 12px;
+}
+
+.buttonColor,
+.buttonColor:focus,
+.buttonColor:active,
+:after {
+  background-color: white;
+}

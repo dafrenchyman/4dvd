@@ -3,6 +3,13 @@
  */
 
 import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from "@angular/animations";
+import {
   AfterViewInit,
   Component,
   ElementRef,
@@ -11,9 +18,14 @@ import {
   ViewChild,
   ViewEncapsulation
 } from "@angular/core";
+import { MatDialog } from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import * as glMatrix from "gl-matrix";
 import { ClickOutsideModule } from "ng-click-outside";
 import { ChangeContext, Options } from "ng5-slider";
+import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { Controller } from "./controller";
+import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
 import { Gl } from "./gl";
 import { GlMatrix } from "./GlMatrix";
@@ -21,22 +33,12 @@ import { Helpers } from "./helpers";
 import { Model } from "./model";
 import { GlobeViewType, Settings } from "./settings";
 import { Shaders } from "./Shaders";
+import { TimeseriesMenuComponent } from "./timeseries-menu.component";
+import { TutorialMenuComponent } from "./tutorial-menu/tutorial-menu.component";
 import { UI } from "./ui";
 import { WebGLProgramEnh } from "./WebGLProgramEnh";
 import { WebGLTextureEnh } from "./WebGLTextureEnh";
 
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from "@angular/animations";
-import { MatDialog } from "@angular/material";
-import * as glMatrix from "gl-matrix";
-import { ColorMapMenuComponent } from "./color-map-menu.component";
-import { DatasetTreeComponent } from "./dataset-tree.component";
-import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 declare var jQuery: any;
 
 @Component({
@@ -833,7 +835,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   OpenColorMapDialog() {
     const dialogRef = this.dialog.open(ColorMapMenuComponent, {
-      data: this._model.colorMap
+      data: this._model.colorMap,
+      autoFocus: false
     });
     dialogRef.afterClosed().subscribe(colorMap => {
       if (colorMap != null) {
@@ -896,7 +899,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(getJson: GetJson, public dialog: MatDialog) {
+  constructor(
+    getJson: GetJson,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {
     this.inCanvas = false;
     this.inMenu = false;
     this._getJson = getJson;
@@ -927,6 +934,24 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this.Shaders = new Shaders();
 
     // Start
+    this.openSnackBar();
+  }
+
+  private openSnackBar() {
+    const message = "New to 4DVD? Check out the tutorials!";
+    const action = "Go";
+
+    const snack = this._snackBar.open(message, action, {
+      duration: 1000 * 10 // show snackbar for 10 seconds
+    });
+
+    snack.onAction().subscribe(a => {
+      this.openTutorialDialog();
+    });
+  }
+
+  private openTutorialDialog() {
+    const dialogRef = this.dialog.open(TutorialMenuComponent);
   }
 
   webGLStart() {
