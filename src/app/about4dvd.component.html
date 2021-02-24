@@ -2,18 +2,13 @@
   <h2 mat-dialog-title>About 4DVD</h2>
   <mat-dialog-content>
     <div style="text-align: center; margin-bottom: 15px">
-      <h5>Basic Functions of 4DVD Tutorial</h5>
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/VFvWAFo4Lp8"
-        frameborder="0"
-        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      <p>PDF Version:</p>
-      <button mat-raised-button (click)="this.getPDF()">
-        Basic Functions of 4DVD Tutorial
+      <h5><u>New to 4DVD?</u></h5>
+      <button
+        class="buttonColor"
+        mat-raised-button
+        (click)="openTutorialDialog()"
+      >
+        Check out the 4DVD tutorials here!
       </button>
     </div>
     <mat-divider></mat-divider>
