@@ -190,7 +190,7 @@ export class TimeSeriesStatisticsComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  private closeStatistics() {
-    this.dialogRef.close();
+  private closeStatistics(menu) {
+    this.dialogRef.close(menu);
   }
 }

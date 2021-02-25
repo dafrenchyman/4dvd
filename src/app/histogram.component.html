@@ -1,9 +1,24 @@
 <mat-drawer-container
-  style="width:150vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
+  style="width:130vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
 >
-  <button mat-button [matMenuTriggerFor]="menu">
+<div class="title_text" class="col s12">
+  <div style="display:inline; float:left;">
+  <button mat-button [matMenuTriggerFor]="menu" align="left">
     <mat-icon>menu</mat-icon>
   </button>
+</div>
+<div style="display:inline; float:right;">
+  <button
+    mat-icon-button
+    (click)="this.closeHistogram('')"
+    class="closeBtn"
+    matTooltip="Close Histogram Chart"
+    
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+</div>
   <mat-menu #menu="matMenu">
     <button
       mat-menu-item
@@ -13,17 +28,15 @@
     >
       Save Graph
     </button>
-  </mat-menu>
-  <div class="title_text" class="col s12" align="right">
-    <button
-      mat-icon-button
-      (click)="this.closeHistogram()"
-      class="closeBtn"
-      matTooltip="Close Histogram Chart"
-    >
-      <mat-icon>close</mat-icon>
+    <button class="buttonColor" mat-menu-item (click)="this.closeHistogram('StatSumm')">
+      Statistical Summary
     </button>
-  </div>
+    <button class="buttonColor" mat-menu-item (click)="this.closeHistogram('LinearTrend')">
+      Linear Trend
+    </button>
+  </mat-menu>
+ 
+  
   <div id="print-section-hist">
     <div id="hist_div"></div>
   </div>

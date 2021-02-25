@@ -302,7 +302,13 @@ export class TimeseriesMenuComponent {
       data: this.multi
     });
     // return dialogRef.afterClosed();
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "LinearTrend") {
+        this.createLinearTrend();
+      } else if (result === "PlotHist") {
+        this.createHistogram();
+      }
+    });
   }
 
   private createLinearTrend() {
@@ -313,7 +319,13 @@ export class TimeseriesMenuComponent {
         model: this._model
       }
     });
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "StatSumm") {
+        this.createSummaryStatistics();
+      } else if (result === "PlotHist") {
+        this.createHistogram();
+      }
+    });
   }
 
   private createHistogram() {
@@ -324,7 +336,13 @@ export class TimeseriesMenuComponent {
         model: this._model
       }
     });
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "LinearTrend") {
+        this.createLinearTrend();
+      } else if (result === "StatSumm") {
+        this.createSummaryStatistics();
+      }
+    });
   }
 
   createCsvFromTimeseriesData() {

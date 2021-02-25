@@ -36,10 +36,10 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     { value: "10", viewValue: "October" },
     { value: "11", viewValue: "November" },
     { value: "12", viewValue: "December" },
-    { value: "13", viewValue: "DecJanFeb" },
-    { value: "14", viewValue: "MarAprMay" },
-    { value: "15", viewValue: "JunJulyAug" },
-    { value: "16", viewValue: "SepOctNov" }
+    { value: "13", viewValue: "Dec,Jan,Feb" },
+    { value: "14", viewValue: "Mar,Apr,May" },
+    { value: "15", viewValue: "Jun,Jul,Aug" },
+    { value: "16", viewValue: "Sep,Oct,Nov" }
   ];
   constructor(
     public dialog: MatDialog,
@@ -101,7 +101,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     // chart title
     svg
       .append("text")
-      .attr("x", width / 2 + 10)
+      .attr("x", width / 2 + 20)
       .attr("y", -20)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
@@ -288,7 +288,7 @@ export class HistogramComponent implements OnInit, AfterViewInit {
     this.drawHist();
   }
 
-  public closeHistogram() {
-    this.dialogRef.close();
+  public closeHistogram(menu) {
+    this.dialogRef.close(menu);
   }
 }
