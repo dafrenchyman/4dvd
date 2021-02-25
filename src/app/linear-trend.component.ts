@@ -59,7 +59,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-    this.GetData(this.currMonth, this.currlevel)
+      this.GetData(this.currMonth, this.currlevel);
     });
   }
 
