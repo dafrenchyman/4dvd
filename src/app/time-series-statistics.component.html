@@ -9,13 +9,19 @@
       printSectionId="printsection"
       ngxPrint
     >
-      Save Graph
+      Save Table
+    </button>
+    <button class="buttonColor" mat-menu-item (click)="this.closeStatistics('LinearTrend')">
+      Linear Trend
+    </button>
+    <button class="buttonColor" mat-menu-item (click)="this.closeStatistics('PlotHist')">
+      Plot Histogram
     </button>
   </mat-menu>
   <div class="title_text" class="col s12" align="top">
     <button
       mat-icon-button
-      (click)="this.closeStatistics()"
+      (click)="this.closeStatistics('')"
       class="closeBtn"
       matTooltip="Close Statistics Summary Chart"
     >

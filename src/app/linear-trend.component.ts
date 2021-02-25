@@ -58,8 +58,11 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.GetData(this.currMonth, this.currlevel);
+    setTimeout(() => {
+    this.GetData(this.currMonth, this.currlevel)
+    });
   }
+
   // Called from HTML to check for number of levels selected
   private GetLevels() {
     return this.multi;
@@ -338,7 +341,7 @@ export class LinearTrendComponent implements OnInit, AfterViewInit {
       .attr("r", 2.5)
       .attr("color", "gray");
   }
-  public closeLinearTrend() {
-    this.dialogRef.close();
+  public closeLinearTrend(menu) {
+    this.dialogRef.close(menu);
   }
 }
