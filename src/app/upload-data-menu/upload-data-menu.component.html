@@ -1,0 +1,15 @@
+<div>
+  <div>
+    <h3>LatLonVal</h3>
+    <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
+  </div>
+  <div>
+    <h3>NameUnitDateLevel</h3>
+    <input type="file" #csvReader name="Upload 2nd CSV" (change)="uploadListener($event)" accept=".csv" />
+  </div>
+</div>
+
+<div *ngIf="bothFilesUploaded()">
+<p>both files have been uploaded!</p>
+  <button (click)="submitFiles()">Submit Files</button>
+</div>
