@@ -27,7 +27,6 @@ import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { Controller } from "./controller";
 import { DatasetTreeComponent } from "./dataset-tree.component";
 import { GetJson } from "./getJson";
-import { Gl } from "./gl";
 import { GlMatrix } from "./GlMatrix";
 import { Helpers } from "./helpers";
 import { Model } from "./model";
@@ -40,6 +39,8 @@ import { WebGLProgramEnh } from "./WebGLProgramEnh";
 import { WebGLTextureEnh } from "./WebGLTextureEnh";
 
 declare var jQuery: any;
+
+// this is a test comment!
 
 @Component({
   selector: "app-climate-view",

@@ -17,8 +17,7 @@ import { About4dvdComponent } from "./about4dvd.component";
 import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { Controller } from "./controller";
 import { GetJson } from "./getJson";
-import { Model } from "./model";
-import { ViewComponent } from "./view.component";
+
 
 @Component({
   selector: "app-root",
