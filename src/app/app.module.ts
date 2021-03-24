@@ -46,7 +46,7 @@ import { SeasonalChartComponent } from "./time-series-menus/seasonal-chart.compo
 import { SeasonalTimeSeriesGraphComponent } from "./time-series-menus/seasonal-time-series-graph.component";
 import { TimeSeriesStatisticsComponent } from "./time-series-statistics.component";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
-import { TutorialMenuComponent } from './tutorial-menu/tutorial-menu.component';
+import { TutorialMenuComponent } from "./tutorial-menu/tutorial-menu.component";
 import { ViewComponent } from "./view.component";
 @NgModule({
   declarations: [

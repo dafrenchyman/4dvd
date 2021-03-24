@@ -18,7 +18,6 @@ import { ColorMapMenuComponent } from "./color-map-menu.component";
 import { Controller } from "./controller";
 import { GetJson } from "./getJson";
 
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
