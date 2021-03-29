@@ -23,6 +23,15 @@
   bottom: 20px;
   left: 20px;
   z-index: 6;
+  width: fit-content;
+  height: fit-content;
+}
+
+#GlobeToolTip {
+  position: absolute;
+  z-index: 6;
+  width: fit-content;
+  height: fit-content;
 }
 
 #LevelsBox {

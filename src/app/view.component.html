@@ -1,33 +1,14 @@
-<div
-  #ClimateSystem
-  id="ClimateSystem"
-  style="max-height:100%; z-index: 2; margin-bottom: 0;"
-  class="row"
->
+<div #ClimateSystem id="ClimateSystem" style="max-height:100%; z-index: 2; margin-bottom: 0;" class="row">
   <div id="close" class="hidden">
-    <button
-      id="closebutton"
-      mat-icon-button
+    <button id="closebutton" mat-icon-button
       style="position: absolute; left: 290px; top: 49px; z-index: 10; color: #FFFFFF; background-color: transparent"
-      (click)="selectedIndex = 0"
-      (click)="sidenav.toggle()"
-      (click)="unhide(this,'close')"
-    >
+      (click)="selectedIndex = 0" (click)="sidenav.toggle()" (click)="unhide(this,'close')">
       <mat-icon matTooltip="{{ exitsidenav }}">close</mat-icon>
     </button>
   </div>
-  <mat-sidenav-container
-    #WebglCanvas
-    style="display:block; position:absolute;  overflow:hidden"
-    id="WebglCanvas"
-  >
-    <mat-sidenav
-      id="Menu"
-      #sidenav
-      opened="false"
-      style="background-color: white; overflow:auto; width: 290px; display: flex"
-      (close)="selectedIndex = 0"
-    >
+  <mat-sidenav-container #WebglCanvas style="display:block; position:absolute;  overflow:hidden" id="WebglCanvas">
+    <mat-sidenav id="Menu" #sidenav opened="false"
+      style="background-color: white; overflow:auto; width: 290px; display: flex" (close)="selectedIndex = 0">
       <mat-tab-group [(selectedIndex)]="selectedIndex">
         <mat-tab>
           <ng-template mat-tab-label>
@@ -52,13 +33,8 @@
           <div class="section" style="margin-left: 20px;">
             <h6>Pressure Levels</h6>
             <mat-radio-group class="radio-group">
-              <mat-radio-button
-                class="radio-button"
-                *ngFor="let level of GetLevels()"
-                [checked]="level.Selected"
-                [value]="level.Name"
-                (change)="ChangeLevel(level.Level_ID)"
-              >
+              <mat-radio-button class="radio-button" *ngFor="let level of GetLevels()" [checked]="level.Selected"
+                [value]="level.Name" (change)="ChangeLevel(level.Level_ID)">
                 {{ this._model.settings.levelCheck(level.Name) }}
               </mat-radio-button>
             </mat-radio-group>
@@ -77,25 +53,13 @@
             <mat-label>Year</mat-label>
             <mat-list>
               <mat-list-item>
-                <mat-slider
-                  [(ngModel)]="yearSlider"
-                  [max]="GetMaxYear()"
-                  [min]="GetMinYear()"
-                  [step]="1"
-                  [thumbLabel]="true"
-                  [tickInterval]="tickInterval"
-                  (change)="ChangeYear()"
-                >
+                <mat-slider [(ngModel)]="yearSlider" [max]="GetMaxYear()" [min]="GetMinYear()" [step]="1"
+                  [thumbLabel]="true" [tickInterval]="tickInterval" (change)="ChangeYear()">
                 </mat-slider>
               </mat-list-item>
               <mat-list-item>
                 <mat-form-field>
-                  <input
-                    matInput
-                    [(ngModel)]="yearSlider"
-                    (change)="ChangeYear()"
-                    type="number"
-                  />
+                  <input matInput [(ngModel)]="yearSlider" (change)="ChangeYear()" type="number" />
                 </mat-form-field>
               </mat-list-item>
             </mat-list>
@@ -107,15 +71,8 @@
             <mat-label>Month</mat-label>
             <mat-list>
               <mat-list-item>
-                <mat-select
-                  placeholder="Month"
-                  [(value)]="currMonth"
-                  (selectionChange)="ChangeMonth()"
-                >
-                  <mat-option
-                    *ngFor="let month of months"
-                    [value]="month.value"
-                  >
+                <mat-select placeholder="Month" [(value)]="currMonth" (selectionChange)="ChangeMonth()">
+                  <mat-option *ngFor="let month of months" [value]="month.value">
                     {{ month.viewValue }}
                   </mat-option>
                 </mat-select>
@@ -135,12 +92,8 @@
           <div class="MatButton2">
             <mat-list>
               <mat-list-item>
-                <button
-                  mat-raised-button
-                  (click)="OpenColorMapDialog()"
-                  matTooltip="{{ colorMapDesc }}"
-                  matTooltipPosition="{{ displayLoc }}"
-                >
+                <button mat-raised-button (click)="OpenColorMapDialog()" matTooltip="{{ colorMapDesc }}"
+                  matTooltipPosition="{{ displayLoc }}">
                   <mat-icon>palette</mat-icon>
                   ColorMaps
                 </button>
@@ -152,84 +105,54 @@
 
             <!-- Smoothed Gridboxes -->
             <mat-list-item style="color: black ">
-              <mat-slide-toggle
-                matTooltip="{{ gridboxDesc }}"
-                matTooltipPosition="{{ displayLoc }}"
-                class="example-margin"
-                [color]="'primary'"
-                [checked]="viewSettingsSelected.smoothGrid"
-                (change)="changeSmoothGrid()"
-              >
+              <mat-slide-toggle matTooltip="{{ gridboxDesc }}" matTooltipPosition="{{ displayLoc }}"
+                class="example-margin" [color]="'primary'" [checked]="viewSettingsSelected.smoothGrid"
+                (change)="changeSmoothGrid()">
                 Smoothed Gridboxes
               </mat-slide-toggle>
             </mat-list-item>
 
             <!-- Pacific Centered -->
             <mat-list-item>
-              <mat-slide-toggle
-                class="example-margin"
-                matTooltip="{{ pacificDesc }}"
-                matTooltipPosition="{{ displayLoc }}"
-                [color]="'primary'"
-                [checked]="viewSettingsSelected.pacificCentered"
-                (change)="changePacificCentered()"
-              >
+              <mat-slide-toggle class="example-margin" matTooltip="{{ pacificDesc }}"
+                matTooltipPosition="{{ displayLoc }}" [color]="'primary'"
+                [checked]="viewSettingsSelected.pacificCentered" (change)="changePacificCentered()">
                 Pacific Centered
               </mat-slide-toggle>
             </mat-list-item>
 
             <!-- Minor Islands -->
             <mat-list-item>
-              <mat-slide-toggle
-                class="example-margin"
-                matTooltip="{{ islandDesc }}"
-                matTooltipPosition="{{ displayLoc }}"
-                [color]="'primary'"
-                [checked]="viewSettingsSelected.minorIslands"
-                (change)="changeMinorIslandsLines()"
-              >
+              <mat-slide-toggle class="example-margin" matTooltip="{{ islandDesc }}"
+                matTooltipPosition="{{ displayLoc }}" [color]="'primary'" [checked]="viewSettingsSelected.minorIslands"
+                (change)="changeMinorIslandsLines()">
                 Minor Islands
               </mat-slide-toggle>
             </mat-list-item>
 
             <!-- Lat/Lon Lines -->
             <mat-list-item>
-              <mat-slide-toggle
-                class="example-margin"
-                matTooltip="{{ latLonDesc }}"
-                matTooltipPosition="{{ displayLoc }}"
-                [color]="'primary'"
-                [checked]="viewSettingsSelected.latlonlines"
-                (change)="changeLatlonlines()"
-              >
+              <mat-slide-toggle class="example-margin" matTooltip="{{ latLonDesc }}"
+                matTooltipPosition="{{ displayLoc }}" [color]="'primary'" [checked]="viewSettingsSelected.latlonlines"
+                (change)="changeLatlonlines()">
                 Lat/Lon Lines
               </mat-slide-toggle>
             </mat-list-item>
 
             <!-- Geographical Lines -->
             <mat-list-item>
-              <mat-slide-toggle
-                class="example-margin"
-                matTooltip="{{ geoLineDes }}"
-                matTooltipPosition="{{ displayLoc }}"
-                [color]="'primary'"
-                [checked]="viewSettingsSelected.geolines"
-                (change)="changeGeolines()"
-              >
+              <mat-slide-toggle class="example-margin" matTooltip="{{ geoLineDes }}"
+                matTooltipPosition="{{ displayLoc }}" [color]="'primary'" [checked]="viewSettingsSelected.geolines"
+                (change)="changeGeolines()">
                 Geographical Lines
               </mat-slide-toggle>
             </mat-list-item>
 
             <!-- Time Zones -->
             <mat-list-item>
-              <mat-slide-toggle
-                class="example-margin"
-                matTooltip="{{ timeZoneDesc }}"
-                matTooltipPosition="{{ displayLoc }}"
-                [color]="'primary'"
-                [checked]="viewSettingsSelected.timezones"
-                (change)="changeTimezones()"
-              >
+              <mat-slide-toggle class="example-margin" matTooltip="{{ timeZoneDesc }}"
+                matTooltipPosition="{{ displayLoc }}" [color]="'primary'" [checked]="viewSettingsSelected.timezones"
+                (change)="changeTimezones()">
                 Time Zones
               </mat-slide-toggle>
             </mat-list-item>
@@ -238,23 +161,12 @@
           <mat-divider></mat-divider>
 
           <!-- Bump Mapping -->
-          <div
-            class="section"
-            style="margin-left: 20px;"
-            matTooltip="{{ bumpDesc }}"
-            matTooltipPosition="{{ displayLoc }}"
-          >
+          <div class="section" style="margin-left: 20px;" matTooltip="{{ bumpDesc }}"
+            matTooltipPosition="{{ displayLoc }}">
             <h5><u>Bump Mapping</u></h5>
-            <mat-radio-group
-              class="radio-group"
-              [(ngModel)]="viewSettingsSelected.bumpMapping"
-            >
-              <mat-radio-button
-                class="radio-button"
-                *ngFor="let curr of viewSettingsOptions.bumpMapping"
-                [value]="curr"
-                (change)="changeBumpMapping(curr)"
-              >
+            <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.bumpMapping">
+              <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.bumpMapping" [value]="curr"
+                (change)="changeBumpMapping(curr)">
                 {{ curr }}
               </mat-radio-button>
             </mat-radio-group>
@@ -262,23 +174,12 @@
           <mat-divider></mat-divider>
 
           <!-- Globe View -->
-          <div
-            class="section"
-            style="margin-left: 20px;"
-            matTooltip="{{ viewDesc }}"
-            matTooltipPosition="{{ displayLoc }}"
-          >
+          <div class="section" style="margin-left: 20px;" matTooltip="{{ viewDesc }}"
+            matTooltipPosition="{{ displayLoc }}">
             <h5><u>Globe View</u></h5>
-            <mat-radio-group
-              class="radio-group"
-              [(ngModel)]="viewSettingsSelected.view"
-            >
-              <mat-radio-button
-                class="radio-button"
-                *ngFor="let curr of viewSettingsOptions.view"
-                [value]="curr"
-                (change)="selectView(curr)"
-              >
+            <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.view">
+              <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.view" [value]="curr"
+                (change)="selectView(curr)">
                 {{ curr }}
               </mat-radio-button>
             </mat-radio-group>
@@ -286,23 +187,12 @@
           <mat-divider></mat-divider>
 
           <!-- Coasts -->
-          <div
-            class="section"
-            style="margin-left: 20px;"
-            matTooltip="{{ coastDesc }}"
-            matTooltipPosition="{{ displayLoc }}"
-          >
+          <div class="section" style="margin-left: 20px;" matTooltip="{{ coastDesc }}"
+            matTooltipPosition="{{ displayLoc }}">
             <h5><u>Coasts</u></h5>
-            <mat-radio-group
-              class="radio-group"
-              [(ngModel)]="viewSettingsSelected.coasts"
-            >
-              <mat-radio-button
-                class="radio-button"
-                *ngFor="let curr of viewSettingsOptions.coasts"
-                [value]="curr"
-                (change)="selectCoasts(curr)"
-              >
+            <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.coasts">
+              <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.coasts" [value]="curr"
+                (change)="selectCoasts(curr)">
                 {{ curr }}
               </mat-radio-button>
             </mat-radio-group>
@@ -310,23 +200,12 @@
           <mat-divider></mat-divider>
 
           <!-- Rivers -->
-          <div
-            class="section"
-            style="margin-left: 20px;"
-            matTooltip="{{ riverDesc }}"
-            matTooltipPosition="{{ displayLoc }}"
-          >
+          <div class="section" style="margin-left: 20px;" matTooltip="{{ riverDesc }}"
+            matTooltipPosition="{{ displayLoc }}">
             <h5><u>Rivers</u></h5>
-            <mat-radio-group
-              class="radio-group"
-              [(ngModel)]="viewSettingsSelected.rivers"
-            >
-              <mat-radio-button
-                class="radio-button"
-                *ngFor="let curr of viewSettingsOptions.rivers"
-                [value]="curr"
-                (change)="selectRiver(curr)"
-              >
+            <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.rivers">
+              <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.rivers" [value]="curr"
+                (change)="selectRiver(curr)">
                 {{ curr }}
               </mat-radio-button>
             </mat-radio-group>
@@ -334,23 +213,12 @@
           <mat-divider></mat-divider>
 
           <!-- Lakes -->
-          <div
-            class="section"
-            style="margin-left: 20px;"
-            matTooltip="{{ lakeDesc }}"
-            matTooltipPosition="{{ displayLoc }}"
-          >
+          <div class="section" style="margin-left: 20px;" matTooltip="{{ lakeDesc }}"
+            matTooltipPosition="{{ displayLoc }}">
             <h5><u>Lakes</u></h5>
-            <mat-radio-group
-              class="radio-group"
-              [(ngModel)]="viewSettingsSelected.lakes"
-            >
-              <mat-radio-button
-                class="radio-button"
-                *ngFor="let curr of viewSettingsOptions.lakes"
-                [value]="curr"
-                (change)="selectLakes(curr)"
-              >
+            <mat-radio-group class="radio-group" [(ngModel)]="viewSettingsSelected.lakes">
+              <mat-radio-button class="radio-button" *ngFor="let curr of viewSettingsOptions.lakes" [value]="curr"
+                (change)="selectLakes(curr)">
                 {{ curr }}
               </mat-radio-button>
             </mat-radio-group>
@@ -364,14 +232,11 @@
           <div class="TabHeading">
             <h5>Information</h5>
           </div>
-          <div
-            *ngIf="
+          <div *ngIf="
               this._model != null &&
               this._model.settings != null &&
               this._model.settings.Dataset != null
-            "
-            style="text-align: center"
-          >
+            " style="text-align: center">
             <a href="{{ this._model.settings.Dataset.OriginalLocation }}">
               Download Original Data
             </a>
@@ -391,83 +256,46 @@
             <h5>4DVD Links</h5>
           </div>
           <div style="text-align: center">
-            <a href="https://www.sdsu.edu/" target="_blank"
-              >San Diego State University</a
-            >
+            <a href="https://www.sdsu.edu/" target="_blank">San Diego State University</a>
             <br />
-            <a href="https://c2s2.sdsu.edu/" target="_blank"
-              >SDSU Climate Science</a
-            >
+            <a href="https://c2s2.sdsu.edu/" target="_blank">SDSU Climate Science</a>
             <br />
           </div>
         </mat-tab>
       </mat-tab-group>
     </mat-sidenav>
 
-    <button
-      mat-button
-      id="sideNavButton"
-      [disableRipple]="true"
-      class="example-fab buttonColor"
-      (click)="sidenav.toggle()"
-      (click)="unhide(this,'close')"
-      matTooltip="Settings"
-      matTooltipPosition="below"
-    >
+    <button mat-button id="sideNavButton" [disableRipple]="true" class="example-fab buttonColor"
+      (click)="sidenav.toggle()" (click)="unhide(this,'close')" matTooltip="Settings" matTooltipPosition="below">
       {{ onClick("close") }}
       <mat-icon>menu</mat-icon>
     </button>
     <div id="ClimateDate">
-      <span
-        class="levelLabel"
-        (click)="changeState('level')"
-        style="cursor: pointer;"
-        matTooltip="Click to change pressure level"
-        >{{ GetLevelLabel() }}</span
-      >
+      <span class="levelLabel" (click)="changeState('level')" style="cursor: pointer;"
+        matTooltip="Click to change pressure level">{{ GetLevelLabel() }}</span>
       |
-      <span
-        class="dateLabel"
-        (click)="changeState('date')"
-        style="cursor: pointer"
-        matTooltip="Click to change date"
-        >{{ GetDateLabel() }}</span
-      >
+      <span class="dateLabel" (click)="changeState('date')" style="cursor: pointer" matTooltip="Click to change date">{{
+        GetDateLabel() }}</span>
     </div>
-    <div
-      [@EnterLeave]="currentStateLevel"
-      style="max-width: 250px; max-height: 310px; z-index: 10; position: absolute;"
-      [exclude]="'.dateLabel,.levelLabel'"
-      [excludeBeforeClick]="true"
-      (clickOutside)="outsideClick('level')"
-    >
+    <div [@EnterLeave]="currentStateLevel" style="max-width: 250px; max-height: 310px; z-index: 10; position: absolute;"
+      [exclude]="'.dateLabel,.levelLabel'" [excludeBeforeClick]="true" (clickOutside)="outsideClick('level')">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Air Pressure Levels</mat-card-title>
         </mat-card-header>
         <mat-card-content style="overflow-y: auto; height: 310px">
           <mat-radio-group class="radio-group">
-            <mat-radio-button
-              class="radio-button"
-              *ngFor="let level of GetLevels()"
-              [checked]="level.Selected"
-              [value]="level.Name"
-              (change)="ChangeLevel(level.Level_ID)"
-              (click)="changeState('level')"
-            >
+            <mat-radio-button class="radio-button" *ngFor="let level of GetLevels()" [checked]="level.Selected"
+              [value]="level.Name" (change)="ChangeLevel(level.Level_ID)" (click)="changeState('level')">
               {{ level.Name }}
             </mat-radio-button>
           </mat-radio-group>
         </mat-card-content>
       </mat-card>
     </div>
-    <div
-      [@EnterLeave]="currentStateDate"
-      style="max-width: 250px; max-height: 310px;z-index: 10;"
-      [exclude]="'.dateLabel,.levelLabel,.mat-select-panel'"
-      [excludeBeforeClick]="true"
-      (clickOutside)="outsideClick('date')"
-    >
+    <div [@EnterLeave]="currentStateDate" style="max-width: 250px; max-height: 310px;z-index: 10;"
+      [exclude]="'.dateLabel,.levelLabel,.mat-select-panel'" [excludeBeforeClick]="true"
+      (clickOutside)="outsideClick('date')">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Date</mat-card-title>
@@ -477,25 +305,13 @@
             <mat-label>Year</mat-label>
             <mat-list>
               <mat-list-item>
-                <mat-slider
-                  [(ngModel)]="yearSlider"
-                  [max]="GetMaxYear()"
-                  [min]="GetMinYear()"
-                  [step]="1"
-                  [thumbLabel]="true"
-                  [tickInterval]="tickInterval"
-                  (change)="ChangeYear()"
-                >
+                <mat-slider [(ngModel)]="yearSlider" [max]="GetMaxYear()" [min]="GetMinYear()" [step]="1"
+                  [thumbLabel]="true" [tickInterval]="tickInterval" (change)="ChangeYear()">
                 </mat-slider>
               </mat-list-item>
               <mat-list-item id="yearInput">
                 <mat-form-field>
-                  <input
-                    matInput
-                    [(ngModel)]="yearSlider"
-                    (change)="ChangeYear()"
-                    type="number"
-                  />
+                  <input matInput [(ngModel)]="yearSlider" (change)="ChangeYear()" type="number" />
                 </mat-form-field>
               </mat-list-item>
             </mat-list>
@@ -507,27 +323,16 @@
             <mat-label>Month</mat-label>
             <mat-list>
               <mat-list-item>
-                <mat-select
-                  placeholder="Month"
-                  [(value)]="currMonth"
-                  (selectionChange)="ChangeMonth()"
-                >
-                  <mat-option
-                    *ngFor="let month of months"
-                    [value]="month.value"
-                  >
+                <mat-select placeholder="Month" [(value)]="currMonth" (selectionChange)="ChangeMonth()">
+                  <mat-option *ngFor="let month of months" [value]="month.value">
                     {{ month.viewValue }}
                   </mat-option>
                 </mat-select>
               </mat-list-item>
             </mat-list>
           </div>
-          <button
-            mat-raised-button
-            (click)="changeState('date')"
-            style="display: flex; align-items: center; justify-content: center;"
-            class="buttonColor"
-          >
+          <button mat-raised-button (click)="changeState('date')"
+            style="display: flex; align-items: center; justify-content: center;" class="buttonColor">
             Close
           </button>
         </mat-card-content>
@@ -535,42 +340,31 @@
     </div>
 
     <div *ngIf="dataAvail">
-      <button
-        (click)="toggleSlider()"
-        mat-button
-        matTooltip="Legend slider"
-        class="openLegendSlider"
-        style="position: absolute; z-index: 6; top: 10px; right: 20px"
-      >
+      <button (click)="toggleSlider()" mat-button matTooltip="Legend slider" class="openLegendSlider"
+        style="position: absolute; z-index: 6; top: 10px; right: 20px">
         <mat-icon>{{ sliderBtnIcon }}</mat-icon>
       </button>
       <div class="custom-slider">
-        <ng5-slider
-          id="legendSlider"
-          [(value)]="sliderMinVal"
-          [(highValue)]="sliderMaxVal"
-          [options]="options"
-          (userChangeEnd)="onUserChangeEnd($event)"
-        ></ng5-slider>
+        <ng5-slider id="legendSlider" [(value)]="sliderMinVal" [(highValue)]="sliderMaxVal" [options]="options"
+          (userChangeEnd)="onUserChangeEnd($event)"></ng5-slider>
       </div>
     </div>
 
-    <div
-      id="Legend"
-      (click)="OpenColorMapDialog()"
-      style="cursor: pointer"
-      matTooltip="Click to change color map"
-      matTooltipPosition="above"
-    ></div>
+    <div id="Legend" (click)="OpenColorMapDialog()" style="cursor: pointer" matTooltip="Click to change color map"
+      matTooltipPosition="above"></div>
 
-    <div
-      id="ClimateTitle"
-      (click)="OpenDataTreeDialog()"
-      matTooltip="{{ datasetTitle }}"
-      matTooltipPosition="below"
-      style="cursor: pointer;"
-    >
+    <div id="ClimateTitle" (click)="OpenDataTreeDialog()" matTooltip="{{ datasetTitle }}" matTooltipPosition="below"
+      style="cursor: pointer;">
       {{ GetTitle() }}
+    </div>
+    <div id="GlobeToolTip" cdkDrag (cdkDragEnded)="dragEnded($event)" *ngIf="isGlobeToolTipEnabled">
+      <mat-card *ngIf="GridboxSelected()" style="padding: 10px; padding-top: 0px; opacity: 0.8;">
+        <div style="display: flex; align-content: center; justify-content: center;">
+          <mat-icon>drag_handle</mat-icon>
+        </div>
+        {{ getTimeSeriesBoxValue() }}
+        {{ this._model.settings.JustUnits() }}
+      </mat-card>
     </div>
 
     <div id="TimeseriesBox">
@@ -578,12 +372,11 @@
         <mat-list>
           <mat-list-item>
             {{
-              this._model.settings.GenerateSimpleTitle(
-                this._model.settings.FullName
-              )
+            this._model.settings.GenerateSimpleTitle(
+            this._model.settings.FullName
+            )
             }}: {{ getTimeSeriesBoxValue() }}
-            {{ this._model.settings.JustUnits() }}</mat-list-item
-          >
+            {{ this._model.settings.JustUnits() }}</mat-list-item>
           <mat-list-item>
             Lat: {{ this._model.settings.GetLatWithDir() }}
           </mat-list-item>
@@ -591,24 +384,16 @@
             Lon: {{ this._model.settings.GetLonWithDir() }}
           </mat-list-item>
           <mat-list-item>
-            <button
-              class="buttonColor"
-              mat-raised-button
-              (click)="OpenTimeseriesDialog()"
-            >
+            <button class="buttonColor" mat-raised-button (click)="OpenTimeseriesDialog()">
               Time Series
             </button>
           </mat-list-item>
         </mat-list>
       </mat-card>
     </div>
-    <canvas
-      #ClimateGl
-      id="ClimateGl"
-      (mouseleave)="inCanvas = false"
-      (mouseenter)="inCanvas = true"
-      style="position: absolute; z-index: 5; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;"
-      ><!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
+    <canvas #ClimateGl id="ClimateGl" (mouseleave)="inCanvas = false" (mouseenter)="inCanvas = true"
+      style="position: absolute; z-index: 5; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
+      <!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
     </canvas>
   </mat-sidenav-container>
 </div>

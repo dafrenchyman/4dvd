@@ -1,43 +1,16 @@
-<div
-  #TabMenuRow
-  id="tabMenuRow"
-  class="row"
-  style="height:100vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
->
-  <div
-    #TabMenu
-    class="row blue white-text"
-    id="TabMenu"
-    style="margin-bottom: 0px; z-index: 10;"
-  >
-    <img
-      src="/assets/4DVDLogoV1.png"
-      alt="4DVD Logo"
-      onClick="window.location.href=window.location.href"
-      style="height: 45px; width: 45px; margin-top: 5px; margin-left: 5px; cursor: pointer"
-      align="left"
-      matTooltip="Refresh Page"
-    />
-    <div
-      class="col s6 blue white-text"
-      style="position: absolute; margin-left: 50px"
-    >
-      <h5>{{ title }}</h5>
-    </div>
-    <div
-      id="QuickButtons"
-      class="col s6"
-      align="right"
-      style="float: right; display: inline-block"
-    >
-      <div id="Top Dataset" class="col s3">
-        <button
-          class="Top_Dataset"
-          mat-button
-          [matMenuTriggerFor]="TopDataset"
-          matTooltip="Choose Dataset"
-          matTooltipPosition="right"
-        >
+<div #TabMenuRow id="tabMenuRow" class="row" style="height:100vh; margin-bottom: 0px; overflow:hidden; z-index: 0;">
+  <div #TabMenu class="row blue white-text" id="TabMenu" style="margin-bottom: 0px; z-index: 10;">
+    <span>
+      <img id="Logo" src="/assets/4DVDLogoV1.png" alt="4DVD Logo" onClick="window.location.href=window.location.href"
+        matTooltip="Refresh Page" />
+      <span class="col s6 blue white-text" style="position: absolute; width: fit-content; top: 2px;">
+        <h5 style="width: fit-content;">{{ title }}</h5>
+      </span>
+    </span>
+    <div id="QuickButtons">
+      <span id="Top_Dataset">
+        <button class="Top_Dataset" mat-button [matMenuTriggerFor]="TopDataset" matTooltip="Choose Dataset"
+          matTooltipPosition="right">
           Top Datasets
         </button>
         <mat-menu #TopDataset="matMenu">
@@ -53,41 +26,33 @@
             <font size="3" color="Gray">20CR Monthly at 1,000 millibar</font>
           </button>
         </mat-menu>
-      </div>
-      <div id="Dataset" class="col s3">
-        <button
-          class="Dataset"
-          mat-button
-          (click)="climate.OpenDataTreeDialog()"
-          matTooltip="Choose Dataset"
-          matTooltipPosition="right"
-        >
+      </span>
+      <span id="Dataset">
+        <button class="Dataset" mat-button (click)="climate.OpenDataTreeDialog()" matTooltip="Choose Dataset"
+          matTooltipPosition="right">
           Datasets
         </button>
-      </div>
-      <div id="DownloadButton" class="col s3">
-        <button
-          class="DataDownload"
-          mat-button
-          (click)="climate.createCsvFromGriddedData()"
-          matTooltip="Download Gridded Data"
-          matTooltipPosition="right"
-        >
+      </span>
+      <span id="DownloadButton">
+        <button class="DataDownload" mat-button (click)="climate.createCsvFromGriddedData()"
+          matTooltip="Download Gridded Data" matTooltipPosition="right">
           Download Data
         </button>
-      </div>
+      </span>
 
-      <div id="AboutButton" class="col s3" align="left">
-        <button
-          class="AboutButton"
-          mat-button
-          (click)="OpenAboutDialog()"
-          matTooltip="About 4DVD"
-          matTooltipPosition="right"
-        >
+      <span id="GlobeToolTipSlider">
+        <mat-slide-toggle matTooltip="{{GlobeToolTipMessage}}" matTooltipPosition="below"
+          [(ngModel)]="climate.isGlobeToolTipEnabled">Globe ToolTips
+        </mat-slide-toggle>
+      </span>
+
+
+      <span id="AboutButton">
+        <button class="AboutButton" mat-button (click)="OpenAboutDialog()" matTooltip="About 4DVD"
+          matTooltipPosition="right">
           <mat-icon>info</mat-icon> About
         </button>
-      </div>
+      </span>
     </div>
   </div>
 

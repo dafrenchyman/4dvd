@@ -179,7 +179,7 @@ export class UI {
     earthRotationMatrix_x,
     earthRotationMatrix_y,
     event
-  ) {
+  ): boolean {
     const canvas = jQuery("#ClimateGl")[0];
     this.mouseDown = false;
     if (!this.MouseDragging && !this.inMenu) {
@@ -335,6 +335,7 @@ export class UI {
           this._settings.CurrGridBoxLat = lat;
           this._settings.CurrGridBoxLon = lon;
           this._settings.CurrGridBoxValue = value;
+          return true;
           // jQuery( "#slider_year" ).slider(y) );
           // 				LoadTimeseriesData(LayerSettings);
 
@@ -353,6 +354,7 @@ export class UI {
           this._settings.CurrGridBoxLat = null;
           this._settings.CurrGridBoxLon = null;
           this._settings.CurrGridBoxValue = null;
+          return false;
           // document.getElementById("gridBoxSize").style.display = "none";
         }
       }

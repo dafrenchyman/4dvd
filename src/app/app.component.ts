@@ -28,6 +28,7 @@ import { ViewComponent } from "./view.component";
 export class AppComponent {
   private _getJson: GetJson;
   title = "4DVD (4-Dimensional Visual Delivery of Big Climate Data)";
+  GlobeToolTipMessage = "Toggle Globe ToolTips - Toggles the ability to display a draggable box with the data value at the location you click on the earth";
 
   constructor(
     getJson: GetJson,
