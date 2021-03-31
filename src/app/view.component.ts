@@ -36,6 +36,7 @@ import { Shaders } from "./Shaders";
 import { TimeseriesMenuComponent } from "./timeseries-menu.component";
 import { TutorialMenuComponent } from "./tutorial-menu/tutorial-menu.component";
 import { UI } from "./ui";
+import { UploadDataMenuComponent } from "./upload-data-menu/upload-data-menu.component";
 import { WebGLProgramEnh } from "./WebGLProgramEnh";
 import { WebGLTextureEnh } from "./WebGLTextureEnh";
 
@@ -206,6 +207,37 @@ export class ViewComponent implements OnInit, AfterViewInit {
     ceil: 38,
     vertical: true
   };
+
+  usingUserData = false;
+
+  public isUsingUserData() {
+    return this.usingUserData;
+  }
+
+  public OpenUploadDataMenu() {
+    const dialogRef = this.dialog.open(UploadDataMenuComponent, {
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(dataset => {
+      if (dataset.usingUserData) {
+        this.usingUserData = true;
+        this._model.settings.userLatLonVal = dataset.getDatasetDataset;
+        this._controller.loadUserLevels(
+          dataset.dataset,
+          dataset.getLevelsDataset
+        );
+        this._controller.loadUserDataset(
+          dataset.dataset,
+          dataset.dataset.StartDate,
+          1,
+          dataset.getDatasetDataset
+        );
+        setTimeout(() => {
+          this.setSlider();
+        }, 700);
+      }
+    });
+  }
 
   // Waits for the dataset to be updated to correctly
   // update the legend slider with up to date data
@@ -714,6 +746,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Precipitation|Single Level|Monthly Mean")
     );
+    this.usingUserData = false;
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
     setTimeout(() => {
@@ -726,6 +759,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Non-Gaussian|Air Temperature|Monthly Mean")
     );
+    this.usingUserData = false;
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
     setTimeout(() => {
@@ -738,6 +772,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes("Global Surface Temperature|Monthly Mean")
     );
+    this.usingUserData = false;
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
     setTimeout(() => {
@@ -764,6 +799,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
           myObj => myObj.FullName === dataset.FullName
         );
         if (selectedDataset != null) {
+          this.usingUserData = false;
           this._controller.loadLevels(selectedDataset);
           this._controller.loadDataset(
             selectedDataset,

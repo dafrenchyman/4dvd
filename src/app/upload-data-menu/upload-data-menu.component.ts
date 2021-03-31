@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {Dataset} from "../Dataset";
-import {LatLonValCSV} from "./LatLonValCSV";
-import {NameUnitsDateLevel} from "./NameUnitsDateLevel";
-import {MatDialogRef} from "@angular/material/dialog";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
+import { Dataset } from "../Dataset";
+import { LatLonValCSV } from "./LatLonValCSV";
+import { NameUnitsDateLevel } from "./NameUnitsDateLevel";
 
 @Component({
   selector: "app-upload-data-menu",
@@ -10,12 +10,10 @@ import {MatDialogRef} from "@angular/material/dialog";
   styleUrls: ["./upload-data-menu.component.css"]
 })
 export class UploadDataMenuComponent implements OnInit {
-
-  user_level_id = [];
-  user_name_and_level_id = [];
-
   userLatLonVal = [];
   userNameUnit = [];
+  validCSV1 = false;
+  validCSV2 = false;
 
   public records: any[] = [];
   @ViewChild('csvReader') csvReader: any;
@@ -23,9 +21,7 @@ export class UploadDataMenuComponent implements OnInit {
 
   ngOnInit() {}
 
-  uploadListener($event: any): void {
-
-    const text = [];
+  uploadCSV1($event: any): void {
     const files = $event.srcElement.files;
 
     if (this.isValidCSVFile(files[0])) {
@@ -40,11 +36,49 @@ export class UploadDataMenuComponent implements OnInit {
 
         const headersRow = this.getHeaderArray(csvRecordsArray);
 
-        this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        if (csvRecordsArray.length === 16382 && headersRow.length === 4) {
+          this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+          this.validCSV1 = true;
+        } else {
+          this.validCSV1 = false;
+        }
       };
 
       reader.onerror = () => {
-        console.log('error is occured while reading file!');
+        console.log('error has occurred while reading file!');
+      };
+
+    } else {
+      alert("Please import valid .csv file.");
+      this.fileReset();
+    }
+  }
+
+  uploadCSV2($event: any): void {
+    const files = $event.srcElement.files;
+
+    if (this.isValidCSVFile(files[0])) {
+
+      const input = $event.target;
+      const reader = new FileReader();
+      reader.readAsText(input.files[0]);
+
+      reader.onload = () => {
+        const csvData = reader.result;
+        const csvRecordsArray = (csvData as string).split(/\r\n|\n/);
+
+        const headersRow = this.getHeaderArray(csvRecordsArray);
+
+        if (csvRecordsArray.length === 3 && headersRow.length === 5) {
+          this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+          this.validCSV2 = true;
+        } else {
+          this.validCSV2 = false;
+        }
+      };
+
+      reader.onerror = () => {
+        console.log('error has occurred while reading file!');
       };
 
     } else {
@@ -57,23 +91,22 @@ export class UploadDataMenuComponent implements OnInit {
     const csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      const curruntRecord = (csvRecordsArray[i] as string).split(',');
-      if (curruntRecord.length === headerLength) {
+      const currRecord = (csvRecordsArray[i] as string).split(',');
+      if (currRecord.length === headerLength) {
         if (headerLength === 4) {
           const csvRecord: LatLonValCSV = new LatLonValCSV();
-          csvRecord.GridBox_ID = curruntRecord[0].trim();
-          csvRecord.Lat = curruntRecord[1].trim();
-          csvRecord.Lon = curruntRecord[2].trim();
-          csvRecord.Value = curruntRecord[3].trim();
+          csvRecord.GridBox_ID = currRecord[0].trim();
+          csvRecord.Lat = currRecord[1].trim();
+          csvRecord.Lon = currRecord[2].trim();
+          csvRecord.Value = currRecord[3].trim();
           csvArr.push(csvRecord);
         } else {
           const csvRecord: NameUnitsDateLevel = new NameUnitsDateLevel();
-          csvRecord.FullName = curruntRecord[0].trim();
-          csvRecord.Units = curruntRecord[1].trim();
-          csvRecord.DateStart = curruntRecord[2].trim();
-          csvRecord.DateEnd = curruntRecord[3].trim();
-          csvRecord.Level = curruntRecord[4].trim();
-          console.log("csvRecord: ", csvRecord);
+          csvRecord.FullName = currRecord[0].trim();
+          csvRecord.Units = currRecord[1].trim();
+          csvRecord.DateStart = currRecord[2].trim();
+          csvRecord.DateEnd = currRecord[3].trim();
+          csvRecord.Level = currRecord[4].trim();
           csvArr.push(csvRecord);
         }
       }
@@ -123,32 +156,9 @@ export class UploadDataMenuComponent implements OnInit {
 
     const getLevelsDataset = new Object({Level_ID: ["1"], Name: ["Level 1"]});
     const getDatasetDataset = new Object({GridBox_ID: this.userLatLonVal.map((a) => parseInt(a.GridBox_ID, 10)), Lat: this.userLatLonVal.map((a) => parseInt(a.Lat, 10)), Lon: this.userLatLonVal.map((a) => parseInt(a.Lon, 10)), Value: this.userLatLonVal.map((a) => parseFloat(a.Value)), ValueFinal: this.userLatLonVal.map((a) => parseFloat(a.Value)), Date: dataset.StartDate });
-    console.log("my dataset: ", dataset);
-    console.log("my get levels dataset: ", getLevelsDataset);
-    console.log("my dataset dataset: ", getDatasetDataset);
+    const usingUserData = true;
 
     // closes the dialog box
-    this.dialogRef.close({dataset, getLevelsDataset, getDatasetDataset});
+    this.dialogRef.close({usingUserData, dataset, getLevelsDataset, getDatasetDataset});
   }
-
-  // DATASET OBJ
-  // public Name: string;
-  // public FullName: string;
-  // public Dataset_ID: number;
-  // public DatabaseStore: string;
-  // public OriginalLocation: string;
-  // public StartDate: string;
-  // public EndDate: string;
-  // public Units: string;
-  // public DefaultLevel: string;
-
-  // const selectedDataset = this._model.settings.Datasets.find(myObj =>
-  //   myObj.FullName.includes("Non-Gaussian|Air Temperature|Monthly Mean")
-  // );
-
-  // this._controller.loadLevels(selectedDataset);
-  //   this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
-  //   setTimeout(() => {
-  //     this.setSlider();
-  //   }, 700);
 }

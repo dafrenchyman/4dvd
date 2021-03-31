@@ -1,17 +1,17 @@
-<div id="ColorMapMenu" style="min-width: 800px; height: 780px;">
+<div id="ColorMapMenu" style="min-width: 800px; height: 780px">
   <div style="width: 100%; height: 50px">
     <h2 mat-dialog-title>Color Maps Available</h2>
     <button
       mat-icon-button
       (click)="this.closeColorMaps()"
-      style="position: relative; top: -60px; left:95%"
+      style="position: relative; top: -60px; left: 95%"
     >
       <mat-icon>close</mat-icon>
     </button>
   </div>
   <mat-slide-toggle
     (toggleChange)="toggleInverseMaps()"
-    style="position: relative; top: -10px; left:40%"
+    style="position: relative; top: -10px; left: 40%"
     >Inverse Color Maps</mat-slide-toggle
   >
   <div class="footer" style="text-align: center">
@@ -19,21 +19,21 @@
       <button
         mat-raised-button
         (click)="changeColorMapSelection('CB Non-Centered')"
-        style="width:30%; margin: 5px"
+        style="width: 30%; margin: 5px"
       >
         Color Brewer 2.0 | Non-Centered
       </button>
       <button
         mat-raised-button
         (click)="changeColorMapSelection('CB Zero-Centered')"
-        style="width:30%; margin: 5px"
+        style="width: 30%; margin: 5px"
       >
         Color Brewer 2.0 | Zero-Centered
       </button>
       <button
         mat-raised-button
         (click)="changeColorMapSelection('CB Multi-hue')"
-        style="width:30%; margin: 5px"
+        style="width: 30%; margin: 5px"
       >
         Color Brewer 2.0 | Multi-hue
       </button>
@@ -49,14 +49,14 @@
       <button
         mat-raised-button
         (click)="changeColorMapSelection('Matlab')"
-        style="width:30%; margin: 5px"
+        style="width: 30%; margin: 5px"
       >
         Matlab
       </button>
       <button
         mat-raised-button
         (click)="changeColorMapSelection('Other')"
-        style="width:30%; margin: 5px"
+        style="width: 30%; margin: 5px"
       >
         Other
       </button>
@@ -65,11 +65,16 @@
   <mat-dialog-content style="height: 100%">
     <mat-list
       *ngFor="let color of this._colorMapGradient.ColorMaps; let i = index"
-      style="margin-bottom: 0; margin-top: 0; padding-bottom: 0; padding-top: 0;"
+      style="margin-bottom: 0; margin-top: 0; padding-bottom: 0; padding-top: 0"
     >
       <mat-list-item
         *ngIf="i <= max && min <= i && indexSkip(i)"
-        style="margin-bottom: 7px; margin-top: 7px; padding-bottom: 7px; padding-top: 7px;"
+        style="
+          margin-bottom: 7px;
+          margin-top: 7px;
+          padding-bottom: 7px;
+          padding-top: 7px;
+        "
       >
         <svg width="55" height="55">
           <defs>

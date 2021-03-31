@@ -43,6 +43,9 @@ export class Settings {
   animate = false;
   ServerString: string;
 
+  usingUserData = false;
+  userLatLonVal: any;
+
   // Legend Slider settings
   scientificNotation = false;
   newMin: number;

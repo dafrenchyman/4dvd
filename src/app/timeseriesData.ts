@@ -13,7 +13,12 @@ export class TimeseriesData {
     name: string;
   }>;
 
-  constructor(name: string, level_ID: number, rawTimeseriesData: any) {
+  constructor(
+    name: string,
+    level_ID: number,
+    rawTimeseriesData: any,
+    userData?: any
+  ) {
     const series = new Array<{
       value: number;
       name: string;
@@ -23,7 +28,10 @@ export class TimeseriesData {
       counter < rawTimeseriesData.ValueFinal.length;
       counter++
     ) {
-      const currDate = rawTimeseriesData.Date[counter].substring(0, 7);
+      let currDate;
+      userData
+        ? (currDate = rawTimeseriesData.Date.substring(0, 7))
+        : (currDate = rawTimeseriesData.Date[counter].substring(0, 7));
       const currValue = rawTimeseriesData.ValueFinal[counter];
       series.push({
         value: currValue,

@@ -285,16 +285,36 @@ export class TimeseriesMenuComponent {
   }
 
   private loadTimeseries(dataset, gridBoxId, level_id, levelName) {
-    this._model.loadTimeseries(dataset, gridBoxId, level_id).then(result => {
-      const rawData: any = result;
+    if (this._model.settings.usingUserData === false) {
+      this._model.loadTimeseries(dataset, gridBoxId, level_id).then(result => {
+        const rawData: any = result;
+        rawData.ValueFinal = [];
+        rawData.ValueFinal = Helpers.ProcessRawDataValue(
+          rawData.Value,
+          this._model.settings
+        );
+        const currTimeseries = new TimeseriesData(levelName, level_id, rawData);
+        this.multi.push(currTimeseries);
+      });
+    } else {
+      const rawData: any = this._model.loadTimeseries(
+        dataset,
+        gridBoxId,
+        level_id
+      );
       rawData.ValueFinal = [];
       rawData.ValueFinal = Helpers.ProcessRawDataValue(
         rawData.Value,
         this._model.settings
       );
-      const currTimeseries = new TimeseriesData(levelName, level_id, rawData);
+      const currTimeseries = new TimeseriesData(
+        levelName,
+        level_id,
+        rawData,
+        true
+      );
       this.multi.push(currTimeseries);
-    });
+    }
   }
 
   private createSummaryStatistics() {
