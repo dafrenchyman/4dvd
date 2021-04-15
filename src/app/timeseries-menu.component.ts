@@ -187,11 +187,11 @@ export class TimeseriesMenuComponent {
     this.view = [
       Math.floor(
         this._model.settings.viewportWidth -
-        this._model.settings.viewportWidth * 0.25
+          this._model.settings.viewportWidth * 0.25
       ),
       Math.floor(
         this._model.settings.viewportHeight -
-        this._model.settings.viewportHeight * 0.32
+          this._model.settings.viewportHeight * 0.32
       )
     ];
     for (
@@ -391,11 +391,11 @@ export class TimeseriesMenuComponent {
           9,
           this._model.settings.Dataset.DatabaseStore.length
         ) +
-        "_Timeseries_Lat" +
-        this._model.settings.CurrGridBoxLat +
-        "_Lon" +
-        this._model.settings.CurrGridBoxLon +
-        ".csv"
+          "_Timeseries_Lat" +
+          this._model.settings.CurrGridBoxLat +
+          "_Lon" +
+          this._model.settings.CurrGridBoxLon +
+          ".csv"
       );
       link.click();
     }

@@ -1,16 +1,39 @@
-<div #TabMenuRow id="tabMenuRow" class="row" style="height:100vh; margin-bottom: 0px; overflow:hidden; z-index: 0;">
-  <div #TabMenu class="row blue white-text" id="TabMenu" style="margin-bottom: 0px; z-index: 10;">
+<div
+  #TabMenuRow
+  id="tabMenuRow"
+  class="row"
+  style="height:100vh; margin-bottom: 0px; overflow:hidden; z-index: 0;"
+>
+  <div
+    #TabMenu
+    class="row blue white-text"
+    id="TabMenu"
+    style="margin-bottom: 0px; z-index: 10;"
+  >
     <span>
-      <img id="Logo" src="/assets/4DVDLogoV1.png" alt="4DVD Logo" onClick="window.location.href=window.location.href"
-        matTooltip="Refresh Page" />
-      <span class="col s6 blue white-text" style="position: absolute; width: fit-content; top: 2px;">
+      <img
+        id="Logo"
+        src="/assets/4DVDLogoV1.png"
+        alt="4DVD Logo"
+        onClick="window.location.href=window.location.href"
+        matTooltip="Refresh Page"
+      />
+      <span
+        class="col s6 blue white-text"
+        style="position: absolute; width: fit-content; top: 2px;"
+      >
         <h5 style="width: fit-content;">{{ title }}</h5>
       </span>
     </span>
     <div id="QuickButtons">
       <span id="Top_Dataset">
-        <button class="Top_Dataset" mat-button [matMenuTriggerFor]="TopDataset" matTooltip="Choose Dataset"
-          matTooltipPosition="right">
+        <button
+          class="Top_Dataset"
+          mat-button
+          [matMenuTriggerFor]="TopDataset"
+          matTooltip="Choose Dataset"
+          matTooltipPosition="right"
+        >
           Top Datasets
         </button>
         <mat-menu #TopDataset="matMenu">
@@ -28,27 +51,45 @@
         </mat-menu>
       </span>
       <span id="Dataset">
-        <button class="Dataset" mat-button (click)="climate.OpenDataTreeDialog()" matTooltip="Choose Dataset"
-          matTooltipPosition="right">
+        <button
+          class="Dataset"
+          mat-button
+          (click)="climate.OpenDataTreeDialog()"
+          matTooltip="Choose Dataset"
+          matTooltipPosition="right"
+        >
           Datasets
         </button>
       </span>
       <span id="DownloadButton">
-        <button class="DataDownload" mat-button (click)="climate.createCsvFromGriddedData()"
-          matTooltip="Download Gridded Data" matTooltipPosition="right">
+        <button
+          class="DataDownload"
+          mat-button
+          (click)="climate.createCsvFromGriddedData()"
+          matTooltip="Download Gridded Data"
+          matTooltipPosition="right"
+        >
           Download Data
         </button>
       </span>
 
       <span id="GlobeToolTipSlider">
-        <mat-slide-toggle matTooltip="{{ GlobeToolTipMessage }}" matTooltipPosition="below"
-          [(ngModel)]="climate.isGlobeToolTipEnabled">Globe ToolTips
+        <mat-slide-toggle
+          matTooltip="{{ GlobeToolTipMessage }}"
+          matTooltipPosition="below"
+          [(ngModel)]="climate.isGlobeToolTipEnabled"
+          >Globe ToolTips
         </mat-slide-toggle>
       </span>
 
       <span id="AboutButton">
-        <button class="AboutButton" mat-button (click)="OpenAboutDialog()" matTooltip="About 4DVD"
-          matTooltipPosition="right">
+        <button
+          class="AboutButton"
+          mat-button
+          (click)="OpenAboutDialog()"
+          matTooltip="About 4DVD"
+          matTooltipPosition="right"
+        >
           <mat-icon>info</mat-icon> About
         </button>
       </span>
