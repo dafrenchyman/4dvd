@@ -45,7 +45,7 @@ export class UI {
     this.globeDistance = -250.0;
   }
 
-  resizeFunction() {}
+  resizeFunction() { }
   handleMouseDown(event) {
     event.preventDefault();
     this.mouseDown = true;
@@ -1138,9 +1138,9 @@ export class UI {
       link.setAttribute(
         "download",
         this._settings.DatabaseStore +
-          "_GridData_" +
-          this._settings.CurrDate +
-          ".csv"
+        "_GridData_" +
+        this._settings.CurrDate +
+        ".csv"
       );
       link.click();
     } else {

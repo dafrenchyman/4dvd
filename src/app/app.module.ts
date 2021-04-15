@@ -125,4 +125,4 @@ import { ViewComponent } from "./view.component";
     TutorialMenuComponent
   ]
 })
-export class AppModule {}
+export class AppModule { }

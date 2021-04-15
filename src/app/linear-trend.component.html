@@ -1,15 +1,9 @@
-<mat-drawer-container
-  class="lineartrend-container"
-  style="width:120vh; margin-bottom: 0px; overflow:hidden; z-index: 0"
->
+<mat-drawer-container class="lineartrend-container"
+  style="width:120vh; margin-bottom: 0px; overflow:hidden; z-index: 0">
   <div class="title_text" class="col s12">
     <div style="display:inline; float:right;">
-      <button
-        mat-icon-button
-        (click)="this.closeLinearTrend('')"
-        class="closeBtn"
-        matTooltip="Close Linear Trend Chart"
-      >
+      <button mat-icon-button (click)="this.closeLinearTrend('')" class="closeBtn"
+        matTooltip="Close Linear Trend Chart">
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -20,26 +14,13 @@
     </div>
   </div>
   <mat-menu #menu="matMenu">
-    <button
-      mat-menu-item
-      [useExistingCss]="true"
-      printSectionId="print-section-trend"
-      ngxPrint
-    >
+    <button mat-menu-item [useExistingCss]="true" printSectionId="print-section-trend" ngxPrint>
       Save Graph
     </button>
-    <button
-      class="buttonColor"
-      mat-menu-item
-      (click)="this.closeLinearTrend('StatSumm')"
-    >
+    <button class="buttonColor" mat-menu-item (click)="this.closeLinearTrend('StatSumm')">
       Statistical Summary
     </button>
-    <button
-      class="buttonColor"
-      mat-menu-item
-      (click)="this.closeLinearTrend('PlotHist')"
-    >
+    <button class="buttonColor" mat-menu-item (click)="this.closeLinearTrend('PlotHist')">
       Plot Histogram
     </button>
   </mat-menu>
@@ -52,20 +33,12 @@
           {{ month.viewValue }}
         </mat-option>
       </mat-select>
-      <mat-select
-        *ngIf="DataAvailable()"
-        placeholder="Levels"
-        [(value)]="currlevel"
-      >
+      <mat-select *ngIf="DataAvailable()" placeholder="Levels" [(value)]="currlevel">
         <mat-option *ngFor="let level of GetLevels()" [value]="level.name">
           {{ level.name }}
         </mat-option>
       </mat-select>
-      <button
-        id="GetData"
-        mat-raised-button
-        (click)="GetUpdatedData(currMonth, currlevel)"
-      >
+      <button id="GetData" mat-raised-button (click)="GetUpdatedData(currMonth, currlevel)">
         Get Linear Trend
       </button>
     </mat-list>

@@ -1,18 +1,8 @@
 <div id="TimeseriesPlot">
   <div id="print-section">
     <div class="main">
-      <div
-        #TabMenu
-        class="row"
-        id="TabMenu"
-        style="margin-bottom: 0px; z-index: 10;"
-      >
-        <div
-          id="QuickButtons"
-          class="col s12"
-          align="left"
-          style="float: right; display: inline-block"
-        >
+      <div #TabMenu class="row" id="TabMenu" style="margin-bottom: 0px; z-index: 10;">
+        <div id="QuickButtons" class="col s12" align="left" style="float: right; display: inline-block">
           <div id="Menu_Title">
             <div id="Menu">
               <button mat-button [matMenuTriggerFor]="menu">
@@ -24,24 +14,17 @@
                 <b>
                   <span class="title">{{
                     this._model.settings.GenerateTitle(
-                      this._model.settings.FullName
+                    this._model.settings.FullName
                     )
-                  }}</span>
-                  <span class="byline"
-                    >&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }},
-                    Lon: {{ this._model.settings.GetLonWithDir() }})</span
-                  >
+                    }}</span>
+                  <span class="byline">&nbsp;(Lat: {{ this._model.settings.GetLatWithDir() }},
+                    Lon: {{ this._model.settings.GetLonWithDir() }})</span>
                 </b>
               </h5>
             </div>
           </div>
           <mat-menu #menu="matMenu">
-            <button
-              mat-menu-item
-              [useExistingCss]="true"
-              printSectionId="print-section"
-              ngxPrint
-            >
+            <button mat-menu-item [useExistingCss]="true" printSectionId="print-section" ngxPrint>
               Save Graph
             </button>
             <button mat-menu-item (click)="createCsvFromTimeseriesData()">
@@ -50,15 +33,9 @@
             <button mat-menu-item [matMenuTriggerFor]="submenu">
               Computing
             </button>
-            <div
-              matTooltip="This dataset is not large enough to display seasonal data"
-              [matTooltipDisabled]="!isEnoughData()"
-            >
-              <button
-                mat-menu-item
-                [matMenuTriggerFor]="seasMenu"
-                [disabled]="isEnoughData()"
-              >
+            <div matTooltip="This dataset is not large enough to display seasonal data"
+              [matTooltipDisabled]="!isEnoughData()">
+              <button mat-menu-item [matMenuTriggerFor]="seasMenu" [disabled]="isEnoughData()">
                 View Seasonal Data
               </button>
             </div>
@@ -68,29 +45,15 @@
               Statistics Summary
             </button>
 
-            <div
-              matTooltip="This functionality is not available for the selected dataset"
-              [matTooltipDisabled]="!review_btn"
-            >
-              <button
-                [disabled]="review_btn"
-                color="primary"
-                mat-menu-item
-                (click)="createLinearTrend()"
-              >
+            <div matTooltip="This functionality is not available for the selected dataset"
+              [matTooltipDisabled]="!review_btn">
+              <button [disabled]="review_btn" color="primary" mat-menu-item (click)="createLinearTrend()">
                 Linear Trend
               </button>
             </div>
-            <div
-              matTooltip="This functionality is not avaible for the selected dataset"
-              [matTooltipDisabled]="!review_btn"
-            >
-              <button
-                [disabled]="review_btn"
-                color="primary"
-                mat-menu-item
-                (click)="createHistogram()"
-              >
+            <div matTooltip="This functionality is not avaible for the selected dataset"
+              [matTooltipDisabled]="!review_btn">
+              <button [disabled]="review_btn" color="primary" mat-menu-item (click)="createHistogram()">
                 Plot Histogram
               </button>
             </div>
@@ -107,34 +70,18 @@
             </button>
           </mat-menu>
           <div class="title_text" class="col s12" align="right">
-            <button
-              mat-icon-button
-              (click)="this.closeTimeSeries()"
-              class="closeBtn"
-              matTooltip="Close Time Series Chart"
-            >
+            <button mat-icon-button (click)="this.closeTimeSeries()" class="closeBtn"
+              matTooltip="Close Time Series Chart">
               <mat-icon>close</mat-icon>
             </button>
           </div>
         </div>
       </div>
       <mat-dialog-content>
-        <ngx-charts-line-chart
-          *ngIf="DataAvailable()"
-          [view]="view"
-          [scheme]="colorScheme"
-          [timeline]="timeline"
-          [results]="multi"
-          [gradient]="gradient"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-          [legend]="showLegend"
-          [showXAxisLabel]="showXAxisLabel"
-          [showYAxisLabel]="showYAxisLabel"
-          [xAxisLabel]="xAxisLabel"
-          [yAxisLabel]="yValTitle()"
-          [autoScale]="autoScale"
-        >
+        <ngx-charts-line-chart *ngIf="DataAvailable()" [view]="view" [scheme]="colorScheme" [timeline]="timeline"
+          [results]="multi" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yValTitle()" [autoScale]="autoScale">
           <ng-template #tooltipTemplate let-model="model">
             <div *ngFor="let data of getToolTipData(model | json)">
               <p>
@@ -164,12 +111,8 @@
       </mat-dialog-content>
     </div>
     <mat-dialog-actions>
-      <mat-checkbox
-        *ngFor="let level of GetLevels(); index as checkboxIndex"
-        [checked]="isChecked(checkboxIndex)"
-        [disabled]="lonerLevelCheck(checkboxIndex)"
-        (change)="ToggleTimeseries(level)"
-      >
+      <mat-checkbox *ngFor="let level of GetLevels(); index as checkboxIndex" [checked]="isChecked(checkboxIndex)"
+        [disabled]="lonerLevelCheck(checkboxIndex)" (change)="ToggleTimeseries(level)">
         {{ this._model.settings.levelCheck(level.Name) }}
       </mat-checkbox>
     </mat-dialog-actions>
