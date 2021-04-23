@@ -40,23 +40,6 @@
   font-size: 18px;
   display: inline-block;
 }
-.GlobeToolTipSlider {
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  display: inline-block;
-  position: relative;
-  top: 2px;
-}
-
-::ng-deep #mat-slide-toggle-1 > label > span {
-  color: white;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-}
 
 button:focus {
   background-color: #2196f3;

@@ -214,6 +214,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
   TSBoxOffsetX = 0;
   TSBoxOffsetY = 50;
   isGlobeToolTipEnabled = false;
+  GlobeToolTipMessage =
+    "Toggles the ability to display a draggable box with the data value at the location you click on the earth";
 
   // Waits for the dataset to be updated to correctly
   // update the legend slider with up to date data
@@ -349,13 +351,13 @@ export class ViewComponent implements OnInit, AfterViewInit {
     // if data values are decimals, then we will convert the slider to scientific notation (legend units have exponent)
     if (
       this.sliderMaxVal.toExponential()[
-        this.sliderMaxVal.toExponential().length - 2
+      this.sliderMaxVal.toExponential().length - 2
       ] === "-"
     ) {
       this.scientificNotation = true;
       this.SNValue = Number(
         this.sliderMaxVal.toExponential()[
-          this.sliderMaxVal.toExponential().length - 1
+        this.sliderMaxVal.toExponential().length - 1
         ]
       );
       this.sliderMaxVal *= Math.pow(10, this.SNValue);
@@ -568,7 +570,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public setModel() {}
+  public setModel() { }
 
   public GetTitle(): string {
     if (this._model != null) {
@@ -872,9 +874,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
       level = "Single Level";
       csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level,Date\n`;
     } else {
-      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${
-        level.split(" ")[1]
-      }],Date\n`;
+      csvContent += `Latitude,Longitude,${valueTitle} [${dataUnits}],Level [${level.split(" ")[1]
+        }],Date\n`;
       level = level.split(" ")[0];
     }
 
@@ -899,9 +900,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
           9,
           this._model.settings.Dataset.DatabaseStore.length
         ) +
-          "_GridData_" +
-          this._model.settings.CurrDate.substr(0, 7) +
-          ".csv"
+        "_GridData_" +
+        this._model.settings.CurrDate.substr(0, 7) +
+        ".csv"
       );
       link.click();
     }

@@ -276,3 +276,14 @@ mat-sidenav-content.mat-drawer-content {
 :after {
   background-color: white;
 }
+
+.GlobeToolTipSlider {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}

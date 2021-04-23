@@ -28,8 +28,6 @@ import { ViewComponent } from "./view.component";
 export class AppComponent {
   private _getJson: GetJson;
   title = "4DVD (4-Dimensional Visual Delivery of Big Climate Data)";
-  GlobeToolTipMessage =
-    "Toggle Globe ToolTips - Toggles the ability to display a draggable box with the data value at the location you click on the earth";
 
   constructor(
     getJson: GetJson,
@@ -53,6 +51,6 @@ export class AppComponent {
     const dialogRef = this.dialog.open(About4dvdComponent, {
       autoFocus: false
     });
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe(() => { });
   }
 }
