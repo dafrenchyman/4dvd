@@ -736,7 +736,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
    */
   public LoadSurfaceTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
-      myObj.FullName.includes("Global Surface Temperature Anomalies|Monthly Mean")
+      myObj.FullName.includes("Global Surface Temperature Anomalies:NOAAGlobalTemp|Monthly Mean")
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
