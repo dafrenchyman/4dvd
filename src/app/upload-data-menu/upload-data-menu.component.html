@@ -1,0 +1,64 @@
+<div>
+  <div style="display: flex;">
+    <span style="position: relative; top: 10px; margin-right: auto; display: inline-flex;">
+      <h3>Upload Your Own Data</h3>
+      <div style="height:fit-content; position:relative; margin-top: 10px; color: #2196f3">beta</div>
+    </span>
+
+    <span>
+      <button mat-button [matMenuTriggerFor]="menu" style="background-color: #ffffff;">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </span>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button class="buttonColor" mat-menu-item>
+      <a href="assets/DatasetInfo_Template.csv">
+        Download Dataset Info CSV Template
+      </a>
+    </button>
+    <button class="buttonColor" mat-menu-item>
+      <a href="assets/Gridbox_Template.csv">
+        Download Gridbox CSV Template
+      </a>
+    </button>
+  </mat-menu>
+
+  <mat-divider></mat-divider>
+
+  <div style="max-width: fit-content;">
+    <p>
+      Bring your own data to show on the 4DVD website!
+      <br />
+      Just download the CSV templates from the menu at the top right, fill in your data, upload those files to this
+      menu, and you are ready to view your data using 4DVD!
+      <br />
+      <span style="font-size: small; color: gray;">
+        Disclaimer: This feature is in beta. Not all 4DVD features are available when using your own data.
+      </span>
+    </p>
+  </div>
+
+  <div>
+    <span style="display: flex; align-items: center;">
+      <h4 style="margin-right: 10px;">Dataset Info CSV: </h4>
+      <input type="file" #csvReader name="Upload 2nd CSV" (change)="uploadCSV2($event)" accept=".csv" />
+    </span>
+  </div>
+  <div>
+    <span style="display: flex; align-items: center;">
+      <h4 style="margin-right: 10px;">Gridbox CSV: </h4>
+      <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadCSV1($event)" accept=".csv" />
+    </span>
+  </div>
+</div>
+
+<div *ngIf="bothFilesUploaded()" style="display: grid;">
+  <div
+    matTooltip="There is an issue with the format of one or more of your files. Click on the hamburger at the top right to download the template CSVs."
+    [matTooltipDisabled]="validCSV1 && validCSV2">
+    <button [disabled]="!validCSV1 || !validCSV2" mat-button (click)="submitFiles()"
+      style="align-self: end; position: relative; width: 100%;">Submit Files</button>
+  </div>
+
+</div>

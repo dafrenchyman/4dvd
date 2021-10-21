@@ -1,31 +1,43 @@
 <div
   #ClimateSystem
   id="ClimateSystem"
-  style="max-height:100%; z-index: 2; margin-bottom: 0;"
+  style="max-height: 100%; z-index: 2; margin-bottom: 0"
   class="row"
 >
   <div id="close" class="hidden">
     <button
       id="closebutton"
       mat-icon-button
-      style="position: absolute; left: 290px; top: 49px; z-index: 10; color: #FFFFFF; background-color: transparent"
+      style="
+        position: absolute;
+        left: 290px;
+        top: 49px;
+        z-index: 10;
+        color: #ffffff;
+        background-color: transparent;
+      "
       (click)="selectedIndex = 0"
       (click)="sidenav.toggle()"
-      (click)="unhide(this,'close')"
+      (click)="unhide(this, 'close')"
     >
       <mat-icon matTooltip="{{ exitsidenav }}">close</mat-icon>
     </button>
   </div>
   <mat-sidenav-container
     #WebglCanvas
-    style="display:block; position:absolute;  overflow:hidden"
+    style="display: block; position: absolute; overflow: hidden"
     id="WebglCanvas"
   >
     <mat-sidenav
       id="Menu"
       #sidenav
       opened="false"
-      style="background-color: white; overflow:auto; width: 290px; display: flex"
+      style="
+        background-color: white;
+        overflow: auto;
+        width: 290px;
+        display: flex;
+      "
       (close)="selectedIndex = 0"
     >
       <mat-tab-group [(selectedIndex)]="selectedIndex">
@@ -36,20 +48,52 @@
           <div class="TabHeading">
             <h5>Select Datasets</h5>
           </div>
-          <div class="MatButton1">
+          <div>
             <mat-list>
               <mat-list-item>
-                <button mat-raised-button (click)="OpenDataTreeDialog()">
+                <button
+                  style="width: 100%"
+                  mat-raised-button
+                  (click)="OpenDataTreeDialog()"
+                >
                   Climate Data
                 </button>
               </mat-list-item>
             </mat-list>
           </div>
-          <mat-list>
-            <mat-divider></mat-divider>
-          </mat-list>
+          <mat-divider></mat-divider>
+          <div>
+            <h5 style="margin-bottom: 0px; text-align: center">
+              Upload Your Own Data
+            </h5>
+            <p
+              style="
+                font-size: small;
+                margin-top: 0px;
+                position: relative;
+                width: fit-content;
+                margin: auto;
+                margin-right: 24px;
+              "
+            >
+              beta
+            </p>
+          </div>
+          <div>
+            <mat-list>
+              <mat-list-item>
+                <button
+                  style="width: 100%"
+                  mat-raised-button
+                  (click)="OpenUploadDataMenu()"
+                >
+                  Upload Your Own Data
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
 
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px">
             <h6>Pressure Levels</h6>
             <mat-radio-group class="radio-group">
               <mat-radio-button
@@ -73,7 +117,7 @@
             <h5>Date</h5>
           </div>
 
-          <div class="section" style="margin-left: 20px;">
+          <div class="section" style="margin-left: 20px">
             <mat-label>Year</mat-label>
             <mat-list>
               <mat-list-item>
@@ -103,7 +147,7 @@
 
           <mat-divider></mat-divider>
 
-          <div class="section" style="margin-left: 20px; margin-top: 20px;">
+          <div class="section" style="margin-left: 20px; margin-top: 20px">
             <mat-label>Month</mat-label>
             <mat-list>
               <mat-list-item>
@@ -132,10 +176,11 @@
           <div class="TabHeading">
             <h5>Graphical Settings</h5>
           </div>
-          <div class="MatButton2">
+          <div>
             <mat-list>
               <mat-list-item>
                 <button
+                  style="width: 100%"
                   mat-raised-button
                   (click)="OpenColorMapDialog()"
                   matTooltip="{{ colorMapDesc }}"
@@ -151,7 +196,7 @@
             <mat-divider></mat-divider>
 
             <!-- Smoothed Gridboxes -->
-            <mat-list-item style="color: black ">
+            <mat-list-item style="color: black">
               <mat-slide-toggle
                 matTooltip="{{ gridboxDesc }}"
                 matTooltipPosition="{{ displayLoc }}"
@@ -240,7 +285,7 @@
           <!-- Bump Mapping -->
           <div
             class="section"
-            style="margin-left: 20px;"
+            style="margin-left: 20px"
             matTooltip="{{ bumpDesc }}"
             matTooltipPosition="{{ displayLoc }}"
           >
@@ -264,7 +309,7 @@
           <!-- Globe View -->
           <div
             class="section"
-            style="margin-left: 20px;"
+            style="margin-left: 20px"
             matTooltip="{{ viewDesc }}"
             matTooltipPosition="{{ displayLoc }}"
           >
@@ -288,7 +333,7 @@
           <!-- Coasts -->
           <div
             class="section"
-            style="margin-left: 20px;"
+            style="margin-left: 20px"
             matTooltip="{{ coastDesc }}"
             matTooltipPosition="{{ displayLoc }}"
           >
@@ -312,7 +357,7 @@
           <!-- Rivers -->
           <div
             class="section"
-            style="margin-left: 20px;"
+            style="margin-left: 20px"
             matTooltip="{{ riverDesc }}"
             matTooltipPosition="{{ displayLoc }}"
           >
@@ -336,7 +381,7 @@
           <!-- Lakes -->
           <div
             class="section"
-            style="margin-left: 20px;"
+            style="margin-left: 20px"
             matTooltip="{{ lakeDesc }}"
             matTooltipPosition="{{ displayLoc }}"
           >
@@ -410,7 +455,7 @@
       [disableRipple]="true"
       class="example-fab buttonColor"
       (click)="sidenav.toggle()"
-      (click)="unhide(this,'close')"
+      (click)="unhide(this, 'close')"
       matTooltip="Settings"
       matTooltipPosition="below"
     >
@@ -421,7 +466,7 @@
       <span
         class="levelLabel"
         (click)="changeState('level')"
-        style="cursor: pointer;"
+        style="cursor: pointer"
         matTooltip="Click to change pressure level"
         >{{ GetLevelLabel() }}</span
       >
@@ -436,7 +481,12 @@
     </div>
     <div
       [@EnterLeave]="currentStateLevel"
-      style="max-width: 250px; max-height: 310px; z-index: 10; position: absolute;"
+      style="
+        max-width: 250px;
+        max-height: 310px;
+        z-index: 10;
+        position: absolute;
+      "
       [exclude]="'.dateLabel,.levelLabel'"
       [excludeBeforeClick]="true"
       (clickOutside)="outsideClick('level')"
@@ -463,7 +513,7 @@
     </div>
     <div
       [@EnterLeave]="currentStateDate"
-      style="max-width: 250px; max-height: 310px;z-index: 10;"
+      style="max-width: 250px; max-height: 310px; z-index: 10"
       [exclude]="'.dateLabel,.levelLabel,.mat-select-panel'"
       [excludeBeforeClick]="true"
       (clickOutside)="outsideClick('date')"
@@ -473,7 +523,7 @@
           <mat-card-title>Date</mat-card-title>
         </mat-card-header>
         <mat-card-content style="height: 310px">
-          <div class="section" style="margin-left: 10px;">
+          <div class="section" style="margin-left: 10px">
             <mat-label>Year</mat-label>
             <mat-list>
               <mat-list-item>
@@ -503,7 +553,7 @@
 
           <mat-divider></mat-divider>
 
-          <div class="section" style="margin-left: 10px; margin-top: 20px;">
+          <div class="section" style="margin-left: 10px; margin-top: 20px">
             <mat-label>Month</mat-label>
             <mat-list>
               <mat-list-item>
@@ -525,7 +575,7 @@
           <button
             mat-raised-button
             (click)="changeState('date')"
-            style="display: flex; align-items: center; justify-content: center;"
+            style="display: flex; align-items: center; justify-content: center"
             class="buttonColor"
           >
             Close
@@ -568,7 +618,7 @@
       (click)="OpenDataTreeDialog()"
       matTooltip="{{ datasetTitle }}"
       matTooltipPosition="below"
-      style="cursor: pointer;"
+      style="cursor: pointer"
     >
       {{ GetTitle() }}
     </div>
@@ -591,13 +641,19 @@
             Lon: {{ this._model.settings.GetLonWithDir() }}
           </mat-list-item>
           <mat-list-item>
-            <button
-              class="buttonColor"
-              mat-raised-button
-              (click)="OpenTimeseriesDialog()"
+            <div
+              matTooltip="Unable to use Time Series Menu while using user data"
+              [matTooltipDisabled]="!isUsingUserData()"
             >
-              Time Series
-            </button>
+              <button
+                class="buttonColor"
+                mat-raised-button
+                (click)="OpenTimeseriesDialog()"
+                [disabled]="isUsingUserData()"
+              >
+                Time Series
+              </button>
+            </div>
           </mat-list-item>
         </mat-list>
       </mat-card>
@@ -607,8 +663,15 @@
       id="ClimateGl"
       (mouseleave)="inCanvas = false"
       (mouseenter)="inCanvas = true"
-      style="position: absolute; z-index: 5; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;"
-      ><!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
+      style="
+        position: absolute;
+        z-index: 5;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+      "
+    >
+      <!-- width="500" height="500" || style="width: 100%; height: 100%" || [attr.width]='_width' [attr.height]='_height'-->
     </canvas>
   </mat-sidenav-container>
 </div>

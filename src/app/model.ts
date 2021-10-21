@@ -104,13 +104,92 @@ export class Model {
     }
   }
 
+  public loadUserLevels(dataset, userData) {
+    this.settings.usingUserData = true;
+    const results: any = userData;
+    const levels: Array<{
+      Level_ID: number;
+      Name: string;
+      Selected: boolean;
+    }> = [];
+    let levelName = "";
+    for (let counter = 0; counter < results.Level_ID.length; counter++) {
+      const selected: boolean = counter === 0 ? true : false;
+      if (results.Level_ID[counter] === 1) {
+        levelName = results.Name[counter];
+      }
+      levels.push({
+        Level_ID: Number(results.Level_ID[counter]),
+        Name: results.Name[counter],
+        Selected: selected
+      });
+    }
+    this.settings.Levels = levels;
+    this.settings.Level_ID = 1;
+    this.settings.LevelName = levelName;
+  }
+
+  public loadUserDataset(dataset, date, level_id, userData) {
+    this.settings.usingUserData = true;
+    this.settings.Dataset = dataset;
+    this.settings.DataUnits = dataset.Units;
+    this.settings.CurrDate = date;
+    this.settings.FullName = dataset.FullName;
+
+    this.rawGridData = userData;
+    this.rawGridData.ValueFinal = [];
+    this.rawGridData.ValueFinal = Helpers.ProcessRawDataValue(
+      this.rawGridData.Value,
+      this.settings
+    );
+    this.settings.originalMaxValue = Helpers.ArrayMax(
+      this.rawGridData.ValueFinal
+    );
+    this.settings.originalMinValue = Helpers.ArrayMin(
+      this.rawGridData.ValueFinal
+    );
+    jQuery("#upperBoundLimit").val(this.settings.originalMaxValue);
+    jQuery("#lowerBoundLimit").val(this.settings.originalMinValue);
+    this.settings.maxValue = Helpers.ArrayMax(this.rawGridData.ValueFinal);
+    this.settings.minValue = Helpers.ArrayMin(this.rawGridData.ValueFinal);
+
+    // Add the datasetID to the input options
+    if (this.settings.EnableUri) {
+      const uri = new URI(window.location.href);
+      uri.removeSearch("database");
+      uri.addSearch("database", this.settings.Dataset_ID);
+      window.history.replaceState("", "", uri.search());
+    }
+
+    // Draw the world
+    this._world.worldBuffers(this.rawGridData);
+
+    // Update the levelId that's selected
+    this.settings.Level_ID = level_id;
+    let levelName = "";
+    for (let i = 0; i < this.settings.Levels.length; i++) {
+      if (this.settings.Levels[i].Level_ID === level_id) {
+        levelName = this.settings.Levels[i].Name;
+      }
+      this.settings.Levels[i].Selected =
+        level_id === this.settings.Levels[i].Level_ID ? true : false;
+    }
+    this.settings.LevelName = levelName;
+
+    // Draw the legend
+    this.legend.drawLegend();
+  }
+
   public loadLevels(dataset) {
+    this.settings.usingUserData = false;
     const filename =
       this.settings.ServerString +
       "assets/g_GetLevel.php" +
       "?dbname=" +
       dataset.DatabaseStore;
+
     const datasetLoader = this._getJson.getAll(filename);
+
     datasetLoader.then(result => {
       const results: any = result;
       const levels: Array<{
@@ -137,11 +216,14 @@ export class Model {
   }
 
   public loadDataset(dataset, date, level_id) {
+    this.settings.usingUserData = false;
+    // if userData we will need to provide a user dataset, user date, user level_id
     this.settings.Dataset = dataset;
     this.settings.DataUnits = dataset.Units;
     this.settings.CurrDate = date;
     this.settings.FullName = dataset.FullName;
-    this.settingsLoader.then(result => {
+
+    this.settingsLoader.then(() => {
       const filename =
         this.settings.ServerString +
         "assets/g_GetGridData.php" +
@@ -155,7 +237,6 @@ export class Model {
       const loader = this._getJson.getAll(filename);
       loader.then(result_sub => {
         this.rawGridData = result_sub;
-
         this.rawGridData.ValueFinal = [];
         this.rawGridData.ValueFinal = Helpers.ProcessRawDataValue(
           this.rawGridData.Value,
@@ -206,24 +287,29 @@ export class Model {
     this.settings.CurrGridBoxId = gridBoxId;
     this.settings.DataUnits = dataset.Units;
     this.settings.FullName = dataset.FullName;
-    const rawTimeseriesData = new Promise<object>(resolve => {
-      this.settingsLoader.then(result => {
-        const filename =
-          this.settings.ServerString +
-          "assets/g_GetTimeseriesData.php" +
-          "?dbname=" +
-          dataset.DatabaseStore +
-          "&gridboxId=" +
-          this.settings.CurrGridBoxId +
-          "&level=" +
-          level_id;
-        const loader = this._getJson.getAll(filename);
-        loader.then(result2 => {
-          resolve(result2);
+
+    if (this.settings.usingUserData) {
+      return this.settings.userLatLonVal;
+    } else {
+      const rawTimeseriesData = new Promise<object>(resolve => {
+        this.settingsLoader.then(result => {
+          const filename =
+            this.settings.ServerString +
+            "assets/g_GetTimeseriesData.php" +
+            "?dbname=" +
+            dataset.DatabaseStore +
+            "&gridboxId=" +
+            this.settings.CurrGridBoxId +
+            "&level=" +
+            level_id;
+          const loader = this._getJson.getAll(filename);
+          loader.then(result2 => {
+            resolve(result2);
+          });
         });
       });
-    });
-    return rawTimeseriesData;
+      return rawTimeseriesData;
+    }
   }
 
   public loadTimeseries2(dataset, gridBoxId, level_id) {

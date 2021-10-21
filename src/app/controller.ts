@@ -45,6 +45,14 @@ export class Controller {
     this._model.changePacificCentered(enabled);
   }
 
+  public loadUserDataset(dataset, date, level, userData) {
+    this._model.loadUserDataset(dataset, date, level, userData);
+  }
+
+  public loadUserLevels(dataset, userData) {
+    this._model.loadUserLevels(dataset, userData);
+  }
+
   public loadDataset(dataset, date, level) {
     this._model.loadDataset(dataset, date, level);
   }
