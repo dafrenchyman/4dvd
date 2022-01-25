@@ -515,6 +515,12 @@ export class ViewComponent implements OnInit, AfterViewInit {
     menu.height(menu.parent().height() - 10);
     const leftPad = menu.width();
 
+    /* When the input field receives input, convert the value from fahrenheit to celsius */
+function temperatureConverter(valNum) {
+  valNum = parseFloat(valNum);
+  document.getElementById("outputCelsius").innerHTML = (valNum-32) / 1.8;
+}
+
     // this.tabMenuRowRef.nativeElement.height = window.innerHeight;
 
     jQuery("#WebglCanvas").height(
