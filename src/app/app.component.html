@@ -6,7 +6,7 @@
 >
   <div
     #TabMenu
-    class="row blue white-text"
+    class="row"
     id="TabMenu"
     style="margin-bottom: 0px; z-index: 10;"
   >
@@ -18,11 +18,11 @@
       align="left"
       matTooltip="Refresh Page"
     />
-    <div
-      class="col s6 blue white-text"
-      style="position: absolute; margin-left: 50px"
-    >
-      <h5>{{ title }}</h5>
+    <div id="TitleLine" style="position: absolute; margin-left: 60px;">
+      <p>
+        {{ title }} <br />
+        OF BIG CLIMATE DATA
+      </p>
     </div>
     <div
       id="QuickButtons"
@@ -38,19 +38,20 @@
           matTooltip="Choose Dataset"
           matTooltipPosition="right"
         >
-          Top Datasets
+          TOP DATASETS
         </button>
-        <mat-menu #TopDataset="matMenu">
+        <mat-menu #TopDataset="matMenu" class="topDatasetsMenu">
           <button mat-menu-item (click)="climate.LoadPrecipitation()">
-            Precipitation: <font size="3" color="Gray">GPCP Monthly</font>
+            <font color="#E8DDCB">Precipitation: </font>
+            <font size="3" color="CDB380">GPCP Monthly</font>
           </button>
           <button mat-menu-item (click)="climate.LoadSurfaceTemperature()">
-            Surface Temperature Anomalies:
-            <font size="3" color="Gray">NOAAGlobalTemp</font>
+            <font color="#E8DDCB">Surface Temperature Anomalies: </font>
+            <font size="3" color="CDB380">NOAAGlobalTemp</font>
           </button>
           <button mat-menu-item (click)="climate.LoadAirTemperature()">
-            Air Temperature:
-            <font size="3" color="Gray">20CR Monthly at 1,000 millibar</font>
+            <font color="#E8DDCB">Air Temperature: </font>
+            <font size="3" color="CDB380">20CR Monthly at 1,000 millibar</font>
           </button>
         </mat-menu>
       </div>
@@ -62,7 +63,7 @@
           matTooltip="Choose Dataset"
           matTooltipPosition="right"
         >
-          Datasets
+          DATASET LIST
         </button>
       </div>
       <div id="DownloadButton" class="col s3">
@@ -73,7 +74,7 @@
           matTooltip="Download Gridded Data"
           matTooltipPosition="right"
         >
-          Download Data
+          DOWNLOAD DATA
         </button>
       </div>
 
@@ -85,7 +86,7 @@
           matTooltip="About 4DVD"
           matTooltipPosition="right"
         >
-          <mat-icon>info</mat-icon> About
+          ABOUT
         </button>
       </div>
     </div>

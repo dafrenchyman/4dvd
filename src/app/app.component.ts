@@ -27,7 +27,7 @@ import { ViewComponent } from "./view.component";
 })
 export class AppComponent {
   private _getJson: GetJson;
-  title = "4DVD (4-Dimensional Visual Delivery of Big Climate Data)";
+  title = "4-DIMENSIONAL VISUAL DELIVERY";
 
   constructor(
     getJson: GetJson,

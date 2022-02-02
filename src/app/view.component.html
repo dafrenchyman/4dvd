@@ -21,17 +21,13 @@
     style="display:block; position:absolute;  overflow:hidden"
     id="WebglCanvas"
   >
-    <mat-sidenav
-      id="Menu"
-      #sidenav
-      opened="false"
-      style="background-color: white; overflow:auto; width: 290px; display: flex"
-      (close)="selectedIndex = 0"
-    >
+    <mat-sidenav id="Menu" #sidenav opened="false" (close)="selectedIndex = 0">
       <mat-tab-group [(selectedIndex)]="selectedIndex">
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon matTooltip="{{ datasetTitle }}">list</mat-icon>
+            <mat-icon color="darkModeIcons" matTooltip="{{ datasetTitle }}"
+              >list</mat-icon
+            >
           </ng-template>
           <div class="TabHeading">
             <h5>Select Datasets</h5>
@@ -39,7 +35,11 @@
           <div class="MatButton1">
             <mat-list>
               <mat-list-item>
-                <button mat-raised-button (click)="OpenDataTreeDialog()">
+                <button
+                  mat-raised-button
+                  color="darkMode"
+                  (click)="OpenDataTreeDialog()"
+                >
                   Climate Data
                 </button>
               </mat-list-item>
@@ -67,7 +67,9 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon matTooltip="{{ timeTitle }}">event</mat-icon>
+            <mat-icon color="darkModeIcons" matTooltip="{{ timeTitle }}"
+              >event</mat-icon
+            >
           </ng-template>
           <div class="TabHeading">
             <h5>Date</h5>
@@ -126,7 +128,9 @@
 
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon matTooltip="{{ graphicTitle }}">brush</mat-icon>
+            <mat-icon color="darkModeIcons" matTooltip="{{ graphicTitle }}"
+              >brush</mat-icon
+            >
           </ng-template>
 
           <div class="TabHeading">
@@ -136,6 +140,7 @@
             <mat-list>
               <mat-list-item>
                 <button
+                  color="darkMode"
                   mat-raised-button
                   (click)="OpenColorMapDialog()"
                   matTooltip="{{ colorMapDesc }}"
@@ -151,7 +156,7 @@
             <mat-divider></mat-divider>
 
             <!-- Smoothed Gridboxes -->
-            <mat-list-item style="color: black ">
+            <mat-list-item>
               <mat-slide-toggle
                 matTooltip="{{ gridboxDesc }}"
                 matTooltipPosition="{{ displayLoc }}"
@@ -359,7 +364,9 @@
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon matTooltip="{{ infoTitle }}">info</mat-icon>
+            <mat-icon color="darkModeIcons" matTooltip="{{ infoTitle }}"
+              >info</mat-icon
+            >
           </ng-template>
           <div class="TabHeading">
             <h5>Information</h5>

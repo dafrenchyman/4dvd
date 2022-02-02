@@ -1,14 +1,27 @@
+#TabMenuRow {
+  background-color: peachpuff;
+}
+
+#TitleLine {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
 .AboutButton {
   margin-top: 10px;
   float: right;
-  font-size: 18px;
+  font-size: 13px;
+  font-weight: 100;
+  letter-spacing: 3px;
 }
 .DataDownload {
   margin-right: 20px;
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 100;
   display: inline-block;
 }
 .Dataset {
@@ -16,7 +29,9 @@
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 100;
   display: inline-block;
 }
 .Top_Dataset {
@@ -24,20 +39,27 @@
   margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 100;
   display: inline-block;
 }
 button:focus {
-  background-color: #2196f3;
+  background-color: #031634;
 }
 button.mat-menu-item {
-  background-color: white;
-  font-size: 18px;
+  background-color: #033649;
+  font-weight: lighter;
+  letter-spacing: 2px;
 }
 button.mat-menu-item:hover {
-  background-color: #2196f3;
-  color: #fff !important;
+  background-color: #036564;
+  color: #cdb380 !important;
 }
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
+}
+
+::ng-deep .topDatasetsMenu {
+  background: #033649;
 }
