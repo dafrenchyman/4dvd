@@ -39,6 +39,8 @@
 .mat-dialog-container {
   background-color: #031634;
   color: #cdb380;
+  background-color: #033649;
+  color: #CDB380;
 }
 
 .row:after {
@@ -764,15 +766,15 @@
 }
 
 .blue {
-  background-color: red !important;
+  background-color: #2196F3 !important;
 }
 
 .white {
-  background-color: red !important;
+  background-color: #FFFFFF !important;
 }
 
 .white-text {
-  color: red !important;
+  color: #FFFFFF !important;
 }
 
 .transparent {

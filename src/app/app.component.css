@@ -1,4 +1,13 @@
 #TabMenuRow {
+  background-color: peachpuff;
+}
+
+#TitleLine {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
+#TabMenuRow {
   background-color: red;
 }
 
