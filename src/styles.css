@@ -754,15 +754,15 @@
 }
 
 .blue {
-  background-color: #060461 !important;
+  background-color: red !important;
 }
 
 .white {
-  background-color: greenyellow !important;
+  background-color: red !important;
 }
 
 .white-text {
-  color: purple !important;
+  color: red !important;
 }
 
 .transparent {
