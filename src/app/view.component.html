@@ -581,15 +581,18 @@
     </div>
 
     <div id="TimeseriesBox">
-      <mat-card *ngIf="GridboxSelected()"  >
+      <mat-card *ngIf="GridboxSelected()">
         <mat-list id="theCardInTimeSeriesBox">
           <mat-list-item>
             {{
               this._model.settings.GenerateSimpleTitle(
                 this._model.settings.FullName
               )
-            }}: <div>{{ getTimeSeriesBoxValue() }}
-            {{ this._model.settings.JustUnits() }}</div></mat-list-item
+            }}:
+            <div>
+              {{ getTimeSeriesBoxValue() }}
+              {{ this._model.settings.JustUnits() }}
+            </div></mat-list-item
           >
           <mat-list-item>
             Lat: {{ this._model.settings.GetLatWithDir() }}
