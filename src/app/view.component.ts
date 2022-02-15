@@ -874,12 +874,12 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
     const rawData = this._model._world.GetRawData();
     let dataString;
-    let temp ="";
+    let temp = "";
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
         const lat = rawData.Lat[i];
         const lon = rawData.Lon[i];
-        if (rawData.ValueFinal[i]){
+        if (rawData.ValueFinal[i]) {
           temp = rawData.ValueFinal[i].toFixed(3);
         }
         const value = temp;
