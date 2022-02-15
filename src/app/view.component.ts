@@ -872,11 +872,15 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
     const rawData = this._model._world.GetRawData();
     let dataString;
+    let temp ="";
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
         const lat = rawData.Lat[i];
         const lon = rawData.Lon[i];
-        const value = rawData.ValueFinal[i].toFixed(3);
+        if (rawData.ValueFinal[i]){
+          temp = rawData.ValueFinal[i].toFixed(3);
+        }
+        const value = temp;
         const date = this._model.settings.CurrDate.substring(0, 7);
         dataString = `${lat},${lon},${value},${level},${date}`;
         csvContent += dataString + "\n";
