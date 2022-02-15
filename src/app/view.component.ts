@@ -736,7 +736,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
    */
   public LoadSurfaceTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
-      myObj.FullName.includes("Global Surface Temperature Anomalies:NOAAGlobalTemp|Monthly Mean")
+      myObj.FullName.includes(
+        "Global Surface Temperature Anomalies:NOAAGlobalTemp|Monthly Mean"
+      )
     );
     this._controller.loadLevels(selectedDataset);
     this._controller.loadDataset(selectedDataset, selectedDataset.StartDate, 1);
@@ -872,12 +874,12 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
     const rawData = this._model._world.GetRawData();
     let dataString;
-    let temp ="";
+    let temp = "";
     if (rawData.Lat.length > 0) {
       for (let i = 0; i < rawData.Lat.length; i++) {
         const lat = rawData.Lat[i];
         const lon = rawData.Lon[i];
-        if (rawData.ValueFinal[i]){
+        if (rawData.ValueFinal[i]) {
           temp = rawData.ValueFinal[i].toFixed(3);
         }
         const value = temp;
