@@ -171,11 +171,19 @@ export class Settings {
     // Get graph tool tip data for a single level
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
-    this.toolTipData.push({
-      name: jsonArr.name,
-      value: jsonArr.value.toFixed(2),
-      series: jsonArr.series
-    });
+    if (!jsonArr.value) {
+      this.toolTipData.push({
+        name: jsonArr.name,
+        value: jsonArr.value = "",
+        series: jsonArr.series
+      });
+    } else {
+      this.toolTipData.push({
+        name: jsonArr.name,
+        value: jsonArr.value.toFixed(2),
+        series: jsonArr.series
+      });
+    }
     return this.toolTipData;
   }
 
@@ -184,11 +192,19 @@ export class Settings {
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
     for (let i = 0; i < jsonArr.length; i++) {
-      this.toolTipData.push({
-        name: jsonArr[i].name,
-        value: jsonArr[i].value.toFixed(2),
-        series: jsonArr[i].series
-      });
+      if (!jsonArr[i].value) {
+        this.toolTipData.push({
+          name: jsonArr[i].name,
+          value: jsonArr[i].value = "",
+          series: jsonArr[i].series
+        });
+      } else {
+        this.toolTipData.push({
+          name: jsonArr[i].name,
+          value: jsonArr[i].value.toFixed(2),
+          series: jsonArr[i].series
+        });
+      }
     }
     return this.toolTipData;
   }
