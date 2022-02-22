@@ -262,12 +262,15 @@ export class Settings {
   JustUnits(): string {
     // returns just the units.. in format: "Units"
     const title = this.GenerateSimpleTitle(this.FullName);
-    if (title.search("Temperature") >= 0) {
+    if (!this.CurrGridBoxValue){
+      return " ";
+    } else if (title.search("Temperature") >= 0) {
       return "\xB0C";
     } else {
       return this.DataUnits;
     }
   }
+
 
   GetLatWithDir() {
     let lat = Number(this.CurrGridBoxLat.toFixed(2));
