@@ -404,12 +404,20 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   // Determine where the value in the time series box needs to be rounded
   private getTimeSeriesBoxValue() {
-    const TSValExp = this.timeSeriesVal.toExponential();
-    if (TSValExp[TSValExp.length - 2] === "-") {
-      const decimalPlace = Number(TSValExp[TSValExp.length - 1]);
-      return this.timeSeriesVal.toFixed(decimalPlace);
+    // First check if the time series value is null
+    if (this.timeSeriesVal) {
+
+      const TSValExp = this.timeSeriesVal.toExponential();
+
+      if (TSValExp[TSValExp.length - 2] === "-") {
+        const decimalPlace = Number(TSValExp[TSValExp.length - 1]);
+        return this.timeSeriesVal.toFixed(decimalPlace);
+      } else {
+        return this.timeSeriesVal.toFixed(2);
+      }
     } else {
-      return this.timeSeriesVal.toFixed(2);
+      // if the time series value was null, return an empty string
+      return " ";
     }
   }
 
