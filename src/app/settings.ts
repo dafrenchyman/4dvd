@@ -184,9 +184,13 @@ export class Settings {
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
     for (let i = 0; i < jsonArr.length; i++) {
+      let tempValue = jsonArr[i].value;
+      if (tempValue){
+        tempValue = jsonArr[i].value.toFixed(2)
+      }
       this.toolTipData.push({
         name: jsonArr[i].name,
-        value: jsonArr[i].value.toFixed(2),
+        value: tempValue,
         series: jsonArr[i].series
       });
     }
