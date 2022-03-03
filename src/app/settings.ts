@@ -171,17 +171,16 @@ export class Settings {
     // Get graph tool tip data for a single level
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
-    if (!jsonArr.value) {
+    for (let i = 0; i < jsonArr.length; i++) {
+      let temp = jsonArr[i].value;
+      if (temp) {
+        temp = jsonArr[i].value.toFixed(2);
+      }
+
       this.toolTipData.push({
-        name: jsonArr.name,
-        value: jsonArr.value = "",
-        series: jsonArr.series
-      });
-    } else {
-      this.toolTipData.push({
-        name: jsonArr.name,
-        value: jsonArr.value.toFixed(2),
-        series: jsonArr.series
+        name: jsonArr[i].name,
+        value: temp,
+        series: jsonArr[i].series
       });
     }
     return this.toolTipData;
@@ -192,19 +191,16 @@ export class Settings {
     this.toolTipData = [];
     const jsonArr = JSON.parse(jsonString);
     for (let i = 0; i < jsonArr.length; i++) {
-      if (!jsonArr[i].value) {
-        this.toolTipData.push({
-          name: jsonArr[i].name,
-          value: jsonArr[i].value = "",
-          series: jsonArr[i].series
-        });
-      } else {
-        this.toolTipData.push({
-          name: jsonArr[i].name,
-          value: jsonArr[i].value.toFixed(2),
-          series: jsonArr[i].series
-        });
+      let temp = jsonArr[i].value;
+      if (temp) {
+        temp = jsonArr[i].value.toFixed(2);
       }
+
+      this.toolTipData.push({
+        name: jsonArr[i].name,
+        value: temp,
+        series: jsonArr[i].series
+      });
     }
     return this.toolTipData;
   }
