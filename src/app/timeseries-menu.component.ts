@@ -374,10 +374,16 @@ export class TimeseriesMenuComponent {
         } // default = single level dataset
         const currTimeseries = this.multi[counter].series;
         let dataString;
+        let tempValue = "";
         for (let i = 0; i < currTimeseries.length; i++) {
-          dataString = `${currTimeseries[i].name},${currTimeseries[
-            i
-          ].value.toFixed(3)},${this.getLat()},${this.getLon()},${levelName}`;
+
+          if (currTimeseries[i].value) {
+            tempValue = currTimeseries[i].value.toFixed(3);
+          }
+
+          dataString = `${currTimeseries[i].name},
+                        ${tempValue},
+                        ${this.getLat()},${this.getLon()},${levelName}`;
           csvContent += dataString + "\n";
         }
       }
