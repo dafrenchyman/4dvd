@@ -406,7 +406,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getTimeSeriesBoxValue() {
     // First check if the time series value is null
     if (this.timeSeriesVal) {
-
       const TSValExp = this.timeSeriesVal.toExponential();
 
       if (TSValExp[TSValExp.length - 2] === "-") {
@@ -745,7 +744,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   public LoadSurfaceTemperature() {
     const selectedDataset = this._model.settings.Datasets.find(myObj =>
       myObj.FullName.includes(
-        "Global Surface Temperature Anomalies:NOAAGlobalTemp|Monthly Mean"
+        "Global Surface Temperature Anomalies: NOAAGlobalTemp|Monthly Mean"
       )
     );
     this._controller.loadLevels(selectedDataset);

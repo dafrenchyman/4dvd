@@ -185,8 +185,8 @@ export class Settings {
     const jsonArr = JSON.parse(jsonString);
     for (let i = 0; i < jsonArr.length; i++) {
       let tempValue = jsonArr[i].value;
-      if (tempValue){
-        tempValue = jsonArr[i].value.toFixed(2)
+      if (tempValue) {
+        tempValue = jsonArr[i].value.toFixed(2);
       }
       this.toolTipData.push({
         name: jsonArr[i].name,
@@ -266,7 +266,7 @@ export class Settings {
   JustUnits(): string {
     // returns just the units.. in format: "Units"
     const title = this.GenerateSimpleTitle(this.FullName);
-    if (!this.CurrGridBoxValue){
+    if (!this.CurrGridBoxValue) {
       return " ";
     } else if (title.search("Temperature") >= 0) {
       return "\xB0C";
@@ -274,7 +274,6 @@ export class Settings {
       return this.DataUnits;
     }
   }
-
 
   GetLatWithDir() {
     let lat = Number(this.CurrGridBoxLat.toFixed(2));
