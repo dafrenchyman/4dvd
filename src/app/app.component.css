@@ -27,6 +27,14 @@
   font-size: 18px;
   display: inline-block;
 }
+/* .Temperature_Conversion {
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  display: inline-block;
+} */
 button:focus {
   background-color: #2196f3;
 }
