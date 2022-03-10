@@ -2,5 +2,5 @@
 .buttonColor:focus,
 .buttonColor:active,
 :after {
-  background-color: white;
+  background-color: rgb(0, 0, 0);
 }

@@ -9,7 +9,7 @@
   background-color: transparent;
 }
 .mat-icon-button:hover {
-  background-color: white;
+  background-color: rgb(0, 0, 0);
 }
 
 .mat-icon-button {
