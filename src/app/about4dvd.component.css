@@ -2,5 +2,10 @@
 .buttonColor:focus,
 .buttonColor:active,
 :after {
-  background-color: white;
+  background-color: #2196F3;
+  color: #FFFFFF;
+}
+
+.buttonColor:hover{
+  background-color: grey;
 }

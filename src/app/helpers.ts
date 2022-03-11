@@ -322,7 +322,11 @@ export class Helpers {
         switch (settings.TemperatureType) {
           case "C":
             for (let i = 0; i < rawValues.length; i++) {
-              valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
+              if (rawValues[i]){
+                valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
+              } else {
+                valueFinal.push(rawValues[i]);
+              }
             }
             break;
           default:

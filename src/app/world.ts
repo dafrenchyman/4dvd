@@ -399,7 +399,7 @@ export class World {
 
       // Pick the color selected in the dropdown
       if (curValue == null || curValue === undefined) {
-        color = [0.0, 0.0, 0.0, 0.99];
+        color = [0.7, 0.7, 0.7, 0.0];
       } else {
         switch (this._settings.functionForColorMap) {
           case "customColorMapWithMidpoint":

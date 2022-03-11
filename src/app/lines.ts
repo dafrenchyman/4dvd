@@ -494,10 +494,10 @@ export class Lines {
         currLatLinesVertexPositionData.push(currCoordinates.z); // Z
 
         // Color
-        currLatLinesVertexColorData.push(0.4); // R
-        currLatLinesVertexColorData.push(0.4); // G
-        currLatLinesVertexColorData.push(0.4); // B
-        currLatLinesVertexColorData.push(1.0); // O
+        currLatLinesVertexColorData.push(0.0); // R
+        currLatLinesVertexColorData.push(0.0); // G
+        currLatLinesVertexColorData.push(0.0); // B
+        currLatLinesVertexColorData.push(0.0); // O
       }
 
       // Position
@@ -558,10 +558,10 @@ export class Lines {
         currLonLinesVertexPositionData.push(currCoordinates.z); // Z
 
         // Color
-        currLonLinesVertexColorData.push(0.4); // R
-        currLonLinesVertexColorData.push(0.4); // G
-        currLonLinesVertexColorData.push(0.4); // B
-        currLonLinesVertexColorData.push(1.0); // O
+        currLonLinesVertexColorData.push(0.0); // R
+        currLonLinesVertexColorData.push(0.0); // G
+        currLonLinesVertexColorData.push(0.0); // B
+        currLonLinesVertexColorData.push(0.0); // O
       }
 
       // Position
