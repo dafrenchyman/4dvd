@@ -101,12 +101,11 @@ export class Helpers {
         switch (LayerSettings.TemperatureType) {
           case "C":
             for (let i = 0; i < rawValues.length; i++) {
-              if (rawValues[i] == null) {
-                // valueFinal = rawValues;
-                continue;
+              if (rawValues[i]) {
+                valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
               }
               else {
-                valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
+                valueFinal.push(rawValues[i]);
               }
             }
             break;
