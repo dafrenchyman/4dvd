@@ -588,15 +588,21 @@
           <p>Fahrenheit to Celsius:</p>
           <p>
             <label>Fahrenheit</label>
-            <input id="inputFahrenheit" type="number" placeholder="Fahrenheit" 
-            oninput="temperatureConverter(this.value)" onchange="temperatureConverter(this.value)">
+            <input
+              id="inputFahrenheit"
+              type="number"
+              placeholder="Fahrenheit"
+              oninput="temperatureConverter(this.value)"
+              onchange="temperatureConverter(this.value)"
+            />
           </p>
           <p>Celcius: <span id="outputCelcius"></span></p>
           <script>
-          function temperatureConverter(valNum) {
-            valNum = parseFloat(valNum);
-            document.getElementById("outputCelcius").innerHTML=(valNum-32)/1.8;
-          }
+            function temperatureConverter(valNum) {
+              valNum = parseFloat(valNum);
+              document.getElementById("outputCelcius").innerHTML =
+                (valNum - 32) / 1.8;
+            }
           </script>
           <mat-list-item>
             Lat: {{ this._model.settings.GetLatWithDir() }}
