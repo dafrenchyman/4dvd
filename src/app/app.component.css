@@ -1,7 +1,46 @@
+@media only screen and (min-width: 359px) {
+  .row-blue-white-text
+  {
+    height: 150px;
+  }
+}
+
+@media only screen and (min-width: 599px) {
+  .row-blue-white-text
+  {
+    height: 100px;
+  }
+}
+
+@media only screen and (min-width: 809px) {
+  .row-blue-white-text
+  {
+    height: 75px;
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+  .row-blue-white-text
+  {
+    height: 55px; 
+  }
+}
+
+
+
+.OptionsButton
+{
+  margin-top: 10px;
+  float: right;
+  font-size: 18px;
+  white-space: pre;
+}
+
 .AboutButton {
   margin-top: 10px;
   float: right;
   font-size: 18px;
+  white-space: pre;
 }
 .DataDownload {
   margin-right: 20px;
@@ -10,6 +49,9 @@
   margin-bottom: 10px;
   font-size: 18px;
   display: inline-block;
+  white-space: pre;
+  
+  width: 250px;
 }
 .Dataset {
   margin-right: 20px;
@@ -18,6 +60,9 @@
   margin-bottom: 10px;
   font-size: 18px;
   display: inline-block;
+  white-space: pre;
+  
+  width: 250px;
 }
 .Top_Dataset {
   margin-right: 20px;
@@ -26,10 +71,15 @@
   margin-bottom: 10px;
   font-size: 18px;
   display: inline-block;
+  white-space: pre;
+
+  width: 250px;
 }
+
 button:focus {
   background-color: #2196f3;
 }
+
 button.mat-menu-item {
   background-color: white;
   font-size: 18px;

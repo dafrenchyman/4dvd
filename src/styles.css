@@ -310,6 +310,8 @@
   left: 100%;
 }
 
+
+/* phone screen */
 @media only screen and (min-width: 601px) {
   .row .col.m1 {
     width: 8.3333333333%;

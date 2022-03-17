@@ -6,9 +6,9 @@
 >
   <div
     #TabMenu
-    class="row blue white-text"
+    class="row-blue-white-text"
     id="TabMenu"
-    style="margin-bottom: 0px; z-index: 10;"
+    style="background-color: #2196f3; margin-bottom: 0px; z-index: 10;"
   >
     <img
       src="/assets/4DVDLogoV1.png"
@@ -24,70 +24,78 @@
     >
       <h5>{{ title }}</h5>
     </div>
-    <div
-      id="QuickButtons"
-      class="col s6"
-      align="right"
-      style="float: right; display: inline-block"
-    >
-      <div id="Top Dataset" class="col s3">
-        <button
-          class="Top_Dataset"
-          mat-button
-          [matMenuTriggerFor]="TopDataset"
-          matTooltip="Choose Dataset"
-          matTooltipPosition="right"
-        >
-          Top Datasets
-        </button>
-        <mat-menu #TopDataset="matMenu">
-          <button mat-menu-item (click)="climate.LoadPrecipitation()">
-            Precipitation: <font size="3" color="Gray">GPCP Monthly</font>
-          </button>
-          <button mat-menu-item (click)="climate.LoadSurfaceTemperature()">
-            Surface Temperature Anomalies:
-            <font size="3" color="Gray">NOAAGlobalTemp</font>
-          </button>
-          <button mat-menu-item (click)="climate.LoadAirTemperature()">
-            Air Temperature:
-            <font size="3" color="Gray">20CR Monthly at 1,000 millibar</font>
-          </button>
-        </mat-menu>
-      </div>
-      <div id="Dataset" class="col s3">
-        <button
-          class="Dataset"
-          mat-button
-          (click)="climate.OpenDataTreeDialog()"
-          matTooltip="Choose Dataset"
-          matTooltipPosition="right"
-        >
-          Datasets
-        </button>
-      </div>
-      <div id="DownloadButton" class="col s3">
-        <button
-          class="DataDownload"
-          mat-button
-          (click)="climate.createCsvFromGriddedData()"
-          matTooltip="Download Gridded Data"
-          matTooltipPosition="right"
-        >
-          Download Data
-        </button>
-      </div>
 
-      <div id="AboutButton" class="col s3" align="left">
-        <button
-          class="AboutButton"
-          mat-button
-          (click)="OpenAboutDialog()"
-          matTooltip="About 4DVD"
-          matTooltipPosition="right"
-        >
-          <mat-icon>info</mat-icon> About
-        </button>
-      </div>
+    <!-- have this dependent off a JS script -->
+    <div id="Options" class="col s3" align="right" style="color: #fff !important; float: inline-end; display: inline-block">
+      <button
+        class="OptionsButton"
+        mat-button
+        [matMenuTriggerFor]="Options"
+        matTooltip="Choose Options"
+        matTooltipPosition="left"
+      >
+        Options
+      </button>
+      <mat-menu #Options="matMenu">
+        <div id="Top Dataset" class="col s3">
+          <button
+            class="Top_Dataset"
+            mat-menu-item 
+            [matMenuTriggerFor]="TopDataset"
+            matTooltip="Choose Dataset"
+            matTooltipPosition="left"
+          >
+            Top Datasets
+          </button>
+          <mat-menu #TopDataset="matMenu">
+            <button mat-menu-item (click)="climate.LoadPrecipitation()">
+              Precipitation: <font size="3" color="Gray">GPCP Monthly</font>
+            </button>
+            <button mat-menu-item (click)="climate.LoadSurfaceTemperature()">
+              Surface Temperature Anomalies:
+              <font size="3" color="Gray">NOAAGlobalTemp</font>
+            </button>
+            <button mat-menu-item (click)="climate.LoadAirTemperature()">
+              Air Temperature:
+              <font size="3" color="Gray">20CR Monthly at 1,000 millibar</font>
+            </button>
+          </mat-menu>
+        </div>
+        <div id="Dataset" class="col s3">
+          <button
+            class="Dataset"
+            mat-menu-item 
+            (click)="climate.OpenDataTreeDialog()"
+            matTooltip="Choose Dataset"
+            matTooltipPosition="left"
+          >
+            Datasets
+          </button>
+        </div>
+        <div id="DownloadButton" class="col s3">
+          <button
+            class="DataDownload"
+            mat-menu-item 
+            (click)="climate.createCsvFromGriddedData()"
+            matTooltip="Download Gridded Data"
+            matTooltipPosition="left"
+          >
+            Download Data
+          </button>
+        </div>
+  
+        <div id="AboutButton" class="col s3" align="left">
+          <button
+            class="AboutButton"
+            mat-menu-item 
+            (click)="OpenAboutDialog()"
+            matTooltip="About 4DVD"
+            matTooltipPosition="left"
+          >
+            <mat-icon>info</mat-icon> About
+          </button>
+        </div>
+      </mat-menu>
     </div>
   </div>
 
