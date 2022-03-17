@@ -1458,7 +1458,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   drawScene(ui, settings) {
     this.GL.viewport(0, 0, this.GL.canvas.width, this.GL.canvas.height);
     // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.GL.clearColor(1.0, 1.0, 1.0, 1.0);
+    this.GL.clearColor(.70, .70, .70, 1.0);
     this.GL.clear(this.GL.COLOR_BUFFER_BIT);
     this.GL.enable(this.GL.CULL_FACE);
     this.GL.cullFace(this.GL.BACK);
