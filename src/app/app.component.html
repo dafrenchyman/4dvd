@@ -34,8 +34,21 @@
         matTooltip="Choose Options"
         matTooltipPosition="left"
       >
-        Options
+      <mat-icon>menu</mat-icon>
       </button>
+<!---
+    <button
+      mat-button
+      id="sideNavButton"
+      [disableRipple]="true"
+      class="example-fab buttonColor"
+      (click)="sidenav.toggle()"
+      (click)="unhide(this,'close')"
+      matTooltip="Settings"
+      matTooltipPosition="below"
+    >
+      {{ onClick("close") }}
+      <mat-icon>menu</mat-icon>-->
       <mat-menu #Options="matMenu">
         <div id="Top Dataset" class="col s3">
           <button
