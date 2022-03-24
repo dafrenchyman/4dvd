@@ -329,8 +329,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   // update the slider's values
   private updateSlider() {
-    
     console.log(this._model.settings.maxValue);
+    throw new Error('Exception for bp');
     this.scientificNotation = false;
     // data sets with smaller ranges do not need to be rounded
     if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
@@ -408,7 +408,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getTimeSeriesBoxValue() {
     // First check if the time series value is null
     if (this.timeSeriesVal) {
-
       const TSValExp = this.timeSeriesVal.toExponential();
 
       if (TSValExp[TSValExp.length - 2] === "-") {
