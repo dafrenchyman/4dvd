@@ -329,6 +329,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   // update the slider's values
   private updateSlider() {
+    
+    console.log(this._model.settings.maxValue);
     this.scientificNotation = false;
     // data sets with smaller ranges do not need to be rounded
     if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
