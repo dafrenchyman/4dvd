@@ -531,10 +531,11 @@ export class World {
         const topRight = jQuery.extend(
           true,
           {},
-          fullData[latCounter + 1][lonCounter + 1]
+          fullData[latCounter + 1][latCounter + 1]
         );
 
         if (!this._settings.smoothGridBoxValues) {
+          /*
           bottomLeft.color[0] = topLeft.color[0];
           bottomLeft.color[1] = topLeft.color[1];
           bottomLeft.color[2] = topLeft.color[2];
@@ -546,6 +547,21 @@ export class World {
           topRight.color[0] = topLeft.color[0];
           topRight.color[1] = topLeft.color[1];
           topRight.color[2] = topLeft.color[2];
+          */
+          if (fullData[latCounter][latCounter].anomaly !== ""){
+            bottomLeft.color[0] = topLeft.color[0];
+            bottomLeft.color[1] = topLeft.color[1];
+            bottomLeft.color[2] = topLeft.color[2];
+
+            bottomRight.color[0] = topLeft.color[0];
+            bottomRight.color[1] = topLeft.color[1];
+            bottomRight.color[2] = topLeft.color[2];
+
+            topRight.color[0] = topLeft.color[0];
+            topRight.color[1] = topLeft.color[1];
+            topRight.color[2] = topLeft.color[2];
+          }
+
         }
 
         const triangleLeft = [topLeft, bottomLeft, topRight];
@@ -578,6 +594,7 @@ export class World {
           const topRight = jQuery.extend(true, {}, fullData[latCounter + 1][0]);
 
           if (!this._settings.smoothGridBoxValues) {
+            /*
             bottomLeft.color[0] = topLeft.color[0];
             bottomLeft.color[1] = topLeft.color[1];
             bottomLeft.color[2] = topLeft.color[2];
@@ -589,6 +606,20 @@ export class World {
             topRight.color[0] = topLeft.color[0];
             topRight.color[1] = topLeft.color[1];
             topRight.color[2] = topLeft.color[2];
+            */
+            if (fullData[latCounter][latCounter].anomaly !== ""){
+              bottomLeft.color[0] = topLeft.color[0];
+              bottomLeft.color[1] = topLeft.color[1];
+              bottomLeft.color[2] = topLeft.color[2];
+
+              bottomRight.color[0] = topLeft.color[0];
+              bottomRight.color[1] = topLeft.color[1];
+              bottomRight.color[2] = topLeft.color[2];
+
+              topRight.color[0] = topLeft.color[0];
+              topRight.color[1] = topLeft.color[1];
+              topRight.color[2] = topLeft.color[2];
+            }
           }
 
           // Force the textCoord to map correctly for the globe
