@@ -594,6 +594,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this.timeSeriesVal = Number(
             this._model.settings.CurrGridBoxValue.toFixed(4)
           );
+        }else {
+          this.timeSeriesVal = null;
         }
       }
     }
@@ -790,16 +792,20 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   OpenTimeseriesDialog() {
-    const timeseriesHeight =
-      Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
-    const timeseriesWidth =
-      Math.floor(this.viewportWidth - this.viewportWidth * 0.1) + "px";
-    this._model.settings.viewportHeight = this.viewportHeight;
-    this._model.settings.viewportWidth = this.viewportWidth;
-    const dialogRef = this.dialog.open(TimeseriesMenuComponent, {
-      height: timeseriesHeight,
-      data: this._model
-    });
+    if (this.timeSeriesVal != null) {
+
+      const timeseriesHeight =
+        Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
+      const timeseriesWidth =
+        Math.floor(this.viewportWidth - this.viewportWidth * 0.1) + "px";
+      this._model.settings.viewportHeight = this.viewportHeight;
+      this._model.settings.viewportWidth = this.viewportWidth;
+      const dialogRef = this.dialog.open(TimeseriesMenuComponent, {
+        height: timeseriesHeight,
+        data: this._model
+      });
+
+    }
   }
 
   ChangeMonth() {
