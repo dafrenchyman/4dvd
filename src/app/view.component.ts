@@ -222,9 +222,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this._model.settings.setSliderMax(
         this.sliderMaxVal / Math.pow(10, this.SNValue)
       );
+      console.log(this.sliderMaxVal / Math.pow(10, this.SNValue));
       this._model.settings.setSliderMin(
         this.sliderMinVal / Math.pow(10, this.SNValue)
       );
+      console.log(this.sliderMinVal / Math.pow(10, this.SNValue));
       this._model._world.processBuffers();
       this._model.legend.drawLegend();
     } else {
@@ -331,6 +333,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private updateSlider() {
     this.scientificNotation = false;
     // data sets with smaller ranges do not need to be rounded
+    console.log("in update this._model.settings.minValue");
+    console.log(this._model.settings.minValue);
+    console.log("in update this._model.settings.maxValue");
+    console.log(this._model.settings.maxValue);
+
     if (this._model.settings.maxValue - this._model.settings.minValue > 5) {
       this.sliderMinVal = Math.floor(this._model.settings.minValue);
       this.sliderMaxVal = Math.ceil(this._model.settings.maxValue);
@@ -366,14 +373,16 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this.updateSlider();
         })
         .catch(message => {
-          console.log(message);
+          console.log("slider, not data available");
         });
     } else {
+      // this.waitForDataLoad();
       this.updateSlider();
     }
   }
 
   ngOnInit(): void {
+    // this.waitForDataLoad();
     this.setSlider();
   }
 
@@ -406,7 +415,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getTimeSeriesBoxValue() {
     // First check if the time series value is null
     if (this.timeSeriesVal) {
-
       const TSValExp = this.timeSeriesVal.toExponential();
 
       if (TSValExp[TSValExp.length - 2] === "-") {
@@ -594,7 +602,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
           this.timeSeriesVal = Number(
             this._model.settings.CurrGridBoxValue.toFixed(4)
           );
-        }else {
+        } else {
           this.timeSeriesVal = null;
         }
       }
@@ -777,6 +785,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
         );
         if (selectedDataset != null) {
           this._controller.loadLevels(selectedDataset);
+          this.dataAvail = false;
           this._controller.loadDataset(
             selectedDataset,
             selectedDataset.StartDate,
@@ -793,7 +802,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   OpenTimeseriesDialog() {
     if (this.timeSeriesVal != null) {
-
       const timeseriesHeight =
         Math.floor(this.viewportHeight - this.viewportHeight * 0.1) + "px";
       const timeseriesWidth =
@@ -804,7 +812,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
         height: timeseriesHeight,
         data: this._model
       });
-
     }
   }
 
