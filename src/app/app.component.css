@@ -45,6 +45,7 @@
   float: right;
   font-size: 18px;
   white-space: pre;
+  color: #fff;
 }
 .DataDownload {
   margin-right: 20px;
@@ -54,7 +55,7 @@
   font-size: 18px;
   display: inline-block;
   white-space: pre;
-  
+  color: #fff;
   width: 250px;
 }
 .Dataset {
@@ -65,7 +66,7 @@
   font-size: 18px;
   display: inline-block;
   white-space: pre;
-  
+  color: #fff;
   width: 250px;
 }
 .Top_Dataset {
@@ -76,7 +77,7 @@
   font-size: 18px;
   display: inline-block;
   white-space: pre;
-
+  color: #fff;
   width: 250px;
 }
 
@@ -84,14 +85,20 @@ button:focus {
   background-color: #2196f3;
 }
 
-button.mat-menu-item {
-  background-color: white;
+::ng-deep button .mat-menu-item {
+  background-color: #2196f3;
+  color: #fff;
   font-size: 18px;
+  box-shadow: none !important;
 }
+
 button.mat-menu-item:hover {
   background-color: #2196f3;
   color: #fff !important;
+  box-shadow: none !important;
 }
 ::ng-deep.mat-menu-panel {
+  background-color: #2196f3;
+  box-shadow: none !important;
   max-width: none !important;
 }

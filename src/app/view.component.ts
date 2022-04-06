@@ -142,11 +142,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   public GridBoxData: number[];
 
-  public yearSlider = 0;
+  public yearSlider = this.GetYearSlider();
   public tickInterval = "auto";
   public thumbLabel = true;
 
-  currMonth = "01";
+  currMonth = this.GetCurrMonth();
   months = [
     { value: "01", viewValue: "January" },
     { value: "02", viewValue: "February" },
@@ -803,6 +803,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
   }
 
   ChangeMonth() {
+    //sessionStorage.clear();
+    sessionStorage.setItem('s_currMonth', this.currMonth);
     this._model.settings.CurrDate =
       Helpers.LeftPad(this.yearSlider, 4) + "-" + this.currMonth + "-01";
     this._controller.loadDataset(
@@ -810,11 +812,20 @@ export class ViewComponent implements OnInit, AfterViewInit {
       this._model.settings.CurrDate,
       this._model.settings.Level_ID
     );
-
     this.waitForDataLoad();
   }
 
+  GetCurrMonth()
+  {
+    if(!(sessionStorage.getItem('s_currMonth')))
+    {
+      sessionStorage.setItem('s_currMonth', "01");
+    }
+    return sessionStorage.getItem('s_currMonth');
+  }
+
   ChangeYear() {
+    sessionStorage.setItem('s_yearSlider', this.yearSlider.toString());
     if (this.yearSlider > this.GetMaxYear()) {
       this.yearSlider = this.GetMaxYear();
     } else if (this.yearSlider < this.GetMinYear()) {
@@ -831,6 +842,15 @@ export class ViewComponent implements OnInit, AfterViewInit {
     );
 
     this.waitForDataLoad();
+  }
+
+  GetYearSlider()
+  {
+    if(!(sessionStorage.getItem('s_yearSlider')))
+    {
+      sessionStorage.setItem('s_yearSlider', '0');
+    }
+    return JSON.parse(sessionStorage.getItem('s_yearSlider'));
   }
 
   ChangeLevel(level_id: number) {
@@ -946,7 +966,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
     GlMatrix.mat4.identity(this.earthRotationMatrix_y);
 
     this.Shaders = new Shaders();
-
     // Start
     this.openSnackBar();
   }

@@ -25,7 +25,8 @@
       <h5>{{ title }}</h5>
     </div>
 
-    <!-- have this dependent off a JS script -->
+    <!-- Menu for Dataset options -->
+    <!-- have this dictated whether on mobile or PC -->
     <div id="Options" class="col s3" align="right" style="color: #fff !important; float: inline-end; display: inline-block">
       <button
         class="OptionsButton"
@@ -34,21 +35,8 @@
         matTooltip="Choose Options"
         matTooltipPosition="left"
       >
-      <mat-icon>menu</mat-icon>
-      </button>
-<!---
-    <button
-      mat-button
-      id="sideNavButton"
-      [disableRipple]="true"
-      class="example-fab buttonColor"
-      (click)="sidenav.toggle()"
-      (click)="unhide(this,'close')"
-      matTooltip="Settings"
-      matTooltipPosition="below"
-    >
-      {{ onClick("close") }}
-      <mat-icon>menu</mat-icon>-->
+      <mat-icon>menu_open</mat-icon>
+    </button>
       <mat-menu #Options="matMenu">
         <div id="Top Dataset" class="col s3">
           <button
@@ -62,15 +50,15 @@
           </button>
           <mat-menu #TopDataset="matMenu">
             <button mat-menu-item (click)="climate.LoadPrecipitation()">
-              Precipitation: <font size="3" color="Gray">GPCP Monthly</font>
+              Precipitation: <font size="3" color="White">GPCP Monthly</font>
             </button>
             <button mat-menu-item (click)="climate.LoadSurfaceTemperature()">
               Surface Temperature Anomalies:
-              <font size="3" color="Gray">NOAAGlobalTemp</font>
+              <font size="3" color="White">NOAAGlobalTemp</font>
             </button>
             <button mat-menu-item (click)="climate.LoadAirTemperature()">
               Air Temperature:
-              <font size="3" color="Gray">20CR Monthly at 1,000 millibar</font>
+              <font size="3" color="White">20CR Monthly at 1,000 millibar</font>
             </button>
           </mat-menu>
         </div>
@@ -109,7 +97,7 @@
           </button>
         </div>
       </mat-menu>
-    </div>
+    </div> 
   </div>
 
   <!--div #ClimateSystem id="ClimateSystem" style="width:100%; overflow:hidden; z-index: 2; margin-bottom: 0px;" class="row">
