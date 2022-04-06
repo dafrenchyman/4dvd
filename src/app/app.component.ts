@@ -47,10 +47,33 @@ export class AppComponent {
     });
   }
 
+  // ngOnInit() {
+  //   const data = sessionStorage.getItem('key');
+  //   if (data) {
+  //     window.location.href = data;
+  //   }
+  // }
+
   public OpenAboutDialog() {
     const dialogRef = this.dialog.open(About4dvdComponent, {
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  saveData() {
+    console.log("hello from the other side");
+    sessionStorage.setItem('key', window.location.href);
+
+    window.location.href = this.getData();
+  }
+
+  getData() {
+    console.log('Getting dat data!');
+    return sessionStorage.getItem('key');
+  }
+
+  removeData() {
+    sessionStorage.removeItem('key');
   }
 }

@@ -13,7 +13,7 @@
     <img
       src="/assets/4DVDLogoV1.png"
       alt="4DVD Logo"
-      onClick="window.location.href=window.location.href"
+      (click)="saveData()"
       style="height: 45px; width: 45px; margin-top: 5px; margin-left: 5px; cursor: pointer"
       align="left"
       matTooltip="Refresh Page"
@@ -103,5 +103,5 @@
   </div-->
 
   <router-outlet></router-outlet>
-  <!-- <app-climate-view #climate>Loading Climate...</app-climate-view> -->
+  <app-climate-view #climate>Loading Climate...</app-climate-view>
 </div>
