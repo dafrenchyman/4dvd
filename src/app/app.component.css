@@ -44,6 +44,8 @@
   margin-top: 10px;
   float: right;
   font-size: 18px;
+  
+  width: 97.9vw;
   white-space: pre;
   color: #fff;
 }
@@ -56,7 +58,7 @@
   display: inline-block;
   white-space: pre;
   color: #fff;
-  width: 250px;
+  width: 97.9vw;
 }
 .Dataset {
   margin-right: 20px;
@@ -67,7 +69,7 @@
   display: inline-block;
   white-space: pre;
   color: #fff;
-  width: 250px;
+  width: 97.9vw;
 }
 .Top_Dataset {
   margin-right: 20px;
@@ -78,7 +80,7 @@
   display: inline-block;
   white-space: pre;
   color: #fff;
-  width: 250px;
+  width: 97.9vw;
 }
 
 button:focus {
