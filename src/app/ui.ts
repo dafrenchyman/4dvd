@@ -55,8 +55,8 @@ export class UI {
       this.lastMouseY = event.clientY; // + event.touches[0].clientY;
     } else if (event.type === "touchstart") {
       const touch = event.touches[0] || event.changedTouches[0];
-      this.lastMouseX = touch.pageX;
-      this.lastMouseY = touch.pageY;
+      this.lastMouseX = event.clientX; // touch.pageX;
+      this.lastMouseY = event.clientY; // touch.pageY;
     }
   }
 

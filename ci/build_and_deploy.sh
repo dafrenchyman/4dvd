@@ -27,8 +27,8 @@ fi
 if [ "${IN_CI}" == "FALSE" ]; then
   # Use the pem file
   echo "Deploying to 4dvd.sdsu.edu/${COPY_PATH}"
-  ssh -i ~/.ssh/ski-for-web.pem ubuntu@4dvd.sdsu.edu "mkdir -p /var/www/html/${COPY_PATH}"
-  scp -i ~/.ssh/ski-for-web.pem -rp ./dist/* ubuntu@4dvd.sdsu.edu:/var/www/html/${COPY_PATH}
+  ssh jngo@4dvd.sdsu.edu "mkdir -p /var/www/html/${COPY_PATH}"
+  scp -r ./dist/* jngo@4dvd.sdsu.edu:/var/www/html/${COPY_PATH}
 else
   echo "CircleCI deployment not yet setup"
 fi
