@@ -1017,8 +1017,35 @@ export class ViewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  //mouse down but for touch
+  @HostListener("touchstart", ["$event"])
+  onTouchdown(event) {
+    if (this._finishedLoading && this.inCanvas) {
+      this.ui.handleMouseDown(event);
+    }
+  }
+
   @HostListener("mousemove", ["$event"])
   onMousemove(event) {
+    if (this._finishedLoading && this.inCanvas) {
+      const rotationMatrix = {
+        earthRotationMatrix: this.earthRotationMatrix,
+        earthRotationMatrix_x: this.earthRotationMatrix_x,
+        earthRotationMatrix_y: this.earthRotationMatrix_y
+      };
+      const results = this.ui.handleMouseMove(
+        rotationMatrix,
+        this._model.settings.globeView,
+        event
+      );
+      this.earthRotationMatrix = results.earthRotationMatrix;
+      this.earthRotationMatrix_x = results.earthRotationMatrix_x;
+      this.earthRotationMatrix_y = results.earthRotationMatrix_y;
+    }
+  }
+
+  @HostListener("touchmove", ["$event"])
+  onTouchmove(event) {
     if (this._finishedLoading && this.inCanvas) {
       const rotationMatrix = {
         earthRotationMatrix: this.earthRotationMatrix,
@@ -1042,6 +1069,24 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
   @HostListener("mouseup", ["$event"])
   onMouseup(event) {
+    if (this._finishedLoading && this.inCanvas) {
+      this.ui.handleMouseUp(
+        this._model._world,
+        this.GL,
+        this._model.settings.globeView,
+        this.pMatrix,
+        this.mvMatrix,
+        this.vMatrix,
+        this.earthRotationMatrix,
+        this.earthRotationMatrix_x,
+        this.earthRotationMatrix_y,
+        event
+      );
+    }
+  }
+
+  @HostListener("touchend", ["$event"])
+  onTouchend(event) {
     if (this._finishedLoading && this.inCanvas) {
       this.ui.handleMouseUp(
         this._model._world,
