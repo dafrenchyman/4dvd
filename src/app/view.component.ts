@@ -553,6 +553,19 @@ export class ViewComponent implements OnInit, AfterViewInit {
     // jQuery('#ClimateSystem').height(jQuery(window).height()-jQuery('#tabMenu').height());
     // this.climateSystemRef.nativeElement.height = window.innerHeight - this.tabMenuRowRef.nativeElement.clientHeight;
     // jQuery('#ClimateSystem').height(jQuery(window).height()-this.tabMenuRowRef.nativeElement.clientHeight);
+    function cToF(celsius) 
+    {
+      var cTemp = celsius;
+      var cToFahr = cTemp * 9 / 5 + 32;
+      return cToFahr;
+    }
+    console.log(cToF(36))
+     
+    function FtoC(fahrenheit){
+        let celcius = fahrenheit*5/9 -32;
+        return celcius;
+    }
+    console.log(FtoC(20));
 
     jQuery("#WebglCanvas").height(
       jQuery("#WebglCanvas")
@@ -1059,7 +1072,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
     this._model = new Model(this.GL, this._getJson);
     this._model.RegisterObserver(this);
     GlMatrix.vec3.normalize(this._model.settings.lightDirection, [
-      -1.0,
+     -1.0,
       0.0,
       0.0
     ]);

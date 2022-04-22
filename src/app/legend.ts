@@ -115,6 +115,7 @@ export class Legend {
       case "degK":
         switch (this._settings.TemperatureType) {
           case "C":
+            case "F":
             legendUnits =
               "Temperature (" + this._settings.TemperatureSymbol + ")";
             break;
