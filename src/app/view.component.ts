@@ -560,14 +560,17 @@ export class ViewComponent implements OnInit, AfterViewInit {
         .parent()
         .height()
     );
-
+    console.log(this.myTempFn(32));
     this.onResize(null);
     this.onResize(null);
     this.uiLoader.then(results => {
       this.webGLStart();
     });
   }
-
+  // converting c to f
+  public myTempFn(temp){
+    return (temp*(9/5)) + 32;
+  }
   public setModel() {}
 
   public GetTitle(): string {
