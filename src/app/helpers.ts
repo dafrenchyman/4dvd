@@ -103,8 +103,7 @@ export class Helpers {
             for (let i = 0; i < rawValues.length; i++) {
               if (rawValues[i]) {
                 valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
-              }
-              else {
+              } else {
                 valueFinal.push(rawValues[i]);
               }
             }
@@ -329,8 +328,7 @@ export class Helpers {
             for (let i = 0; i < rawValues.length; i++) {
               if (rawValues[i]) {
                 valueFinal.push(Helpers.KelvinToCelsius(rawValues[i]));
-              }
-              else {
+              } else {
                 valueFinal.push(rawValues[i]);
               }
             }
