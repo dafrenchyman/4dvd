@@ -318,6 +318,7 @@ export class Helpers {
     return Math.max.apply(null, input);
   }
 
+  // look here Ayoub, code already written for conversion above
   public static ProcessRawDataValue(rawValues, settings: Settings) {
     let valueFinal = [];
     switch (settings.DataUnits) {
