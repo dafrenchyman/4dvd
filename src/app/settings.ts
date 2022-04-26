@@ -42,6 +42,8 @@ export class Settings {
   minValue: number = null;
   animate = false;
   ServerString: string;
+  // for ayoub example purposes
+  farenheitMode= false;
 
   // Legend Slider settings
   scientificNotation = false;
