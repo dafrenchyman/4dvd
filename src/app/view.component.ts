@@ -285,7 +285,12 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getFloor() {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return Math.floor(this._model.settings.minValue);
+        if(this._model.settings.farenheitMode === true){
+          return this.myTempFn(this._model.settings.minValue);
+        }
+        else {
+          return Math.floor(this._model.settings.minValue);
+        }
       }
     }
     return 0;
