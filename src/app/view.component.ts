@@ -285,10 +285,9 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getFloor() {
     if (this._model != null) {
       if (this._model.settings != null) {
-        if(this._model.settings.farenheitMode === true){
+        if (this._model.settings.farenheitMode === true) {
           return this.myTempFn(this._model.settings.minValue);
-        }
-        else {
+        } else {
           return Math.floor(this._model.settings.minValue);
         }
       }
@@ -299,7 +298,11 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getCeil() {
     if (this._model != null) {
       if (this._model.settings != null) {
-        return Math.ceil(this._model.settings.maxValue);
+        if (this._model.settings.farenheitMode === true) {
+          return this.myTempFn(this._model.settings.maxValue);
+        } else {
+          return Math.ceil(this._model.settings.maxValue);
+        }
       }
     }
     return 10;
@@ -415,9 +418,17 @@ export class ViewComponent implements OnInit, AfterViewInit {
 
       if (TSValExp[TSValExp.length - 2] === "-") {
         const decimalPlace = Number(TSValExp[TSValExp.length - 1]);
-        return this.timeSeriesVal.toFixed(decimalPlace);
+        if (this._model.settings.farenheitMode) {
+          return this.myTempFn(this.timeSeriesVal).toFixed(decimalPlace);
+        } else {
+          return this.timeSeriesVal.toFixed(decimalPlace);
+        }
       } else {
-        return this.timeSeriesVal.toFixed(2);
+        if (this._model.settings.farenheitMode) {
+          return this.myTempFn(this.timeSeriesVal).toFixed(2);
+        } else {
+          return this.timeSeriesVal.toFixed(2);
+        }
       }
     } else {
       // if the time series value was null, return an empty string
