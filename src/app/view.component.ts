@@ -406,7 +406,6 @@ export class ViewComponent implements OnInit, AfterViewInit {
   private getTimeSeriesBoxValue() {
     // First check if the time series value is null
     if (this.timeSeriesVal) {
-
       const TSValExp = this.timeSeriesVal.toExponential();
 
       if (TSValExp[TSValExp.length - 2] === "-") {
@@ -568,8 +567,8 @@ export class ViewComponent implements OnInit, AfterViewInit {
     });
   }
   // converting c to f
-  public myTempFn(temp){
-    return (temp*(9/5)) + 32;
+  public myTempFn(temp) {
+    return temp * (9 / 5) + 32;
   }
   public setModel() {}
 
