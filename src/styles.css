@@ -27,7 +27,8 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
-
+  background-color: #033649;
+  color: #CDB380;
 }
 
 .row:after {

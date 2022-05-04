@@ -56,7 +56,7 @@
 }
 
 #Legend text {
-  fill: black;
+  fill: red;
 }
 
 path.domain {
@@ -270,7 +270,7 @@ button:focus {
 }
 
 .custom-slider .ng5-slider .ng5-slider-selection {
-  background-color: #2196f3;
+  background-color: greenyellow;
 }
 
 mat-sidenav-content.mat-drawer-content {
@@ -316,7 +316,7 @@ mat-sidenav-content.mat-drawer-content {
 }
 
 #Menu {
-  background-color: #033649;
+  background-color: mediumvioletred;
   color: #cdb380;
   overflow: auto;
   width: 290px;
