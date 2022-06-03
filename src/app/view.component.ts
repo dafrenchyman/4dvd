@@ -1013,7 +1013,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   @HostListener("mousedown", ["$event"])
   onMousedown(event) {
     if (this._finishedLoading && this.inCanvas) {
-      this.ui.handleMouseDown(event);
+      this.ui.handleMouseDown(this._model.settings.globeView, event);
     }
   }
 
@@ -1021,7 +1021,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   @HostListener("touchstart", ["$event"])
   onTouchdown(event) {
     if (this._finishedLoading && this.inCanvas) {
-      this.ui.handleMouseDown(event);
+      this.ui.handleMouseDown(this._model.settings.globeView, event);
     }
   }
 

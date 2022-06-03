@@ -46,7 +46,7 @@ export class UI {
   }
 
   resizeFunction() {}
-  handleMouseDown(event) {
+  handleMouseDown(globeView: GlobeViewType, event) {
     event.preventDefault();
     this.mouseDown = true;
     if (event.type === "mousedown") {
@@ -54,9 +54,11 @@ export class UI {
       this.lastMouseX = event.clientX; // + event.touches[0].clientX;
       this.lastMouseY = event.clientY; // + event.touches[0].clientY;
     } else if (event.type === "touchstart") {
-      const touch = event.touches[0] || event.changedTouches[0];
-      this.lastMouseX = touch.pageX;
-      this.lastMouseY = touch.pageY;
+      if(event.touches.length > 1) {
+        const touch = event.touches[0] || event.changedTouches[0];
+        this.lastMouseX = touch.pageX;
+        this.lastMouseY = touch.pageY;
+      }
     }
   }
 

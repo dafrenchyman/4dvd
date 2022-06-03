@@ -1,33 +1,3 @@
-@media only screen and (min-width: 359px) {
-  .row-blue-white-text
-  {
-    height: 150px;
-  }
-}
-
-@media only screen and (min-width: 599px) {
-  .row-blue-white-text
-  {
-    height: 100px;
-  }
-}
-
-@media only screen and (min-width: 809px) {
-  .row-blue-white-text
-  {
-    height: 75px;
-  }
-}
-
-@media only screen and (min-width: 1292px) {
-  .row-blue-white-text
-  {
-    height: 55px; 
-  }
-}
-
-
-
 .OptionsButton
 {
   margin-top: 15px;
@@ -38,6 +8,7 @@
   padding: 0;
   line-height: normal;
   white-space: pre;
+  cursor: pointer;
 }
 
 .AboutButton {
@@ -45,10 +16,10 @@
   float: right;
   font-size: 18px;
   
-  width: 97.9vw;
   white-space: pre;
   color: #fff;
 }
+  
 .DataDownload {
   margin-right: 20px;
   margin-left: 20px;
@@ -58,7 +29,6 @@
   display: inline-block;
   white-space: pre;
   color: #fff;
-  width: 97.9vw;
 }
 .Dataset {
   margin-right: 20px;
@@ -69,18 +39,114 @@
   display: inline-block;
   white-space: pre;
   color: #fff;
-  width: 97.9vw;
 }
 .Top_Dataset {
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  display: inline-block;
-  white-space: pre;
-  color: #fff;
-  width: 97.9vw;
+   margin-right: 20px;
+   margin-left: 20px;
+   margin-top: 10px;
+   margin-bottom: 10px;
+   font-size: 18px;
+   display: inline-block;
+   white-space: pre;
+   color: #fff;
+}
+
+@media only screen and (min-width: 359px) {
+  .row-blue-white-text{
+    height: 150px;
+  }
+
+  .OptionsButton {
+    height: 125px;
+  }
+
+  .AboutButton {
+    width: 93.3vw;
+  }
+  .DataDownload {
+    width: 93.3vw;
+  }
+  .Dataset {
+    width: 93.3vw;
+  }
+  .Top_Dataset {
+    width: 93.3vw;
+  }
+}
+
+@media only screen and (min-width: 599px) {
+  .row-blue-white-text
+  {
+    height: 100px;
+  }
+
+  .OptionsButton
+  {
+    height: 85px;
+  }
+
+  .AboutButton {
+    width: 95vw;
+  }
+  .DataDownload {
+    width: 95vw;
+  }
+  .Dataset {
+    width: 95vw;
+  }
+  .Top_Dataset {
+    width: 95vw;
+  }
+}
+
+@media only screen and (min-width: 809px) {
+  .row-blue-white-text
+  {
+    height: 75px;
+  }
+
+  .OptionsButton
+  {
+    height: 60px;
+  }
+
+  .AboutButton {
+    width: 96.8vw;
+  }
+  .DataDownload {
+    width: 96.8vw;
+  }
+  .Dataset {
+    width: 96.8vw;
+  }
+  .Top_Dataset {
+    width: 96.8vw;
+  }
+}
+
+@media only screen and (min-width: 1292px) {
+  .row-blue-white-text
+  {
+    height: 55px; 
+  }
+
+  .OptionsButton
+  {
+    height: 39px;
+  }
+
+  .AboutButton {
+    width: 97.8vw;
+  }
+  .DataDownload {
+    width: 97.8vw;
+  }
+  .Dataset {
+    width: 97.8vw;
+  }
+  .Top_Dataset {
+    width: 97.8vw;
+  }
 }
 
 button:focus {
