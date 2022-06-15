@@ -29,6 +29,7 @@
 #TimeseriesBox {
   background-color: #031634;
   letter-spacing: 3px;
+  font-weight: lighter;
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -36,7 +37,7 @@
 }
 
 #TimeseriesBox mat-card {
-  background-color: #031634;
+  background-color: #031634cc;
 }
 
 #TimeseriesBox mat-card button {
@@ -76,14 +77,14 @@ path.domain {
 
 #Legend .axis text {
   font-size: 20px;
-  fill: black;
-  font-weight: bold;
+  fill: #cdb380;
+  font-weight: lighter;
 }
 
 .axis line,
 .axis path {
   fill: none;
-  stroke: black;
+  stroke: #cdb380;
   shape-rendering: crispEdges;
 }
 
@@ -155,12 +156,15 @@ path.domain {
   position: absolute;
   display: block;
   bottom: 10px;
-  width: 50%;
-  margin-left: 20vw;
+  right: 20px;
   border: none;
   font-size: 20pt;
   color: #cdb380 !important;
   z-index: 6;
+}
+#ClimateDate,
+.levelLabel {
+  color: #cdb380 !important;
 }
 
 html,
@@ -257,22 +261,26 @@ button:focus {
 }
 
 .openLegendSlider:focus {
-  background-color: #ffffff;
+  background-color: #033649;
 }
 
 .custom-slider .ng5-slider .ng5-slider-pointer {
-  background-color: black;
+  background-color: #036564;
   height: 5px;
   top: auto;
   bottom: 0;
+  width: 18px;
+  border-radius: 1px;
 }
-
+.ng5-slider.vertical .ng5-slider-pointer {
+  left: 0px !important;
+}
 .custom-slider .ng5-slider .ng5-slider-pointer:after {
   display: none;
 }
 
 .custom-slider .ng5-slider .ng5-slider-selection {
-  background-color: greenyellow;
+  background-color: #036564;
 }
 
 mat-sidenav-content.mat-drawer-content {
@@ -281,8 +289,7 @@ mat-sidenav-content.mat-drawer-content {
 
 .levelLabel,
 .dateLabel {
-  color: black;
-  font-weight: bold;
+  font-weight: lighter;
   margin: 3px;
 }
 
@@ -318,9 +325,29 @@ mat-sidenav-content.mat-drawer-content {
 }
 
 #Menu {
-  background-color: mediumvioletred;
+  background-color: #033649;
   color: #cdb380;
   overflow: auto;
   width: 290px;
   display: flex;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  color: #cdb380;
+}
+
+.mat-list-base .mat-list-item text {
+  color: #cdb380;
+}
+
+.mat-select-value {
+  color: #cdb380;
+}
+
+.mat-fab,
+.mat-flat-button,
+.mat-mini-fab,
+.mat-raised-button {
+  background-color: #036564;
 }
