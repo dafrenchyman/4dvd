@@ -27,7 +27,6 @@
   color: #cdb380 !important;
 }
 #TimeseriesBox {
-  background-color: #031634;
   letter-spacing: 3px;
   font-weight: lighter;
   position: absolute;
@@ -136,7 +135,7 @@ path.domain {
   font-size: 30px;
   z-index: 6;
   color: #cdb380 !important;
-  background-color: rgba(0.011, 0.086, 0.2, 0.1);
+  background-color: #031634cc;
   font-weight: 100;
   letter-spacing: 3px;
   margin: 3px;
@@ -161,6 +160,8 @@ path.domain {
   font-size: 20pt;
   color: #cdb380 !important;
   z-index: 6;
+  background-color: #031634cc;
+  border-radius: 3px;
 }
 #ClimateDate,
 .levelLabel {
