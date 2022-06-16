@@ -36,6 +36,11 @@
   color: #CDB380;
 }
 
+.mat-dialog-container {
+  background-color: #031634;
+  color: #cdb380;
+}
+
 .row:after {
   content: "";
   display: table;
@@ -821,7 +826,4 @@ h6 {
   font-weight: 100 !important;
 }
 
-mat-dialog-container {
-  background-color: #031634;
-  color: #cdb380;
-}
+
