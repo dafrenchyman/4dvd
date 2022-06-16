@@ -1,10 +1,12 @@
 .mat-dialog-container {
   background-color: #031634;
+  color: #cdb380;
 }
 #ColorMapMenu {
+  color: #cdb380;
   position: absolute;
   left: 20px;
   top: 20px;
   z-index: 10;
-  color: #cdb380;
+
 }
