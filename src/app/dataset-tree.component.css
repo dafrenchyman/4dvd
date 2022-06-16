@@ -4,16 +4,18 @@
   padding: 5px 5px;
   border-radius: 50%;
 }
-
+.mat-tree-node{
+  background-color: #031634;
+}
 .mat-icon-button:focus {
   background-color: transparent;
 }
 .mat-icon-button:hover {
-  background-color: white;
+  background-color: #036564;
 }
 
 .mat-icon-button {
-  color: black;
+  color: #cdb380;
   padding: 0px 10px;
   width: 400px;
   cursor: pointer;
