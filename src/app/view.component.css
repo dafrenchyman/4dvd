@@ -7,6 +7,8 @@
   font-size: 20pt;
   padding-left: 10px;
   margin: 3px;
+  background-color: #031634cc;
+  border-radius: 3px;
 }
 
 #legendSlider {
@@ -17,12 +19,35 @@
   width: 50px;
   z-index: -5;
 }
+#theCardInTimeSeriesBox {
+  background-color: transparent !important;
+}
 
+#theCardInTimeSeriesBox mat-list-item {
+  color: #cdb380 !important;
+}
 #TimeseriesBox {
+  letter-spacing: 3px;
+  font-weight: lighter;
   position: absolute;
   bottom: 20px;
   left: 20px;
   z-index: 6;
+}
+
+#TimeseriesBox mat-card {
+  background-color: #031634cc;
+}
+
+#TimeseriesBox mat-card button {
+  background-color: #036564;
+}
+#TimeseriesBox mat-card button:hover {
+  background-color: #033649;
+}
+
+#TimeseriesBox mat-card button:after {
+  background-color: #031634;
 }
 
 #LevelsBox {
@@ -51,18 +76,19 @@ path.domain {
 
 #Legend .axis text {
   font-size: 20px;
-  fill: black;
-  font-weight: bold;
+  fill: #cdb380;
+  font-weight: lighter;
 }
 
 .axis line,
 .axis path {
   fill: none;
-  stroke: black;
+  stroke: #cdb380;
   shape-rendering: crispEdges;
 }
 
 .TabHeading {
+  padding-top: 30px;
   text-align: center;
 }
 
@@ -88,6 +114,10 @@ path.domain {
   left: 10px;
   top: 10px;
   z-index: 10;
+  background-color: transparent;
+}
+#sideNavButton:hover {
+  background-color: #033649;
 }
 
 /*.example-fab {
@@ -104,8 +134,10 @@ path.domain {
   text-align: center;
   font-size: 30px;
   z-index: 6;
-  color: black;
-  font-weight: bold;
+  color: #cdb380 !important;
+  background-color: #031634cc;
+  font-weight: 100;
+  letter-spacing: 3px;
   margin: 3px;
   padding-right: 2px;
   padding-left: 2px;
@@ -119,14 +151,21 @@ path.domain {
 }
 
 #ClimateDate {
+  text-align: center;
   position: absolute;
   display: block;
   bottom: 10px;
   right: 20px;
   border: none;
   font-size: 20pt;
-  color: black;
+  color: #cdb380 !important;
   z-index: 6;
+  background-color: #031634cc;
+  border-radius: 3px;
+}
+#ClimateDate,
+.levelLabel {
+  color: #cdb380 !important;
 }
 
 html,
@@ -164,14 +203,27 @@ md-sidenav-container,
   margin-right: 75px;
   margin-left: 75px;
   width: fit-content;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.mat-darkMode {
+  background-color: #036564;
+  color: #cdb380 !important;
+}
+.mat-darkMode:focus {
+  background-color: #031634;
+  color: #cdb380 !important;
+}
+
+.mat-darkModeIcons {
+  color: #cdb380 !important;
 }
 
 .MatButton2 {
   margin-right: 50px;
   margin-left: 50px;
   width: fit-content;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .MenTab {
@@ -181,7 +233,9 @@ md-sidenav-container,
 .mat-slide-toggle-content,
 .mat-radio-label-content {
   font-size: 14px;
-  color: black;
+  color: #e8ddcb;
+  font-weight: lighter;
+  letter-spacing: 2px;
 }
 
 .hidden {
@@ -208,22 +262,26 @@ button:focus {
 }
 
 .openLegendSlider:focus {
-  background-color: #ffffff;
+  background-color: #033649;
 }
 
 .custom-slider .ng5-slider .ng5-slider-pointer {
-  background-color: black;
+  background-color: #036564;
   height: 5px;
   top: auto;
   bottom: 0;
+  width: 18px;
+  border-radius: 1px;
 }
-
+.ng5-slider.vertical .ng5-slider-pointer {
+  left: 0px !important;
+}
 .custom-slider .ng5-slider .ng5-slider-pointer:after {
   display: none;
 }
 
 .custom-slider .ng5-slider .ng5-slider-selection {
-  background-color: #2196f3;
+  background-color: #036564;
 }
 
 mat-sidenav-content.mat-drawer-content {
@@ -232,8 +290,7 @@ mat-sidenav-content.mat-drawer-content {
 
 .levelLabel,
 .dateLabel {
-  color: black;
-  font-weight: bold;
+  font-weight: lighter;
   margin: 3px;
 }
 
@@ -260,10 +317,38 @@ mat-sidenav-content.mat-drawer-content {
   border: 3px solid gray;
   border-radius: 7px;
 }
-
+/* hamburger button color*/
 .buttonColor,
 .buttonColor:focus,
 .buttonColor:active,
 :after {
-  background-color: white;
+  color: #cdb380;
+}
+
+#Menu {
+  background-color: #033649;
+  color: #cdb380;
+  overflow: auto;
+  width: 290px;
+  display: flex;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content,
+.mat-list-base .mat-list-option .mat-list-item-content {
+  color: #cdb380;
+}
+
+.mat-list-base .mat-list-item text {
+  color: #cdb380;
+}
+
+.mat-select-value {
+  color: #cdb380;
+}
+
+.mat-fab,
+.mat-flat-button,
+.mat-mini-fab,
+.mat-raised-button {
+  background-color: #036564;
 }

@@ -3,6 +3,8 @@
   overflow-x: hidden;
   height: 100%;
   width: 100%;
+  background-color: white;
+  color: black;
 }
 
 .title {
@@ -127,4 +129,18 @@ button:focus {
 #Title {
   width: 78%;
   text-align: center;
+}
+.row {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  background-color: white;
+  color: black;
+}
+
+h5 {
+  color: black;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-weight: 100 !important;
 }

@@ -27,6 +27,20 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+  background-color: #033649;
+  color: #CDB380;
+}
+
+.mat-card{
+  background: #033649;
+  color: #CDB380;
+}
+
+.mat-dialog-container {
+  background-color: #031634;
+  color: #cdb380;
+  background-color: #033649;
+  color: #CDB380;
 }
 
 .row:after {
@@ -799,3 +813,19 @@
 .z-depth-5 {
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
 }
+
+h5 {
+  color: #CDB380;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-weight: 100 !important;
+}
+
+h6 {
+  color: #CDB380;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-weight: 100 !important;
+}
+
+
