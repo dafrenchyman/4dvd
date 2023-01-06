@@ -207,6 +207,16 @@ export class ViewComponent implements OnInit, AfterViewInit {
     vertical: true
   };
 
+  // time series box variables
+  TSBoxIsVis = false;
+  TSBoxX = 0;
+  TSBoxY = 0;
+  TSBoxOffsetX = 0;
+  TSBoxOffsetY = 50;
+  isGlobeToolTipEnabled = false;
+  GlobeToolTipMessage =
+    "Toggles the ability to display a draggable box with the data value at the location you click on the earth";
+
   // Waits for the dataset to be updated to correctly
   // update the legend slider with up to date data
   private waitForDataLoad() {
@@ -977,6 +987,16 @@ export class ViewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // called after finished dragging Time Series Box
+  private dragEnded(event) {
+    const element = event.source.getRootElement();
+    const newPos = element.getBoundingClientRect();
+
+    // get the offset to place TS box in correct place for next click
+    this.TSBoxOffsetX = newPos.x - this.TSBoxX;
+    this.TSBoxOffsetY = newPos.y - this.TSBoxY;
+  }
+
   @HostListener("mousewheel", ["$event"]) wheel1(event) {
     this.onMousewheel(event);
   }
@@ -995,6 +1015,10 @@ export class ViewComponent implements OnInit, AfterViewInit {
   onMousedown(event) {
     if (this._finishedLoading && this.inCanvas) {
       this.ui.handleMouseDown(event);
+    }
+    if (this.TSBoxIsVis) {
+      document.getElementById("GlobeToolTip").style.visibility = "hidden";
+      this.TSBoxIsVis = false;
     }
   }
 
@@ -1024,7 +1048,7 @@ export class ViewComponent implements OnInit, AfterViewInit {
   @HostListener("mouseup", ["$event"])
   onMouseup(event) {
     if (this._finishedLoading && this.inCanvas) {
-      this.ui.handleMouseUp(
+      const response: any = this.ui.handleMouseUp(
         this._model._world,
         this.GL,
         this._model.settings.globeView,
@@ -1036,6 +1060,15 @@ export class ViewComponent implements OnInit, AfterViewInit {
         this.earthRotationMatrix_y,
         event
       );
+      if (response) {
+        // if Time Series Card is shown, set TS card X and Y to mouse pointer
+        this.TSBoxX = event.pageX - this.TSBoxOffsetX;
+        this.TSBoxY = event.pageY - this.TSBoxOffsetY;
+        this.TSBoxIsVis = true;
+        document.getElementById("GlobeToolTip").style.left = `${this.TSBoxX}px`;
+        document.getElementById("GlobeToolTip").style.top = `${this.TSBoxY}px`;
+        document.getElementById("GlobeToolTip").style.visibility = "visible";
+      }
     }
   }
 

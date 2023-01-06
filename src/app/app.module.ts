@@ -1,3 +1,4 @@
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import { APP_BASE_HREF } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
@@ -100,7 +101,8 @@ import { ViewComponent } from "./view.component";
     HttpClientModule,
     MatSnackBarModule,
     MatStepperModule,
-    MatGridListModule
+    MatGridListModule,
+    DragDropModule
   ],
   providers: [
     GetJson,
